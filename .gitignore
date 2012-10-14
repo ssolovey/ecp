@@ -1,3 +1,4 @@
+app/
 app/code/community/Find/
 app/code/community/Phoenix/
 app/code/core/
@@ -31,6 +32,9 @@ app/etc/local.xml.template
 app/.htaccess
 app/locale/en_US/
 app/Mage.php
+.htaccess
+.htaccess.sample
+api.php
 cron.php
 cron.sh
 downloader/
