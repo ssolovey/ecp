@@ -17,11 +17,11 @@ $j('document').ready(function(){
 function hoverLogo(){
 	$j('.logo img').hover(function(){
 		
-		this.src = '../../skin/frontend/shop/default/images/logo-over.png';
+		this.src = '../skin/frontend/shop/default/images/logo-over.png';
 		
 	},function(){
 		
-		this.src = '../../skin/frontend/shop/default/images/logo.png';
+		this.src = '../skin/frontend/shop/default/images/logo.png';
 		
 	});
 
