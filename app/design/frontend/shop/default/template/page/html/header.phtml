@@ -36,10 +36,21 @@
         <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
         <?php endif?>
         <div class="quick-access">
-            <?php echo $this->getChildHtml('topSearch') ?>
+           <?php /*?><?php echo $this->getChildHtml('topSearch') ?>
             <p class="welcome-msg"><?php echo $this->getWelcome() ?> <?php echo $this->getAdditionalHtml() ?></p>
             <?php echo $this->getChildHtml('topLinks') ?>
-            <?php echo $this->getChildHtml('store_language') ?>
+            <?php echo $this->getChildHtml('store_language') ?><?php */?>
+            
+            <ul id="header_menu">
+                <li><a href="<?php echo $this->getUrl('plant_tour')?>"><?php echo $this->__('Plant_tour') ?></a></li>
+                <li><a href="<?php echo $this->getUrl('reman_u')?>"><?php echo $this->__('Reman U') ?></a></li>
+                <li><a href="<?php echo $this->getUrl('warranty_info')?>"><?php echo $this->__('Warranty Info') ?></a></li>
+                <li><a href="<?php echo $this->getUrl('car_care_centers')?>"><?php echo $this->__('Car Care Centers') ?></a></li>
+                <li><a href="<?php echo $this->getUrl('contact')?>"><?php echo $this->__('Contact') ?></a></li>
+                <li class="online_quotes_lable">Online Quotes</li>
+            </ul>
+            
+            
         </div>
         <?php echo $this->getChildHtml('topContainer'); ?>
     </div>

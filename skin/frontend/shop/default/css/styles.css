@@ -514,6 +514,7 @@ tr.summary-details-excluded { font-style:italic; }
 
 /* Custom for shop*/
 
+/*UPPER HEADER MENU*/
 #bizinfo{
 	color: #444;
 	font-size: 11px;
@@ -537,6 +538,41 @@ tr.summary-details-excluded { font-style:italic; }
 	text-decoration: underline;
 }
 
+/* HEADER MENU*/
+#header_menu{
+	position:relative;
+}
+
+#header_menu li a {
+	text-decoration:none;
+	color: #29266B;
+	text-shadow: .1em 0em white;
+	font-size:13px;
+	padding: 8px 6px 12px 7px;
+}
+
+#header_menu li a:hover {
+	background: #C8C8C8;
+	color: #233E89;
+	background-image: url(../images/nav-over-bg.gif);
+	background-repeat: repeat-x;
+	text-shadow: .1em 0em white;
+}
+
+#header_menu li {
+	position: relative;
+	display: inline-block;
+	float: left;
+	padding: 0px 0px 0px 0px;
+}
+#header_menu .online_quotes_lable{
+	padding: 2px 6px 12px 45px;
+	font-size: 13px;
+	color: #E06060;
+}
+
+
+
 .logo { float:left; }
 .header-container {background:url(../images/navbar-bg.png) no-repeat; height:123px; background-position:bottom; width: 930px;
 margin: 0 auto; }
@@ -544,7 +580,7 @@ margin: 0 auto; }
 .header .logo { float:left; margin:6px 0 10px 15px; text-decoration:none !important; }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
 .header h1.logo { margin:0; }
-.header .quick-access { float:right; width:600px; padding:28px 10px 0 0; }
+.header .quick-access { float:right; width:600px; padding:15px 10px 0 0; }
 .header .welcome-msg { margin:0; color:#fff; text-align:right; }
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search { position:absolute; top:0; right:29px; width:315px; height:30px; background:url(../images/bkg_form-search.gif) 0 0 no-repeat; padding:1px 0 0 16px; }
