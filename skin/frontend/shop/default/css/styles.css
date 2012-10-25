@@ -522,7 +522,7 @@ tr.summary-details-excluded { font-style:italic; }
 	letter-spacing: 1px;
 	line-height: 1em;
 	height: 24px;
-	margin-top: 24px;
+	margin-top: 14px;
 	margin-right: 15px;
 	position:relative;
 	z-index:11;
@@ -571,16 +571,31 @@ tr.summary-details-excluded { font-style:italic; }
 	color: #E06060;
 }
 
+#online_quotes_big_lable{
+	width: 253px;
+	margin-left:25px;
+	margin-top:10px;
+}
 
+#online_quotes_big_lable .online_lable{
+	color: #29266B;
+	font-size: 30px;
+	margin-right:10px;
+}
+
+#online_quotes_big_lable .quote_lable{
+	color: #E06060;
+	font-size: 30px;
+}
 
 .logo { float:left; }
-.header-container {background:url(../images/navbar-bg.png) no-repeat; height:123px; background-position:bottom; width: 930px;
+.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:199px; width: 916px;
 margin: 0 auto; }
-.header { width:930px; margin:0 auto; padding:10px; text-align:right; position:relative; z-index:10; }
-.header .logo { float:left; margin:6px 0 10px 15px; text-decoration:none !important; }
-.header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
+.header {margin:0 auto; text-align:right; position:relative; z-index:10; background:url(../images/navbar-bg.png) no-repeat;background-position:bottom;}
+.header .logo { float:left; margin:6px 0 3px 15px; text-decoration:none !important; }
+.header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden;  }
 .header h1.logo { margin:0; }
-.header .quick-access { float:right; width:600px; padding:15px 10px 0 0; }
+.header .quick-access { float:right; width:600px; padding:10px 10px 0 0; }
 .header .welcome-msg { margin:0; color:#fff; text-align:right; }
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search { position:absolute; top:0; right:29px; width:315px; height:30px; background:url(../images/bkg_form-search.gif) 0 0 no-repeat; padding:1px 0 0 16px; }
