@@ -588,8 +588,35 @@ tr.summary-details-excluded { font-style:italic; }
 	font-size: 30px;
 }
 
+#main-menu{
+	background:url(../images/navbar-bottom-bg.png) no-repeat;
+	width:920px;
+	height:50px;
+	margin-top:26px;
+}
+
+#main-menu .links a{
+	text-decoration:none;
+	color:#233E89;
+	padding: 4px 5px 7px 5px;
+}
+
+#main-menu .links a:hover{
+	background: #233E89;
+	color:#fff;
+}
+
+#main-menu .links {
+	float:left;
+	margin-top: 16px;
+	margin-left: 150px;
+	
+}
+
+
+
 .logo { float:left; }
-.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:199px; width: 916px;
+.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:230px; width: 920px;
 margin: 0 auto; }
 .header {margin:0 auto; text-align:right; position:relative; z-index:10; background:url(../images/navbar-bg.png) no-repeat;background-position:bottom;}
 .header .logo { float:left; margin:6px 0 3px 15px; text-decoration:none !important; }
