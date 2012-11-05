@@ -8,7 +8,7 @@ var $j = jQuery.noConflict();
 /** DOM Ready Event */
 
 $j('document').ready(function(){
-	hoverLogo();
+	//hoverLogo();
 	
 });
 

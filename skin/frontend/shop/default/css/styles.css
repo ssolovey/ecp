@@ -595,6 +595,25 @@ tr.summary-details-excluded { font-style:italic; }
 	margin-top:26px;
 }
 
+#main-menu .links a{
+	text-decoration:none;
+	color:#233E89;
+	padding: 4px 5px 7px 5px;
+}
+
+#main-menu .links a:hover{
+	background: #233E89;
+	color:#fff;
+}
+
+#main-menu .links {
+	float:left;
+	margin-top: 16px;
+	margin-left: 150px;
+	
+}
+
+
 
 .logo { float:left; }
 .header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:230px; width: 920px;

@@ -54,6 +54,8 @@
         <?php echo $this->getChildHtml('topContainer'); ?>
     </div>
     <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>
-    <div id="main-menu"></div>
+    <div id="main-menu">
+    	<?=$this->getChildHtml('header_links')?>
+    </div>
 </div>
 <?php echo $this->getChildHtml('topMenu') ?>
