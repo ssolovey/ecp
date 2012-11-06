@@ -40,7 +40,8 @@
             </db>
             <default_setup>
                 <connection>
-                    <host><![CDATA[198.57.137.46]]></host>
+                    <!--<host><![CDATA[198.57.137.46]]></host>-->
+                    <host><![CDATA[localhost]]></host>
                     <username><![CDATA[dbkadro]]></username>
                     <password><![CDATA[DANger]]></password>
                     <dbname><![CDATA[magento]]></dbname>
