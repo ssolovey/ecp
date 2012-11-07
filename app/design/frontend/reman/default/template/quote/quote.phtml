@@ -1,5 +1,9 @@
-<?php
-    
-	echo $this->getContent(); 
-	
-?>
+
+
+<select onchange="selectMake(this.value)">
+	 <option selected="selected">...</option>
+	 <?php foreach($this->getMake() as $value): ?>
+			<option><?php echo $value ?></option>
+	 <?php endforeach; ?>
+</select>
+ 

@@ -10,4 +10,9 @@ var $j = jQuery.noConflict();
 $j('document').ready(function(){
 	
 	
+	
 });
+
+function selectMake(value){
+
+}

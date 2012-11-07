@@ -7,4 +7,8 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
         $this->renderLayout(); //This function processes and displays all layout phtml and php files.
 		
     }
+	
+	
+	
+	
 }
