@@ -51,7 +51,7 @@ Default layout, loads most of the pages
 				
 				
 				<action method="addItem"><type>skin_js</type><name>js/jquery.js</name></action>
-				<action method="addItem"><type>skin_js</type><name>js/shop.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/general.js</name></action>
 
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 
