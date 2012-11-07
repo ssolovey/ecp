@@ -42,8 +42,8 @@
                 <connection>
                     <!--<host><![CDATA[198.57.137.46]]></host>-->
                     <host><![CDATA[localhost]]></host>
-                    <username><![CDATA[dbkadro]]></username>
-                    <password><![CDATA[DANger]]></password>
+                    <username><![CDATA[root]]></username>
+                    <password></password>
                     <dbname><![CDATA[magento]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
