@@ -10,7 +10,16 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		$data_model		= Mage::getModel('sync/model');
 		$data_applic	= Mage::getModel('sync/applic');
 		
-		//$model_applic->setVehicle_id(100);
-		//$model_applic->save();
+		echo 'Make: ';
+		echo $data_make->getCollection()->count();
+		echo '</br>';
+		
+		echo 'Model: ';
+		echo $data_model->getCollection()->count();
+		echo '</br>';
+		
+		echo 'Applic: ';
+		echo $data_applic->getCollection()->count();
+		echo '</br>';
 	}
 }
