@@ -9,7 +9,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		$data_make		= Mage::getModel('sync/make');
 		$data_model		= Mage::getModel('sync/model');
 		$data_applic	= Mage::getModel('sync/applic');
-		
+
 		echo 'Make: ';
 		echo $data_make->getCollection()->count();
 		echo '</br>';
@@ -21,5 +21,8 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		echo 'Applic: ';
 		echo $data_applic->getCollection()->count();
 		echo '</br>';
+		
+		echo $make;
+		
 	}
 }

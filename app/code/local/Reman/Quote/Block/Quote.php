@@ -1,23 +1,10 @@
 <?php
 class Reman_Quote_Block_Quote extends Mage_Core_Block_Template
 {
+	
+	/** Get Makers names for reman_make model*/
     public function getMake()
     {
-		$write = Mage::getSingleton('core/resource')->getConnection('core_write');
-		
-		$readresult=$write->query('SELECT make FROM reman_make');
-		
-		while ($row = $readresult->fetch() ) {
-			$makers[]=$row['make'];
-		}
-		
-		return $makers;
-	
+		return Mage::getModel('sync/make')->loadMake();
     }
-	
-	public function onMakeSelect($make)
-	{
-	
-	}
-	
 }

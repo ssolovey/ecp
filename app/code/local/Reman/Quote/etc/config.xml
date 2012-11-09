@@ -34,5 +34,36 @@
 				<class>Reman_Quote_Helper</class>
 			</quote>
 		</helpers>
+		<sync_mysql4>
+				<class>Reman_Sync_Model_Mysql4</class>
+				<entities>
+					<make> 
+						<table>reman_make</table>
+					</make>
+					<model> 
+						<table>reman_model</table>
+					</model>
+					<applic> 
+						<table>reman_applic</table>
+					</applic>
+				</entities>
+			</sync_mysql4>
+		<resources>
+			<sync_setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</sync_setup>
+			<sync_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</sync_write>
+			<sync_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</sync_read>
+		</resources>	
 	</global>
 </config>
