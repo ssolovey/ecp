@@ -4,6 +4,6 @@ class Reman_Sync_Model_Mysql4_Make_Collection extends Mage_Core_Model_Mysql4_Col
 {
 	public function _construct()
 	{
-
+		$this->_init('sync/make');
 	}
 }

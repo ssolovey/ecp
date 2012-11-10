@@ -4,6 +4,6 @@ class Reman_Sync_Model_Mysql4_Applic_Collection extends Mage_Core_Model_Mysql4_C
 {
 	public function _construct()
 	{
-
+		$this->_init('sync/applic');
 	}
 }

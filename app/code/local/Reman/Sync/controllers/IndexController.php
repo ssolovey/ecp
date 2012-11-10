@@ -7,13 +7,24 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		
 		$this->syncMakeData();
 		$this->syncModelData();
-		//$this->syncInvenData();	
+		$this->syncApplicData();	
+	}
+	
+	private function deleteAllRecords($model) 
+	{
+		$collection = $model->getCollection()->getItems();
+		
+		foreach( $collection as $item ) {
+			$item->delete();
+		}
 	}
 	
 	private function syncMakeData()
 	{		
 		$model	=	Mage::getModel('sync/make');
 		
+		$this->deleteAllRecords($model);
+				
 		// Location of CSV file
 		$file	=	'import/make.csv';
 				
@@ -25,7 +36,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		// Load data from CSV file
 		$data	=	$csv->getData($file);
 		
-		$count	=	0;
+		$count	=	0;		
 		
 		foreach( $data as $item ) {
 					
@@ -51,6 +62,8 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 	private function syncModelData()
 	{		
 		$model	=	Mage::getModel('sync/model');
+		
+		$this->deleteAllRecords($model);
 		
 		// Location of CSV file
 		$file	=	'import/model.csv';
@@ -90,6 +103,8 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 	{		
 		$model	=	Mage::getModel('sync/applic');
 		
+		$this->deleteAllRecords($model);
+		
 		// Location of CSV file
 		$file	=	'import/applic.csv';
 				
@@ -97,6 +112,36 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		
 		// Set delimiter to "\"
 		$csv->setDelimiter('|');
+		
+		// Set delimiter to "\"
+		$csv->setDelimiter('|');
+		
+		// Load data from CSV file
+		$data	=	$csv->getData($file);
+		
+		$count	=	0;
+		
+		foreach( $data as $item ) {
+					
+			$model->setData(
+				array(
+					'vehicle_id'		=>		$item[0],
+					'group'				=>		$item[1],
+					'subgroup'			=>		$item[4],
+					'menu_heading'		=>		$item[5],
+					'applic'			=>		$item[3],
+					'part_number'		=>		$item[6]
+				)		    	
+			);
+			
+			$model->save();
+			
+			$count++;
+		}
+		
+		echo 'Applic: sync items > ';
+		echo $count;
+		echo '<br/>';
 	
 	}
 }
