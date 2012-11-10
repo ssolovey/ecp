@@ -18,7 +18,6 @@ $installer->run("
 	`vehicle_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Vehicle ID',
 	`make_id` int(4) unsigned NOT NULL COMMENT 'Make ID',
 	`year` int(4) NOT NULL DEFAULT '0' COMMENT 'Year',
-	`end_year` int(4) NOT NULL DEFAULT '0' COMMENT 'End Year',
 	`model` varchar(35) DEFAULT NULL COMMENT 'Model',
 	PRIMARY KEY (`vehicle_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;

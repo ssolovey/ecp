@@ -6,7 +6,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		echo 'Reman sync module.</br>';
 		
 		$this->syncMakeData();
-		//$this->syncModelData();
+		$this->syncModelData();
 		//$this->syncInvenData();	
 	}
 	
@@ -45,6 +45,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		
 		echo 'Make: sync items > ';
 		echo $count;
+		echo '<br/>';
 	}
 	
 	private function syncModelData()
@@ -58,7 +59,31 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		
 		// Set delimiter to "\"
 		$csv->setDelimiter('|');
-	
+		
+		// Load data from CSV file
+		$data	=	$csv->getData($file);
+		
+		$count	=	0;
+		
+		foreach( $data as $item ) {
+					
+			$model->setData(
+				array(
+					'vehicle_id'		=>		$item[3],
+					'make_id'			=>		$item[0],
+					'year'				=>		$item[1],
+					'model'				=>		$item[4]
+				)		    	
+			);
+			
+			$model->save();
+			
+			$count++;
+		}
+		
+		echo 'Model: sync items > ';
+		echo $count;
+		echo '<br/>';
 	}
 	
 	private function syncApplicData()
