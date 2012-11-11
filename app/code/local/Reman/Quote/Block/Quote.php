@@ -7,4 +7,5 @@ class Reman_Quote_Block_Quote extends Mage_Core_Block_Template
     {
 		return Mage::getModel('sync/make')->loadMake();
     }
+	
 }
