@@ -27,7 +27,7 @@ function selectMake(){
 	// buffer string 
 	var buffer = '';
 	
-	for(var i = 0; i<=range; i++){
+	for(var i = 0; i<=range-1; i++){
 		buffer += '<option value="'+make_id+'" label="'+(start_year+=1)+'">'+start_year+'</option>';
 	}
 	//clear options
