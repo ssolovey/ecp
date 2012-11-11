@@ -1,11 +1,27 @@
 <!-- 
 	First Step Quick quote (MAKE DATA)
 -->
-<select onchange="selectMake(this.value)">
+<select id="qq_select_make" onchange="selectMake()">
 	 <option selected="selected">...</option>
 	 <?php  foreach($this->getMake() as $value): ?>
-			<option value="<?php echo $value['make_id']?>">
+			<option value="<?php echo $value['make_id']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
 				<?php echo $value['make'] ?>
 			</option>
 	 <?php endforeach; ?>
 </select>
+
+<!-- 
+	Second Step Quick quote (Select Year)
+-->
+
+<select id="qq_select_year"  onchange="selectModel(this.value)">
+	 <option selected="selected">...</option>
+</select> 
+
+<!-- 
+	Third Step Quick quote (Select Model)
+-->
+
+<select id="qq_select_model">
+	 <option selected="selected">...</option>
+</select> 
