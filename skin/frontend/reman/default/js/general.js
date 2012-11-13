@@ -43,6 +43,7 @@ function selectModel(make_id){
 	
 	$j.post("index/ajax",
 		  {
+			step: 2,  
 			id:make_id,
 			year: year
 		  },
@@ -54,7 +55,7 @@ function selectModel(make_id){
 			var buffer = '';
 			
 			for(var i = 0; i<=response.length-1; i++){
-				buffer += '<option>'+response[i]+'</option>'
+				buffer += '<option  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</option>'
 			}
 			//clear options
 			$j('#qq_select_model > option').remove();
@@ -62,4 +63,108 @@ function selectModel(make_id){
 			$j('#qq_select_model').append(buffer);
 	  });
 }
+
+function selectProductID(vehicle_id){
+	$j.post("index/ajax",
+		  {
+			step: 3, 
+			id:vehicle_id
+		  },
+	  function(data){
+		 
+		    //parse response to JSON Object		  
+			var response = JSON.parse(data);
+			
+			// CHECK For DATA if NULL return
+			if(response.length == 0)
+	  		{
+				alert('DATA IS EMPTY');
+				return;
+			}
+			
+			var obj= {};
+			
+			for(var i=0; i<=response.length-1;i++)
+			{
+				
+				if(response[i].applic == null)
+				{
+					$j('#select_part_cont > div').remove();
+					
+					alert('APPLIC DATA IS EMPTY');
+					
+					return;
+				}
+				
+				if($j.isEmptyObject(obj) || current_group != response[i].group ){
+					obj[response[i].group] = {
+						'heading': response[i].menu_heading,
+						'applic' : [
+										{
+											name:response[i].applic , 
+											id:response[i].applic_id
+										}
+									],
+					}
+				}else
+				{
+					
+					obj[current_group].applic.push({name:response[i].applic ,id:response[i].applic_id});
+				}
+				
+				var current_group = response[i].group; 
+			
+			}
+			
+			selectPartBuildHTML(obj);
+			
+	  });
+}
+
+function selectPartBuildHTML(obj){
+	
+	$j('#select_part_cont > div').remove();
+	
+	for (key in obj)
+	{
+		
+		// buffer string 
+		var buffer = '';
+		
+		for(var i = 0; i<=obj[key].applic.length-1; i++){
+			buffer += '<option  value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</option>'
+		}
+		
+		var template = "<div class='select_part'>"+
+						"<span>"+obj[key].heading+"</span>"+
+						"<select class='select_part_box'>"+buffer+"</select>"+
+				  "</div>";
+		
+		$j('#select_part_cont').append(template);
+		
+		$j('.select_part_box').bind('change', function() {
+			 onPartSelect(this.value);
+		});
+		
+	}
+	
+}
+
+function onPartSelect(applic_id){
+	
+	$j.post("index/ajax",
+		  {
+			step: 4,  
+			id:applic_id,
+		  },
+	  function(data){
+		  
+			//parse response to JSON Object		  
+			var response = JSON.parse(data);
+
+			alert("PART NUMBER: " +response[0].part_number);
+	  });
+
+}
+
 

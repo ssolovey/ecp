@@ -11,12 +11,36 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// parse request data
 		$request = $this->getRequest()->getPost();
 		
-		// get years accprding to selected make
-		$result = Mage::getModel('sync/model')->loadModel($request['id'],$request['year']);
+		if($request['step'] == 2)
+		{
+			// get years accprding to selected make
+			$result_st2 = Mage::getModel('sync/model')->loadModel($request['id'],$request['year']);
+			
+			//return php array in json 	
+			echo json_encode($result_st2);
+			
+		}
 		
+		if($request['step'] == 3)
+		{
+			
+			// get years accprding to selected make
+			$result_st3 = Mage::getModel('sync/applic')->loadProductId($request['id']);
+			
+			echo json_encode($result_st3);
 		
-		//return php array in json 	
-		echo json_encode($result);
+		}
+		
+		if($request['step'] == 4)
+		{
+		
+			// get years accprding to selected make
+			$result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
+			
+			echo json_encode($result_st4);
+			
+		}
+		
 		// close connection
 		die;
 	}

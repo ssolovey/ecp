@@ -1893,3 +1893,42 @@ margin: 0 auto; }
 /* ======================================================================================= */
 
 .guest-select {width:305px !important;}
+
+/* REMAN*/
+#steps{
+	position: relative;
+	float: left;
+	width: 100%;
+}
+
+.select_box {
+	position:relative;
+	float:left;
+	margin-right:25px;
+}
+
+#select_part_cont {
+	position: relative;
+	width: 400px;
+	margin-top: 25px;
+	float:left;
+}
+
+#select_part_cont .select_part {
+	margin-top: 15px;
+	position: relative;
+	float: left;
+	margin-right: 25px;
+}
+
+#select_part_cont .select_part span {
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.steps_lable {
+	position: relative;
+	float: left;
+	margin-right: 10px;
+	font-weight:bold;
+}
