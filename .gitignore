@@ -26,6 +26,7 @@ app/etc/modules/Mage_Widget.xml
 app/etc/modules/Mage_XmlConnect.xml
 app/etc/modules/Phoenix_Moneybookers.xml
 app/etc/config.xml
+app/etc/local.xml
 app/etc/local.xml.additional
 app/etc/local.xml.template
 app/.htaccess
