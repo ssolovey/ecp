@@ -68,6 +68,7 @@ lib/Zend/
 LICENSE_AFL.txt
 LICENSE.html
 LICENSE.txt
+error_log
 mage
 media/customer/
 media/downloadable/
