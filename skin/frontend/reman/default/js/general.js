@@ -28,17 +28,31 @@ function selectMake(){
 	var buffer = '';
 	
 	for(var i = 0; i<=range-1; i++){
+		if(i==0){
+			buffer += '<option selected="selected">...</option>';
+		}
 		buffer += '<option value="'+make_id+'" label="'+(start_year+=1)+'">'+start_year+'</option>';
 	}
-	//clear options
-	$j('#qq_select_year > option').remove();
+	
+	resetSelectBoxes();
 	// fill options with data
 	$j('#qq_select_year').append(buffer);
 	
 }
 
+function resetSelectBoxes(){
+	//clear options for model
+	$j('#qq_select_model > option').remove()
+	$j('#qq_select_model').append('<option selected="selected">...</option>'); 
+	//clear options for year
+	$j('#qq_select_year > option').remove();
+	//clear select part number selectors
+	$j('#select_part_cont > div').remove();
+
+}
+
 function selectModel(make_id){
-	
+	if(make_id == '...') return;
 	var year = $j('#qq_select_year > option:selected').attr('label');
 	
 	$j.post("index/ajax",
@@ -50,11 +64,21 @@ function selectModel(make_id){
 	  function(data){
 			//parse response to JSON Object		  
 			var response = JSON.parse(data);
-
+			
+			// CHECK For DATA if NULL return
+			if(response.length == 0)
+	  		{
+				alert('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR!!!');
+				return;
+			}
+			
 			// buffer string 
 			var buffer = '';
 			
 			for(var i = 0; i<=response.length-1; i++){
+				if(i==0){
+					buffer += '<option selected="selected">...</option>';
+				}
 				buffer += '<option  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</option>'
 			}
 			//clear options
@@ -65,6 +89,7 @@ function selectModel(make_id){
 }
 
 function selectProductID(vehicle_id){
+	if(vehicle_id == '...') return;
 	$j.post("index/ajax",
 		  {
 			step: 3, 
@@ -78,7 +103,7 @@ function selectProductID(vehicle_id){
 			// CHECK For DATA if NULL return
 			if(response.length == 0)
 	  		{
-				alert('DATA IS EMPTY');
+				alert('VEHICLE ID DOESNT EXIST IN APPLIC DATA !!!');
 				return;
 			}
 			
@@ -91,7 +116,7 @@ function selectProductID(vehicle_id){
 				{
 					$j('#select_part_cont > div').remove();
 					
-					alert('APPLIC DATA IS EMPTY');
+					alert('NO DATA FOR THIS APPLIC ID !!!');
 					
 					return;
 				}
@@ -132,6 +157,9 @@ function selectPartBuildHTML(obj){
 		var buffer = '';
 		
 		for(var i = 0; i<=obj[key].applic.length-1; i++){
+			if(i==0){
+				buffer += '<option selected="selected">...</option>';
+			}
 			buffer += '<option  value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</option>'
 		}
 		
@@ -151,7 +179,7 @@ function selectPartBuildHTML(obj){
 }
 
 function onPartSelect(applic_id){
-	
+	if(applic_id == '...') return;
 	$j.post("index/ajax",
 		  {
 			step: 4,  
@@ -161,8 +189,14 @@ function onPartSelect(applic_id){
 		  
 			//parse response to JSON Object		  
 			var response = JSON.parse(data);
-
-			alert("PART NUMBER: " +response[0].part_number);
+			if(response[0].part_number == "N/A")
+			{
+				alert("NO PART NUMBER CALL 55500000 FOR MORE INFO !!!");
+			}else
+			{
+				alert("PART NUMBER: " +response[0].part_number);
+			}
+			
 	  });
 
 }
