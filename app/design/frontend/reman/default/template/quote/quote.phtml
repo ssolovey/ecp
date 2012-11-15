@@ -2,7 +2,7 @@
     <!-- 
         First Step Quick quote (MAKE DATA)
     -->
-    <span class="steps_lable">MAKE:</span>
+    <span class="steps_lable">Make:</span>
     <select class="select_box" id="qq_select_make" onchange="selectMake()">
          <option selected="selected">...</option>
          <?php  foreach($this->getMake() as $value): ?>
@@ -15,7 +15,7 @@
     <!-- 
         Second Step Quick quote (Select Year)
     -->
-    <span class="steps_lable">YEAR:</span>
+    <span class="steps_lable">Year:</span>
     <select class="select_box" id="qq_select_year"  onchange="selectModel(this.value)">
          <option selected="selected">...</option>
     </select> 
@@ -23,7 +23,7 @@
     <!-- 
         Third Step Quick quote (Select Model)
     -->
-    <span class="steps_lable">MODEL:</span>
+    <span class="steps_lable">Model:</span>
     <select class="select_box" onchange="selectProductID(this.value)" id="qq_select_model">
          <option selected="selected">...</option>
     </select> 

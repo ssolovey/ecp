@@ -28,7 +28,11 @@
 
 body          { /*background:#496778 url(../images/bkg_body.gif) 50% 0 repeat-y;*/
 				 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				 color:#666; text-align:center; }
+				 color:#666; text-align:center; 
+				 background-color: #20296e;
+				background-image: url("http://etereman.com/images/body-bg.jpg");
+				background-repeat: repeat-x;
+				 }
 
 img           { border:0; vertical-align:top; }
 
@@ -98,12 +102,23 @@ ul,ol         { list-style:none; }
 .page-print { background:#fff; padding:25px 30px; text-align:left; }
 .page-empty { background:#fff; padding:20px; text-align:left; }
 .page-popup { background:#fff; padding:25px 30px; text-align:left; }
-.main-container { background:#fbfaf6 url(../../../shop/default/images/bkg_main1.gif) 50% 0 no-repeat; }
-.main { width:900px; margin:0 auto; min-height:400px; padding:25px 25px 80px; background:#fffffe url(../../../shop/default/images/bkg_main2.gif) 0 0 no-repeat; text-align:left; }
+.main-container {
+
+}
+.main { width:860px; margin:0 auto; min-height:400px; padding:25px 25px 80px; text-align:left; 
+	background-image: url("http://etereman.com/images/content-main-fade-bg.png");
+	background-color:#F2F2F2;
+	background-repeat: repeat-x;
+}
 
 /* Base Columns */
 .col-left { float:left; width:195px; padding:0 0 1px; }
-.col-main { float:left; width:685px; padding:0 0 1px; }
+.col-main { float:left; width:685px; padding:0 0 1px; 
+	background-repeat: no-repeat;
+	background-color: #F2F2F2;
+	padding: 20px;
+	border-radius: 15px;
+}
 .col-right { float:right; width:195px; padding:0 0 1px; }
 
 /* 1 Column Layout */
@@ -521,7 +536,7 @@ tr.summary-details-excluded { font-style:italic; }
 	float:right;
 	letter-spacing: 1px;
 	line-height: 1em;
-	height: 24px;
+	height: 44px;
 	margin-top: 14px;
 	margin-right: 15px;
 	position:relative;
@@ -566,9 +581,13 @@ tr.summary-details-excluded { font-style:italic; }
 	padding: 0px 0px 0px 0px;
 }
 #header_menu .online_quotes_lable{
-	padding: 2px 6px 12px 45px;
+	padding: 3px 6px 12px 45px;
 	font-size: 13px;
+}
+
+#header_menu .online_quotes_lable a{
 	color: #E06060;
+	font-weight: bold;
 }
 
 #online_quotes_big_lable{
@@ -616,13 +635,16 @@ tr.summary-details-excluded { font-style:italic; }
 
 
 .logo { float:left; }
-.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:230px; width: 920px;
-margin: 0 auto; }
-.header {margin:0 auto; text-align:right; position:relative; z-index:10; background:url(../images/navbar-bg.png) no-repeat;background-position:bottom;}
+.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:250px; width: 920px;
+margin: 0 auto;
+background-repeat: no-repeat;
+background-position: 0px 20px;
+}
+.header {margin:0 auto; text-align:right; position:relative; z-index:10; background:url(../images/navbar-bg.png) no-repeat;background-position:bottom;padding-top: 20px;}
 .header .logo { float:left; margin:6px 0 3px 15px; text-decoration:none !important; }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden;  }
 .header h1.logo { margin:0; }
-.header .quick-access { float:right; width:600px; padding:10px 10px 0 0; }
+.header .quick-access { float:right; width:700px; padding:10px 10px 0 0; }
 .header .welcome-msg { margin:0; color:#fff; text-align:right; }
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search { position:absolute; top:0; right:29px; width:315px; height:30px; background:url(../../../shop/default/images/bkg_form-search.gif) 0 0 no-repeat; padding:1px 0 0 16px; }
@@ -1798,7 +1820,7 @@ margin: 0 auto; }
 
 
 /* Footer ================================================================================ */
-.footer-container { border-top:15px solid #b6d1e2; }
+.footer-container { }
 .footer { width:930px; margin:0 auto; padding:10px 10px 50px; }
 .footer .store-switcher { display:inline; margin:0 5px 0 0; color:#fff; }
 .footer .store-switcher label { font-weight:bold; vertical-align:middle; }
@@ -1912,6 +1934,7 @@ margin: 0 auto; }
 	width: 400px;
 	margin-top: 25px;
 	float:left;
+	font-size: 12px;
 }
 
 .select_part_box{
@@ -1922,6 +1945,7 @@ margin: 0 auto; }
 	cursor:pointer;
 	color:blue;
 	margin-left:10px;
+	text-decoration: underline;
 }
 
 
