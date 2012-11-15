@@ -1952,3 +1952,17 @@ margin: 0 auto; }
 	margin-right: 10px;
 	font-weight:bold;
 }
+
+#info_popup{
+	width: 300px;
+	height: 86px;
+	border: 1px solid #393939;
+	border-radius: 3px;
+	position: fixed;
+	margin-left: 30%;
+	display: none;
+	text-align: center;
+	padding-top: 40px;
+	font-weight: bold;
+	background: #F2F2F2;
+}

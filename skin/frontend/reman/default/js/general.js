@@ -64,7 +64,7 @@ function selectModel(make_id){
 			// CHECK For DATA if NULL return
 			if(response.length == 0)
 	  		{
-				alert('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR!!!');
+				showInfoPopup('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR!!!');	
 				return;
 			}
 			
@@ -100,7 +100,7 @@ function selectProductID(vehicle_id){
 			// CHECK For DATA if NULL return
 			if(response.length == 0)
 	  		{
-				alert('VEHICLE ID DOESNT EXIST IN APPLIC DATA !!!');
+				showInfoPopup('VEHICLE ID DOESNT EXIST IN APPLIC DATA !!!');
 				return;
 			}
 			
@@ -113,7 +113,8 @@ function selectProductID(vehicle_id){
 				{
 					$j('#select_part_cont > div').remove();
 					
-					alert('NO DATA FOR THIS APPLIC ID !!!');
+					showInfoPopup('NO DATA FOR THIS APPLIC ID !!!');
+					
 					
 					return;
 				}
@@ -199,10 +200,12 @@ function onPartSelect(applic_id,subgroup){
 			var response = JSON.parse(data);
 			if(response[0].part_number == "N/A")
 			{
-				alert("NO PART NUMBER CALL 55500000 FOR MORE INFO !!!");
+				showInfoPopup("NO PART NUMBER CALL 55500000 FOR MORE INFO !!!");	
+				
 			}else
 			{
-				alert("PART NUMBER: " +response[0].part_number);
+				showInfoPopup("PART NUMBER: " +response[0].part_number);
+				
 			}
 			
 	  });
@@ -243,12 +246,19 @@ function onPartSelect(applic_id,subgroup){
 }
 
 function showAllGroups (){
-	
 	$j('#showall').bind('click', function(event) {
 		$j('.select_part').css('display','block');
 		$j('#showall').css('display','none');
-
 	});
+}
+
+function showInfoPopup(message){
+	
+	$j('#info_popup').html(message).css('display','block');
+	
+	setTimeout(function(){
+		$j('#info_popup').fadeOut(1000);
+	},2000);
 	
 }
 
