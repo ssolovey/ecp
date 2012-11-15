@@ -1,7 +1,3 @@
-/** 
- *	Resolve conflict with default prototype library
- *  use #j to define jQuery namespace
-*/
 var $j = jQuery.noConflict();
 
 
@@ -100,6 +96,7 @@ function selectProductID(vehicle_id){
 		    //parse response to JSON Object		  
 			var response = JSON.parse(data);
 			
+			
 			// CHECK For DATA if NULL return
 			if(response.length == 0)
 	  		{
@@ -121,23 +118,25 @@ function selectProductID(vehicle_id){
 					return;
 				}
 				
-				if($j.isEmptyObject(obj) || current_group != response[i].group ){
-					obj[response[i].group] = {
+				if($j.isEmptyObject(obj) || current_group != response[i].groupp ){
+					
+					obj[response[i].groupp] = {
 						'heading': response[i].menu_heading,
 						'applic' : [
 										{
 											name:response[i].applic , 
-											id:response[i].applic_id
+											id:response[i].applic_id,
+											subgroup:response[i].subgroup,
 										}
 									],
 					}
 				}else
 				{
 					
-					obj[current_group].applic.push({name:response[i].applic ,id:response[i].applic_id});
+					obj[current_group].applic.push({name:response[i].applic ,id:response[i].applic_id , subgroup:response[i].subgroup});
 				}
 				
-				var current_group = response[i].group; 
+				var current_group = response[i].groupp; 
 			
 			}
 			
@@ -155,32 +154,41 @@ function selectPartBuildHTML(obj){
 		
 		// buffer string 
 		var buffer = '';
+		// heading
+		var header = '';
 		
 		for(var i = 0; i<=obj[key].applic.length-1; i++){
-			if(i==0){
-				buffer += '<option selected="selected">...</option>';
+			
+			buffer += '<li type="'+obj[key].applic[i].subgroup+'" value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</li>';
+			
+			if(obj[key].heading != null){
+				header = obj[key].heading; 
 			}
-			buffer += '<option  value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</option>'
-		}
-		
-		var template = "<div class='select_part'>"+
-						"<span>"+obj[key].heading+"</span>"+
-						"<select class='select_part_box'>"+buffer+"</select>"+
+			
+			var template = "<div id='"+key+"' class='select_part'>"+
+						"<span>"+header+" (Group: "+key+")</span>"+
+						"<ul class='select_part_box'>"+buffer+"</ul>"+
 				  "</div>";
+			
+		}
 		
 		$j('#select_part_cont').append(template);
 		
-		$j('.select_part_box').bind('change', function() {
-			 onPartSelect(this.value);
-		});
-		
 	}
+	$j('.select_part_box li').bind('click', function(event) {
+			 if($(event.target).value == this.value)
+			 {
+			 	onPartSelect(this.value,this.type);
+			 }
+		});
 	
 }
 
-function onPartSelect(applic_id){
-	if(applic_id == '...') return;
-	$j.post("index/ajax",
+function onPartSelect(applic_id,subgroup){
+	
+	if(subgroup == 0)
+	{
+		$j.post("index/ajax",
 		  {
 			step: 4,  
 			id:applic_id,
@@ -199,6 +207,48 @@ function onPartSelect(applic_id){
 			
 	  });
 
+	
+	}
+	else
+	{
+		
+		for (var i=0; i<= $j('.select_part').length-1; i++)
+		{
+				if($j('.select_part')[i].id != subgroup)
+				{
+					$j('.select_part')[i].style.display = 'none';
+					
+				}
+				else
+				{
+					if($j('.select_part')[i].style.display == 'none')
+					{
+						$j('.select_part')[i].style.display = 'block';
+					}
+				}
+		}
+		
+		if(!$j('#showall').length)
+		{
+		$j('#select_part_cont').prepend('<div id="showall" >Show All groups</div>');
+					
+		showAllGroups();
+		}else
+		{
+			$j('#showall').css('display','block');
+		}
+	}
+	
+	
 }
 
+function showAllGroups (){
+	
+	$j('#showall').bind('click', function(event) {
+		$j('.select_part').css('display','block');
+		$j('#showall').css('display','none');
+
+	});
+	
+}
 

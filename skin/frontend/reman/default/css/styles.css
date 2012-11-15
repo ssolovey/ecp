@@ -1914,16 +1914,36 @@ margin: 0 auto; }
 	float:left;
 }
 
+.select_part_box{
+	margin-top:5px;
+}
+
+.select_part_box li {
+	cursor:pointer;
+	color:blue;
+	margin-left:10px;
+}
+
+
 #select_part_cont .select_part {
 	margin-top: 15px;
 	position: relative;
 	float: left;
 	margin-right: 25px;
+	width: 400px;
+	border: 1px solid;
+	border-radius: 4px;
+	padding: 5px;
 }
 
 #select_part_cont .select_part span {
 	margin-right: 10px;
 	font-weight: bold;
+}
+
+#showall{
+	cursor:pointer;
+	font-weight:bold;
 }
 
 .steps_lable {

@@ -13,9 +13,9 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 	*/
 	public function loadProductId($vehicle_id){
 				
-		$where = $this->_getReadAdapter()->quoteInto("vehicle_id=? AND ", $vehicle_id).$this->_getReadAdapter()->quoteInto("subgroup = 0");
+		$where = $this->_getReadAdapter()->quoteInto("vehicle_id=? AND ", (int)$vehicle_id).$this->_getReadAdapter()->quoteInto("groupp > 0");
 		
-		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('group','menu_heading','applic','applic_id'))->where($where);
+		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('groupp','menu_heading','applic','applic_id','subgroup'))->where($where);
 		
 		$result = $this->_getReadAdapter()->fetchAll($select); // run sql query
 
