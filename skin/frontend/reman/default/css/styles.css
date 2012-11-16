@@ -1931,10 +1931,11 @@ background-position: 0px 20px;
 
 #select_part_cont {
 	position: relative;
-	width: 400px;
+	width: 415px;
 	margin-top: 25px;
 	float:left;
 	font-size: 12px;
+	margin-right:20px;
 }
 
 .select_part_box{
@@ -1950,7 +1951,6 @@ background-position: 0px 20px;
 
 
 #select_part_cont .select_part {
-	margin-top: 15px;
 	position: relative;
 	float: left;
 	margin-right: 25px;
@@ -1958,6 +1958,7 @@ background-position: 0px 20px;
 	border: 1px solid;
 	border-radius: 4px;
 	padding: 5px;
+	display:none;
 }
 
 #select_part_cont .select_part span {
@@ -1965,10 +1966,6 @@ background-position: 0px 20px;
 	font-weight: bold;
 }
 
-#showall{
-	cursor:pointer;
-	font-weight:bold;
-}
 
 .steps_lable {
 	position: relative;
@@ -1977,16 +1974,37 @@ background-position: 0px 20px;
 	font-weight:bold;
 }
 
-#info_popup{
+#info{
 	width: 300px;
-	height: 86px;
+	min-height: 90px;
+	margin-top:25px;
 	border: 1px solid #393939;
 	border-radius: 3px;
-	position: fixed;
-	margin-left: 30%;
-	display: none;
-	text-align: center;
-	padding-top: 40px;
+	position:relative;
+	float:left;
+	display:none;
+}
+
+#info .info_list {
+	position:relative;
+	float:left;
+	margin-top:5px;
+	margin-left:5px;
+}
+
+#info .info_list .label {
+	font-weight:bold;
+}
+
+#info .info_list li.search_steps {
+	margin-left:10px;
+	font-size:12px;
+}
+
+#info .info_list li.part_info{
+	margin-top: 10px;
+	margin-left: 92px;
+	margin-bottom:10px;
+	font-size: 14px;
 	font-weight: bold;
-	background: #F2F2F2;
 }

@@ -3,8 +3,9 @@
         First Step Quick quote (MAKE DATA)
     -->
     <span class="steps_lable">Make:</span>
-    <select class="select_box" id="qq_select_make" onchange="selectMake()">
-         <option selected="selected">...</option>
+   <!-- <select class="select_box" id="qq_select_make" onchange="Reman.QuickQuoteModule.selectMake(this.selectedOptions[0].getAttribute('startyear'),this.selectedOptions[0].getAttribute('endyear'),this.value)">-->
+         <select class="select_box" id="qq_select_make" onchange="selectMake()">
+		 <option selected="selected">...</option>
          <?php  foreach($this->getMake() as $value): ?>
                 <option value="<?php echo $value['make_id']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
                     <?php echo $value['make'] ?>
@@ -17,7 +18,7 @@
     -->
     <span class="steps_lable">Year:</span>
     <select class="select_box" id="qq_select_year"  onchange="selectModel(this.value)">
-         <option selected="selected">...</option>
+         <option value="none" selected="selected">...</option>
     </select> 
     
     <!-- 
@@ -36,4 +37,9 @@
 <div id="select_part_cont">
 </div>
 
-<div id="info_popup"></div>
+<div id="info">
+	<ul class="info_list">
+		<li class='label'>INFO:</li>
+	</ul>
+
+</div>
