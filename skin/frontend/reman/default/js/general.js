@@ -8,10 +8,10 @@ var Reman = {
 
 Reman.QuickQuoteModule = {
 	
-	selectMake: function(startyear,endyear,makeid){
+	selectMake: function(makeid){
 		
-		var startyear = Number(startyear);
-		var endyear = Number(endyear);
+		var startyear = Number($j('#qq_select_make > option:selected').attr('startyear'));
+		var endyear = Number($j('#qq_select_make > option:selected').attr('endyear'));
 		var range = endyear - startyear; //range between start and end year
 		var year_selectBox = $j('#qq_select_year'); // select year selectbox obj
 		
@@ -42,9 +42,11 @@ Reman.QuickQuoteModule = {
 		
 	},
 	
-	selectYear: function(makeid,year){
+	selectYear: function(makeid){
 			
 			if(makeid == 'none') return; // return if make id none
+			
+			var year = $j('#qq_select_year > option:selected').attr('label');
 			
 			var model_selectBox = $j('#qq_select_model'); // select model selectbox obj
 			
@@ -242,14 +244,13 @@ Reman.QuickQuoteModule = {
 		// Group Block links event
 		$j('.select_part_box li').bind('click', function(event) {
 			 if($(event.target).value == this.value){
-			 	Reman.QuickQuoteModule.selectPart(this.value,this.type,this.parentElement.parentElement.id, this.innerHTML);
+			 	Reman.QuickQuoteModule.selectPart(this.value,$j(this).attr('type'),this.parentElement.parentElement.id, this.innerHTML);
 			 }
 		});
 	
 	},
 	
 	selectPart: function(applic_id,subgroup,id,name){
-			
 			if(subgroup == 0) {
 				
 					$j.ajax({
