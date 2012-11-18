@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 THIS IS A METAPACKAGE FOR CORE MAGENTO INSTALLATION
 
 IT DEPENDS ON FOLLOWING PACKAGES:
@@ -7,14 +6,4 @@ IT DEPENDS ON FOLLOWING PACKAGES:
 * Mage_Core_Adminhtml
 * Interface_Adminhtml_Default
 * Interface_Frontend_Default
-=======
-THIS IS A METAPACKAGE FOR CORE MAGENTO INSTALLATION
-
-IT DEPENDS ON FOLLOWING PACKAGES:
-
-* Mage_Core_Modules
-* Mage_Core_Adminhtml
-* Interface_Adminhtml_Default
-* Interface_Frontend_Default
->>>>>>> develop
 * Interface_Install_Default

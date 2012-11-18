@@ -304,8 +304,6 @@ class Mage_CatalogSearch_Block_Advanced_Form extends Mage_Core_Block_Template
             ->setClass('input-text')
             ->getHtml();
     }
-<<<<<<< HEAD
-=======
 	
 	/**
 	 * Add Custom category search to advanced search
@@ -317,5 +315,4 @@ class Mage_CatalogSearch_Block_Advanced_Form extends Mage_Core_Block_Template
         return $helper->getStoreCategories();
     }
 	
->>>>>>> develop
 }
