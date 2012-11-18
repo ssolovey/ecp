@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Remah Quick Quote Module
+ * 
+ * This module used with Magento E-commerse software
+ * to view quick quote module
+ *
+ * @category    Remah
+ * @package     Reman_Quote
+ * @copyright   Copyright (c) 2012 Igor zhavoronkin (zhavoronkin.i@gmail.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+
+<config>
+	<modules>
+		<Reman_Quote>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Reman_Quote>
+	</modules>
+</config>

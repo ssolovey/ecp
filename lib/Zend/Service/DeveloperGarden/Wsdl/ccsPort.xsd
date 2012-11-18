@@ -61,6 +61,7 @@
 			<xsd:element name="duration" type="xsd:int" />
 		</xsd:sequence>
 	</xsd:complexType>
+<<<<<<< HEAD
 
 	<xsd:complexType name="ConferenceAccStruct">
 		<xsd:sequence>
@@ -68,6 +69,15 @@
 			<xsd:element name="account" type="xsd:string" />
 		</xsd:sequence>
 	</xsd:complexType>
+=======
+
+	<xsd:complexType name="ConferenceAccStruct">
+		<xsd:sequence>
+			<xsd:element name="billingtype" type="xsd:string" />
+			<xsd:element name="account" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+>>>>>>> develop
 
 
 	<xsd:complexType name="ScheduleStruct">
@@ -88,7 +98,11 @@
 		<xsd:complexContent mixed="false">
 			<xsd:extension base="tns:CCSRequestType">
 			<xsd:sequence>
+<<<<<<< HEAD
 				<xsd:element name="account" type="xsd:string"  nillable="true" minOccurs="0" maxOccurs="1" />
+=======
+				<xsd:element name="account" type="xsd:string"  nillable="true" minOccurs="0" maxOccurs="1" />
+>>>>>>> develop
 				<xsd:element name="ownerId" type="xsd:string"/>
 				<xsd:element name="detail" type="tns:ConferenceDetailStruct"/>
 				<xsd:element name="schedule" type="tns:ScheduleStruct" minOccurs="0" maxOccurs="1" nillable="true" />
@@ -136,7 +150,11 @@
 			<xsd:extension base="tns:CCSResponseType">
 			<xsd:sequence>
 				<xsd:element name="detail" type="tns:ConferenceDetailStruct" minOccurs="0" maxOccurs="1" nillable="true"/>
+<<<<<<< HEAD
 				<xsd:element name="acc" type="tns:ConferenceAccStruct" minOccurs="0" maxOccurs="1" nillable="true"/>
+=======
+				<xsd:element name="acc" type="tns:ConferenceAccStruct" minOccurs="0" maxOccurs="1" nillable="true"/>
+>>>>>>> develop
 				<xsd:element name="startTime" type="xsd:long" minOccurs="0" maxOccurs="1" nillable="true"/>
 				<xsd:element name="participants" type="tns:ParticipantStruct" minOccurs="0" maxOccurs="unbounded" nillable="true" />
 				<xsd:element name="schedule" type="tns:ScheduleStruct" minOccurs="0" maxOccurs="1" nillable="true"/>
@@ -183,7 +201,11 @@
 			<xsd:extension base="tns:CCSRequestType">
 			<xsd:sequence>
 				<xsd:element name="what" type="xsd:int" />
+<<<<<<< HEAD
 				<xsd:element name="ownerId" type="xsd:string"/>
+=======
+				<xsd:element name="ownerId" type="xsd:string"/>
+>>>>>>> develop
 			</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -204,7 +226,11 @@
 		<xsd:complexContent mixed="false">
 			<xsd:extension base="tns:CCSRequestType">
 			<xsd:sequence>
+<<<<<<< HEAD
 				<xsd:element name="account" type="xsd:string"  nillable="true" minOccurs="0" maxOccurs="1" />
+=======
+				<xsd:element name="account" type="xsd:string"  nillable="true" minOccurs="0" maxOccurs="1" />
+>>>>>>> develop
 				<xsd:element name="conferenceId" type="xsd:string"/>
 				<xsd:element name="initiatorId" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
 				<xsd:element name="detail" type="tns:ConferenceDetailStruct" minOccurs="0" maxOccurs="1" nillable="true"/>
@@ -367,7 +393,11 @@
 		<xsd:complexContent mixed="false">
 			<xsd:extension base="tns:CCSRequestType">
 			<xsd:sequence>
+<<<<<<< HEAD
 				<xsd:element name="ownerId" type="xsd:string"/>
+=======
+				<xsd:element name="ownerId" type="xsd:string"/>
+>>>>>>> develop
 			</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
