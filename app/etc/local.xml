@@ -40,7 +40,6 @@
             </db>
             <default_setup>
                 <connection>
-                    <!--<host><![CDATA[198.57.137.46]]></host>-->
                     <host><![CDATA[localhost]]></host>
                     <username><![CDATA[dev]]></username>
                     <password><![CDATA[DANger0]]></password>
