@@ -25,7 +25,7 @@ $installer->run("
 	CREATE TABLE {$this->getTable('sync/applic')} (
 	`applic_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Applic ID',
 	`vehicle_id` int(10) unsigned NOT NULL COMMENT 'Vehicle ID',
-	`group` int(2) unsigned NOT NULL COMMENT 'Group',
+	`group_number` int(2) unsigned NOT NULL COMMENT 'Group',
 	`key` int(2) unsigned NOT NULL COMMENT 'Key',
 	`subgroup` int(2) unsigned NOT NULL COMMENT 'Subgroup',
 	`menu_heading` varchar(30) DEFAULT NULL COMMENT 'Menu Heading',

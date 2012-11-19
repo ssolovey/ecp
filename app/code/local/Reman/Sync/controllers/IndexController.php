@@ -113,9 +113,6 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		// Set delimiter to "\"
 		$csv->setDelimiter('|');
 		
-		// Set delimiter to "\"
-		$csv->setDelimiter('|');
-		
 		// Load data from CSV file
 		$data	=	$csv->getData($file);
 		
@@ -126,7 +123,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 			$model->setData(
 				array(
 					'vehicle_id'		=>		$item[0],
-					'group'				=>		$item[1],
+					'group_number'		=>		$item[1],
 					'subgroup'			=>		$item[4],
 					'menu_heading'		=>		$item[5],
 					'applic'			=>		$item[3],
