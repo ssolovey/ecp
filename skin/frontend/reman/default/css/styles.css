@@ -2015,3 +2015,70 @@ background-position: 0px 20px;
 	font-weight: bold;
 	margin-top:13px;
 }
+/* new design*/
+#breadcrumb_info{
+	position: relative;
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+	font-size: 12px;
+	color: #233E89;
+}
+
+#breadcrumb_info span {
+	position:relative;
+	float:left;
+	margin-right:5px;
+	font-weight:bold;
+}
+
+#breadcrumb_info .breadcrumb{
+	cursor:pointer;
+}
+
+
+#breadcrumb_info .breadcrumb:hover {
+	text-decoration:underline;
+}
+
+#table_container{
+	min-width: 200px;
+	min-height: 200px;
+	position: relative;
+	float: left;
+	padding: 10px;
+	border: 1px solid #393939;
+	border-radius: 5px;
+}
+
+#make_tbl td {
+	width:15%;
+	font-size:12px;
+	cursor:pointer;
+	padding-bottom:4px;
+}
+
+#year_tbl td , #model_tbl td{
+	width:40%;
+	font-size:12px;
+	cursor:pointer;
+	padding-bottom:4px;
+}
+
+#make_tbl .lable , #year_tbl .lable , #model_tbl .lable{
+	font-size:14px;
+	font-weight:bold;
+	padding-bottom:10px;
+}
+
+#make_tbl td:hover, #year_tbl td:hover,  #model_tbl td:hover {
+	text-decoration:underline;
+}
+
+.reman_show{
+	display:block !important;
+}
+
+.reman_hide{
+	display:none !important;
+}
