@@ -170,9 +170,9 @@ Reman.QuickQuoteModule = {
 									return;
 								}
 							
-							if($j.isEmptyObject(obj) || current_group != response[i].groupp ){
+							if($j.isEmptyObject(obj) || current_group != response[i].group_number ){
 							
-								obj[response[i].groupp] = {
+								obj[response[i].group_number] = {
 									'heading': response[i].menu_heading,
 									'applic' : [
 													{
@@ -193,7 +193,7 @@ Reman.QuickQuoteModule = {
 															);
 							}
 							
-								var current_group = response[i].groupp; 
+								var current_group = response[i].group_number; 
 						
 						}
 						
