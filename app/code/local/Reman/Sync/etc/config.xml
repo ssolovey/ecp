@@ -68,4 +68,32 @@
 			</sync_read>
 		</resources>
 	</global>
+	<crontab>
+		<jobs>
+			<sync_make>
+				<schedule>
+					<cron_expr>0 3 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/make::syncData</model>
+				</run>
+			</sync_make>
+			<sync_model>
+				<schedule>
+					<cron_expr>0 3 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/model::syncData</model>
+				</run>
+			</sync_model>
+			<sync_applic>
+				<schedule>
+					<cron_expr>0 3 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/applic::syncData</model>
+				</run>
+			</sync_applic>
+		</jobs>
+	</crontab>
 </config>

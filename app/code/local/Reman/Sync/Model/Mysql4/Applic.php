@@ -7,6 +7,9 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		$this->_isPkAutoIncrement = false;
 	}
 	
+	public function trancateTable() {
+		$this->_getWriteAdapter()->query("TRUNCATE TABLE `reman_applic`");
+	}
 	
 	/** 
 	 * SQL query for select product ID from reman_applic table

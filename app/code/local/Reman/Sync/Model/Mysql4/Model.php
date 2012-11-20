@@ -7,6 +7,9 @@ class Reman_Sync_Model_Mysql4_Model extends Mage_Core_Model_Mysql4_Abstract
 		$this->_isPkAutoIncrement = false;
 	}
 	
+	public function trancateTable() {
+		$this->_getWriteAdapter()->query("TRUNCATE TABLE `reman_model`");
+	}
 	
 	/** 
 	 * SQL query for select year production from reman_model table

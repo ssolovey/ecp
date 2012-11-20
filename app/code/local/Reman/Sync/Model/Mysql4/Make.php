@@ -7,6 +7,10 @@ class Reman_Sync_Model_Mysql4_Make extends Mage_Core_Model_Mysql4_Abstract
 		$this->_isPkAutoIncrement = false;
 	}
 	
+	public function trancateTable() {
+		$this->_getWriteAdapter()->query("TRUNCATE TABLE `reman_make`");
+	}
+	
 	/** 
 	 * SQL query for select makers names from reman_make table
 	*/
