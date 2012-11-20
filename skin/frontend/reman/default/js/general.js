@@ -197,7 +197,9 @@ Reman_QuickQuote.prototype = {
 							
 						// Error message
 						$j('#quote_error .text').append('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR !!!!');
-						$j('#quote_error').removeClass().addClass('reman_visibility_show');	
+						$j('#quote_error').removeClass().addClass('reman_visibility_show');
+						
+						$j('#preloader_cont').fadeOut(500);	
 						return;
 					}
 				
@@ -254,6 +256,8 @@ Reman_QuickQuote.prototype = {
 							// Error message
 							$j('#quote_error .text').append('VEHICLE ID DOESNT EXIST IN APPLIC DATA !!!');
 							$j('#quote_error').removeClass().addClass('reman_visibility_show');
+							
+							$j('#preloader_cont').fadeOut(500);
 							return;
 						}
 						
@@ -268,7 +272,7 @@ Reman_QuickQuote.prototype = {
 									// Error message
 									$j('#quote_error .text').append('NO DATA FOR THIS APPLIC ID!!!');
 									$j('#quote_error').removeClass().addClass('reman_visibility_show');	
-									
+									$j('#preloader_cont').fadeOut(500);
 									return;
 								}
 							
