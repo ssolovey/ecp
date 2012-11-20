@@ -1923,23 +1923,18 @@ background-position: 0px 20px;
 	width: 100%;
 }
 
-.select_box {
-	position:relative;
-	float:left;
-	margin-right:25px;
-}
 
-#select_part_cont {
-	position: relative;
-	width: 415px;
-	margin-top: 25px;
-	float:left;
-	font-size: 12px;
-	margin-right:20px;
-}
+
 
 .select_part_box{
-	margin-top:5px;
+	position:relative;
+	width:110px;
+	float:left;
+	margin-bottom:10px;
+}
+
+.select_part_box.block_3{
+	clear:both;
 }
 
 .select_part_box li {
@@ -1947,23 +1942,27 @@ background-position: 0px 20px;
 	color:blue;
 	margin-left:10px;
 	text-decoration: underline;
+	margin-top:5px;
 }
 
 
-#select_part_cont .select_part {
+#parts_tbl .select_part {
 	position: relative;
 	float: left;
 	margin-right: 25px;
 	width: 400px;
-	border: 1px solid;
-	border-radius: 4px;
 	padding: 5px;
+	overflow-x:hidden;
+	height:302px;
 	display:none;
 }
 
-#select_part_cont .select_part span {
+#parts_tbl .select_part span {
 	margin-right: 10px;
 	font-weight: bold;
+	position: relative;
+	float: left;
+	width: 100%;
 }
 
 
@@ -2042,38 +2041,56 @@ background-position: 0px 20px;
 }
 
 #table_container{
-	min-width: 200px;
-	min-height: 200px;
+	width: 500px;
+	height: 350px;
 	position: relative;
 	float: left;
 	padding: 10px;
-	border: 1px solid #393939;
-	border-radius: 5px;
+	border: 1px solid #666;
 }
 
-#make_tbl td {
-	width:15%;
-	font-size:12px;
+#table_container .list{
+	position:relative;
+	float:left;
+	margin-left:12px;
+}
+
+#table_container .list.list_first{
+	margin-left:12px !important;
+}
+
+
+#table_container #year_tbl ul, #table_container #model_tbl ul{
+	position:relative;
+	float:left;
+	margin-left:15px;
+}
+
+#table_container #year_tbl ul li, #table_container #model_tbl ul li{	
+	margin-bottom:10px;
+}
+
+#table_container .list li {
 	cursor:pointer;
-	padding-bottom:4px;
+	font-size:14px;
+	margin-bottom:5px;
 }
 
-#year_tbl td , #model_tbl td{
-	width:40%;
-	font-size:12px;
-	cursor:pointer;
-	padding-bottom:4px;
+#table_container .list li:hover {
+	text-decoration:underline;
 }
 
-#make_tbl .lable , #year_tbl .lable , #model_tbl .lable{
+
+#make_tbl .label , #year_tbl .label , #model_tbl .label,  #parts_tbl .label{
 	font-size:14px;
 	font-weight:bold;
 	padding-bottom:10px;
+	position:relative;
+	float:left;
+	width:100%;
 }
 
-#make_tbl td:hover, #year_tbl td:hover,  #model_tbl td:hover {
-	text-decoration:underline;
-}
+
 
 .reman_show{
 	display:block !important;
@@ -2081,4 +2098,88 @@ background-position: 0px 20px;
 
 .reman_hide{
 	display:none !important;
+}
+
+
+
+.reman_visibility_show{
+	visibility: visible !important;
+}
+
+.reman_visibility_hide{
+	visibility: hidden !important;
+}
+
+
+#quote_error{
+	position: relative;
+	width: 100%;
+	float: left;
+	height: 20px;
+	margin-top: 10px;
+	text-align:center;
+	color:#E06060;
+	font-weight:bold;
+}
+
+#search_info{
+	position: relative;
+	float: left;
+	width: 290px;
+	height: 370px;
+	border: 1px solid #666;
+	margin-left: 5px;
+
+}
+
+#search_info .label {
+	position: relative;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-weight: bold;
+	width:100%;
+}
+
+#search_info ul {
+	position:relative;
+	float:left;
+	margin-left:25px;
+	margin-top:20px;
+}
+
+#search_info ul li{
+	margin-bottom:5px;
+}
+
+#search_info ul li span{
+	font-weight:bold;
+	font-size:14px;
+}
+
+.disable_by_opacity{
+	opacity:0.3;	
+}
+
+.enable_by_opacity{
+	opacity:1;	
+}
+
+#preloader_cont{
+	background-color:#F2F2F2;
+	width:500px;
+	height:350px;
+	z-index:1;
+	position:absolute;
+	display:none;
+}
+
+#reman_preloader{
+	background-image:url(../images/preloader.gif);
+	background-repeat:no-repeat;
+	position:absolute;
+	height:100px;
+	width:100px;
+	margin-left: 40%;
+	margin-top: 30%;
 }

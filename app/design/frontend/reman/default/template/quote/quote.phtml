@@ -1,76 +1,60 @@
-<div id="steps">
+<div id="steps" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
 
 <!-- First Step Quick quote (MAKE DATA)-->
 <div id="breadcrumb_info">
 	<span onclick="Reman_QuickQuote.prototype.turnOnMakeBreadcrumb(); return false;"><span>Quick navigation:</span><span class="breadcrumb">Make</span></span>
     <span class="year reman_hide" onclick="Reman_QuickQuote.prototype.turnOnYearBreadcrumb(); return false;"><span> > </span><span class="breadcrumb">Year</span></span>
-	<span class="model reman_hide"><span> > </span><span class="breadcrumb">Model</span></span>
+	<span class="model reman_hide" onclick="Reman_QuickQuote.prototype.turnOnModelBreadcrumb(); return false"><span> > </span><span class="breadcrumb">Model</span></span>
+	<span class="group reman_hide" onclick="Reman_QuickQuote.prototype.clearSubGroups();return false;"><span> > </span><span class="breadcrumb">Groups</span></span>
 </div>
 
-<div id="table_container">    
-    <table id="make_tbl" width="500px" border="0" cellspacing="0" cellpadding="0" >
-        <tr>
-            <td class="lable">Select Make:</td>
-        </tr>
-        <tr>
-            <?php  foreach($this->getMake() as $index => $value): ?>
-                <td  value="<?php echo $value['make_id']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
-                    <?php echo $value['make'] ?>
-                </td>
-        <?php $index +=1 ?>
-        <?php if($index%5 == 0 && $index != 0): ?>
-        </tr>
-        <tr>
-        <?php endif; ?>	
-        <?php endforeach; ?>
-    </table>
-        
-    <table id="year_tbl" class="reman_hide" width="100%" border="0" cellspacing="0" cellpadding="0" >
-        <tr>
-            <td class="lable">Select Year:</td>
-        </tr>
-    
-    </table>   
-    
-    <table id="model_tbl" class="reman_hide" width="100%" border="0" cellspacing="0" cellpadding="0" >
-        <tr>
-            <td class="lable">Select Model:</td>
-        </tr>
-    
-    </table> 
 
-
-</div> 
-    
-    
-    
-    <!-- 
-        Second Step Quick quote (Select Year)
-    -->
-    <!--<span class="steps_lable">Year:</span>
-    <select class="select_box" id="qq_select_year"  onchange="Reman.QuickQuoteModule.selectYear(this.value)">
-         <option value="none" selected="selected">...</option>
-    </select> -->
-    
-    <!-- 
-        Third Step Quick quote (Select Model)
-    -->
-    <!--<span class="steps_lable">Model:</span>
-    <select class="select_box" onchange="Reman.QuickQuoteModule.selectModel(this.value)" id="qq_select_model">
-         <option selected="selected">...</option>
-    </select> -->
-
-</div>
-<!-- 
-	Forth Step Quick quote (Select Part Number)
--->
-
-<div id="select_part_cont">
-</div>
-
-<div id="info">
-	<ul class="info_list">
-		<li class='label'>INFO:</li>
-	</ul>
-
+	<div id="table_container">
+		<div id="preloader_cont">
+			<div id="reman_preloader"></div>
+		</div>
+		<div id="make_tbl">
+			 <span class="label">Select Make:</span>	
+			 <ul class="list">
+			 <?php  foreach($this->getMake() as $index => $value): ?>
+				<li class="make_select"  value="<?php echo $value['make_id']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
+					<?php echo $value['make'] ?>
+				</li>
+			<?php $index +=1 ?>
+			<?php if($index%15 == 0 && $index != 0): ?>
+			</ul>
+			<ul class="list">
+			<?php endif; ?>			
+			<?php endforeach; ?>
+		
+		</div>
+	
+		<div id="year_tbl" class="reman_hide">
+			<span class="label">Select Production Year for <span  class="selected_make"></span>:</span>
+		</div>   
+		
+		<div id="model_tbl" class="reman_hide">
+			<span class="label">Select Model for <span  class="selected_make_year"></span>:</span>
+		</div>
+		
+		<div id="parts_tbl" class="reman_hide">
+			<span class="label">Select Group for <span  class="selected_make_year"></span>:</span>
+		</div>
+		 
+	</div>
+	<div id="search_info" class="disable_by_opacity">
+		<span class="label">Custom Quote Details</span>
+		<ul>
+			<li id="part_number_id"><span>Part Number:</span></li>
+			<li><span>Family:</span></li>
+			<li style="margin-bottom:20px;"><span>MSRP:</span></li>
+			<li style="color:#00F;"><span>Your Price:</span></li>
+			<li><span>Core:</span></li>
+			<li><span>Shipping</span></li>
+		</ul>
+	</div>
+	<div id="quote_error" class="reman_visibility_hide">
+		<span>ERROR: <span class="text"></span></span>
+	</div>
+	
 </div>
