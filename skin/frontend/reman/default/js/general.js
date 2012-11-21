@@ -206,7 +206,7 @@ Reman_QuickQuote.prototype = {
 	selectYear: function(makeid,year){
 		var self = this;
 		$j.ajax({
-				url: "quote/index/ajax",
+				url: "index.php/quote/index/ajax",
 				type: 'POST',
 				data: {
 					step: 2,  
@@ -263,7 +263,7 @@ Reman_QuickQuote.prototype = {
 	selectModel: function(vehicle_id,name){
 		
 			$j.ajax({
-				url: "quote/index/ajax",
+				url: "index.php/quote/index/ajax",
 				type: 'POST',
 				data: {
 					step: 3,  
@@ -396,7 +396,7 @@ Reman_QuickQuote.prototype = {
 			if(subgroup == 0) {
 				
 					$j.ajax({
-						url: "quote/index/ajax",
+						url: "index.php/quote/index/ajax",
 						type: 'POST',
 						data: {
 							step: 4,  
