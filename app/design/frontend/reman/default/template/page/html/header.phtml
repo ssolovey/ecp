@@ -28,11 +28,12 @@
  */
 ?>
 <div class="header-container">
-	<div id="bizinfo"> ETE REMAN   1-800-934-9479 | <a href="http://etereman.com"><?php echo $this->__('Home') ?></a> | 
-		<a href="http://www.facebook.com/ETEREMAN" target="_blank"><img src="http://etereman.com/images/icon-fbook.gif" alt="Facebook" width="24" height="24" border="0" align="absmiddle"></a>
+	<div id="bizinfo"><div class="top_remanhomelink">ETE REMAN   1-800-934-9479 | <a href="http://etereman.com"><?php echo $this->__('Home') ?></a> |</div> 
+		<div class="social_links"><a href="http://www.facebook.com/ETEREMAN" target="_blank"><img src="http://etereman.com/images/icon-fbook.gif" alt="Facebook" width="24" height="24" border="0" align="absmiddle"></a>
 		<a href="http://www.linkedin.com/companies/ete-reman" target="_blank"><img src="http://etereman.com/images/icon-lnkdin.gif" alt="LinkedIn" width="24" height="24" border="0" align="absmiddle"></a>
 		<a href="http://twitter.com/REMANUNIVERSITY" target="_blank"><img src="http://etereman.com/images/icon-twitter.gif" alt="Twitter" width="24" height="24" align="absmiddle"></a>
-	</div>
+	</div>	
+    </div>
     <div class="header">
         <?php if ($this->getIsHomePage()):?>
         <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
@@ -52,7 +53,7 @@
                 <li><a href="http://etereman.com/warrantyinfo.php"><?php echo $this->__('Warranty Info') ?></a></li>
                 <li><a href="http://etereman.com/carcarecenters.php"><?php echo $this->__('Car Care Centers') ?></a></li>
                 <li><a href="http://etereman.com/contact.php"><?php echo $this->__('Contact') ?></a></li>
-                 <li class="online_quotes_lable"><a href="<?php echo $this->getUrl('quote')?>"><?php echo $this->__('Online Quotes') ?></a></li>
+                <li class="online_quotes_lable"><a href="<?php echo $this->getUrl('')?>"><?php echo $this->__('Online Quotes') ?></a></li>
                 <!-- <li class="online_quotes_lable">Online Quotes</li> -->
             </ul>
   

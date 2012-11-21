@@ -553,6 +553,18 @@ tr.summary-details-excluded { font-style:italic; }
 	text-decoration: underline;
 }
 
+#bizinfo .top_remanhomelink{
+	position: relative;
+	float: left;
+	margin-right: 2px;
+	margin-top: 7px;
+}
+
+#bizinfo .social_links{
+	position: relative;
+	float: left;
+}
+
 /* HEADER MENU*/
 #header_menu{
 	position:relative;
