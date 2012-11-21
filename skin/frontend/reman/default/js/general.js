@@ -21,45 +21,38 @@ Reman_QuickQuote.prototype = {
 	
 	currentSelectedYear: '',
 	
+	currentSelectedModel: '',
+	
 	eventsHandler: function(event){
 	
 		var elem = event.target;
 		
 		while (elem) {
 			
-			//reset error
-			$j('#quote_error .text').html('');
-			$j('#quote_error').removeClass().addClass('reman_visibility_hide');	
-			
-			//reset quote details
-			if($j('#search_info').hasClass('enable_by_opacity')){
-				$j('#search_info').removeClass().addClass('disable_by_opacity');
-				$j('#sku').remove();
-			}
-			
-			
 			if (elem.className == 'make_select') {
 				var year_range = $j(elem).attr('endyear') - $j(elem).attr('startyear');
 				this.currentSelectedMake = $j(elem).html();
 				this.selectMake($j(elem).attr('value'),Number(year_range),Number($j(elem).attr('startyear')));
-				
-				
+				this.resetSearchErrorResults();
 				return;
 			}
 			
 			if (elem.className == 'year_select') {
 				this.currentSelectedYear = $j(elem).html();
 				this.selectYear($j(elem).attr('value'), $j(elem).attr('year'));
+				this.resetSearchErrorResults();
 				return;
 			}
 			
 			if (elem.className == 'model_select') {
-				this.selectModel($j(elem).attr('value'));
+				this.selectModel($j(elem).attr('value'), elem.innerHTML);
+				this.resetSearchErrorResults();
 				return;
 			}
 			
 			if (elem.className == 'parts_select') {
 				this.selectPart($j(elem).attr('value'),$j(elem).attr('type'),elem.parentElement.parentElement.id, elem.innerHTML);
+				this.resetSearchErrorResults();
 				return;
 			}
 			
@@ -72,9 +65,29 @@ Reman_QuickQuote.prototype = {
 				}
 				//delete this link
 				$j(elem).parent().remove();
+				this.resetSearchErrorResults();
 				
 				return;
 			}
+			
+			if (elem.className == 'breadcrumb make_link'){
+				this.turnOnMakeBreadcrumb();
+				this.resetSearchErrorResults();
+				return;
+			}
+			
+			if (elem.className == 'breadcrumb year_link'){
+				this.turnOnYearBreadcrumb();
+				this.resetSearchErrorResults();
+				return;
+			}
+			
+			if (elem.className == 'breadcrumb model_link'){
+				this.turnOnModelBreadcrumb();
+				this.resetSearchErrorResults();
+				return;
+			}
+			
 			elem = elem.parentNode;
 		}
 	
@@ -91,7 +104,7 @@ Reman_QuickQuote.prototype = {
 		//append new info to year table
 		$j(year_tbl).append(buffer);
 		// show breadcrumb year link
-		$j('.year').removeClass('reman_hide').addClass('reman_show');
+		//$j('.year').removeClass('reman_hide').addClass('reman_show');
 		// hide make table
 		$j(make_tbl).removeClass().addClass('reman_hide');
 		// set selected Make name to top menu
@@ -100,21 +113,36 @@ Reman_QuickQuote.prototype = {
 		$j(year_tbl).removeClass().addClass('reman_show');
 		// year table active true
 		this.isYearActive = true;
+		
+		$j('#breadcrumb_info').append('<span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span>');
+	},
+	
+	
+	resetSearchErrorResults: function(){
+		//reset error
+		$j('#quote_error .text').html('');
+		$j('#quote_error').removeClass().addClass('reman_visibility_hide');	
+		
+		//reset quote details
+		if($j('#search_info').hasClass('enable_by_opacity')){
+			$j('#search_info').removeClass().addClass('disable_by_opacity');
+			$j('.sku').remove();
+		}
 	},
 	
 	clearYear: function(){
 		//clear year
 		$j(year_tbl).removeClass().addClass('reman_hide');
 		$j('#year_tbl .list').remove();
-		$j('.year').removeClass('reman_show').addClass('reman_hide');
+		$j('.year_link').parent().remove();
 		this.isYearActive = false;
 	},
 	
 	clearModel: function(){
 		//clear year
 		$j(model_tbl).removeClass().addClass('reman_hide');
-		$j('.model_select').remove();
-		$j('.model').removeClass('reman_show').addClass('reman_hide');
+		$j('.model_select').parent().remove();
+		$j('.model_link').parent().remove();
 		this.isModelActive = false;
 	},
 	
@@ -145,6 +173,7 @@ Reman_QuickQuote.prototype = {
 			this.clearYear();
 			this.clearModel();
 			this.clearGroup();
+			$j('.make_link').remove();
 			//show make table
 			$j(make_tbl).removeClass().addClass('reman_show');
 		}
@@ -155,6 +184,7 @@ Reman_QuickQuote.prototype = {
 		if(this.isModelActive){
 			this.clearModel();
 			this.clearGroup();
+			$j('.year_link').parent().remove();
 			//show make table
 			$j(year_tbl).removeClass().addClass('reman_show');
 		}
@@ -165,6 +195,7 @@ Reman_QuickQuote.prototype = {
 	turnOnModelBreadcrumb: function(){
 		if(this.isGroupActive){
 			this.clearGroup();
+			$j('.model_link').parent().remove();
 			//show make table
 			$j('#model_tbl').removeClass().addClass('reman_show');
 		}
@@ -198,7 +229,7 @@ Reman_QuickQuote.prototype = {
 						// Error message
 						$j('#quote_error .text').append('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR !!!!');
 						$j('#quote_error').removeClass().addClass('reman_visibility_show');
-						
+						Reman_QuickQuote.prototype.turnOnYearBreadcrumb();
 						$j('#preloader_cont').fadeOut(500);	
 						return;
 					}
@@ -221,18 +252,15 @@ Reman_QuickQuote.prototype = {
 		
 		$j(year_tbl).removeClass().addClass('reman_hide');
 		
-		// set selected Make name to top menu
-		$j('.selected_make_year').html(this.currentSelectedMake +' ('+this.currentSelectedYear+')');
-		
 		$j(model_tbl).removeClass().addClass('reman_show');
 		
-		$j('.model').removeClass('reman_hide').addClass('reman_show');
+		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb year_link">'+this.currentSelectedYear+'</span>');
 		
 		this.isModelActive = true;
 	
 	},
 	
-	selectModel: function(vehicle_id){
+	selectModel: function(vehicle_id,name){
 		
 			$j.ajax({
 				url: "index/ajax",
@@ -304,12 +332,12 @@ Reman_QuickQuote.prototype = {
 						}
 						
 						
-						Reman_QuickQuote.prototype.formSelectGroupBlock(obj);
+						Reman_QuickQuote.prototype.formSelectGroupBlock(obj,name);
 				}
 			});
 	},
 	
-	formSelectGroupBlock: function(obj){
+	formSelectGroupBlock: function(obj,name){
 
 		for (key in obj)
 		{
@@ -336,30 +364,32 @@ Reman_QuickQuote.prototype = {
 				}
 				
 			}
-			var template = "<div id='"+key+"' class='select_part'>"+
-									"<span>"+header+"</span>"+
-									buffer
-							  "</div>";
-			// append to container
-			$j('#parts_tbl').append(template);
-			
-			
-			$j(model_tbl).removeClass().addClass('reman_hide');
-	
+				var template = "<div id='"+key+"' class='select_part'>"+
+										"<span>"+header+"</span>"+
+										buffer
+								  "</div>";
+				// append to container
+				$j('#parts_tbl').append(template);
 				
-			//Show First Group
-			$j($j('.select_part').get(0)).css('display','block');
+				//hide model table
+				$j(model_tbl).removeClass().addClass('reman_hide');
+		
+					
+				//Show First Group
+				$j($j('.select_part').get(0)).css('display','block');
+		}
+		
 			
 			$j('#parts_tbl').removeClass().addClass('reman_show');
 			
-			// show group lable
-			$j('.group').removeClass('reman_hide').addClass('reman_show');
+			this.currentSelectedModel = name;
+			
+			$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+this.currentSelectedModel+'</span>');
 			
 			this.isGroupActive = true;
 			
 			$j('#preloader_cont').fadeOut(500);
 					
-		}
 	},
 	
 	selectPart: function(applic_id,subgroup,id,name){
@@ -386,7 +416,8 @@ Reman_QuickQuote.prototype = {
 									
 							}else{
 								$j('#search_info').removeClass().addClass('enable_by_opacity');
-								$j('#part_number_id').append('<span id="sku" style="color:blue"> '+response[0].part_number+'</span>');
+								$j('.sku').remove();
+								$j('#part_number_id').append('<span class="sku" style="color:blue"> '+response[0].part_number+'</span>');
 								
 							}
 						}

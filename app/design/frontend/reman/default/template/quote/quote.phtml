@@ -2,13 +2,11 @@
 
 <!-- First Step Quick quote (MAKE DATA)-->
 <div id="breadcrumb_info">
-	<span onclick="Reman_QuickQuote.prototype.turnOnMakeBreadcrumb(); return false;"><span>Quick navigation:</span><span class="breadcrumb">Make</span></span>
+	<!--<span onclick="Reman_QuickQuote.prototype.turnOnMakeBreadcrumb(); return false;"><span class="breadcrumb">Make</span></span>-->
     <span class="year reman_hide" onclick="Reman_QuickQuote.prototype.turnOnYearBreadcrumb(); return false;"><span> > </span><span class="breadcrumb">Year</span></span>
 	<span class="model reman_hide" onclick="Reman_QuickQuote.prototype.turnOnModelBreadcrumb(); return false"><span> > </span><span class="breadcrumb">Model</span></span>
 	<span class="group reman_hide" onclick="Reman_QuickQuote.prototype.clearSubGroups();return false;"><span> > </span><span class="breadcrumb">Groups</span></span>
 </div>
-
-
 	<div id="table_container">
 		<div id="preloader_cont">
 			<div id="reman_preloader"></div>
@@ -30,15 +28,15 @@
 		</div>
 	
 		<div id="year_tbl" class="reman_hide">
-			<span class="label">Select Production Year for <span  class="selected_make"></span>:</span>
+			<span class="label">Select Production Year:</span>
 		</div>   
 		
 		<div id="model_tbl" class="reman_hide">
-			<span class="label">Select Model for <span  class="selected_make_year"></span>:</span>
+			<span class="label">Select Model:</span>
 		</div>
 		
 		<div id="parts_tbl" class="reman_hide">
-			<span class="label">Select Group for <span  class="selected_make_year"></span>:</span>
+			<span class="label">Select Group:</span>
 		</div>
 		 
 	</div>
