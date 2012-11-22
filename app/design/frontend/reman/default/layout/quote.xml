@@ -7,7 +7,7 @@
 	<reference name="header_links">
 		<action method="addLink" translate="label title" module="quote">
 			<label>Online Quote</label>
-			<url helper="cms/getQuickQuoteUrl" />
+			<url helper="quote/getQuickQuoteUrl" />
 			<title>Online Quote</title>
 		</action>
 	</reference>
