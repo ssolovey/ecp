@@ -27,6 +27,8 @@ Reman_QuickQuote.prototype = {
 	
 		var elem = event.target;
 		
+		if(elem.tagName == 'A') return
+		
 		while (elem) {
 			
 			if (elem.className == 'make_select') {
@@ -128,6 +130,9 @@ Reman_QuickQuote.prototype = {
 			$j('#search_info').removeClass().addClass('disable_by_opacity');
 			$j('.sku').remove();
 		}
+		
+		//reset Product DATA Error
+		$j('.product_error').html('');
 	},
 	
 	clearYear: function(){
@@ -411,6 +416,12 @@ Reman_QuickQuote.prototype = {
 							
 							var response = JSON.parse(data.responseText);
 							
+							if(response.error){
+								$j('#search_info').removeClass().addClass('enable_by_opacity');
+								$j('.product_error').html(response.message);
+							
+								return;
+							}
 							
 							if(response.sku == "N/A"){
 								// Error message
@@ -425,9 +436,7 @@ Reman_QuickQuote.prototype = {
 								$j('#part_msrp_id').append('<span class="sku"> $'+Number(response.msrp).toFixed(1)+'</span>');
 								$j('#part_price_id').append('<span class="sku"> $'+Number(response.price).toFixed(1)+'</span>');
 								$j('#part_core_id').append('<span class="sku"> $'+Number(response.core).toFixed(1)+'</span>');
-								
-								$j('#product_details_btn a').attr('href',window.location.href.substring(window.location.href.lastIndexOf('q'),-1)+String(response.sku).toLowerCase()+'.html');
-								
+								$j('#product_details_btn a').attr('href',response.url);
 							}
 						}
 				});

@@ -2207,16 +2207,29 @@ background-position: 0px 20px;
 
 #product_details_btn{
 	width: 100px;
-	height: 31px;
-	border: 1px solid black;
+	height: 28px;
+	border: 1px solid #999;
 	position: relative;
 	float: left;
 	clear: both;
 	margin-top: 30px;
-	margin-left: 26px;
+	margin-left: 28px;
 	background:url(../images/btn_bg_h31.png) repeat-x;
 	text-align:center;
-	line-height:30px;
+	line-height:28px;
 	color:#000;
 	cursor:pointer;
+}
+#product_details_btn a {
+	text-decoration:none;
+	color:#999;
+}
+
+.product_error{
+	position: relative;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	margin-top: 20px;
+	color:#E06060;
 }

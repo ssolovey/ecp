@@ -1,13 +1,12 @@
-<div id="steps" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
+<div id="steps">
 
 <!-- First Step Quick quote (MAKE DATA)-->
-<div id="breadcrumb_info">
-	<!--<span onclick="Reman_QuickQuote.prototype.turnOnMakeBreadcrumb(); return false;"><span class="breadcrumb">Make</span></span>-->
+<div id="breadcrumb_info" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
     <span class="year reman_hide" onclick="Reman_QuickQuote.prototype.turnOnYearBreadcrumb(); return false;"><span> > </span><span class="breadcrumb">Year</span></span>
 	<span class="model reman_hide" onclick="Reman_QuickQuote.prototype.turnOnModelBreadcrumb(); return false"><span> > </span><span class="breadcrumb">Model</span></span>
 	<span class="group reman_hide" onclick="Reman_QuickQuote.prototype.clearSubGroups();return false;"><span> > </span><span class="breadcrumb">Groups</span></span>
 </div>
-	<div id="table_container">
+	<div id="table_container" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
 		<div id="preloader_cont">
 			<div id="reman_preloader"></div>
 		</div>
@@ -41,7 +40,7 @@
 		 
 	</div>
 	<div id="search_info" class="disable_by_opacity">
-		<span class="label">Custom Quote Details</span>
+		<span class="label">Custom Quote Details:</span>
 		<ul>
 			<li id="part_number_id"><span>Part Number:</span></li>
 			<li id="part_family_id"><span>Family:</span></li>
@@ -52,10 +51,10 @@
 		</ul>
 		
 		<div id="product_details_btn">
-			<a href="">
-			<span>Start Over</span>
-			</a>
+			<a href="#"><span>Start Over</span></a>
 		</div>
+        
+        <div class="product_error"></div>
 		
 	</div>
 	<div id="quote_error" class="reman_visibility_hide">
