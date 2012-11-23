@@ -78,11 +78,6 @@ Default layout, loads most of the pages
 						<url helper="quote/getQuickQuoteUrl" />
 						<title>Online Quote</title>
 					</action>
-					<action method="addLink" translate="label title" module="product">
-						<label>Products</label>
-						<url helper="product/getProductUrl" />
-						<title>Products</title>
-					</action>
 				</block>
                 
 				<block type="page/template_links" name="top.links" as="topLinks"/>

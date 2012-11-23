@@ -5,7 +5,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 	{
 		echo 'Reman sync module.</br>';
 		
-		$this->loadProductsData();
+		//$this->loadProductsData();
 	}
 	
 	/**
@@ -25,52 +25,34 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		// Load data from CSV file
 		$data	=	$csv->getData($file);
 		
-		foreach( $data as $item ) {			
-			$this->getProduct($item);			
+		foreach( $data as $item ) {
+			
+			$this->addProduct($item);			
+			//return false;
 		}
-	}
+	} 
 	
 	/**
-	 * Get product by SKU
+	 * Add or update product
 	 *
 	 * @param array $data
 	 */
-	private function getProduct($data) 
+	private function addProduct($data)
 	{
 		$product = Mage::getModel('catalog/product');
 		
-		$_Pdetails = $product->loadByAttribute( 'sku', $data[0] );
-		
-		if ( $_Pdetails ) {
-			$this->updateProductAttributes($_Pdetails, $data);
-		} else {
-			$this->addProduct($product, $data);			
-		}
-	}
-	
-	/**
-	 * Add new product
-	 *
-	 * @param Mage_Catalog_Model_Abstract $product
-	 * @param array $data
-	 */
-	private function addProduct($product, $data)
-	{
-		$product->setData( 
+		$product->setData(
 			array(
+				// general
 				'sku'					=>	$data[0],
 				'type_id'				=>	'simple',
 				'attribute_set_id'		=>	9,
-				'weight'				=>	1.0,
-				'status'				=>	1,
-				'visibility'			=>	4,
-				'category_ids'			=>	array(3),
 				'name'					=>	$data[0],
 				'description'			=>	'Description',
 				'short_description'		=>	'Short description',
-				// Parts Warranty
-				'parts_commercial_warranty2'	=>	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ),
-				'parts_original_warranty2'		=>	$this->getOptionId( $product->getResource()->getAttribute('parts_original_warranty2'), $data[15] ),
+				'weight'				=>	1.0,
+				'status'				=>	1,
+				'visibility'			=>	4,
 				// Parts prices
 				'price'					=>	$data[12],
 				'parts_msrp'			=>	$data[12],
@@ -97,41 +79,12 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 				'qty'					=>	999
 			)
 		);
-			
-		$product->save();
-	}
-	
-	/**
-	 * Update product attributes
-	 *
-	 * @param Mage_Catalog_Model_Abstract $product
-	 * @param array $data
-	 */
-	private function updateProductAttributes($product, $data)
-	{
 		
-		$product->setParts_commercial_warranty2(	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ) );
-		$product->setParts_original_warranty2(		$this->getOptionId( $product->getResource()->getAttribute('parts_original_warranty2'), $data[15] ) );
-		
-		$product->setPrice(							$data[12] );
-		$product->setParts_msrp(					$data[12] );
-		$product->setParts_core_price(				$data[13] );
-		
-		$product->setParts_fluid_option(			$this->getOptionId( $product->getResource()->getAttribute('parts_fluid_option'), $data[4] ) );
-		$product->setParts_fluid_quantity(			$data[5] );
-		
-		$product->setParts_start_year(				$data[1] );
-		$product->setParts_end_year(				$data[2] );
-		
-		$product->setParts_type(					$this->getOptionId( $product->getResource()->getAttribute('parts_type'), $data[3] ) );
-		$product->setParts_family(					$data[11] );
-		$product->setParts_fuel(					$data[6] );
-		$product->setParts_engine(					$data[7] );
-		$product->setParts_drive(					$data[8] );
-		$product->setParts_cylinder_type(			$data[10] );
-		$product->setParts_aspiration(				$data[9] );
+		// assign product to the default website
+		//$product->setWebsiteIds(array(Mage::app()->getStore(true)->getWebsite()->getId()));
 		
 		$product->save();
+
 	}
 		
 	/**
@@ -143,11 +96,6 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 	 */
 	private function getOptionId($attr, $value)
 	{
-		if ( $value === '' ) {
-			// return default option value
-			return $attr->getDefaultValue();
-		} else {
-			return $attr->getSource()->getOptionId($value);
-		}
+		return $attr->getSource()->getOptionId($value);
 	}
 }
