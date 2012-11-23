@@ -37,7 +37,15 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			// get years accprding to selected make
 			$result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
 			
-			echo json_encode($result_st4);
+			$productObj = new stdClass();
+				$productObj->price = $result_st4->getPrice();
+				$productObj->sku = $result_st4->getSku();
+				$productObj->family = $result_st4->getData('parts_family');
+				$productObj->msrp = $result_st4->getData('parts_msrp');
+				$productObj->core = $result_st4->getData('parts_core_price');
+			
+			
+			echo json_encode($productObj);
 			
 		}
 		

@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout version="0.1.0">
-
-<default>
-	<!-- Header link to Quick Quate Page-->
-	<reference name="header_links">
-		<action method="addLink" translate="label title" module="quote">
-			<label>Online Quote</label>
-			<url helper="quote/getQuickQuoteUrl" />
-			<title>Online Quote</title>
-		</action>
-	</reference>
-	<!-- Page titile-->
-	<reference name="head">
-		 <action method="setTitle" translate="title" module="quote">
-			  <title>Quick Quote</title>
-		 </action>
-	</reference>
-	<!-- Default Layout for Quick Quate Page-->
-	<reference name="root">
-		<action method="setTemplate"><template>page/1column.phtml</template></action>
-	</reference>
-	
-</default>
-<!-- Quick Quote Content-->
-<quote_index_index>
-	<reference name="content">
-		<block type="quote/quote" name="quote" template="quote/quote.phtml" />
-	</reference>
-</quote_index_index>
- 
- 
+	<!-- Quick Quote Content-->
+	<quote_index_index>
+		<reference name="head">
+			 <action method="setTitle" translate="title" module="quote">
+				  <title>Quick Quote</title>
+			 </action>
+		</reference>
+		<reference name="content">
+			<block type="quote/quote" name="quote" template="quote/quote.phtml" />
+		</reference>
+	</quote_index_index>
 </layout>

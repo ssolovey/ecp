@@ -632,11 +632,6 @@ tr.summary-details-excluded { font-style:italic; }
 	padding: 4px 5px 7px 5px;
 }
 
-#main-menu .links a:hover{
-	background: #233E89;
-	color:#fff;
-}
-
 #main-menu .links a.active{
 	background: #233E89;
 	color:#fff;
@@ -2203,4 +2198,25 @@ background-position: 0px 20px;
 	width:100px;
 	margin-left: 40%;
 	margin-top: 30%;
+}
+
+.sku{
+	color:#000;
+}
+
+
+#product_details_btn{
+	width: 100px;
+	height: 31px;
+	border: 1px solid black;
+	position: relative;
+	float: left;
+	clear: both;
+	margin-top: 30px;
+	margin-left: 26px;
+	background:url(../images/btn_bg_h31.png) repeat-x;
+	text-align:center;
+	line-height:30px;
+	color:#000;
+	cursor:pointer;
 }

@@ -408,8 +408,11 @@ Reman_QuickQuote.prototype = {
 						},
 						complete: function(data){	
 							//parse response to JSON Object		  
+							
 							var response = JSON.parse(data.responseText);
-							if(response[0].part_number == "N/A"){
+							
+							
+							if(response.sku == "N/A"){
 								// Error message
 								$j('#quote_error .text').append('No Part ID CALL 55500000 FOR MORE INFO');
 								$j('#quote_error').removeClass().addClass('reman_visibility_show');	
@@ -417,7 +420,13 @@ Reman_QuickQuote.prototype = {
 							}else{
 								$j('#search_info').removeClass().addClass('enable_by_opacity');
 								$j('.sku').remove();
-								$j('#part_number_id').append('<span class="sku" style="color:blue"> '+response[0].part_number+'</span>');
+								$j('#part_number_id').append('<span class="sku"> '+response.sku+'</span>');
+								$j('#part_family_id').append('<span class="sku"> '+response.family+'</span>');
+								$j('#part_msrp_id').append('<span class="sku"> $'+Number(response.msrp).toFixed(1)+'</span>');
+								$j('#part_price_id').append('<span class="sku"> $'+Number(response.price).toFixed(1)+'</span>');
+								$j('#part_core_id').append('<span class="sku"> $'+Number(response.core).toFixed(1)+'</span>');
+								
+								$j('#product_details_btn a').attr('href',window.location.href.substring(window.location.href.lastIndexOf('q'),-1)+String(response.sku).toLowerCase()+'.html');
 								
 							}
 						}
