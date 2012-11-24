@@ -1,6 +1,16 @@
 <?php
 class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 {
+
+	protected $_products;
+	
+	public function _construct()
+	{
+		parent::_construct();
+		
+		$this->_products	=	Mage::getModel('catalog/product');
+	}
+	
 	/**
 	 * Load products data form CSV file
 	 *
@@ -17,28 +27,75 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 
 		// Load data from CSV file
 		$data	=	$csv->getData($file);
-
+		
 		foreach( $data as $item ) {			
-			$this->getProduct($item);
-			return;
+			
+			$product = $this->_getProductBySku( $item[0] );
+
+			if ( $product ) {
+				$this->_updateProductAttributes($product, $item);
+			} else {
+				$this->_addProduct($this->_products, $item);			
+			}
 		}
 	}
+	
+	/**
+	 * Load inventory data form CSV file
+	 *
+	 */
+	public function loadInventoryData() {
 
+		// Location of CSV file
+		$file	=	'import/inven.csv';
+
+		$csv	=	new Varien_File_Csv();
+
+		// Set delimiter to "\"
+		$csv->setDelimiter('|');
+
+		// Load data from CSV file
+		$data	=	$csv->getData($file);
+				
+		foreach( $data as $item ) {			
+			$this->_updateInventory($item);
+		}
+	}
+	
 	/**
 	 * Get product by SKU
 	 *
+	 * @param string $sku
+	 */
+	protected function _getProductBySku($sku)
+	{		
+		$product = $this->_products->loadByAttribute( 'sku', $sku );
+		
+		if ( $product ) {
+			return $product;
+		} else {
+			return false;		
+		}
+	}
+	
+	/**
+	 * Update product inventory
+	 *
 	 * @param array $data
 	 */
-	private function getProduct($data) 
-	{
-		$product = Mage::getModel('catalog/product');
-
-		$_Pdetails = $product->loadByAttribute( 'sku', $data[0] );
-
-		if ( $_Pdetails ) {
-			$this->updateProductAttributes($_Pdetails, $data);
-		} else {
-			$this->addProduct($product, $data);			
+	protected function _updateInventory($data)
+	{		
+		$product = $this->_getProductBySku( $data[0] );
+		
+		if ( $product ) {
+			$productId = $product->getId();
+			$stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
+			$stockItemId = $stockItem->getId();
+			
+			//$stockItem->setData('manage_stock', 1);
+			$stockItem->setData('qty', 999);
+			
+			$stockItem->save();
 		}
 	}
 
@@ -48,7 +105,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 	 * @param Mage_Catalog_Model_Abstract $product
 	 * @param array $data
 	 */
-	private function addProduct($product, $data)
+	protected function _addProduct($product, $data)
 	{
 		$product->setData( 
 			array(
@@ -88,7 +145,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 		$product->setStockData(
 			array(
 				'is_in_stock'			=>	1,
-				'qty'					=>	999
+				'qty'					=>	0
 			)
 		);
 		
@@ -104,7 +161,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 	 * @param Mage_Catalog_Model_Abstract $product
 	 * @param array $data
 	 */
-	private function updateProductAttributes($product, $data)
+	protected function _updateProductAttributes($product, $data)
 	{
 
 		$product->setParts_commercial_warranty2(	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ) );
