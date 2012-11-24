@@ -116,7 +116,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 				'status'				=>	1,
 				'visibility'			=>	4,
 				'category_ids'			=>	array(3),
-				'name'					=>	$data[3] . '-' . $data[0],
+				'name'					=>	$data[3] . ' - ' . $data[0],
 				'description'			=>	'Description',
 				'short_description'		=>	'Short description',
 				// Parts Warranty
