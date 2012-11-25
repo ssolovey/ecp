@@ -641,14 +641,17 @@ tr.summary-details-excluded { font-style:italic; }
 #main-menu .welcome_lable{
 	color: #233E89;
 	float: left;
-	margin-top: 6px;
+	margin-top: 7px;
 	margin-left: 5px;
+	font-size:14px;
 }
 
 #main-menu .links {
 	float:left;
-	margin-top: 6px;
+	margin-top: 7px;
 	margin-left: 15px;
+	font-size:14px;
+	
 	
 }
 
@@ -2159,6 +2162,10 @@ background-position: 0px 20px;
 	width:100%;
 }
 
+#search_info .headings li{
+	font-weight:bold;
+}
+
 #search_info ul {
 	position:relative;
 	float:left;
@@ -2171,7 +2178,6 @@ background-position: 0px 20px;
 }
 
 #search_info ul li span{
-	font-weight:bold;
 	font-size:14px;
 }
 
@@ -2240,4 +2246,27 @@ background-position: 0px 20px;
 	position: relative;
 	float: left;
 	margin-bottom: 4px;
+}
+
+/*Product View Page*/
+
+#product_attributes{
+	position:relative;
+	font-size:14px;
+	clear:left;
+}
+
+#product_attributes ul {
+	position:relative;
+	float:left;
+	margin-right:25px;
+}
+
+#product_attributes ul li {
+	margin-bottom: 5px;
+}
+
+#product_attributes ul li.label{
+	font-weight: bold;
+	margin-bottom: 5px;
 }
