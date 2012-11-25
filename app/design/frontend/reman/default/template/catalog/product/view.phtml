@@ -94,37 +94,6 @@
         <div class="product-img-box">
             <?php echo $this->getChildHtml('media') ?>        
          </div>
-		 <div id="product_attributes">
-        		<ul style="margin-left:10px;">
-                    <li class="label"><span>Family:</span></li>
-                    <li class="label"><span>Start Year:</span></li>
-                    <li class="label"><span>Fuel:</span></li>
-                    <li class="label"><span>Aspiration:</span></li>
-                    <li class="label"><span>Original Warranty:</span></li>
-                </ul>
-                <ul>
-                    <li><?php echo $_product->getData('parts_family'); ?></li>
-                    <li><?php echo $_product->getData('parts_start_year'); ?></li>
-                    <li><?php echo $_product->getData('parts_fuel'); ?></li>
-                    <li><?php echo $_product->getData('parts_aspiration'); ?></li>
-                    <li><?php if(!$_product->getData('parts_original_warranty2')){echo 'N/A';}else{echo $_product->getData('parts_original_warranty2');} ?></li>
-                </ul>
-                <ul>
-                    <li class="label"><span>Drive:</span></li>
-                    <li class="label"><span>End Year:</span></li>
-                    <li class="label"><span>Engine Sizes:</span></li>
-                    <li class="label"><span>Cylinder Type:</span></li>
-                    <li class="label"><span>Commercial Warranty:</span></li>
-                </ul>
-                <ul>
-                    <li><?php echo $_product->getData('parts_drive'); ?></li>
-                    <li><?php echo $_product->getData('parts_end_year'); ?></li>
-                    <li><?php echo $_product->getData('parts_engine'); ?></li>
-                    <li><?php echo $_product->getData('parts_cylinder_type'); ?></li>
-                    <li><?php if(!$_product->getData('parts_commercial_warranty2')){echo 'N/A';}else{echo $_product->getData('parts_commercial_warranty2');} ?></li>
-                </ul>
-        	  
-        </div>
         <div class="clearer"></div>
         
 		<?php if ($_product->isSaleable() && $this->hasOptions()):?>
