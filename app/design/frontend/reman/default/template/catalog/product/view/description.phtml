@@ -64,7 +64,7 @@
             <li><?php if(!$_product->getData('parts_commercial_warranty2')){echo 'N/A';}else{echo $_product->getData('parts_commercial_warranty2');} ?></li>
         </ul>   	  
      </div>
-    <div class="std">
+    <div style="clear:left" class="std">
         <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?>
     </div>
 <?php endif; ?>
