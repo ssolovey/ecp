@@ -5,7 +5,15 @@
 		<reference name="root"> 
 			<action method="setTemplate">
 				<template>page/1column.phtml</template>
-			</action> 
+			</action>
+			
+			<reference name="right">
+				<remove name="catalog.compare.sidebar"></remove> <!--remove catalog compare block-->
+				<remove name="right.poll"></remove> <!--remove poll block-->
+				<remove name="paypal.partner.right.logo" /> <!--remove paypal logo -->
+				<remove name="right.permanent.callout" /> <!--remove banner block-->
+			</reference>
+			 
 		</reference>
 	</default>
 </layout>

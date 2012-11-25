@@ -1,15 +1,13 @@
 <div id="steps">
 
 <!-- First Step Quick quote (MAKE DATA)-->
-<div id="breadcrumb_info" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
-    <span class="year reman_hide" onclick="Reman_QuickQuote.prototype.turnOnYearBreadcrumb(); return false;"><span> > </span><span class="breadcrumb">Year</span></span>
-	<span class="model reman_hide" onclick="Reman_QuickQuote.prototype.turnOnModelBreadcrumb(); return false"><span> > </span><span class="breadcrumb">Model</span></span>
-	<span class="group reman_hide" onclick="Reman_QuickQuote.prototype.clearSubGroups();return false;"><span> > </span><span class="breadcrumb">Groups</span></span>
-</div>
-	<div id="table_container" onclick="Reman_QuickQuote.prototype.eventsHandler(event); return false;">
-		<div id="preloader_cont">
+<div id="breadcrumb_info"></div>
+	<div id="table_container">
+		<!--Preloader-->
+        <div id="preloader_cont">
 			<div id="reman_preloader"></div>
 		</div>
+        <!--Make Selection-->
 		<div id="make_tbl">
 			 <span class="label">Select Make:</span>	
 			 <ul class="list">
@@ -18,45 +16,52 @@
 					<?php echo $value['make'] ?>
 				</li>
 			<?php $index +=1 ?>
-			<?php if($index%15 == 0 && $index != 0): ?>
+			<?php if($index%25 == 0 && $index != 0): ?>
 			</ul>
 			<ul class="list">
 			<?php endif; ?>			
 			<?php endforeach; ?>
 		
 		</div>
-	
+		<!--Year Selection-->
 		<div id="year_tbl" class="reman_hide">
 			<span class="label">Select Production Year:</span>
 		</div>   
-		
+		<!--Model Selection-->
 		<div id="model_tbl" class="reman_hide">
 			<span class="label">Select Model:</span>
 		</div>
-		
+		<!--Parts Selection-->
 		<div id="parts_tbl" class="reman_hide">
-			<span class="label">Select Group:</span>
 		</div>
 		 
 	</div>
+    <!--Search Quote -->
 	<div id="search_info" class="disable_by_opacity">
 		<span class="label">Custom Quote Details:</span>
 		<ul>
-			<li id="part_number_id"><span>Part Number:</span></li>
-			<li id="part_family_id"><span>Family:</span></li>
-			<li id="part_msrp_id" style="margin-bottom:20px;"><span>MSRP:</span></li>
-			<li id="part_price_id" style="color:#00F;"><span>Your Price:</span></li>
-			<li id="part_core_id"><span>Core:</span></li>
+			<li><span>Part Number:</span></li>
+			<li><span>Family:</span></li>
+			<li style="margin-bottom:20px;"><span>MSRP:</span></li>
+			<li style="color:#00F;"><span>Your Price:</span></li>
+			<li><span>Core:</span></li>
 			<!--<li><span>Shipping:</span> N/A</li>-->
 		</ul>
-		
+		<ul>
+        	<li id="part_number_id"></li>
+            <li id="part_family_id"></li>
+            <li id="part_msrp_id" style="margin-bottom:20px;"></li>
+            <li id="part_price_id"></li>
+            <li id="part_core_id"></li>
+        </ul>
 		<div id="product_details_btn">
 			<a href="#"><span>Start Over</span></a>
 		</div>
-        
+        <!--Products Error-->
         <div class="product_error"></div>
 		
 	</div>
+    <!--Quote Error-->
 	<div id="quote_error" class="reman_visibility_hide">
 		<span>ERROR: <span class="text"></span></span>
 	</div>

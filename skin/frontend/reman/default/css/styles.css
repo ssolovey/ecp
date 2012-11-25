@@ -113,7 +113,7 @@ ul,ol         { list-style:none; }
 
 /* Base Columns */
 .col-left { float:left; width:195px; padding:0 0 1px; }
-.col-main { float:left; width:685px; padding:0 0 1px; 
+.col-main { float:left; /*width:685px;*/ padding:0 0 1px; 
 	background-repeat: no-repeat;
 	background-color: #F2F2F2;
 	padding: 20px;
@@ -620,10 +620,11 @@ tr.summary-details-excluded { font-style:italic; }
 }
 
 #main-menu{
-	background:url(../images/navbar-bottom-bg.png) no-repeat;
-	width:920px;
-	height:50px;
+	background:url(../images/content-subnav-bg.png) repeat-x;
+	width:910px;
+	height:44px;
 	margin-top:26px;
+	margin-left:5px;
 }
 
 #main-menu .links a{
@@ -639,12 +640,10 @@ tr.summary-details-excluded { font-style:italic; }
 
 #main-menu .links {
 	float:left;
-	margin-top: 16px;
-	margin-left: 150px;
+	margin-top: 6px;
+	margin-left: 130px;
 	
 }
-
-
 
 .logo { float:left; }
 .header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:250px; width: 920px;
@@ -1119,9 +1118,9 @@ background-position: 0px 20px;
 .add-to-box .add-to-links li .separator { display:none !important; }
 
 
-.product-view { border:1px solid #c4c6c8; }
+.product-view { border:1px solid #c4c6c8; width:615px; }
 
-.product-essential { padding:25px; background:#fff url(../../../shop/default/images/bkg_product-view.gif) 100% 0 no-repeat; }
+.product-essential { /*padding:25px;*/ background:#fff url(../../../shop/default/images/bkg_product-view.gif) 100% 0 no-repeat; }
 .product-essential h2 { font:bold 13px/1.35 Arial, Helvetica, sans-serif; }
 
 .product-collateral { background:#faf7ee url(../../../shop/default/images/bkg_product_collateral.gif) 0 0 repeat-x; padding:25px; }
@@ -1153,7 +1152,7 @@ background-position: 0px 20px;
 .product-image-popup .image-label { font-size:13px; font-weight:bold; margin:0 0 10px; color:#2f2f2f; }
 
 /* Product Shop */
-.product-view .product-shop { float:right; width:330px; }
+.product-view .product-shop { float:right; width:290px; margin-top:25px; }
 .col1-layout .product-view .product-shop { float:right; width:545px; }
 .col3-layout .product-view .product-shop { float:none; width:auto; }
 .product-view .product-shop .product-name { margin:0 0 5px; }
@@ -1940,7 +1939,7 @@ background-position: 0px 20px;
 
 .select_part_box{
 	position:relative;
-	width:110px;
+	min-width:160px;
 	float:left;
 	margin-bottom:10px;
 }
@@ -1962,11 +1961,6 @@ background-position: 0px 20px;
 #parts_tbl .select_part {
 	position: relative;
 	float: left;
-	margin-right: 25px;
-	width: 400px;
-	padding: 5px;
-	overflow-x:hidden;
-	height:302px;
 	display:none;
 }
 
@@ -2054,11 +2048,11 @@ background-position: 0px 20px;
 }
 
 #table_container{
-	width: 500px;
-	height: 350px;
+	width: 525px;
+	min-height: 360px;
 	position: relative;
 	float: left;
-	padding: 10px;
+	padding: 5px;
 	border: 1px solid #666;
 }
 
@@ -2066,6 +2060,7 @@ background-position: 0px 20px;
 	position:relative;
 	float:left;
 	margin-left:12px;
+	min-width:160px;
 }
 
 #table_container .list.list_first{
@@ -2076,7 +2071,7 @@ background-position: 0px 20px;
 #table_container #year_tbl ul, #table_container #model_tbl ul{
 	position:relative;
 	float:left;
-	margin-left:15px;
+	/*margin-left:15px;*/
 }
 
 #table_container #year_tbl ul li, #table_container #model_tbl ul li{	
@@ -2087,7 +2082,6 @@ background-position: 0px 20px;
 	cursor:pointer;
 	font-size:14px;
 	margin-bottom:5px;
-	max-width:150px;
 	color:#0000FF;
 	text-decoration:underline;
 }
@@ -2141,7 +2135,7 @@ background-position: 0px 20px;
 #search_info{
 	position: relative;
 	float: left;
-	width: 290px;
+	width: 270px;
 	height: 370px;
 	border: 1px solid #666;
 	margin-left: 5px;
@@ -2154,6 +2148,7 @@ background-position: 0px 20px;
 	margin-top: 10px;
 	margin-left: 10px;
 	font-weight: bold;
+	font-size:14px;
 	width:100%;
 }
 
@@ -2183,8 +2178,8 @@ background-position: 0px 20px;
 
 #preloader_cont{
 	background-color:#F2F2F2;
-	width:500px;
-	height:350px;
+	width:520px;
+	min-height:360px;
 	z-index:1;
 	position:absolute;
 	display:none;
@@ -2222,7 +2217,7 @@ background-position: 0px 20px;
 }
 #product_details_btn a {
 	text-decoration:none;
-	color:#999;
+	color:#666;
 }
 
 .product_error{
