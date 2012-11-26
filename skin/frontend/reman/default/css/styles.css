@@ -2235,11 +2235,12 @@ background-position: 0px 20px;
 
 .product_error{
 	position: relative;
-	float: left;
-	font-size: 14px;
+	font-size: 20px;
 	text-align: center;
-	margin-top: 20px;
-	color:#E06060;
+	top: 35px;
+	color: #E06060;
+	font-weight: bold;
+	clear: left;
 }
 
 .reman_page_heading{

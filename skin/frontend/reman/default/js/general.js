@@ -133,16 +133,10 @@ Reman_QuickQuote.prototype = {
 	
 	
 	resetSearchErrorResults: function(){
-		//reset error
-		$j('#quote_error .text').html('');
-		$j('#quote_error').removeClass().addClass('reman_visibility_hide');	
-		
-		//reset quote details
-		if($j('#search_info').hasClass('enable_by_opacity')){
-			$j('#search_info').removeClass().addClass('disable_by_opacity');
-			$j('.sku').remove();
-		}
-		
+		//clear start over button link
+		$j('#product_details_btn a').attr('href','#');
+		//clear product info fields
+		$j('.sku').remove();
 		//reset Product DATA Error
 		$j('.product_error').html('');
 	},
@@ -245,8 +239,7 @@ Reman_QuickQuote.prototype = {
 					if(response.length == 0)
 					{
 						// Error message
-						$j('#quote_error .text').append('MODELS DOESNT EXIST IN MODEL DATA FOR THIS YEAR !!!!');
-						$j('#quote_error').removeClass().addClass('reman_visibility_show');
+						$j('.product_error').append('Not available');
 						Reman_QuickQuote.prototype.turnOnYearBreadcrumb();
 						$j('#preloader_cont').fadeOut(500,function(){
 							$j(year_tbl).removeClass().addClass('reman_show');
@@ -304,9 +297,7 @@ Reman_QuickQuote.prototype = {
 						{
 							
 							// Error message
-							$j('#quote_error .text').append('VEHICLE ID DOESNT EXIST IN APPLIC DATA !!!');
-							$j('#quote_error').removeClass().addClass('reman_visibility_show');
-							
+							$j('.product_error').append('Not available');
 							$j('#preloader_cont').fadeOut(500,function(){
 								$j(model_tbl).removeClass().addClass('reman_show');
 							});
@@ -322,8 +313,7 @@ Reman_QuickQuote.prototype = {
 								{
 									
 									// Error message
-									$j('#quote_error .text').append('NO DATA FOR THIS APPLIC ID!!!');
-									$j('#quote_error').removeClass().addClass('reman_visibility_show');	
+									$j('.product_error').append('Not available');
 									$j('#preloader_cont').fadeOut(500);
 									return;
 								}
@@ -442,11 +432,8 @@ Reman_QuickQuote.prototype = {
 							
 							if(response.sku == "N/A"){
 								// Error message
-								$j('#quote_error .text').append('No Part ID CALL 55500000 FOR MORE INFO');
-								$j('#quote_error').removeClass().addClass('reman_visibility_show');	
-									
+								$j('.product_error').append('Not available');
 							}else{
-								$j('#search_info').removeClass().addClass('enable_by_opacity');
 								$j('.sku').remove();
 								$j('#part_number_id').append('<span class="sku"> '+response.sku+'</span>');
 								$j('#part_family_id').append('<span class="sku"> '+response.family+'</span>');

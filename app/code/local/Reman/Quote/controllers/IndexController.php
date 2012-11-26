@@ -50,7 +50,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			}else{
 				$productError = new stdClass();
 					$productError->error = true;
-					$productError->message = "Selected product SKU ->(".$request['id'].") doesn't exist in Product Data !!!";
+					$productError->message = "Not available";
 				echo json_encode($productError);
 			}
 			
