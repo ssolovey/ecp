@@ -2078,13 +2078,13 @@ background-position: 0px 20px;
 }
 
 
-#table_container #year_tbl ul, #table_container #model_tbl ul{
+#table_container #year_tbl ul, #table_container #model_tbl ul , #table_container #group_select ul{
 	position:relative;
 	float:left;
 	/*margin-left:15px;*/
 }
 
-#table_container #year_tbl ul li, #table_container #model_tbl ul li{	
+#table_container #year_tbl ul li, #table_container #model_tbl ul li ,  #table_container #group_select ul li{	
 	margin-bottom:10px;
 }
 
@@ -2101,7 +2101,7 @@ background-position: 0px 20px;
 }
 
 
-#make_tbl .label , #year_tbl .label , #model_tbl .label,  #parts_tbl .label{
+#make_tbl .label , #year_tbl .label , #model_tbl .label,  #parts_tbl .label , #group_select .label{
 	font-size:14px;
 	font-weight:bold;
 	padding-bottom:10px;

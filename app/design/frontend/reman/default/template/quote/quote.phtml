@@ -7,8 +7,16 @@
         <div id="preloader_cont">
 			<div id="reman_preloader"></div>
 		</div>
+        <!--Group Selects-->
+        <div id="group_select">
+        	 <span class="label">Select Category:</span>	
+			 <ul class="list">
+                    <li class="cat_select" cat="T">AUTO TRANSMISSION</li>
+                    <li class="cat_select" cat="X">TRANSFER CASE</li>
+             </ul>
+        </div>
         <!--Make Selection-->
-		<div id="make_tbl">
+		<div id="make_tbl" class="reman_hide">
 			 <span class="label">Select Make:</span>	
 			 <ul class="list">
 			 <?php  foreach($this->getMake() as $index => $value): ?>

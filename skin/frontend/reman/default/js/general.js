@@ -36,6 +36,8 @@ Reman_QuickQuote.prototype = {
 	
 	currentSelectedModel: '',
 	
+	currentCatSelected:'',
+	
 	/*General Event Handler*/
 	eventsHandler: function(event){
 	
@@ -44,6 +46,15 @@ Reman_QuickQuote.prototype = {
 		if(elem.tagName == 'A') return
 		
 		while (elem) {
+			/*Event for Category Select*/
+			if (elem.className == 'cat_select'){
+				this.currentCatSelected = $j(elem).attr('cat');
+				$j('#group_select').removeClass().addClass('reman_hide');
+				$j(make_tbl).removeClass().addClass('reman_show');
+				// update bread crumb link
+				$j('#breadcrumb_info').append('<span><span class="breadcrumb cat_link">'+elem.innerHTML+'</span>');
+				return;
+			}
 			/*Event for Make Table*/
 			if (elem.className == 'make_select') {
 				var year_range = $j(elem).attr('endyear') - $j(elem).attr('startyear');
@@ -104,6 +115,13 @@ Reman_QuickQuote.prototype = {
 				return;
 			}
 			
+			/*Event for Breadcrumbs Cat links*/
+			if (elem.className == 'breadcrumb cat_link'){
+				this.turnOnCatBreadcrumb();
+				this.resetSearchErrorResults();
+				return;
+			}
+			
 			elem = elem.parentNode;
 		}
 	
@@ -128,7 +146,7 @@ Reman_QuickQuote.prototype = {
 		// year table active true
 		this.isYearActive = true;
 		// update bread crumb link
-		$j('#breadcrumb_info').append('<span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span>');
+		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span>');
 	},
 	
 	
@@ -169,11 +187,18 @@ Reman_QuickQuote.prototype = {
 		this.isGrouplActive = false;
 	},
 	
+	clearMake: function(){
+		//clear Make
+		$j(make_tbl).removeClass().addClass('reman_hide');
+		$j('.make_link').parent().remove();
+	},
+	
 	
 	clearSubGroups: function(){
 		// clear subgroup
 		if($j('.group_link').length){
 			$j('.group_link').parent().remove();
+			//$j('.sel_group_link').parent().remove();
 		}
 		$j('.select_part').css('display','none');
 		//Show First Group
@@ -185,7 +210,7 @@ Reman_QuickQuote.prototype = {
 			this.clearYear();
 			this.clearModel();
 			this.clearGroup();
-			$j('.make_link').remove();
+			$j('.make_link').parent().remove();
 			//show make table
 			$j(make_tbl).removeClass().addClass('reman_show');
 		}
@@ -211,6 +236,20 @@ Reman_QuickQuote.prototype = {
 			//show model table
 			$j('#model_tbl').removeClass().addClass('reman_show');
 		}
+	
+	},
+	
+	turnOnCatBreadcrumb: function(){
+			this.clearMake();
+			this.clearYear();
+			this.clearModel();
+			this.clearGroup();
+			$j('.cat_link').remove();
+			//show cat table
+			$j('#group_select').removeClass().addClass('reman_show');
+			
+			this.currentCatSelected = '';
+		
 	
 	},
 	
@@ -430,9 +469,10 @@ Reman_QuickQuote.prototype = {
 								return;
 							}
 							
-							if(response.sku == "N/A"){
+							if(response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
 								// Error message
 								$j('.product_error').append('Not available');
+								//$j('.sel_group_link').parent().remove();
 							}else{
 								$j('.sku').remove();
 								$j('#part_number_id').append('<span class="sku"> '+response.sku+'</span>');
@@ -442,10 +482,13 @@ Reman_QuickQuote.prototype = {
 								$j('#part_core_id').append('<span class="sku"> $'+Number(response.core).toFixed(1)+'</span>');
 								$j('#product_details_btn a').attr('href',response.url);
 							}
+							//$j('.sel_group_link').parent().remove();
+							//$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span>');
 						}
 				});
 				
 			}else{
+				//$j('.sel_group_link').parent().remove(); // if was selected remove selected lable
 				$j('#'+id).css('display','none'); // hide current group
 				$j('#'+subgroup).css('display','block'); // show next group according to subgroup ID
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span>');
