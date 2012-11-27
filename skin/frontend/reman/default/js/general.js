@@ -198,7 +198,7 @@ Reman_QuickQuote.prototype = {
 		// clear subgroup
 		if($j('.group_link').length){
 			$j('.group_link').parent().remove();
-			//$j('.sel_group_link').parent().remove();
+			$j('.sel_group_link').parent().remove();
 		}
 		$j('.select_part').css('display','none');
 		//Show First Group
@@ -233,6 +233,7 @@ Reman_QuickQuote.prototype = {
 		if(this.isGroupActive){
 			this.clearGroup();
 			$j('.model_link').parent().remove();
+			$j('.sel_group_link').parent().remove();
 			//show model table
 			$j('#model_tbl').removeClass().addClass('reman_show');
 		}
@@ -461,18 +462,22 @@ Reman_QuickQuote.prototype = {
 							//parse response to JSON Object		  
 							
 							var response = JSON.parse(data.responseText);
+							// trancate text if longer than 30 letters
+							if(name.length >30){
+								name = jQuery.trim(name).substring(0, 30).trim(this) + "...";
+							}
+							// set breadcrumb info about last successful or not succssful choise
+							$j('.sel_group_link').parent().remove();
+							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span>');
 							
 							if(response.error){
-								$j('#search_info').removeClass().addClass('enable_by_opacity');
 								$j('.product_error').html(response.message);
-							
 								return;
 							}
 							
 							if(response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
 								// Error message
 								$j('.product_error').append('Not available');
-								//$j('.sel_group_link').parent().remove();
 							}else{
 								$j('.sku').remove();
 								$j('#part_number_id').append('<span class="sku"> '+response.sku+'</span>');
@@ -482,8 +487,8 @@ Reman_QuickQuote.prototype = {
 								$j('#part_core_id').append('<span class="sku"> $'+Number(response.core).toFixed(1)+'</span>');
 								$j('#product_details_btn a').attr('href',response.url);
 							}
-							//$j('.sel_group_link').parent().remove();
-							//$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span>');
+							
+							
 						}
 				});
 				

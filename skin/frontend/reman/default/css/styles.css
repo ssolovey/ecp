@@ -2162,23 +2162,27 @@ background-position: 0px 20px;
 	width:100%;
 }
 
-#search_info .headings li{
+#search_info .headings{
 	font-weight:bold;
+	font-size:14px;
+	width:110px;
 }
 
-#search_info ul {
+#search_info .values{
+	font-size:14px;
+}
+
+#search_info table {
 	position:relative;
 	float:left;
 	margin-left:25px;
 	margin-top:20px;
 }
 
-#search_info ul li{
-	margin-bottom:5px;
-}
-
-#search_info ul li span{
-	font-size:14px;
+#search_info table tr{
+	display:block;
+	position:relative;
+	height:20px;
 }
 
 .disable_by_opacity{
