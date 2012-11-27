@@ -35,7 +35,7 @@
 <?php if ($_description): ?>
     <h2><?php echo $this->__('Details') ?></h2>
     <div id="product_attributes">
-        <ul style="margin-left:10px; margin-right:40px;">
+        <ul>
             <li class="label"><span>Family:</span></li>
             <li class="label"><span>Start Year:</span></li>
             <li class="label"><span>Fuel:</span></li>
@@ -52,14 +52,14 @@
 				echo $this->helper('catalog/product')->getOptionAttributeLable('parts_original_warranty2',$optionId );
 			?></li>
         </ul>
-        <ul style="clear: left; margin-left: 10px; margin-top: 5px;margin-right: 15px;">
+        <ul>
             <li class="label"><span>Drive:</span></li>
             <li class="label"><span>End Year:</span></li>
             <li class="label"><span>Engine Sizes:</span></li>
             <li class="label"><span>Cylinder Type:</span></li>
             <li class="label"><span>Commercial Warranty:</span></li>
         </ul>
-        <ul style="margin-top: 5px;">
+        <ul style="margin-right:0px;">
             <li><?php echo $_product->getData('parts_drive'); ?></li>
             <li><?php echo $_product->getData('parts_end_year'); ?></li>
             <li><?php echo $_product->getData('parts_engine'); ?></li>
