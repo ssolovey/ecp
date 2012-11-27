@@ -36,7 +36,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 				$this->_updateProductAttributes($product, $item);
 			} else {
 				$this->_addProduct($this->_products, $item);			
-			}
+			}			
 		}
 	}
 	
@@ -212,7 +212,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 		$product->setParts_drive(					$data[8] );
 		$product->setParts_cylinder_type(			$data[10] );
 		$product->setParts_aspiration(				$data[9] );
-
+		
 		$product->save();
 	}
 
@@ -226,10 +226,21 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 	private function getOptionId($attr, $value)
 	{
 		if ( $value === '' ) {
-			// return default option value
-			return $attr->getDefaultValue();
+			if ( $attr->getIs_required() ) {
+				// return default option value
+				return $attr->getDefaultValue();
+			} else {
+				return '';
+			}
 		} else {
-			return $attr->getSource()->getOptionId($value);
+			
+			foreach ( $attr->getSource()->getAllOptions() as $option) {
+            	if (strcasecmp($option['label'], $value)==0 ) {
+                	return $option['value'];
+            	}
+        	}
+			
+			//return $attr->getSource()->getOptionId($value);
 		}
 	}
 }
