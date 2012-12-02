@@ -40,15 +40,15 @@
                 <table>
                     <tr>
                         <td class="headings">MSRP:</td>
-                        <td class="values" id="part_msrp_id">$<?php echo $_product->getData('parts_msrp');?></td>
+                        <td class="values" id="part_msrp_id">$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
                     </tr>
                     <tr>
                         <td style="color:#00F;" class="headings">Your Price:</td>
-                        <td style="color:#00F;" class="values" id="part_price_id">$<?php echo $_product->getPrice();?></td>
+                        <td style="color:#00F;" class="values" id="part_price_id">$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
                     </tr>
                     <tr>
                         <td class="headings">Core:</td>
-                        <td class="values" id="part_core_id">$<?php echo $_product->getData('parts_core_price');?></td>
+                        <td class="values" id="part_core_id">$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
                     </tr>
                     <tr>
                         <td class="headings">Shipping:</td>
