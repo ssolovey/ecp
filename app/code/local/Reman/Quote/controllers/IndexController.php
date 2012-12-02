@@ -38,12 +38,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			$result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
 			if($result_st4 != null){
 			$productObj = new stdClass();
-				$productObj->price = $result_st4->getPrice();
 				$productObj->sku = $result_st4->getSku();
-				$productObj->family = $result_st4->getData('parts_family');
-				$productObj->msrp = $result_st4->getData('parts_msrp');
-				$productObj->core = $result_st4->getData('parts_core_price');
-				$productObj->url = $result_st4->getProductUrl();
 				$productObj->error = false;
 			
 				echo json_encode($productObj);
@@ -58,6 +53,16 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		
 		// close connection
 		die;
+	}
+	
+	public function productAction(){
+		/** 
+			Load Only Custom product page for Quick Quote Block
+		*/
+		$this->loadLayout('view'); 
+        //This function processes and displays all layout phtml and php files.
+		$this->renderLayout(); 
+	
 	}
 	
 }

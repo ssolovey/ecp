@@ -1,0 +1,115 @@
+﻿<?php
+/**
+ * Reman Catalog
+ * Ajax Product page template
+ * @author Igor Zhavoronkin
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); ?>
+<?php $_description = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'))->getDescription(); ?>
+
+<div class="product-view_quote">
+    <div class="product-essential">
+   
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+
+        <div class="product-shop">
+ 			
+              <div class="product-img-box">
+                   <p class="product-image">
+                        <?php
+                            $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />';
+                            echo $_helper->productAttribute($_product, $_img, 'image');
+                        ?>
+                    </p>
+             </div>
+            
+            	           
+            <div class="product-name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+            </div>
+            
+            <div id="general_info">
+                
+                <table>
+                    <tr>
+                        <td class="headings">MSRP:</td>
+                        <td class="values" id="part_msrp_id">$<?php echo $_product->getData('parts_msrp');?></td>
+                    </tr>
+                    <tr>
+                        <td style="color:#00F;" class="headings">Your Price:</td>
+                        <td style="color:#00F;" class="values" id="part_price_id">$<?php echo $_product->getPrice();?></td>
+                    </tr>
+                    <tr>
+                        <td class="headings">Core:</td>
+                        <td class="values" id="part_core_id">$<?php echo $_product->getData('parts_core_price');?></td>
+                    </tr>
+                    <tr>
+                        <td class="headings">Shipping:</td>
+                        <td class="values"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="clearer"></div>
+    </form>
+ </div>
+
+    <div class="product-collateral">
+        <div id="product_attributes">
+                <div class="colmns">
+                    <ul>
+                        <li class="label"><span>Family:</span></li>
+                        <li class="label"><span>Start Year:</span></li>
+                        <li class="label"><span>Fuel:</span></li>
+                        <li class="label"><span>Aspiration:</span></li>
+                        <li class="label"><span>Original Warranty:</span></li>
+                    </ul>
+                    <ul>
+                        <li><?php echo $_product->getData('parts_family'); ?></li>
+                        <li><?php echo $_product->getData('parts_start_year'); ?></li>
+                        <li><?php echo $_product->getData('parts_fuel'); ?></li>
+                        <li><?php echo $_product->getData('parts_aspiration'); ?></li>
+                        <li><?php 
+                            $optionId =  $_product->getData('parts_original_warranty2');
+                            echo $this->helper('catalog/product')->getOptionAttributeLable('parts_original_warranty2',$optionId );
+                        ?></li>
+                    </ul>
+                </div>
+                <div class="colmns">
+                    <ul>
+                        <li class="label"><span>Drive:</span></li>
+                        <li class="label"><span>End Year:</span></li>
+                        <li class="label"><span>Engine Sizes:</span></li>
+                        <li class="label"><span>Cylinder Type:</span></li>
+                        <li class="label"><span>Commercial Warranty:</span></li>
+                    </ul>
+                    <ul style="margin-right:0px;">
+                        <li><?php echo $_product->getData('parts_drive'); ?></li>
+                        <li><?php echo $_product->getData('parts_end_year'); ?></li>
+                        <li><?php echo $_product->getData('parts_engine'); ?></li>
+                        <li><?php echo $_product->getData('parts_cylinder_type'); ?></li>
+                        <li><?php 
+                            $optionId =  $_product->getData('parts_commercial_warranty2');
+                            echo $this->helper('catalog/product')->getOptionAttributeLable('parts_commercial_warranty2',$optionId );
+                        ?></li>
+                    </ul>
+                </div>   	  
+          </div>
+              
+              <div style="clear:left" class="std">
+              <div class="description_lable">Description:</div>
+              <div class="desc_cont">
+        <?php echo $this->helper('catalog/output')->productAttribute(Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')), $_description, 'description') ?>
+				</div>
+        	  <div class="description_lable">Manuals:</div>
+    		</div>
+    </div>
+</div>

@@ -34,10 +34,8 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		$select = $this->_getReadAdapter()->select()->from('reman_applic','part_number')->where($where);
 		
 		$sku = $this->_getReadAdapter()->fetchAll($select); // run sql query
-		//var_dump($sku);
-		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
 		
-		//var_dump($product);
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
 
 		// return result
 		return $product;

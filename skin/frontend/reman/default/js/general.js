@@ -89,6 +89,8 @@ Reman_QuickQuote.prototype = {
 				// deleted other groups
 				if($j(elem).parent().next().length){
 					$j(elem).parent().nextAll().remove();
+					$j('#reman-product_info').removeClass().addClass('reman_hide'); // hide product info block
+					$j('#parts_tbl').removeClass().addClass('reman_show'); // show parts table
 				}
 				//delete this link
 				$j(elem).parent().remove();
@@ -118,6 +120,13 @@ Reman_QuickQuote.prototype = {
 			/*Event for Breadcrumbs Cat links*/
 			if (elem.className == 'breadcrumb cat_link'){
 				this.turnOnCatBreadcrumb();
+				this.resetSearchErrorResults();
+				return;
+			}
+			
+			/*Event for Breadcrumbs Cat links*/
+			if (elem.className == 'breadcrumb sel_group_link'){
+				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				return;
 			}
@@ -204,12 +213,17 @@ Reman_QuickQuote.prototype = {
 		//Show First Group
 		$j($j('.select_part').get(0)).css('display','block');
 	},
-
+	
+	clearProductInfo: function(){
+		$j('#reman-product_info').removeClass().addClass('reman_hide');
+		$j('#reman-product_info').html('');
+	},
 	turnOnMakeBreadcrumb: function(){
 		if(this.isYearActive){
 			this.clearYear();
 			this.clearModel();
 			this.clearGroup();
+			this.clearProductInfo();
 			$j('.make_link').parent().remove();
 			//show make table
 			$j(make_tbl).removeClass().addClass('reman_show');
@@ -221,6 +235,7 @@ Reman_QuickQuote.prototype = {
 		if(this.isModelActive){
 			this.clearModel();
 			this.clearGroup();
+			this.clearProductInfo();
 			$j('.year_link').parent().remove();
 			//show year table
 			$j(year_tbl).removeClass().addClass('reman_show');
@@ -232,6 +247,7 @@ Reman_QuickQuote.prototype = {
 	turnOnModelBreadcrumb: function(){
 		if(this.isGroupActive){
 			this.clearGroup();
+			this.clearProductInfo();
 			$j('.model_link').parent().remove();
 			$j('.sel_group_link').parent().remove();
 			//show model table
@@ -245,6 +261,7 @@ Reman_QuickQuote.prototype = {
 			this.clearYear();
 			this.clearModel();
 			this.clearGroup();
+			this.clearProductInfo();
 			$j('.cat_link').remove();
 			//show cat table
 			$j('#group_select').removeClass().addClass('reman_show');
@@ -252,6 +269,12 @@ Reman_QuickQuote.prototype = {
 			this.currentCatSelected = '';
 		
 	
+	},
+	
+	turnOnGroupBreadcrumb: function(){
+		this.clearProductInfo();
+		$j('#parts_tbl').removeClass().addClass('reman_show');
+		$j('.sel_group_link').parent().remove();
 	},
 	
 	
@@ -337,9 +360,9 @@ Reman_QuickQuote.prototype = {
 						{
 							
 							// Error message
-							$j('.product_error').append('Not available');
 							$j('#preloader_cont').fadeOut(500,function(){
 								$j(model_tbl).removeClass().addClass('reman_show');
+								$j('.product_error').append('Not available');
 							});
 							return;
 						}
@@ -353,8 +376,10 @@ Reman_QuickQuote.prototype = {
 								{
 									
 									// Error message
-									$j('.product_error').append('Not available');
-									$j('#preloader_cont').fadeOut(500);
+									$j('#preloader_cont').fadeOut(500,function(){
+										$j(model_tbl).removeClass().addClass('reman_show');
+										$j('.product_error').append('Not available');
+									});
 									return;
 								}
 							
@@ -451,52 +476,70 @@ Reman_QuickQuote.prototype = {
 						url: "index/ajax",
 						type: 'POST',
 						data: {
-							step: 4,  
+							step:4,
 							id:applic_id,
 						},
-					
+						
 						beforeSend: function(){
-							//TODO PRELOADER
+							$j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
+							$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
+							$j('#parts_tbl').removeClass().addClass('reman_hide');
+							$j('#preloader_cont').css('display','block');
 						},
-						complete: function(data){	
+						
+						complete: function(data){
+							
 							//parse response to JSON Object		  
+							var response = JSON.parse(data.responseText);	
 							
-							var response = JSON.parse(data.responseText);
-							// trancate text if longer than 30 letters
-							if(name.length >30){
-								name = jQuery.trim(name).substring(0, 30).trim(this) + "...";
+							if(response.error || response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
+								
+								$j('#preloader_cont').fadeOut(500,function(){
+										$j('#parts_tbl').removeClass().addClass('reman_show');
+										$j('.product_error').append('Not available');
+									});
+								return
 							}
-							// set breadcrumb info about last successful or not succssful choise
-							$j('.sel_group_link').parent().remove();
-							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span>');
-							
-							if(response.error){
-								$j('.product_error').html(response.message);
-								return;
-							}
-							
-							if(response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
-								// Error message
-								$j('.product_error').append('Not available');
-							}else{
-								$j('.sku').remove();
-								$j('#part_number_id').append('<span class="sku"> '+response.sku+'</span>');
-								$j('#part_family_id').append('<span class="sku"> '+response.family+'</span>');
-								$j('#part_msrp_id').append('<span class="sku"> $'+Number(response.msrp).toFixed(1)+'</span>');
-								$j('#part_price_id').append('<span class="sku"> $'+Number(response.price).toFixed(1)+'</span>');
-								$j('#part_core_id').append('<span class="sku"> $'+Number(response.core).toFixed(1)+'</span>');
-								$j('#product_details_btn a').attr('href',response.url);
-							}
-							
+						
+							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
 							
 						}
 				});
 				
 			}else{
-				//$j('.sel_group_link').parent().remove(); // if was selected remove selected lable
 				$j('#'+id).css('display','none'); // hide current group
 				$j('#'+subgroup).css('display','block'); // show next group according to subgroup ID
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span>');
 			}
-	}	
+	},
+	
+	loadProductInfo: function(id,name){
+	
+		$j.ajax({
+				url: "index/product",
+				type: 'POST',
+				data: {
+					id:id,
+				},
+				
+				complete: function(data){
+					// trancate group text if longer than 30 letters
+					if(name.length >30){
+						name = jQuery.trim(name).substring(0, 30).trim(this) + "...";
+					}
+					//hide parts table					
+					$j('#parts_tbl').removeClass().addClass('reman_hide');
+					//insert product info block	
+					$j('#preloader_cont').fadeOut(500,function(){
+						$j('#table_container').css('min-height', '');
+						// set breadcrumb info about last successful or not succssful choise
+						$j('.sel_group_link').parent().remove();
+						$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span>');
+						// Show product page
+						$j('#reman-product_info').removeClass().addClass('reman_show');	
+						$j('#reman-product_info').html(data.responseText);
+					});
+				}
+		});
+	}
 }
