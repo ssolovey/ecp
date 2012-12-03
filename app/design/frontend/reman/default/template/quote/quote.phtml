@@ -1,3 +1,8 @@
+<?php
+	if(!$this->helper('customer')->isLoggedIn()):
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login', $arguments= array()));
+	 endif;
+?>
 <div id="steps">
 <!-- First Step Quick quote (MAKE DATA)-->
 <div id="breadcrumb_info"></div>

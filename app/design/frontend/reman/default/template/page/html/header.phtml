@@ -62,7 +62,14 @@
     </div>
     <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>
     <div id="main-menu">
-    	<span class="welcome_lable">Welcome, John Smith</span><?=$this->getChildHtml('header_links')?>
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+    	<span class="welcome_lable">Welcome, John Smith</span>
+	 <?php endif?>	
+	<?php 
+		if($this->helper('customer')->isLoggedIn()){
+			$this->getChildHtml('header_links');
+		}
+	?>
     </div>
 </div>
 <?php echo $this->getChildHtml('topMenu') ?>

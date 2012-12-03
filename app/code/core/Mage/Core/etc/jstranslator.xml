@@ -73,7 +73,7 @@
         <message>Please enter a valid date.</message>
     </validate-date>
     <validate-email translate="message" module="core">
-        <message>Please enter a valid email address. For example johndoe@domain.com.</message>
+        <message>Please enter a valid email address.</message>
     </validate-email>
     <validate-email-sender translate="message" module="core">
         <message>Please use only visible characters and spaces.</message>

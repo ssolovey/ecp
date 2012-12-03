@@ -75,7 +75,7 @@ class Mage_XmlConnect_Model_Simplexml_Form_Element_Validator_Abstract
             'min_length' => Mage::helper('xmlconnect')->__('Text length does not satisfy specified min text range.'),
             'max_length' => Mage::helper('xmlconnect')->__('Text length does not satisfy specified max text range.'),
             'alphanumeric' => Mage::helper('xmlconnect')->__('Please use only letters (a-z or A-Z) or numbers (0-9) only in this field. No spaces or other characters are allowed.'),
-            'email' => Mage::helper('xmlconnect')->__('Please enter a valid email address. For example johndoe@domain.com.'),
+            'email' => Mage::helper('xmlconnect')->__('Please enter a valid email address.'),
             'required' => Mage::helper('xmlconnect')->__('This is a required field.'),
             'required_select' => Mage::helper('xmlconnect')->__('Please select an option.'),
             'numeric' => Mage::helper('xmlconnect')->__('Please use numbers only in this field. Please avoid spaces or other characters such as dots or commas.'),
