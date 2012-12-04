@@ -27,6 +27,10 @@
  * @var Mage_Page_Block_Html_Header $this
  */
 ?>
+<?php 
+	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+	$customer = Mage::getModel('customer/customer')->load($customer_id); 
+?>
 <div class="header-container">
 	<div id="bizinfo"><div class="top_remanhomelink">ETE REMAN   1-800-934-9479 | <a href="http://etereman.com"><?php echo $this->__('Home') ?></a> |</div> 
 		<div class="social_links"><a href="http://www.facebook.com/ETEREMAN" target="_blank"><img src="http://etereman.com/images/icon-fbook.gif" alt="Facebook" width="24" height="24" border="0" align="absmiddle"></a>
@@ -63,13 +67,20 @@
     <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>
     <div id="main-menu">
 	<?php if($this->helper('customer')->isLoggedIn()): ?>
-    	<span class="welcome_lable">Welcome, John Smith</span>
+    	<span class="welcome_lable">Welcome, <?php echo $customer->getFirstname().' '.$customer->getLastname();?></span>
 	 <?php endif?>	
 	<?php 
 		if($this->helper('customer')->isLoggedIn()){
-			$this->getChildHtml('header_links');
+			echo $this->getChildHtml('header_links');
 		}
 	?>
+    <div class="login_links">
+    	<span>Registered Users:</span>
+		<?php if (! Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                    <a href="<?php echo Mage::helper('customer')->getLoginUrl(); ?>"><?php echo $this->__('Login') ?></a>
+        <?php else: ?>
+                    <a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Logout') ?></a>
+        <?php endif; ?>
     </div>
 </div>
 <?php echo $this->getChildHtml('topMenu') ?>
