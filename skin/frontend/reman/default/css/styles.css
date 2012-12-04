@@ -2391,3 +2391,11 @@ background-position: 0px 20px;
 	line-height: 24px;
 	color: red;
 }
+
+.login_links{
+	position: relative;
+	float: right;
+	margin-right: 20px;
+	margin-top: 9px;
+	font-size: 12px;
+}
