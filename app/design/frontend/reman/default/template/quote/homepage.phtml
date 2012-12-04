@@ -1,0 +1,7 @@
+<?php
+	if(!$this->helper('customer')->isLoggedIn()){
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login', $arguments= array()));
+	}else{
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('quote', $arguments= array()));
+	}
+?>
