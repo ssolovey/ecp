@@ -25,26 +25,16 @@
  */
 ?>
 <?php
-	if($this->helper('customer')->isLoggedIn()):
-		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('quote', $arguments= array()));
-	 endif;
+	if(!$this->helper('customer')->isLoggedIn()){
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login', $arguments= array()));
+	}
 ?>
-<div class="dashboard">
-    <div class="page-title">
-        <h1><?php echo $this->__('My Dashboard') ?></h1>
-    </div>
-    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-    <?php echo $this->getChildHtml('hello') ?>
-    <?php echo $this->getChildHtml('top') ?>
-    <div class="box-account box-info">
-        <div class="box-head">
-            <h2><?php echo $this->__('Account Information') ?></h2>
-        </div>
-        <?php /* Extensions placeholder */ ?>
-        <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
-        <?php echo $this->getChildHtml('info') ?>
-        <?php echo $this->getChildHtml('address') ?>
-    </div>
-    <?php echo $this->getChildHtml('info1') ?>
-    <?php echo $this->getChildHtml('info2') ?>
+<div class="page-title">
+    <h1><?php echo Mage::helper('customer')->__('You are now logged out') ?></h1>
 </div>
+<p><?php echo Mage::helper('customer')->__('You have logged out and will be redirected to our homepage in 5 seconds.') ?></p>
+<script type="text/javascript">
+//<![CDATA[
+    setTimeout(function(){ location.href = '<?php echo $this->getUrl() ?>'},5000);
+//]]>
+</script>
