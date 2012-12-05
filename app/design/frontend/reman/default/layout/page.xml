@@ -102,7 +102,7 @@ Default layout, loads most of the pages
                 </block>
             </block>
 
-            <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+            <!--<block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>-->
 
             <block type="core/text_list" name="left" as="left" translate="label">
                 <label>Left Column</label>
