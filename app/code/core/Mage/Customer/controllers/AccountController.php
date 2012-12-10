@@ -243,7 +243,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
      */
     public function createAction()
     {
-        if ($this->_getSession()->isLoggedIn()) {
+        if ($this->_getSession()->isLoggedIn() && Mage::getSingleton('customer/session')->getCustomer()->getPrefix() != 'Admin') {
             $this->_redirect('*/*');
             return;
         }
@@ -259,18 +259,21 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
     public function createPostAction()
     {
         $session = $this->_getSession();
-        if ($session->isLoggedIn()) {
+        if ($session->isLoggedIn() && Mage::getSingleton('customer/session')->getCustomer()->getPrefix() != 'Admin') {
             $this->_redirect('*/*/');
             return;
         }
         $session->setEscapeMessages(true); // prevent XSS injection in user input
-        if ($this->getRequest()->isPost()) {
+        
+		if ($this->getRequest()->isPost()) {
             $errors = array();
 
             if (!$customer = Mage::registry('current_customer')) {
-                $customer = Mage::getModel('customer/customer')->setId(null);
+                $customer = Mage::getModel('customer/customer')->setId(null);	
             }
-
+			// Set the same group as customer admin group
+			$customer->setGroupId(Mage::getSingleton('customer/session')->getCustomer()->getGroupId());
+			
             /* @var $customerForm Mage_Customer_Model_Form */
             $customerForm = Mage::getModel('customer/form');
             $customerForm->setFormCode('customer_account_create')
@@ -285,6 +288,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             /**
              * Initialize customer group id
              */
+			 
             $customer->getGroupId();
 
             if ($this->getRequest()->getPost('create_address')) {
@@ -346,9 +350,12 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                         $this->_redirectSuccess(Mage::getUrl('*/*/index', array('_secure'=>true)));
                         return;
                     } else {
-                        $session->setCustomerAsLoggedIn($customer);
-                        $url = $this->_welcomeCustomer($customer);
-                        $this->_redirectSuccess($url);
+						// redirect to quick quote page after new user registration
+						Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('quote', $arguments= array()));
+                        
+						//$session->setCustomerAsLoggedIn($customer);
+                        //$url = $this->_welcomeCustomer($customer);
+                        // $this->_redirectSuccess($url);
                         return;
                     }
                 } else {
@@ -407,11 +414,11 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             $this->_getSession()->addSuccess($userPrompt);
         }
 
-        $customer->sendNewAccountEmail(
-            $isJustConfirmed ? 'confirmed' : 'registered',
-            '',
-            Mage::app()->getStore()->getId()
-        );
+        //$customer->sendNewAccountEmail(
+          //  $isJustConfirmed ? 'confirmed' : 'registered',
+           // '',
+            //Mage::app()->getStore()->getId()
+        //);
 
         $successUrl = Mage::getUrl('*/*/index', array('_secure'=>true));
         if ($this->_getSession()->getBeforeAuthUrl()) {

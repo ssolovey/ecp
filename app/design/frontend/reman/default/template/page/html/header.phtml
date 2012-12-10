@@ -67,13 +67,26 @@
     <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>
     <div id="main-menu">
 	<?php if($this->helper('customer')->isLoggedIn()): ?>
-    	<span class="welcome_lable">Welcome, <?php echo $customer->getFirstname().' '.$customer->getLastname();?></span>
+    	<span class="welcome_lable">Welcome, 
+			<?php 
+				echo $customer->getFirstname().' '.$customer->getLastname(); 
+		
+			if(Mage::getSingleton('customer/session')->getCustomer()->getPrefix() !=''){
+				echo ' ('.Mage::getSingleton('customer/session')->getCustomer()->getPrefix().')';
+			}
+			?>
+       </span>
 	 <?php endif?>	
 	<?php 
 		if($this->helper('customer')->isLoggedIn()){
 			echo $this->getChildHtml('header_links');
 		}
 	?>
+    <div class="login_links">
+    	<?php if (Mage::getSingleton('customer/session')->getCustomer()->getPrefix() == 'Admin'): ?>
+    	 	<a href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Register New User') ?></a>
+         <?php endif; ?>
+    </div>
     <div class="login_links">
     	<span>Registered Users:</span>
 		<?php if (! Mage::getSingleton('customer/session')->isLoggedIn()): ?>

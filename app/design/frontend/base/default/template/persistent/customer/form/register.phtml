@@ -34,7 +34,19 @@
 ?>
 <div class="account-create">
     <div class="page-title">
-        <h1><?php echo $this->__('Create an Account') ?></h1>
+        <h1><?php echo $this->__('Create an Account for') ?> <?php 
+			
+			$groups = Mage::helper('customer')->getGroups()->toOptionArray();
+			
+			$groupId = Mage::getSingleton('customer/session')->getCustomer()->getGroupId();
+			
+			foreach($groups as $group){ 
+				if( $group['value'] == $groupId){
+					echo $group['label'].' Group';
+				}
+			}
+		?>
+        </h1>
     </div>
     <?php echo $this->getChildHtml('form_fields_before')?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
@@ -53,14 +65,14 @@
                         <input type="text" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
                     </div>
                 </li>
-                <?php if ($this->isNewsletterEnabled()): ?>
+               <?php /*?> <?php if ($this->isNewsletterEnabled()): ?>
                 <li class="control">
                     <div class="input-box">
                         <input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
                     </div>
                     <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
                 </li>
-                <?php endif ?>
+                <?php endif ?><?php */?>
             <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
             <?php if ($_dob->isEnabled()): ?>
                 <li><?php echo $_dob->setDate($this->getFormData()->getDob())->toHtml() ?></li>
@@ -76,6 +88,7 @@
             </ul>
         </div>
     <?php if($this->getShowAddressFields()): ?>
+    
         <div class="fieldset">
             <input type="hidden" name="create_address" value="1" />
             <h2 class="legend"><?php echo $this->__('Address Information') ?></h2>
