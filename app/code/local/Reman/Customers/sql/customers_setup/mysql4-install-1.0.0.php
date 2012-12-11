@@ -25,7 +25,7 @@ Mage::getSingleton('eav/config')
 
 // Fluid
 $setup->addAttribute('customer', 'fluid', array(
-	'type'				=>	'int',
+	'type'				=>	'text',
 	'input'				=>	'text',
 	'label'				=>	'Fluid',
 	'global'			=>	1,
@@ -39,6 +39,25 @@ $setup->addAttribute('customer', 'fluid', array(
 
 Mage::getSingleton('eav/config')
 	->getAttribute('customer', 'fluid')
+	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
+	->save();
+
+// Splink
+$setup->addAttribute('customer', 'splink', array(
+	'type'				=>	'int',
+	'input'				=>	'text',
+	'label'				=>	'Splink',
+	'global'			=>	1,
+	'visible'			=>	1,
+	'required'			=> 	0,
+	'user_defined'		=>	1,
+	'default'			=>	'0',
+	'visible_on_front'	=>	1,
+	'source'			=>	'profile/entity_splink'
+));
+
+Mage::getSingleton('eav/config')
+	->getAttribute('customer', 'splink')
 	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
 	->save();
 
