@@ -44,6 +44,9 @@
 					<applic> 
 						<table>reman_applic</table>
 					</applic>
+					<gsp> 
+						<table>reman_gsp</table>
+					</gsp>
 				</entities>
 			</sync_mysql4>
 		</models>

@@ -33,6 +33,15 @@ $installer->run("
 	`part_number` varchar(12) DEFAULT NULL COMMENT 'Path Number',
 	PRIMARY KEY (`applic_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	DROP TABLE IF EXISTS {$this->getTable('sync/gsp')}; 
+	CREATE TABLE {$this->getTable('sync/gsp')} (
+	`gsp_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'GSP ID',
+	`customer_id` varchar(12) DEFAULT NULL COMMENT 'Customer ID',
+	`partnum` varchar(12) DEFAULT NULL COMMENT 'Part SKU',
+	`price` int(2) unsigned NOT NULL COMMENT 'Special Price',
+	`core` int(2) unsigned NOT NULL COMMENT 'Special Core Price',
+	PRIMARY KEY (`gsp_id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
 
 $installer->endSetup();
