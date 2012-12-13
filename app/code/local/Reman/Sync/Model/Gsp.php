@@ -39,4 +39,13 @@ class Reman_Sync_Model_Gsp extends Mage_Core_Model_Abstract
 			$this->save();
 		}
 	}
+	
+	/**
+	 * Load Customer Special Price
+	 *
+	 */
+	public function loadSp($sku, $splink){
+		return $this->getResource()->loadSp($sku, $splink);
+    }
+	
 }
