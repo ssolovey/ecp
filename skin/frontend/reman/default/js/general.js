@@ -418,6 +418,8 @@ Reman_QuickQuote.prototype = {
 
 			$j('.sel_group_link').parent().remove();
 
+		}else{
+			$j('.sel_group_link').parent().remove();
 		}
 
 		$j('.select_part').css('display','none');

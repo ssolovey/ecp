@@ -25,7 +25,5 @@ class Reman_Sync_Model_Mysql4_Gsp extends Mage_Core_Model_Mysql4_Abstract
 		
 		// return result
 		return $spPrice;
-	
 	}
-	
 }

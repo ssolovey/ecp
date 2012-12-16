@@ -37,19 +37,25 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		
 		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
 		
+		if(!$product){
 		
-		$specialPrices = $this->calculateMSRP($product);
+			return $product; // empty object
 		
-		if($specialPrices['msrp'] != ""){
-			 $product->setData('parts_msrp',$specialPrices['msrp']);
+		}else{
+			// calculate MSRP Price
+			$specialPrices = $this->calculateMSRP($product);
+			
+			if($specialPrices['msrp'] != ""){
+				 $product->setData('parts_msrp',$specialPrices['msrp']);
+			}
+			
+			if($specialPrices['core'] != ""){
+				 $product->setData('parts_core_price',$specialPrices['core']);
+			}
+			
+			// return calculated product with new MSRP and Core price
+			return $product;
 		}
-		
-		if($specialPrices['core'] != ""){
-			 $product->setData('parts_core_price',$specialPrices['core']);
-		}
-		
-		// return result
-		return $product;
 	
 	}
 	
@@ -76,11 +82,11 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		// Get Special Price for selected product if exist
 		$spPrice = Mage::getModel('sync/gsp')->loadSp($prod->getData('sku'), $customer_splink);
 		
-		
-		if(is_null($customer_splink) || sizeof($spPrice) == 0)
+		if(sizeof($spPrice) == 0)
 		{
 			// calculate discount rate 
 			$inverseDiscValue =(100 - $customer_discount) / 100;
+			
 			// calculated msrp value
 			$msrp =  round($prod->getData('parts_msrp') * $inverseDiscValue);
 			// assing calculated msrp value
@@ -89,10 +95,13 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			return $values;
 		}else
 		{
+			/**
+			 * Get Price and Core price for current useer with valid Splink and SKU
+			 *
+			*/
+			$values["msrp"]= $spPrice[0]['price'];
 			
-			$values["msrp"]= $spPrice['price'];
-			
-			$values["core"]= $spPrice['core'];
+			$values["core"]= $spPrice[0]['core'];
 			
 			return $values;
 		}
