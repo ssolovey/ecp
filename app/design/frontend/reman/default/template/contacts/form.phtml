@@ -25,11 +25,11 @@
  */
 ?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
-<div class="page-title">
-    <h1><?php echo Mage::helper('contacts')->__('Online Custom Quote Registration') ?></h1>
+<div class="page-title" style="margin:0px;">
+    <h1><?php echo Mage::helper('contacts')->__('Online custom quote company registration') ?></h1>
 </div>
 <form action="<?php echo $this->getUrl('contacts/index/post'); ?>" id="contactForm" method="post">
-    <div class="fieldset_reman" style=" margin-left:65px; margin-right:41px;">
+    <div class="fieldset_reman" style="margin-right:15px; width:270px;">
         <ul class="form-list">
             <li>
                     <label for="name" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('First Name') ?></label>
@@ -70,18 +70,19 @@
         <button type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
     </div>
     </div>
-     <div class="fieldset_reman" style="margin-right:63px;">
+     <div class="fieldset_reman" style="width:450px;"> 
      	 <ul class="form-list">
             <li>
                 <label>Requirements:</label>
                  <div class="input-box" style="margin-top: 5px; position: relative; float: left;">
                  	some text.................
                  </div>
-                 <label style="margin-top:120px;">Instructions:</label>
+           </li>
+           <li>
+           		<label style="margin-top:120px;">Instructions:</label>
                  <div class="input-box" style="margin-top: 5px; position: relative; float: left;">
                  	some text.................
                  </div>
-                   
            </li>
            </ul>
      </div>
