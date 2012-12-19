@@ -46,7 +46,7 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			$specialPrices = $this->calculateMSRP($product);
 			
 			if($specialPrices['msrp'] != ""){
-				 $product->setData('parts_msrp',$specialPrices['msrp']);
+				 $product->setData('price',$specialPrices['msrp']);
 			}
 			
 			if($specialPrices['core'] != ""){
