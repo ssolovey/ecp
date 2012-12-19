@@ -2364,7 +2364,7 @@ background-position: 0px 20px;
 .reman_login_content{
 	min-height:220px !important; 
 	background:none !important; 
-	border:2px solid #000 !important;
+	border: 1px solid #999 !important;
 }
 
 .reman_user_login_lable{
