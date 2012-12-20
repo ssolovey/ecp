@@ -39,39 +39,44 @@
         <div class="col2-set_reman">
             <div class="col-2_reman registered-users">
                 <div class="content reman_login_content">
-                    <ul class="form-list_reman">
-							<li class="reman_user_login_lable">User Login:</li>
-	                    <li style="height:40px;">
-                            <label for="email" class="required"><?php echo $this->__('email:') ?></label>
-                            <div style="margin-left:50px;" class="input-box_reman">
-                                <input style="border:1px solid #000; width:200px;" type="text" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" />
-                            </div>
-							<div class="reqmark">*</div>
-                        </li>
-                        <li>
-                            <label for="pass" class="required"><?php echo $this->__('password:') ?></label>
-                            <div style="margin-left:14px;" class="input-box_reman">
+                    <table class="reman_login_form">
+                    	<tr>
+                            <td><span class="reman_user_login_lable">User Login:</span></td>
+                        </tr>
+                        <tr>
+                        	<td style="color:#000;"><label for="email" class="required"><?php echo $this->__('email:') ?></label></td>
+                            <td>
+                                <div class="input-box_reman">
+                                    <input style="border:1px solid #000; width:200px;" type="text" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" />
+                                </div>
+                            </td>
+                             <td><div class="reqmark">*</div></td>
+                        </tr>
+                        <tr>
+                        	<td style="color:#000;"> <label for="pass" class="required"><?php echo $this->__('password:') ?></label></td>
+                            <td>
+                            	<div class="input-box_reman">
                                 <input style="border:1px solid #000; width:200px;" type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" />
-                            </div>
-							<div class="reqmark">*</div>
-                        </li>
-                        <?php echo $this->getChildHtml('form.additional.info'); ?>
-                    </ul>
-				<div class="reman_login_submit">
-               <button style="width:80px;" type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
-                </div>
-					<div class="forgetpass">
-						<ul>
-							<li style="height:20px;"><a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left"><?php echo $this->__('Forgot Your Password?') ?></a></li>
-							<li><a style="float:right;" href="<?php echo Mage::getUrl('register'); ?>">Register</a></li>
-						</ul>
-					</div>
-                    
-					
-					
-					
-					
+                            	</div>
                             
+                            </td>
+                            <td><div class="reqmark">*</div></td>
+                        </tr>
+                        <tr>
+                        	<td></td>
+                        	<td style="float:right">
+                            	<button style="width:80px;" type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
+                            </td>
+                        </tr>
+                        <tr class="links">
+                        	<td></td>
+                            <td style="float:right;"><a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left"><?php echo $this->__('Forgot Your Password?') ?></a></td>
+                        </tr>
+                        <tr class="links">
+                        	<td></td>
+                            <td style="float:right;"><a href="<?php echo Mage::getUrl('register'); ?>">Register</a></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
