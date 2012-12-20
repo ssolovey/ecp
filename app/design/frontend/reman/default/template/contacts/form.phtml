@@ -25,7 +25,7 @@
  */
 ?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
-<div class="page-title" style="margin:0px;">
+<div id="reg_title" class="page-title" style="margin:0px;">
     <h1><?php echo Mage::helper('contacts')->__('Online custom quote company registration') ?></h1>
 </div>
 <form action="<?php echo $this->getUrl('contacts/index/post'); ?>" id="contactForm" method="post">
@@ -91,4 +91,11 @@
 //<![CDATA[
     var contactForm = new VarienForm('contactForm', true);
 //]]>
+</script>
+<!--Hide COntact form in case of success form submit-->
+<script type="text/javascript">
+	if($j('#messages_product_view').children().length > 0){
+		$j('#reg_title').hide();
+		$j('#contactForm').hide();
+	}
 </script>
