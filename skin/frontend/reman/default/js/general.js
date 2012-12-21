@@ -21,7 +21,16 @@ $j(document).ready(function(){
 		Reman_QuickQuote.prototype.eventsHandler(event);
 
 	});
-
+	/* Slide Down About reman list*/
+	$j('#about_reman_link').bind('mouseenter', function(){
+		$j('.reman_about_link').addClass('hover');
+		$j("#dropdown_menu").slideDown();
+	});
+	/* Slide DUp About reman list*/
+	$j('#about_reman_link').bind('mouseleave', function(event){
+		$j('.reman_about_link').removeClass('hover');
+		$j("#dropdown_menu").slideUp();
+	})
 });
 
 
@@ -1089,4 +1098,5 @@ Reman_QuickQuote.prototype = {
 	}
 
 }
+
 

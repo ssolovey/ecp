@@ -592,6 +592,7 @@ tr.summary-details-excluded { font-style:italic; }
 	text-shadow: .1em 0em white;
 	font-size:13px;
 	padding: 8px 6px 12px 7px;
+	display:block;
 }
 
 #header_menu li a:hover {
@@ -602,6 +603,16 @@ tr.summary-details-excluded { font-style:italic; }
 	text-shadow: .1em 0em white;
 }
 
+
+#header_menu .reman_about_link.hover {
+	background: #C8C8C8;
+	color: #233E89;
+	background-image: url(../images/nav-over-bg.gif);
+	background-repeat: repeat-x;
+	text-shadow: .1em 0em white;
+}
+
+
 #header_menu li {
 	position: relative;
 	display: inline-block;
@@ -609,8 +620,8 @@ tr.summary-details-excluded { font-style:italic; }
 	padding: 0px 0px 0px 0px;
 }
 #header_menu .online_quotes_lable{
-	padding: 3px 6px 12px 45px;
 	font-size: 13px;
+	margin-left:50px;
 }
 
 #header_menu .online_quotes_lable a{
@@ -681,7 +692,7 @@ background-position: 0px 20px;
 .header .logo { float:left; margin:6px 0 3px 15px; text-decoration:none !important; }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden;  }
 .header h1.logo { margin:0; }
-.header .quick-access { float:right; width:700px; padding:10px 10px 0 0; }
+.header .quick-access { float:left; width:745px; padding:10px 10px 0 0; margin-left:10px; }
 .header .welcome-msg { margin:0; color:#fff; text-align:right; }
 .header .welcome-msg a { color:#ebbc58; }
 .header .form-search { position:absolute; top:0; right:29px; width:315px; height:30px; background:url(../../../shop/default/images/bkg_form-search.gif) 0 0 no-repeat; padding:1px 0 0 16px; }
@@ -2406,4 +2417,45 @@ background-position: 0px 20px;
 .reman_login_form .links td{
 	height:18px;
 	font-size:14px;
+}
+/*About Reman Drop Down menu*/
+
+#dropdown_menu{
+	top:47px; 
+	left:0px; 
+	width:160px; 
+	position:absolute;
+	background:#e4e4e4;
+	background-image:url(../images/nav-submenu-bg.gif);
+	background-repeat:repeat-x;
+	display:none;
+}
+
+
+
+#dropdown_menu li{
+	position:relative;
+	float:none;
+	width:160px;
+	left:0px;
+}
+
+#dropdown_menu li a{
+	width:150px;
+	padding:5px;
+	border-bottom:1px solid #999;
+	display:block;
+	text-align:left;
+}
+#dropdown_menu li a:hover{
+	background-image:url(../images/nav-subnav-item-over.gif) repeat-x;
+	background-repeat:repeat-x;
+}
+.downarrowclass{
+	position: absolute;
+	top: 12px;
+	right: 7px;
+	background:url(../images/down.gif) no-repeat;
+	width:11px;
+	height:8px;
 }

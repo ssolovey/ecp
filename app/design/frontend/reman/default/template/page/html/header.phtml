@@ -51,7 +51,19 @@
             <?php echo $this->getChildHtml('store_language') ?><?php */?>
             
             <ul id="header_menu">
-            	<li><a href="http://etereman.com/philosophy.php"><?php echo $this->__('About ETE REMAN') ?></a></li>
+            	<li id="about_reman_link"  style="width:160px; text-align:left; height:48px">
+					<a class="reman_about_link" href="http://etereman.com/philosophy.php"><?php echo $this->__('About ETE REMAN') ?></a>
+					<div class="downarrowclass"></div>
+					<ul id="dropdown_menu">
+						<li><a href="http://etereman.com/philosophy.php">Philosophy</a></li>
+						<li><a href="http://etereman.com/people.php">People</a></li>
+						<li><a href="http://etereman.com/testimonials.php">Testimonials</a></li>
+						<li><a href="http://etereman.com/customerloyalty.php">Customer Loyalty</a></li>
+						<li><a href="http://etereman.com/news/">News</a></li>
+						<li><a href="http://etereman.com/overview-video.php">Video</a></li>
+						<li><a href="http://etereman.com/employment.php">Employment</a></li>
+					</ul>
+				</li>
                 <li><a href="http://etereman.com/planttour.php"><?php echo $this->__('Plant Tour') ?></a></li>
                 <li><a href="http://etereman.com/remanu"><?php echo $this->__('Reman U') ?></a></li>
                 <li><a href="http://etereman.com/warrantyinfo.php"><?php echo $this->__('Warranty Info') ?></a></li>
