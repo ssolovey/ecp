@@ -33,11 +33,11 @@ class Reman_Sync_Model_Applic extends Mage_Core_Model_Abstract
 			$this->setData(
 				array(
 					'vehicle_id'		=>		$item[0],
-					'group_number'		=>		$item[1],
-					'subgroup'			=>		$item[4],
-					'menu_heading'		=>		$item[5],
-					'applic'			=>		$item[3],
-					'part_number'		=>		$item[6]
+					'group_number'		=>		$item[2],
+					'subgroup'			=>		$item[5],
+					'menu_heading'		=>		$item[6],
+					'applic'			=>		$item[4],
+					'part_number'		=>		$item[7]
 				)		    	
 			);
 			
