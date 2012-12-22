@@ -999,14 +999,12 @@ Reman_QuickQuote.prototype = {
 
 							if(response.error || response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
 
-								
-
 								$j('#preloader_cont').fadeOut(500,function(){
-
 										$j('#parts_tbl').removeClass().addClass('reman_show');
-
-										$j('.product_error').append('Not available');
-
+										$j('#product_error_popup').fadeIn();
+										setTimeout(function(){
+											$j('#product_error_popup').fadeOut();
+										},3000);
 									});
 
 								return
@@ -1090,13 +1088,9 @@ Reman_QuickQuote.prototype = {
 						$j('#reman-product_info').html(data.responseText);
 
 					});
-
 				}
-
 		});
-
 	}
-
 }
 
 

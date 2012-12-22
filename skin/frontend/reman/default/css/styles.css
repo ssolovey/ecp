@@ -2459,3 +2459,18 @@ background-position: 0px 20px;
 	width:11px;
 	height:8px;
 }
+/*Error Part Number Popup*/
+#product_error_popup{
+	width: 235px;
+	height: 88px;
+	border: 1px solid #E06060;
+	text-align: center;
+	padding-top: 30px;
+	font-weight: bold;
+	z-index: 5;
+	position: absolute;
+	background: white;
+	left: 210px;
+	top: 50px;
+	display:none;
+}
