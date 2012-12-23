@@ -18,4 +18,10 @@
 				<block type="quote/quote" name="quote" output="toHtml" template="quote/product.phtml" />
 		 </reference>
 	</quote_index_product>
+	<!--Quick Quote Ajax action for product store inventory info load-->
+	<quote_index_invent>
+		 <reference name="content">
+				<block type="quote/quote" name="quote" output="toHtml" template="quote/invent.phtml" />
+		 </reference>
+	</quote_index_invent>
 </layout>

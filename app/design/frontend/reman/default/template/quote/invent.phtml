@@ -1,0 +1,57 @@
+<?php $_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); ?>
+<!-- Stock Availability-->
+<div id="stock_avl">
+	<div class="title">Availability</div>
+    <table>
+        <tr>
+            <td class="lable">MKE:</td>
+            <td id="mke">
+		     <?php
+				 if($_product->getData('parts_inventory_nc') == 0 || $_product->getData('parts_inventory_nc') == null){
+						echo 'No';
+					}else{
+						echo 'Yes';
+					}
+             ?>
+             </td>
+        </tr>
+        <tr>
+            <td class="lable">BWI:</td>
+            <td id="bwi">
+				<?php 
+					if($_product->getData('parts_inventory_ne') == 0 || $_product->getData('parts_inventory_ne') == null){
+						echo 'No';
+					}else{
+						echo 'Yes';
+					}
+				?>
+            </td>
+        </tr>
+        <tr>
+            <td class="lable">ONT:</td>
+            <td id="ont">
+				<?php 
+					if($_product->getData('parts_inventory_sw') == 0 || $_product->getData('parts_inventory_sw') == null){
+						echo 'No';
+					}else{
+						echo 'Yes';
+					}
+				?>
+            </td>
+        </tr>
+        <tr>
+            <td class="lable">ATL:</td>
+            <td id="atl">
+				<?php 
+					if($_product->getData('parts_inventory_se') == 0 || $_product->getData('parts_inventory_se') == null){
+						echo 'No';
+					}else{
+						echo 'Yes';
+					}
+				?>
+            </td>
+        </tr>
+    </table>
+    
+    <div class="bottom_message">Available for immediate delivery</div>
+</div>

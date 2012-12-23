@@ -59,7 +59,17 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		/** 
 			Load Only Custom product page for Quick Quote Block
 		*/
-		$this->loadLayout('view'); 
+		$this->loadLayout('product'); 
+        //This function processes and displays all layout phtml and php files.
+		$this->renderLayout(); 
+	
+	}
+	
+	public function inventAction(){
+		/** 
+			Load Inventory info block page for Quick Quote Block
+		*/
+		$this->loadLayout('invent'); 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	

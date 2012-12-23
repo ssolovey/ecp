@@ -1157,7 +1157,7 @@ background-position: 0px 20px;
 
 .product-view { border:1px solid #c4c6c8; width:615px; }
 /* Custom Quote Product View block*/
-.product-view_quote { width:100%; padding:5px;}
+.product-view_quote { width:100%; padding:5px; min-height: 550px;}
 
 .product-view_quote .product-name{
 	margin-left: 25px;
@@ -2473,4 +2473,44 @@ background-position: 0px 20px;
 	left: 210px;
 	top: 50px;
 	display:none;
+}
+/*Inventory Info BLock*/
+
+#stock_avl{
+	border: 1px solid black;
+	float: left;
+	width: 20%;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
+#stock_avl table {
+	margin-top: 15px;
+	margin-left: 20px;
+	font-size: 14px;
+}
+
+#stock_avl table tr{
+	height:25px;
+}
+
+#stock_avl .title{
+	font-size: 14px;
+	font-weight: bold;
+	margin-left: 20px;
+	margin-top: 5px;
+}
+
+#stock_avl .lable{
+	font-weight:bold;
+	padding-right:5px;
+	
+}
+
+#stock_avl .bottom_message{
+	font-size: 14px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	margin-top: 15px;
+	font-weight: bold;
 }

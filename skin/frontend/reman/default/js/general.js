@@ -442,11 +442,10 @@ Reman_QuickQuote.prototype = {
 	
 
 	clearProductInfo: function(){
-
+		$j('#reman-invent_info').removeClass().addClass('reman_hide');
+		$j('#reman-invent_info').html('');
 		$j('#reman-product_info').removeClass().addClass('reman_hide');
-
 		$j('#reman-product_info').html('');
-
 	},
 
 	turnOnMakeBreadcrumb: function(){
@@ -993,7 +992,9 @@ Reman_QuickQuote.prototype = {
 
 							//parse response to JSON Object		  
 
-							var response = $j.parseJSON(data.responseText);	
+							var response = $j.parseJSON(data.responseText);
+							
+								
 
 							
 
@@ -1014,7 +1015,7 @@ Reman_QuickQuote.prototype = {
 						
 
 							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
-
+							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 							
 
 						}
@@ -1038,9 +1039,7 @@ Reman_QuickQuote.prototype = {
 	
 
 	loadProductInfo: function(id,name){
-
-	
-
+		
 		$j.ajax({
 
 				url: "index/product",
@@ -1083,11 +1082,26 @@ Reman_QuickQuote.prototype = {
 
 						// Show product page
 
-						$j('#reman-product_info').removeClass().addClass('reman_show');	
+						$j('#reman-product_info').removeClass().addClass('reman_show');
+						$j('#reman-invent_info').removeClass().addClass('reman_show');		
 
 						$j('#reman-product_info').html(data.responseText);
 
 					});
+				}
+		});
+	},
+	
+	loadInventoryInfo: function(id){
+		$j.ajax({
+
+				url: "index/invent",
+				type: 'POST',
+				data: {
+					id:id
+				},
+				complete: function(data){
+					$j('#reman-invent_info').html(data.responseText);
 				}
 		});
 	}
