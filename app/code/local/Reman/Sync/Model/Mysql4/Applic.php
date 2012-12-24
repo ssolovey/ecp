@@ -38,8 +38,8 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
 		
 		if(!$product){
-		
-			return $product; // empty object
+			
+			return $product;  // empty object
 		
 		}else{
 			// calculate MSRP Price
@@ -52,11 +52,9 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			if($specialPrices['core'] != ""){
 				 $product->setData('parts_core_price',$specialPrices['core']);
 			}
-			
-			// return calculated product with new MSRP and Core price
-			return $product;
+					
+			 return $product;
 		}
-	
 	}
 	
 	/**
@@ -107,5 +105,4 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		}
 			
 	}
-	
 }

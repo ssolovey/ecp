@@ -33,24 +33,21 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		
 		if($request['step'] == 4)
 		{
-		
 			// get years accprding to selected make
 			$result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
-			if($result_st4 != null){
-			$productObj = new stdClass();
+			if($result_st4){
+				$productObj = new stdClass();
 				$productObj->sku = $result_st4->getSku();
-				$productObj->error = false;
-			
-				echo json_encode($productObj);
+				if($productObj->sku == "N/A" || $productObj->sku[0] != $request['category'] ){
+					return var_export(false);
+				}else{
+					echo json_encode($productObj);
+					$this->productAction();
+				}
 			}else{
-				$productError = new stdClass();
-					$productError->error = true;
-					$productError->message = "Not available";
-				echo json_encode($productError);
+				return var_export(false);
 			}
-			
 		}
-		
 		// close connection
 		die;
 	}

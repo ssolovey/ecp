@@ -951,89 +951,46 @@ Reman_QuickQuote.prototype = {
 	
 
 	selectPart: function(applic_id,subgroup,id,name){
-
 			if(subgroup == 0) {
-
-				
-
 					$j.ajax({
-
 						url: "index/ajax",
-
 						type: 'POST',
-
 						data: {
-
 							step:4,
-
-							id:applic_id
-
+							id:applic_id,
+							category: Reman_QuickQuote.prototype.currentCatSelected
 						},
-
-						
 
 						beforeSend: function(){
-
 							$j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
-
 							$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
-
 							$j('#parts_tbl').removeClass().addClass('reman_hide');
-
 							$j('#preloader_cont').css('display','block');
-
 						},
 
-						
-
 						complete: function(data){
-
-							
-
 							//parse response to JSON Object		  
-
 							var response = $j.parseJSON(data.responseText);
 							
-								
-
-							
-
-							if(response.error || response.sku == "N/A" || response.sku.split('')[0] != Reman_QuickQuote.prototype.currentCatSelected){
-
-								$j('#preloader_cont').fadeOut(500,function(){
+							if(!response){
+									$j('#preloader_cont').fadeOut(500,function(){
 										$j('#parts_tbl').removeClass().addClass('reman_show');
 										$j('#product_error_popup').fadeIn();
 										setTimeout(function(){
 											$j('#product_error_popup').fadeOut();
 										},3000);
 									});
-
-								return
-
+							}else{
+								Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
+								Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 							}
-
-						
-
-							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
-							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
-							
-
 						}
-
 				});
-
-				
-
 			}else{
-
 				$j('#'+id).css('display','none'); // hide current group
-
 				$j('#'+subgroup).css('display','block'); // show next group according to subgroup ID
-
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span>');
-
 			}
-
 	},
 
 	
