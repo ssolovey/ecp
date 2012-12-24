@@ -2510,7 +2510,8 @@ background-position: 0px 20px;
 #stock_avl .bottom_message{
 	font-size: 14px;
 	margin-left: 20px;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 	margin-top: 15px;
 	font-weight: bold;
+	color:#00F;
 }

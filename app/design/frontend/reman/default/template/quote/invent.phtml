@@ -1,4 +1,16 @@
-<?php $_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); ?>
+<?php 
+		$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
+		//MKE Stock
+		$mke = $_product->getData('parts_inventory_nc');
+		//BWI Stock
+		$bwi = $_product->getData('parts_inventory_ne');
+		//ONT Stock
+		$ont = $_product->getData('parts_inventory_sw');
+		//ATL Stock
+		$atl = $_product->getData('parts_inventory_se');
+		//IP
+		$ip = $_product->getData('parts_inventory_ip');
+?>
 <!-- Stock Availability-->
 <div id="stock_avl">
 	<div class="title">Availability</div>
@@ -11,7 +23,7 @@
             <td class="lable">BWI:</td>
             <td id="bwi">
 				<?php 
-					if($_product->getData('parts_inventory_ne') == 0 || $_product->getData('parts_inventory_ne') == null){
+					if($bwi == 0 || $bwi == null){
 						echo 'No';
 					}else{
 						echo 'Yes';
@@ -23,7 +35,7 @@
             <td class="lable">ONT:</td>
             <td id="ont">
 				<?php 
-					if($_product->getData('parts_inventory_sw') == 0 || $_product->getData('parts_inventory_sw') == null){
+					if($ont == 0 || $ont == null){
 						echo 'No';
 					}else{
 						echo 'Yes';
@@ -35,7 +47,7 @@
             <td class="lable">ATL:</td>
             <td id="atl">
 				<?php 
-					if($_product->getData('parts_inventory_se') == 0 || $_product->getData('parts_inventory_se') == null){
+					if($atl == 0 || $atl == null){
 						echo 'No';
 					}else{
 						echo 'Yes';
@@ -45,5 +57,13 @@
         </tr>
     </table>
     
-    <div class="bottom_message">Call for availability</div>
+    <div class="bottom_message">
+    	<?php
+        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null)){
+        	echo "Call for availability";
+		}else{
+			echo "Available for immediate delivery";
+		}
+		?>
+    </div>
 </div>
