@@ -9,5 +9,6 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		//Mage::getModel('sync/parts')->loadProductsData();
 		//Mage::getModel('sync/gsw')->loadGswData();
 		//Mage::getModel('sync/gsp')->loadGspData();
+		//Mage::getModel('sync/applic')->syncData();
 	}
 }
