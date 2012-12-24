@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Remah Customer module
+ * Reman Company module
  * 
  * This module used with Magento E-commerse software
  * to provide custom attributes to customers profile
  *
- * @category    Remah
- * @package     Reman_Customer
+ * @category    Reman
+ * @package     Reman_Company
  * @copyright   Copyright (c) 2012 Artem Petrosyan (artpetrosyan@gmail.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -15,9 +15,9 @@
 
 <config>
 	<modules>
-		<Reman_Customers>
+		<Reman_Company>
 			<active>true</active>
 			<codePool>local</codePool>
-		</Reman_Customers>
+		</Reman_Company>
 	</modules>
 </config>
