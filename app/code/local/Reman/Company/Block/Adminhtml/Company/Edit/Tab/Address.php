@@ -1,19 +1,12 @@
 <?php
-class Reman_Company_Block_Adminhtml_Company_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
+class Reman_Company_Block_Adminhtml_Company_Edit_Tab_Address extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()
   {
       $form = new Varien_Data_Form();
       $this->setForm($form);
-      $fieldset = $form->addFieldset('web_form', array('legend'=>Mage::helper('company')->__('Company information')));
-     
-      $fieldset->addField('name', 'text', array(
-          'label'     => Mage::helper('company')->__('Name'),
-          'class'     => 'required-entry',
-          'required'  => true,
-          'name'      => 'name'
-      ));
-      
+      $fieldset = $form->addFieldset('address_form', array('legend'=>Mage::helper('company')->__('Address information')));     
+           
       $fieldset->addField('addr1', 'text', array(
           'label'     => Mage::helper('company')->__('Address 1'),
           'required'  => false,
@@ -46,33 +39,7 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_Form extends Mage_Adminhtml
           'required'  => true,
           'name'      => 'zip'
       ));
-      
-      $fieldset->addField('tax', 'text', array(
-          'label'     => Mage::helper('company')->__('Tax'),
-          'required'  => false,
-          'name'      => 'tax'
-      ));
-      
-      $fieldset->addField('discount', 'text', array(
-          'label'     => Mage::helper('company')->__('Discount'),
-          'required'  => false,
-          'name'      => 'discount'
-      ));
-      
-      $fieldset->addField('fluid', 'text', array(
-          'label'     => Mage::helper('company')->__('Fluid'),
-          'class'     => 'required-entry',
-          'required'  => true,
-          'name'      => 'fluid'
-      ));
-      
-      $fieldset->addField('payment', 'text', array(
-          'label'     => Mage::helper('company')->__('Payment'),
-          'class'     => 'required-entry',
-          'required'  => true,
-          'name'      => 'payment'
-      ));
-     
+           
       if ( Mage::getSingleton('adminhtml/session')->getWebData() )
       {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getWebData());

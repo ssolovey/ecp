@@ -21,7 +21,7 @@
 			<customer>
 				<children>
 					<items module="company">
-						<title>Company Manager</title>
+						<title>Manage Companies</title>
 						<sort_order>0</sort_order>
 						<action>company/adminhtml_company</action>
 					</items>

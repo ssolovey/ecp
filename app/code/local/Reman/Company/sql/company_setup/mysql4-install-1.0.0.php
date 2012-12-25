@@ -21,6 +21,7 @@ $installer->run("
 	`tc_war` int(2) NOT NULL DEFAULT '0' COMMENT 'TC Warranty ID',
 	`at_war` int(2) NOT NULL DEFAULT '0' COMMENT 'AT Warranty ID',
 	`di_war` int(2) NOT NULL DEFAULT '0' COMMENT 'DI Warranty ID',
+	`status` smallint(6) NOT NULL default '0',
 	PRIMARY KEY (`company_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");

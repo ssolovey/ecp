@@ -22,25 +22,16 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
     protected function _prepareColumns()
     {
         $this->addColumn('company_id', array(
-          'header'    => Mage::helper('company')->__('ID'),
-          'width'     => '50px',
+          'header'    => Mage::helper('company')->__('Company ID'),
+          'width'     => '100px',
           'index'     => 'company_id',
-          'align'     => 'center'
+          'align'     => 'right'
         ));
  
         $this->addColumn('name', array(
           'header'    => Mage::helper('company')->__('Name'),
+          'width'     => '250px',
           'index'     => 'name'
-        ));
-        
-        $this->addColumn('city', array(
-          'header'    => Mage::helper('company')->__('City'),
-          'index'     => 'city'
-        ));
-        
-        $this->addColumn('state', array(
-          'header'    => Mage::helper('company')->__('State'),
-          'index'     => 'state'
         ));
         
         $this->addColumn('zip', array(
@@ -48,15 +39,41 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
           'index'     => 'zip'
         ));
         
+        $this->addColumn('tax', array(
+          'header'    => Mage::helper('company')->__('Tax Number'),
+          'index'     => 'tax'
+        ));
+        
+        $this->addColumn('discount', array(
+          'header'    => Mage::helper('company')->__('Discount'),
+          'index'     => 'discount'
+        ));
+        
         $this->addColumn('payment', array(
           'header'    => Mage::helper('company')->__('Payment'),
-          'index'     => 'payment'
-        ));
+          'index'     => 'payment',
+          'type'      => 'options',
+          'options'   => array(
+              'ACCT' => 'On Account',
+              'PREPAY' => 'Prepaid'
+          )
+      ));
+        
+        $this->addColumn('status', array(
+          'header'    => Mage::helper('company')->__('Status'),
+          'index'     => 'status',
+          'type'      => 'options',
+          'options'   => array(
+              1 => 'Enabled',
+              2 => 'Disabled'
+          )
+      ));
 		
 		 $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('company')->__('Action'),
-                'width'     => '100',
+                'width'     => '100px',
+                'align'     => 'center',
                 'type'      => 'action',
                 'getter'    => 'getId',
                 'actions'   => array(
