@@ -18,8 +18,7 @@
     </admin>
 	<adminhtml>
 		<menu>
-			<company module="company">
-				<title>Company</title>
+			<customer>
 				<children>
 					<items module="company">
 						<title>Company Manager</title>
@@ -27,7 +26,7 @@
 						<action>company/adminhtml_company</action>
 					</items>
 				</children>
-			</company>
+			</customer>
 		</menu>
 		<acl>
 			<resources>

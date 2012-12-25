@@ -3,7 +3,7 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 {
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('company/items')
+			->_setActiveMenu('customer/items')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Company Manager'), Mage::helper('adminhtml')->__('Company Manager'));
 		return $this;
 	}
