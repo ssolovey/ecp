@@ -52,7 +52,25 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
           'header'    => Mage::helper('company')->__('Payment'),
           'index'     => 'payment'
         ));
-
+		
+		 $this->addColumn('action',
+            array(
+                'header'    =>  Mage::helper('company')->__('Action'),
+                'width'     => '100',
+                'type'      => 'action',
+                'getter'    => 'getId',
+                'actions'   => array(
+                    array(
+                        'caption'   => Mage::helper('company')->__('Edit'),
+                        'url'       => array('base'=> '*/*/edit'),
+                        'field'     => 'id'
+                    )
+                ),
+                'filter'    => false,
+                'sortable'  => false,
+                'index'     => 'stores',
+                'is_system' => true,
+        ));
         
         return parent::_prepareColumns();
     }

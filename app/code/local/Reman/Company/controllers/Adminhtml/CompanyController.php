@@ -6,16 +6,7 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 			->_setActiveMenu('company/items')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Company Manager'), Mage::helper('adminhtml')->__('Company Manager'));
 		return $this;
-	}   
-	
-	/*
-	public function indexAction() {
-		$this->loadLayout();
-		$myblock = $this->getLayout()->createBlock('company/adminhtml_company');
-		$this->_addContent($myblock);
-		$this->renderLayout();
-
-	}*/
+	}
 	
 	public function indexAction() {
 		$this->_initAction();
@@ -23,13 +14,92 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 		$this->renderLayout();
 	}
 	
-	/*
-	public function gridAction()
-    {
-        $this->loadLayout();
-        $this->getResponse()->setBody(
-               $this->getLayout()->createBlock('company/adminhtml_company_grid')->toHtml()
-        );
-    }
-    */
+	public function editAction() {
+		$id     = $this->getRequest()->getParam('id');
+		$model  = Mage::getModel('company/company')->load($id);
+
+		if ($model->getId() || $id == 0) {
+			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
+			if (!empty($data)) {
+				$model->setData($data);
+			}
+
+			Mage::register('company_data', $model);
+
+			$this->loadLayout();
+			$this->_setActiveMenu('company/items');
+
+			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Company Manager'), Mage::helper('adminhtml')->__('Company Manager'));
+			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Company News'), Mage::helper('adminhtml')->__('Company News'));
+
+			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+
+			$this->_addContent($this->getLayout()->createBlock('company/adminhtml_company_edit'))
+				->_addLeft($this->getLayout()->createBlock('company/adminhtml_company_edit_tabs'));
+
+			$this->renderLayout();
+		} else {
+			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('company')->__('Company does not exist'));
+			$this->_redirect('*/*/');
+		}
+	}
+	
+	public function newAction() {
+		$this->_forward('edit');
+	}
+	
+	
+	public function saveAction() {
+		if ($data = $this->getRequest()->getPost()) {
+			
+			$model = Mage::getModel('company/company');		
+			$model->setData($data)
+				->setId($this->getRequest()->getParam('id'));
+			
+			try {
+				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
+					$model->setCreatedTime(now())
+						->setUpdateTime(now());
+				} else {
+					$model->setUpdateTime(now());
+				}	
+				
+				$model->save();
+				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('company')->__('Company was successfully saved'));
+				Mage::getSingleton('adminhtml/session')->setFormData(false);
+
+				if ($this->getRequest()->getParam('back')) {
+					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+					return;
+				}
+				$this->_redirect('*/*/');
+				return;
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                Mage::getSingleton('adminhtml/session')->setFormData($data);
+                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                return;
+            }
+        }
+        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('company')->__('Unable to find company to save'));
+        $this->_redirect('*/*/');
+	}
+	
+	public function deleteAction() {
+		if( $this->getRequest()->getParam('id') > 0 ) {
+			try {
+				$model = Mage::getModel('company/company');
+				 
+				$model->setId($this->getRequest()->getParam('id'))
+					->delete();
+					 
+				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Company was successfully deleted'));
+				$this->_redirect('*/*/');
+			} catch (Exception $e) {
+				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+			}
+		}
+		$this->_redirect('*/*/');
+	}
 }
