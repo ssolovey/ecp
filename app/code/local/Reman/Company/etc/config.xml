@@ -5,22 +5,21 @@
 			<version>1.0.0</version>
 		</Reman_Company>
 	</modules>
-	<frontend>
-		<routers>
+    <admin>
+        <routers>
 			<company>
-				<use>standard</use>
+				<use>admin</use>
 				<args>
 					<module>Reman_Company</module>
 					<frontName>company</frontName>
 				</args>
 			</company>
-		</routers>
-	</frontend>
+        </routers>
+    </admin>
 	<adminhtml>
 		<menu>
 			<company module="company">
 				<title>Company</title>
-				<sort_order>71</sort_order>               
 				<children>
 					<items module="company">
 						<title>Company Manager</title>
@@ -37,10 +36,10 @@
 				</all>
 				<admin>
 					<children>
-						<company>
+						<Reman_Company>
 							<title>Company Module</title>
-							<sort_order>200</sort_order>
-						</company>
+							<sort_order>10</sort_order>
+						</Reman_Company>
 					</children>
 				</admin>
 			</resources>
@@ -88,6 +87,11 @@
 				</connection>
 			</company_read>
 		</resources>
+		<blocks>
+            <company>
+                <class>Reman_Company_Block</class>
+            </company>
+        </blocks>
 		<helpers>
             <company>
                 <class>Reman_Company_Helper</class>

@@ -12,13 +12,19 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
     */
 	
 	public function indexAction() {		
-		$this->loadLayout();
+		//$this->loadLayout();
 		//$this->_addContent($this->getLayout()->createBlock('company/adminhtml_company'));
+		//$this->renderLayout();
+		
+		$this->loadLayout();
+		$myblock = $this->getLayout()->createBlock('company/adminhtml_company');
+		$this->_addContent($myblock);
 		$this->renderLayout();
+
 	}
 	
 	/*
-    public function gridAction()
+	public function gridAction()
     {
         $this->loadLayout();
         $this->getResponse()->setBody(
