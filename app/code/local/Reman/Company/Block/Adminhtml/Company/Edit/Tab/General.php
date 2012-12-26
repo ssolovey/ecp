@@ -29,7 +29,7 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_General extends Mage_Adminh
       ));
       
       $fieldset->addField('discount', 'text', array(
-          'label'     => Mage::helper('company')->__('Discount'),
+          'label'     => Mage::helper('company')->__('Discount, %'),
           'required'  => false,
           'name'      => 'discount'
       ));

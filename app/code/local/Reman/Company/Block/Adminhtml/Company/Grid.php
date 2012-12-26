@@ -45,7 +45,7 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
         ));
         
         $this->addColumn('discount', array(
-          'header'    => Mage::helper('company')->__('Discount'),
+          'header'    => Mage::helper('company')->__('Discount, %'),
           'index'     => 'discount'
         ));
         
