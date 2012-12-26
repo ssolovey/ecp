@@ -2461,11 +2461,11 @@ background-position: 0px 20px;
 }
 /*Error Part Number Popup*/
 #product_error_popup{
-	width: 235px;
-	height: 88px;
+	width: 260px;
+	height: 90px;
 	border: 1px solid #E06060;
 	text-align: center;
-	padding-top: 30px;
+	padding-top: 40px;
 	font-weight: bold;
 	z-index: 5;
 	position: absolute;
