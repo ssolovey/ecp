@@ -26,4 +26,23 @@ $installer->run("
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
 
+$setup = Mage::getModel('customer/entity_setup', 'core_setup');
+$setup->addAttribute('customer', 'company', array(
+	'type'				=> 'int',
+	'input'				=> 'select',
+	'label'				=> 'Company',
+	'global'			=> 1,
+	'visible'			=> 1,
+	'required'			=> 1,
+	'user_defined'		=> 1,
+	'default'			=> '0',
+	'visible_on_front'	=> 1,
+	'source'			=> 'company/entity_companies',
+));
+
+Mage::getSingleton('eav/config')
+	->getAttribute('customer', 'company')
+	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
+	->save();
+
 $installer->endSetup();
