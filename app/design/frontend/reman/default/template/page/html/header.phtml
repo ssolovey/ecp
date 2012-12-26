@@ -84,7 +84,7 @@
 		}
 	?>
     <div class="login_links">
-    	<?php if (Mage::getSingleton('customer/session')->getCustomer()->getPrefix() == 'Admin'): ?>
+    	<?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>
     	 	<a href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Register New User') ?></a>
          <?php endif; ?>
     </div>
@@ -94,7 +94,7 @@
 		<?php 
 			echo $customer->getFirstname().' '.$customer->getLastname(); 
 	
-			if(Mage::getSingleton('customer/session')->getCustomer()->getPrefix() !=''){
+			if(Mage::helper('customer')->isCompanyAdminUser()){
 				echo ' ('.Mage::getSingleton('customer/session')->getCustomer()->getPrefix().')';
 			}
 		?>

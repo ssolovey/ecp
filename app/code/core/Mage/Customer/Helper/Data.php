@@ -131,6 +131,40 @@ class Mage_Customer_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $this->_groups;
     }
+	/**
+     * Check for customer Admin group
+     *
+     * @return (boolean)
+     */
+	public function isCompanyAdminUser()
+	{
+		$groups = Mage::helper('customer')->getGroups()->toOptionArray();
+		$groupId = Mage::getSingleton('customer/session')->getCustomer()->getGroupId();
+		foreach($groups as $group){ 
+			if( $group['value'] == $groupId){
+				if($group['label'] == "ADMIN"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+	
+	}
+	/**
+     * Check Customer SALES Group ID
+     *
+     * @return int
+     */
+	public function getSalesGroupId()
+	{
+		$groups = Mage::helper('customer')->getGroups()->toOptionArray();
+		foreach($groups as $group){ 
+			if( $group['label'] == "SALES"){
+				return $group['value'];
+			}
+		}
+	}
 
     /**
      * Retrieve current (logged in) customer object

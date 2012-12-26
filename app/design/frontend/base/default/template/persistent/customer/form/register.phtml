@@ -34,18 +34,8 @@
 ?>
 <div class="account-create">
     <div class="page-title">
-        <h1><?php echo $this->__('Create an Account for') ?> <?php 
-			
-			$groups = Mage::helper('customer')->getGroups()->toOptionArray();
-			
-			$groupId = Mage::getSingleton('customer/session')->getCustomer()->getGroupId();
-			
-			foreach($groups as $group){ 
-				if( $group['value'] == $groupId){
-					echo $group['label'].' Group';
-				}
-			}
-		?>
+        <h1><?php echo $this->__('Create an Account for') ?> 
+		<?php echo Mage::helper('company')->getCompanyName(). ' Company'?>
         </h1>
     </div>
     <?php echo $this->getChildHtml('form_fields_before')?>
@@ -54,6 +44,7 @@
         <div class="fieldset">
             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+            <input type="hidden" name="company" value="<?php echo Mage::helper('company')->getCompanyId();?>" />
             <h2 class="legend"><?php echo $this->__('Personal Information') ?></h2>
             <ul class="form-list">
                 <li class="fields">

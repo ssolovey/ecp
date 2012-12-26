@@ -243,7 +243,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
      */
     public function createAction()
     {
-        if ($this->_getSession()->isLoggedIn() && Mage::getSingleton('customer/session')->getCustomer()->getPrefix() != 'Admin') {
+        if (!Mage::helper('customer')->isCompanyAdminUser()) {
             $this->_redirect('*/*');
             return;
         }
@@ -259,7 +259,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
     public function createPostAction()
     {
         $session = $this->_getSession();
-        if ($session->isLoggedIn() && Mage::getSingleton('customer/session')->getCustomer()->getPrefix() != 'Admin') {
+        if (!Mage::helper('customer')->isCompanyAdminUser()) {
             $this->_redirect('*/*/');
             return;
         }
@@ -272,7 +272,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $customer = Mage::getModel('customer/customer')->setId(null);	
             }
 			// Set the same group as customer admin group
-			$customer->setGroupId(Mage::getSingleton('customer/session')->getCustomer()->getGroupId());
+			$customer->setGroupId(Mage::helper('customer')->getSalesGroupId());
 			
             /* @var $customerForm Mage_Customer_Model_Form */
             $customerForm = Mage::getModel('customer/form');
@@ -414,11 +414,11 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             $this->_getSession()->addSuccess($userPrompt);
         }
 
-        //$customer->sendNewAccountEmail(
-          //  $isJustConfirmed ? 'confirmed' : 'registered',
-           // '',
-            //Mage::app()->getStore()->getId()
-        //);
+        $customer->sendNewAccountEmail(
+            $isJustConfirmed ? 'confirmed' : 'registered',
+             '',
+            Mage::app()->getStore()->getId()
+        );
 
         $successUrl = Mage::getUrl('*/*/index', array('_secure'=>true));
         if ($this->_getSession()->getBeforeAuthUrl()) {
