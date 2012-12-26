@@ -38,6 +38,9 @@
 					<gsw> 
 						<table>reman_gsw</table>
 					</gsw>
+					<warranties> 
+						<table>reman_warranties</table>
+					</warranties>
 				</entities>
 			</warranty_mysql4>
 		</models>
