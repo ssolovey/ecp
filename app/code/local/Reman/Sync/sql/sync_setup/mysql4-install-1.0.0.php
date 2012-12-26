@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Reman Sync Intall
+ *
+ * Reman Sync module setup
+ *
+ * @category    Remah
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 $installer = $this;
 
 $installer->startSetup();

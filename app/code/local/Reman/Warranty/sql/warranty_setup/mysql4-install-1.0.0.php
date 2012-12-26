@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Reman Warranty Intall
+ *
+ * Reman Warranty module setup
+ * create database tables related to warranties
+ *
+ * @category    Remah
+ * @package     Reman_Warranty
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 $installer = $this;
 
 $installer->startSetup();

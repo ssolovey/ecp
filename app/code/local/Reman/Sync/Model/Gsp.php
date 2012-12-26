@@ -1,4 +1,11 @@
 <?php
+/**
+ * Model for GSP table
+ *
+ * @category    Reman
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Sync_Model_Gsp extends Mage_Core_Model_Abstract
 {
 	public function _construct()

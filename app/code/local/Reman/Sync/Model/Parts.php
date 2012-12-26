@@ -1,4 +1,11 @@
 <?php
+/**
+ * Model for Parts and Inventories
+ *
+ * @category    Reman
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 {
 

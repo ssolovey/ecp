@@ -4,8 +4,7 @@
  *
  * @category    Reman
  * @package     Reman_Sync
- * @copyright   Copyright (c) 2012 Artem Petrosyan (artpetrosyan@gmail.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
 class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 {	

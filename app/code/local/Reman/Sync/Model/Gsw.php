@@ -1,4 +1,11 @@
 <?php
+/**
+ * Model for GSW table
+ *
+ * @category    Reman
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Sync_Model_Gsw extends Mage_Core_Model_Abstract
 {
 

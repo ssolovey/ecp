@@ -1,4 +1,11 @@
 <?php
+/**
+ * Reman Warranty Warranties Model
+ *
+ * @category    Remah
+ * @package     Reman_Warranty
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Warranty_Model_Warranties extends Mage_Core_Model_Abstract
 {
 	public function _construct()

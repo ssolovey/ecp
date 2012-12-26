@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Remah Warranty Model
+ * Reman Warranty Model
  * 
  * This module used with Magento E-commerse software
  * 
  *
  * @category    Remah
  * @package     Reman_Warranty
- * @copyright   Copyright (c) 2012 Artem Petrosyan (artpetrosyan@gmail.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
 -->
 
