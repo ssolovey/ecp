@@ -93,10 +93,6 @@
         <span style="font-size: 13px; margin-right: 5px">
 		<?php 
 			echo $customer->getFirstname().' '.$customer->getLastname(); 
-	
-			if(Mage::helper('customer')->isCompanyAdminUser()){
-				echo ' ('.Mage::getSingleton('customer/session')->getCustomer()->getPrefix().')';
-			}
 		?>
         </span>
         <?php endif?>	

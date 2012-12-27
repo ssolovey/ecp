@@ -52,12 +52,18 @@
                     </tr>
                     <tr>
                         <td class="headings">Shipping:</td>
-                        <td class="values"></td>
+                        
+                        	<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
+									<td class="values"><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
+							<?php endif; ?>
+                            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>	
+                            		<td class="values" style=" font-size:12px;"><?php echo "to be estimated basis on ZIP";;?></td> 
+							<?php endif; ?>		
                     </tr>
                 </table>
             </div>
             <div id="product_attributes">
-                <div class="colmns" style="margin-right:60px;">
+                <div class="colmns" style="margin-right:53px;">
                     <ul>
                         <li class="label"><span>Family:</span></li>
                         <li class="label"><span>Start Year:</span></li>

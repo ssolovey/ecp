@@ -36,6 +36,18 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		return $customer_company_id;
     }
-	 
-
+	
+	public function getCustomerShippingPrice()
+	{
+		
+		$company = Mage::getModel('company/company')->load($this->getCompanyId());
+  		$shippingPrice = $company->ship;
+		if(is_null($shippingPrice))
+		{
+			return "NULL";
+		}else
+		{
+			return $shippingPrice;
+		}
+	}
 }
