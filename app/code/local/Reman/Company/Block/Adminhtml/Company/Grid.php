@@ -22,10 +22,15 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
     protected function _prepareColumns()
     {
         $this->addColumn('company_id', array(
-          'header'    => Mage::helper('company')->__('Company ID'),
+          'header'    => Mage::helper('company')->__('ID'),
           'width'     => '100px',
           'index'     => 'company_id',
           'align'     => 'right'
+        ));
+        
+        $this->addColumn('ete', array(
+          'header'    => Mage::helper('company')->__('ETE Company ID'),
+          'index'     => 'ete'
         ));
  
         $this->addColumn('name', array(

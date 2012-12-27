@@ -8,6 +8,7 @@ $installer->run("
 	DROP TABLE IF EXISTS {$this->getTable('company/company')}; 
 	CREATE TABLE {$this->getTable('company/company')} (
 	`company_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Company ID',
+	`ete` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'ETE ID',
 	`name` varchar(30) DEFAULT NULL COMMENT 'Company name',
 	`addr1` varchar(30) DEFAULT NULL COMMENT 'Address 1',
 	`addr2` varchar(30) DEFAULT NULL COMMENT 'Address 2',
@@ -18,7 +19,8 @@ $installer->run("
 	`discount` int(2) NOT NULL DEFAULT '0' COMMENT 'Discount',
 	`fluid` varchar(2) DEFAULT NULL COMMENT 'Fluid',
 	`payment` varchar(6) DEFAULT NULL COMMENT 'Payment method',
-	`ship` decimal(12,2) NOT NULL DEFAULT '0' COMMENT 'Shipping price',
+	`ship` decimal(12,2) DEFAULT NULL COMMENT 'Shipping price',
+	`splink` varchar(12) DEFAULT NULL COMMENT 'Special link',
 	`tc_war` int(2) NOT NULL DEFAULT '0' COMMENT 'TC Warranty ID',
 	`at_war` int(2) NOT NULL DEFAULT '0' COMMENT 'AT Warranty ID',
 	`di_war` int(2) NOT NULL DEFAULT '0' COMMENT 'DI Warranty ID',
@@ -26,7 +28,7 @@ $installer->run("
 	PRIMARY KEY (`company_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
-
+/*
 $setup = Mage::getModel('customer/entity_setup', 'core_setup');
 $setup->addAttribute('customer', 'company', array(
 	'type'				=> 'int',
@@ -45,5 +47,5 @@ Mage::getSingleton('eav/config')
 	->getAttribute('customer', 'company')
 	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
 	->save();
-
+*/
 $installer->endSetup();

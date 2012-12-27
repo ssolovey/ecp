@@ -7,13 +7,12 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_General extends Mage_Adminh
       $this->setForm($form);
       $fieldset = $form->addFieldset('general_form', array('legend'=>Mage::helper('company')->__('General information')));     
      
-     $fieldset->addField('company_id', 'text', array(
-          'label'     => Mage::helper('company')->__('Company ID'),
+      $fieldset->addField('ete', 'text', array(
+          'label'     => Mage::helper('company')->__('ETE Company ID'),
           'class'     => 'required-entry',
           'required'  => true,
-          'name'      => 'company_id'
+          'name'      => 'ete'
       ));
-     
      
       $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('company')->__('Name'),
@@ -38,6 +37,12 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_General extends Mage_Adminh
           'label'     => Mage::helper('company')->__('Shipping price, $'),
           'required'  => false,
           'name'      => 'ship'
+      ));
+      
+      $fieldset->addField('splink', 'text', array(
+          'label'     => Mage::helper('company')->__('GSP Link'),
+          'required'  => false,
+          'name'      => 'splink'
       ));
       
       $fieldset->addField('fluid', 'select', array(
