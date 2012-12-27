@@ -56,15 +56,8 @@
                     </tr>
                 </table>
             </div>
-
-        </div>
-        <div class="clearer"></div>
-    </form>
- </div>
-
-    <div class="product-collateral">
-        <div id="product_attributes">
-                <div class="colmns">
+            <div id="product_attributes">
+                <div class="colmns" style="margin-right:60px;">
                     <ul>
                         <li class="label"><span>Family:</span></li>
                         <li class="label"><span>Start Year:</span></li>
@@ -103,13 +96,19 @@
                     </ul>
                 </div>   	  
           </div>
-              
-              <div style="clear:left">
+
+        </div>
+        <div class="clearer"></div>
+    </form>
+ </div>
+
+    <div class="product-collateral">      
+      	      <div style="clear:left">
               <div class="description_lable">Description:</div>
               <div class="desc_cont">
         <?php echo $this->helper('catalog/output')->productAttribute(Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')), $_description, 'description') ?>
 				</div>
-        	  <div class="description_lable">Manuals:</div>
+        	  <div class="description_lable" style="margin-top:50px;">Manuals:</div>
     		</div>
     </div>
 </div>

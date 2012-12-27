@@ -2257,7 +2257,7 @@ background-position: 0px 20px;
 #general_info .headings{
 	font-weight:bold;
 	font-size:15px;
-	width:220px;
+	width:177px;
 }
 
 #general_info .values{
@@ -2349,18 +2349,18 @@ background-position: 0px 20px;
 /*Product View Page*/
 
 #product_attributes{
-	position:relative;
-	font-size:12px;
-	float:left;
-	margin-bottom:25px;
-	width:100%;
-	color: #000;
+	position: relative;
+	font-size: 12px;
+	float: left;
+	width: 300px;
+	color: black;
+	margin-left: 25px;
+	margin-top: 38px;
 }
 
 #product_attributes .colmns {
 	position:relative;
 	float:left;
-	width:50%;
 }
 
 
@@ -2507,12 +2507,14 @@ background-position: 0px 20px;
 	width: 20%;
 	margin-left: 5px;
 	margin-bottom: 5px;
+	height:274px;
 }
 
 #stock_avl table {
-	margin-top: 15px;
-	margin-left: 20px;
-	font-size: 14px;
+	margin-top: 26px;
+	margin-left: 15px;
+	font-size: 12px;
+	color:#000;
 }
 
 #stock_avl table tr{
@@ -2520,23 +2522,23 @@ background-position: 0px 20px;
 }
 
 #stock_avl .title{
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: bold;
-	margin-left: 20px;
-	margin-top: 5px;
+	margin-left: 15px;
+	margin-top: 18px;
+	color: #000;
 }
 
 #stock_avl .lable{
-	font-weight:bold;
-	padding-right:5px;
+	padding-right: 5px;
+	font-size: 12px;
 	
 }
 
 #stock_avl .bottom_message{
 	font-size: 14px;
 	margin-left: 20px;
-	margin-bottom: 10px;
-	margin-top: 15px;
+	margin-top: 35px;
 	font-weight: bold;
 	color:#00F;
 }
