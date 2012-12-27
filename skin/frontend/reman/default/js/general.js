@@ -46,11 +46,10 @@ Reman_QuickQuote.prototype = {
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
-		
 		var elem = event.target;
-		
 		if(elem.tagName == 'A') return
-		
+		//Hide error popup
+		$j('#product_error_popup').fadeOut();
 		while (elem) {
 			/*Event for Category Select*/
 			if (elem.className == 'cat_select'){
@@ -151,165 +150,82 @@ Reman_QuickQuote.prototype = {
 		}
 	},
 
-	
-
 	selectMake: function(makeid,range,startyear){
-
 		var buffer = '<ul class="list list_first">'; // buffer string 
-
 		for(var i = 1; i<=range; i++){  
-
 			buffer += '<li class="year_select" value="'+makeid+'" year="'+(startyear+=1)+'">'+startyear+'</li>';
-
 			if(i%10 == 0){
-
 				buffer += '</ul><ul class="list">';
-
 			}
-
 		}
-
 		//append new info to year table
-
 		$j(year_tbl).append(buffer);
-
 		// hide make table
-
 		$j(make_tbl).removeClass().addClass('reman_hide');
-
 		// set selected Make name to top menu
-
 		$j('.selected_make').html(this.currentSelectedMake);
-
 		//show year table
-
 		$j(year_tbl).removeClass().addClass('reman_show');
-
 		// year table active true
-
 		this.isYearActive = true;
-
 		// update bread crumb link
-
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span>');
-
 	},
-
-	
-
-	
 
 	resetSearchErrorResults: function(){
-
 		//clear start over button link
-
 		$j('#product_details_btn a').attr('href','#');
-
 		//clear product info fields
-
 		$j('.sku').remove();
-
 		//reset Product DATA Error
-
 		$j('.product_error').html('');
-
 	},
-
-	
 
 	clearYear: function(){
-
 		//clear year
-
 		$j(year_tbl).removeClass().addClass('reman_hide');
-
 		$j('#year_tbl .list').remove();
-
 		$j('.year_link').parent().remove();
-
 		this.isYearActive = false;
-
 	},
-
-	
 
 	clearModel: function(){
-
 		//clear model
-
 		$j(model_tbl).removeClass().addClass('reman_hide');
-
 		$j('#table_container').css('min-height', '');
-
 		$j('#preloader_cont').css('height', '');
-
 		$j('.model_select').parent().remove();
-
 		$j('.model_link').parent().remove();
-
 		this.isModelActive = false;
-
 	},
-
-	
-
-	
 
 	clearGroup: function(){
-
 		//clear group
-
 		$j('#parts_tbl').removeClass().addClass('reman_hide');
-
 		$j('.select_part').remove();
-
 		$j('.group').removeClass('reman_show').addClass('reman_hide');
-
 		this.clearSubGroups();
-
 		this.isGrouplActive = false;
-
 	},
-
 	
-
 	clearMake: function(){
-
 		//clear Make
-
 		$j(make_tbl).removeClass().addClass('reman_hide');
-
 		$j('.make_link').parent().remove();
-
 	},
-
-	
-
-	
 
 	clearSubGroups: function(){
-
 		// clear subgroup
-
 		if($j('.group_link').length){
-
 			$j('.group_link').parent().remove();
-
 			$j('.sel_group_link').parent().remove();
-
 		}else{
 			$j('.sel_group_link').parent().remove();
 		}
-
 		$j('.select_part').css('display','none');
-
 		//Show First Group
-
 		$j($j('.select_part').get(0)).css('display','block');
-
 	},
-
-	
 
 	clearProductInfo: function(){
 		$j('#reman-invent_info').removeClass().addClass('reman_hide');
@@ -319,357 +235,146 @@ Reman_QuickQuote.prototype = {
 	},
 
 	turnOnMakeBreadcrumb: function(){
-
 		if(this.isYearActive){
-
 			this.clearYear();
-
 			this.clearModel();
-
 			this.clearGroup();
-
 			this.clearProductInfo();
-
 			$j('.make_link').parent().remove();
-
 			//show make table
-
 			$j(make_tbl).removeClass().addClass('reman_show');
-
 		}
-
-	
-
 	},
-
-	
-
 	turnOnYearBreadcrumb: function(){
-
 		if(this.isModelActive){
-
 			this.clearModel();
-
 			this.clearGroup();
-
 			this.clearProductInfo();
-
 			$j('.year_link').parent().remove();
-
 			//show year table
-
 			$j(year_tbl).removeClass().addClass('reman_show');
-
 		}
-
-	
-
 	},
-
-	
-
-	
-
 	turnOnModelBreadcrumb: function(){
-
 		if(this.isGroupActive){
-
 			this.clearGroup();
-
 			this.clearProductInfo();
-
 			$j('.model_link').parent().remove();
-
 			$j('.sel_group_link').parent().remove();
-
 			//show model table
-
 			$j('#model_tbl').removeClass().addClass('reman_show');
-
 		}
-
-	
-
 	},
-
 	
-
 	turnOnCatBreadcrumb: function(){
-
 			this.clearMake();
-
 			this.clearYear();
-
 			this.clearModel();
-
 			this.clearGroup();
-
 			this.clearProductInfo();
-
 			$j('.cat_link').remove();
-
 			//show cat table
-
 			$j('#group_select').removeClass().addClass('reman_show');
-
-			
-
 			this.currentCatSelected = '';
-
-		
-
-	
-
 	},
-
-	
 
 	turnOnGroupBreadcrumb: function(){
-
 		this.clearProductInfo();
-
 		$j('#parts_tbl').removeClass().addClass('reman_show');
-
 		$j('.sel_group_link').parent().remove();
-
 	},
 
-	
-
-	
-
 	selectYear: function(makeid,year){
-
 		var self = this;
-
 		$j.ajax({
-
 				url: "index/ajax",
-
 				type: 'POST',
-
 				data: {
-
 					step: 2,  
-
 					id:makeid,
-
 					year: year
-
 				},
-
-			
-
 				beforeSend: function(){
-
 					$j(year_tbl).removeClass().addClass('reman_hide');
-
 					$j('#preloader_cont').css('display','block');
-
 				},
-
-			
-
 				complete: function(data){
-
 					//parse response to JSON Object		  
-
 					var response =  $j.parseJSON(data.responseText);
-
-				
-
 					// CHECK For DATA if NULL return
-
-					if(response.length == 0)
-
-					{
-
-						// Error message
+					if(response.length == 0){
+						//show error popup
 						$j('#product_error_popup').fadeIn();
-						setTimeout(function(){
-											$j('#product_error_popup').fadeOut();
-										},7000);
-
 						Reman_QuickQuote.prototype.turnOnYearBreadcrumb();
-
 						$j('#preloader_cont').fadeOut(500,function(){
-
 							$j(year_tbl).removeClass().addClass('reman_show');
-
 						});	
-
 						return;
-
 					}
-
-				
-
-				/** Nest Select box with options*/
-
-				
-
 				var buffer = '<ul class="list list_first">'; // buffer string 
-
 					for(var i = 0; i<=response.length-1; i++){ // nest select with options 
-
 						buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
-
 						if(i%15 == 0 && i!=0){
-
 							buffer += '</ul><ul class="list">';
-
 						}
-
 					}
-
 					$j(model_tbl).append(buffer);
-
 					$j('#preloader_cont').fadeOut(500,function(){
-
 						$j(model_tbl).removeClass().addClass('reman_show');
-
 					});
-
-					
-
 				}
-
-				
-
 		});
 
 		/*Update breadcrumb*/
-
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb year_link">'+this.currentSelectedYear+'</span>');
-
-		
-
 		this.isModelActive = true;
-
-	
-
 	},
-
-	
-
 	selectModel: function(vehicle_id,name){
-
 		
-
 			$j.ajax({
-
 				url: "index/ajax",
-
 				type: 'POST',
-
 				data: {
-
 					step: 3,  
-
 					id:vehicle_id
-
 				},
-
-			
-
 				beforeSend: function(){
-
 					//hide model table
-
 					$j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
-
 					$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
-
 					$j(model_tbl).removeClass().addClass('reman_hide');
-
 					$j('#preloader_cont').css('display','block');
-
 				},
-
 				complete: function(data){
-
 						//parse response to JSON Object		  
-
 						var response = $j.parseJSON(data.responseText);
-
-						
-
 						// CHECK For DATA if NULL return
-
-						if(response.length == 0)
-
-						{
-
-							
-
-							// Error message
-
+						if(response.length == 0){
 							$j('#preloader_cont').fadeOut(500,function(){
-
 								$j(model_tbl).removeClass().addClass('reman_show');
+								//show error popup
 								$j('#product_error_popup').fadeIn();
-								setTimeout(function(){
-									$j('#product_error_popup').fadeOut();
-								},7000);
-
 							});
-
 							return;
-
 						}
-
-						
-
 						var obj= {}; // create empty object to handle response data
+						for(var i=0; i<=response.length-1;i++)						{
 
-						
-
-						for(var i=0; i<=response.length-1;i++)
-
-						{
-
-						
-
-								if(response[i].applic == null)
-
-								{
-
-									
-
-									// Error message
-
-									$j('#preloader_cont').fadeOut(500,function(){
-
+								if(response[i].applic == null){
+								$j('#preloader_cont').fadeOut(500,function(){
 										$j(model_tbl).removeClass().addClass('reman_show');
+										//show error popup
 										$j('#product_error_popup').fadeIn();
-										setTimeout(function(){
-											$j('#product_error_popup').fadeOut();
-										},7000);
-
 									});
-
 									return;
-
 								}
-
-							
-
 							if($j.isEmptyObject(obj) || current_group != response[i].group_number ){
-
-							
-
 								obj[response[i].group_number] = {
-
 									'heading': response[i].menu_heading,
-
 									'applic' : [
-
 													{
-
 														name:response[i].applic , 
-
 														id:response[i].applic_id,
-
 														subgroup:response[i].subgroup
 
 													}
@@ -679,117 +384,53 @@ Reman_QuickQuote.prototype = {
 								}
 
 							}else{
-
-							
-
 								obj[current_group].applic.push(
-
 																{
-
 																	name:response[i].applic,
-
 																	id:response[i].applic_id, 
-
 																	subgroup:response[i].subgroup
-
 																}
 
 															);
 
 							}
-
-							
-
 								var current_group = response[i].group_number; 
-
-						
-
 						}
-
-						
-
-						
-
 						Reman_QuickQuote.prototype.formSelectGroupBlock(obj,name);
-
 				}
-
 			});
-
 	},
-
 	
-
 	formSelectGroupBlock: function(obj,name){
-
-
-
-		for (key in obj)
-
-		{
-
-			
-
+		for (key in obj){
 			// buffer string 
-
 			var buffer = "<ul class='select_part_box'>"; // buffer string 
-
 			// heading
-
 			var header = '';
-
-			
-
 			var block_counter = 0;
-
 			
-
 			for(var i = 0; i<=obj[key].applic.length-1; i++){
-
 				// form link to part id
-
 				buffer += '<li class="parts_select" type="'+obj[key].applic[i].subgroup+'" value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</li>';
-
-				
-
 				if(obj[key].heading != null){
-
 					header = obj[key].heading; 
-
 				}else{
-
 					header = '<span class="label">Select Group:</span>';
-
 				}
-
 				// Group template
-
-				
-
 				if(i%20 == 0 && i!=0){
-
 					block_counter +=1;
-
 					buffer += '</ul><ul class="select_part_box block_'+block_counter+'">';
-
 				}
-
-				
-
 			}
-
 				var template = "<div id='"+key+"' class='select_part'>"+
-
 										"<span class='label'>"+header+"</span>"+
-
 										buffer
-
 								  "</div>";
 				// append to container
 				$j('#parts_tbl').append(template);
 				//Show First Group
 				$j($j('.select_part').get(0)).css('display','block');
-
 		}
 		this.currentSelectedModel = name;
 			$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+this.currentSelectedModel+'</span>');
@@ -826,10 +467,8 @@ Reman_QuickQuote.prototype = {
 							if(!response){
 									$j('#preloader_cont').fadeOut(500,function(){
 										$j('#parts_tbl').removeClass().addClass('reman_show');
+										//show error popup
 										$j('#product_error_popup').fadeIn();
-										setTimeout(function(){
-											$j('#product_error_popup').fadeOut();
-										},7000);
 									});
 							}else{
 								Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		

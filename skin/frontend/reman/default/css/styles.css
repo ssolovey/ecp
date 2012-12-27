@@ -2474,6 +2474,14 @@ background-position: 0px 20px;
 	top: 50px;
 	display:none;
 }
+
+#product_error_popup button{
+	width: 80px;
+	height: 25px;
+	margin-top: 10px;
+	cursor:pointer;
+}
+
 /*Inventory Info BLock*/
 
 #stock_avl{
