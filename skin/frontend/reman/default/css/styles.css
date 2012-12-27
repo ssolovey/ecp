@@ -654,15 +654,32 @@ tr.summary-details-excluded { font-style:italic; }
 	margin-left:5px;
 }
 
+#main-menu .links li{
+	padding-right:3px;
+}
+
 #main-menu .links a{
 	text-decoration:none;
 	color:#233E89;
-	padding: 5px 5px 8px 5px;
+	padding: 5px 12px 9px;
+	font-size: 13px;
+	text-shadow: .1em .1em #EFEFEF;
 }
 
+#main-menu .links a:hover{
+	color: #233E89;
+	background-color: #C8C8C8;
+	text-shadow: .1em 0em white;
+	background-image: url(../images/nav-over-bg.gif);
+	background-repeat: repeat-x;
+}
+
+
 #main-menu .links a.active{
-	background: #233E89;
+	background-image:url(../images/subnav-bg-active.png);
+	background-repeat:repeat-x;
 	color:#fff;
+	text-shadow:none;
 }
 
 #main-menu .welcome_lable{
@@ -676,7 +693,7 @@ tr.summary-details-excluded { font-style:italic; }
 #main-menu .links {
 	float:left;
 	margin-top: 7px;
-	margin-left: 15px;
+	margin-left: 5px;
 	font-size:14px;
 	
 	
