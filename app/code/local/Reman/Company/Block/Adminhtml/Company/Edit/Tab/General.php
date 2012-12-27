@@ -34,6 +34,12 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_General extends Mage_Adminh
           'name'      => 'discount'
       ));
       
+      $fieldset->addField('ship', 'text', array(
+          'label'     => Mage::helper('company')->__('Shipping price, $'),
+          'required'  => false,
+          'name'      => 'ship'
+      ));
+      
       $fieldset->addField('fluid', 'select', array(
           'label'     => Mage::helper('company')->__('Fluid'),
           'name'      => 'fluid',

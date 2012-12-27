@@ -18,6 +18,7 @@ $installer->run("
 	`discount` int(2) NOT NULL DEFAULT '0' COMMENT 'Discount',
 	`fluid` varchar(2) DEFAULT NULL COMMENT 'Fluid',
 	`payment` varchar(6) DEFAULT NULL COMMENT 'Payment method',
+	`ship` decimal(12,2) NOT NULL DEFAULT '0' COMMENT 'Shipping price',
 	`tc_war` int(2) NOT NULL DEFAULT '0' COMMENT 'TC Warranty ID',
 	`at_war` int(2) NOT NULL DEFAULT '0' COMMENT 'AT Warranty ID',
 	`di_war` int(2) NOT NULL DEFAULT '0' COMMENT 'DI Warranty ID',
