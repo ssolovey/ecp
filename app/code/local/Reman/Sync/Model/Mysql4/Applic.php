@@ -71,12 +71,11 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
     		"core" => "",
 		);
 		
-		// Customer object
-		$customer = Mage::getSingleton('customer/session')->getCustomer();
+		
 		// Customer Splink value
-		$customer_splink = $customer->getSplink();
+		$customer_splink = Mage::helper('company')->getGSPLink();
 		// Customer Discount value
-		$customer_discount = $customer->getDiscount();
+		$customer_discount = Mage::helper('company')->getDiscount();
 		// Get Special Price for selected product if exist
 		$spPrice = Mage::getModel('sync/gsp')->loadSp($prod->getData('sku'), $customer_splink);
 		
