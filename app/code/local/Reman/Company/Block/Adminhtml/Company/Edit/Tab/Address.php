@@ -1,4 +1,12 @@
 <?php
+/**
+ * Company Adminhtml Edit Tab Address
+ * define company address tab layout for edit form
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Block_Adminhtml_Company_Edit_Tab_Address extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()

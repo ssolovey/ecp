@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Reman Company Install
+ *
+ * Reman Company module setup
+ *
+ * @category    Remah
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 $installer = $this;
 
 $installer->startSetup();

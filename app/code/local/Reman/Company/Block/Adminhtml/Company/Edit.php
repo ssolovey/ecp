@@ -1,4 +1,12 @@
 <?php
+/**
+ * Company Adminhtml Edit
+ * define company edit layout
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Block_Adminhtml_Company_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()

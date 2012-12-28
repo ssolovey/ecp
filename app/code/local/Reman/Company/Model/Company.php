@@ -1,4 +1,11 @@
 <?php
+/**
+ * Company Model for Reman_Company module
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 {
 	public function _construct()

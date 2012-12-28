@@ -1,4 +1,12 @@
 <?php
+/**
+ * Company Adminhtml Block
+ * define tabs layout for company edit block
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Block_Adminhtml_Company_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
 {
 

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
 class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	

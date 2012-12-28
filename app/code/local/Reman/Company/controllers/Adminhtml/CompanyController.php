@@ -1,6 +1,17 @@
 <?php
+/**
+ * Company Admin Controller
+ * provide CRUD operations logic
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controller_Action
 {
+	/**
+	 * Initialization
+	 */
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('customer/items')
@@ -8,12 +19,19 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 		return $this;
 	}
 	
+	/**
+	 * Index action for display list of companies
+	 * used in adminhtml grid
+	 */
 	public function indexAction() {
 		$this->_initAction();
 		$this->_addContent($this->getLayout()->createBlock('company/adminhtml_company'));
 		$this->renderLayout();
 	}
 	
+	/**
+	 * Action for edit company
+	 */
 	public function editAction() {
 		$id     = $this->getRequest()->getParam('id');
 		$model  = Mage::getModel('company/company')->load($id);
@@ -44,11 +62,16 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 		}
 	}
 	
+	/**
+	 * Action for create new company
+	 */
 	public function newAction() {
 		$this->_forward('edit');
 	}
 	
-	
+	/**
+	 * Action for save company
+	 */
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 			
@@ -85,6 +108,9 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
         $this->_redirect('*/*/');
 	}
 	
+	/**
+	 * Action for delete company
+	 */
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {

@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Company Adminhtml Form
+ * define company form layout
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Block_Adminhtml_Company_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()

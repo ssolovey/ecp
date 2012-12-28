@@ -1,4 +1,13 @@
 <?php
+/**
+ * Company Adminhtml Grid
+ * define company module grid layout
+ * describe fields and actions
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
