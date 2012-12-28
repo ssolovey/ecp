@@ -6,9 +6,13 @@
  * @package		Reman_Sync
  * @author		Artem Petrosyan <artpetrosyan@gmail.com>
  */
-class Reman_Sync_Model_Profile extends Mage_Core_Model_Abstract
+class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 {
 	
+	//path to directory to scan
+	protected $_directory = 'import/customers/';
+	
+	/*
 	protected $_customers;
 		
 	protected $passwordLength = 10;
@@ -21,39 +25,43 @@ class Reman_Sync_Model_Profile extends Mage_Core_Model_Abstract
 		
 		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
 	}
+	*/
 	
-	/**
-	 * Load customers CSV file
-	 *
-	 */
-	public function loadFile()
+	
+	// override
+	protected function _parseItem( $item )
 	{
-				
-		// Location of CSV file
-		$file	=	'import/cust.csv';
-
-		$csv	=	new Varien_File_Csv();
-
-		// Set delimiter to "\"
-		$csv->setDelimiter('|');
-
-		// Load data from CSV file
-		$data	=	$csv->getData($file);
-				
-		foreach( $data as $item ) {
-			
-			// try to load customer by id
-			$customer = $this->_customers->loadByEmail( $item[13] );
-			
-			if ( $customer->getId() ) {
-				echo 'Customer already exists';
-			} else {
-				// create new customer
-				$this->_createCustomer( $customer, $item );
-			}
-		}
+		echo $item[0] . '<br />';
+		/*
+		$this->setData(
+			array(
+				'vehicle_id'		=>		$item[0],
+				'group_number'		=>		$item[2],
+				'subgroup'			=>		$item[5],
+				'menu_heading'		=>		$item[6],
+				'applic'			=>		$item[4],
+				'part_number'		=>		$item[7]
+			)		    	
+		);
+		
+		$this->save();
+		*/
 	}
 	
+	// override
+	public function syncData()
+	{	
+	
+		$profiles = glob($this->_directory . '*.csv');
+		
+		foreach($profiles as $file)
+		{
+			$this->_loadFile( $file );
+		}
+		
+	}
+	
+	/*
 	protected function _createCustomer( $customer, $data )
 	{
 		$customer->setData( 
@@ -95,4 +103,5 @@ class Reman_Sync_Model_Profile extends Mage_Core_Model_Abstract
 		
 		$address->save();
 	}
+	*/
 }
