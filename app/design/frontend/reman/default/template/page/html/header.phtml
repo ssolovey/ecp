@@ -83,7 +83,7 @@
 			echo $this->getChildHtml('header_links');
 		}
 	?>
-    <div class="login_links">
+    <div class="login_links" style="margin-top:10px;">
     	<?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>
     	 	<a href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Register New User') ?></a>
          <?php endif; ?>
