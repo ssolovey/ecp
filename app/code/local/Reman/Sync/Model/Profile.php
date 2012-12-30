@@ -112,7 +112,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			'firstname'		=>	$item[1],
 			'lastname'		=>	$item[1],
 			'company'		=>	$company->getId(),
-			'state'			=>	1,
+			//'state'			=>	1,
 			'group_id'			=>	6
 		);
 		
@@ -131,8 +131,11 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 				$customer_model = $this->_customers->load($customer_data->getId());
 				
 				if ( $customer_model->getCompany() == $company->getId() ) {
-					if ( $customer_model->getState() ) {
-						$customer_model->setState(0)->save();
+					
+					//echo '<h3>' . $customer_model->getGroup_id() . '</h3>';
+					
+					if ( $customer_model->getGroup_id() == 6 ) {
+						$customer_model->setGroup_id(1)->save();
 					}
 				}				
 			}
