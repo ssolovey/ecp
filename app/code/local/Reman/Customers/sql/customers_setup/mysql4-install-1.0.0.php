@@ -31,6 +31,7 @@ Mage::getSingleton('eav/config')
 	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
 	->save();
 
+/*
 $setup->addAttribute('customer', 'state', array(
 	'type'				=> 'int',
 	'input'				=> 'select',
@@ -48,5 +49,6 @@ Mage::getSingleton('eav/config')
 	->getAttribute('customer', 'state')
 	->setData('used_in_forms', array('adminhtml_customer','customer_account_create','customer_account_edit','checkout_register'))
 	->save();
+*/
 
 $installer->endSetup();
