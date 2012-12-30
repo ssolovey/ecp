@@ -135,7 +135,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 					//echo '<h3>' . $customer_model->getGroup_id() . '</h3>';
 					
 					if ( $customer_model->getGroup_id() == 6 ) {
-						$customer_model->setGroup_id(1)->save();
+						$customer_model->setGroup_id(7)->save();
 					}
 				}				
 			}
