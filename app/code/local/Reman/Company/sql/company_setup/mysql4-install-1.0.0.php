@@ -27,7 +27,7 @@ $installer->run("
 	`discount` int(2) NOT NULL DEFAULT '0' COMMENT 'Discount',
 	`fluid` varchar(2) DEFAULT NULL COMMENT 'Fluid',
 	`payment` varchar(6) DEFAULT NULL COMMENT 'Payment method',
-	`ship` decimal(12,2) DEFAULT NULL COMMENT 'Shipping price',
+	`ship` varchar(10) DEFAULT NULL COMMENT 'Shipping price',
 	`splink` varchar(12) DEFAULT NULL COMMENT 'GSP Link',
 	`tc_war` int(2) NOT NULL DEFAULT '0' COMMENT 'TC Warranty ID',
 	`tc_gswlink` varchar(12) DEFAULT NULL COMMENT 'TC GSW Link',
