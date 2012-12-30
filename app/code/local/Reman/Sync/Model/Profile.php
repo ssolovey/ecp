@@ -15,24 +15,20 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 	// companies model
 	protected $_companies;
 	
+	// customers model
+	protected $_customers;
+	
 	// current file path
 	protected $_file;
-	
-	/*
-	protected $_customers;
-		
-	protected $passwordLength = 10;
-	
-	*/
-	
+
 	public function _construct()
 	{
 		parent::_construct();
 		
 		$this->_companies		=	Mage::getModel('company/company');
 		
-		//$this->_customers		=	Mage::getModel('customer/customer');
-		//$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
+		$this->_customers		=	Mage::getModel('customer/customer');
+		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
 	}
 	
 	// override
@@ -68,6 +64,8 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		echo '<tr><td>Payment</td><td>' . $item[26] . '</td></tr>';
 		echo '<tr><td>Status</td><td>' . $item[27] . '</td></tr>';
 		echo '</table>';
+		
+		// Update companies data
 		
 		$data = array(
 			'ete'		=>	$item[0],
@@ -105,6 +103,47 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		
 		$company->save();
 		
+		
+		// Update customers data
+		
+		$data = array(
+			'email'			=>	$item[13],
+			'created_in'	=>	'SYNC MODULE',
+			'firstname'		=>	$item[1],
+			'lastname'		=>	$item[1],
+			'company'		=>	$company->getId(),
+			'state'			=>	1,
+			'group_id'			=>	6
+		);
+		
+		$customer = $this->_customers->loadByEmail( $item[13] );
+		
+		if ( $customer->getId() ) {
+			echo '<h3>UPDATE CUSTOMER DATA</h3>';
+			$customer->addData( $data );
+		} else {
+			echo '<h3>ADD NEW CUSTOMER</h3>';
+			
+			// deactivate current admin
+			$customers = $this->_customers->getCollection();
+			
+			foreach ( $customers as $customer_data ) {
+				$customer_model = $this->_customers->load($customer_data->getId());
+				
+				if ( $customer_model->getCompany() == $company->getId() ) {
+					if ( $customer_model->getState() ) {
+						$customer_model->setState(0)->save();
+					}
+				}				
+			}
+			
+			// create new admin			
+			$customer->setData( $data );
+		}
+		
+		$customer->save();
+		
+		// Delete file
 		//unlink( $this->_file );
 	}
 	
