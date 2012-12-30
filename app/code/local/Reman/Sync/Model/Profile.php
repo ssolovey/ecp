@@ -105,7 +105,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		
 		$company->save();
 		
-		unlink( $this->_file );
+		//unlink( $this->_file );
 	}
 	
 	// override
