@@ -99,7 +99,8 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb group_link') {
 				$j('.select_part').css('display','none') // hide  groups
 				$j('#'+$j(elem).attr('prevgroup')).css('display','block'); // show next group according to subgroup ID
-				
+				$j('#reman-invent_info').removeClass().addClass('reman_hide');
+				$j('#reman-invent_info').html('');
 				// deleted other groups
 				if($j(elem).parent().next().length){
 					$j(elem).parent().nextAll().remove();
