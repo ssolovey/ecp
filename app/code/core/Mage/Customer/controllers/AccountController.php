@@ -174,7 +174,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             }
         }
 		/* LOGOUT USER in BANNED GROUP IS SET*/
-		if(Mage::helper('customer')->isBannedGroup()){
+		if(Mage::helper('customer')->isBannedGroup() || Mage::helper('company')->getCustomerCompanyObject()->getStatus() == 2){
 			$this->logoutAction();
 			return;
 		}else{
