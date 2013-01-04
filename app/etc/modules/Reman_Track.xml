@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Remah Order Track Module
+ * 
+ * This module used with Magento E-commerse software
+ * to view Order Track module
+ *
+ * @category    Remah
+ * @package     Reman_Track
+ * @copyright   Copyright (c) 2012 Igor zhavoronkin (zhavoronkin.i@gmail.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+
+<config>
+	<modules>
+		<Reman_Track>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Reman_Track>
+	</modules>
+</config>

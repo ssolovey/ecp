@@ -468,4 +468,17 @@ class Mage_Catalog_Helper_Product extends Mage_Core_Helper_Url
     {
         return $this->_skipSaleableCheck;
     }
+	/**
+     * Get option id and attribute code
+     *
+     * @return string
+     */
+	public function getOptionAttributeLable($attributeCode,$attributeId) 
+	{
+		 $_attribute= $this->getProduct()->getResource()->getAttribute($attributeCode);
+		 $_options = $_attribute->getSource()->getAllOptions(true, true);
+		  foreach($_options as $option)
+			  if ($option['value'] == $attributeId)
+		  return $option['label'];return false;
+	}
 }

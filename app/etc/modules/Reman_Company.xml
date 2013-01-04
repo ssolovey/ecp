@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Reman Company module
+ * 
+ * This module used with Magento E-commerse software
+ * to provide customers companies management
+ *
+ * @category    Reman
+ * @package     Reman_Company
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
+-->
+
+<config>
+	<modules>
+		<Reman_Company>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Reman_Company>
+	</modules>
+</config>

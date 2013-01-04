@@ -1,10 +1,41 @@
 <?php
-class Reman_Sync_Model_Applic extends Mage_Core_Model_Abstract
+/**
+ * Model for Applic table
+ *
+ * @category    Reman
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
+class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 {
 	public function _construct()
 	{
 		parent::_construct();
-		$this->_init('sync/applic');       
+		$this->_init('sync/applic');
+	}
+	
+	// override
+	protected function _parseItem( $item )
+	{
+		$this->setData(
+			array(
+				'vehicle_id'		=>		$item[0],
+				'group_number'		=>		$item[2],
+				'subgroup'			=>		$item[5],
+				'menu_heading'		=>		$item[6],
+				'applic'			=>		$item[4],
+				'part_number'		=>		$item[7]
+			)		    	
+		);
+		
+		$this->save();		
+	}
+	
+	// override
+	public function syncData()
+	{
+		$this->getResource()->trancateTable();	
+		$this->_loadFile( 'import/applic.csv' );
 	}
 	
 	/** 
@@ -17,5 +48,4 @@ class Reman_Sync_Model_Applic extends Mage_Core_Model_Abstract
 	public function loadProduct($applic_id){
 		return $this->getResource()->loadProduct($applic_id);
     }
-	
 }

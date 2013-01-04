@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout version="0.1.0">
+	<!-- Order Track Content-->
+	<track_index_index>
+		<reference name="head">
+			 <action method="setTitle" translate="title" module="track">
+				  <title>Order Tracking</title>
+			 </action>
+		</reference>
+		<reference name="content">
+			<block type="track/track" name="track" template="track/track.phtml" />
+		</reference>
+	</track_index_index>
+</layout>

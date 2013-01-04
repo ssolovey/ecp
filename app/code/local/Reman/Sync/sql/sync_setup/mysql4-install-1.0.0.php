@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Reman Sync Intall
+ *
+ * Reman Sync module setup
+ *
+ * @category    Remah
+ * @package     Reman_Sync
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
 $installer = $this;
 
 $installer->startSetup();
@@ -25,13 +33,22 @@ $installer->run("
 	CREATE TABLE {$this->getTable('sync/applic')} (
 	`applic_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Applic ID',
 	`vehicle_id` int(10) unsigned NOT NULL COMMENT 'Vehicle ID',
-	`group` int(2) unsigned NOT NULL COMMENT 'Group',
+	`group_number` int(2) unsigned NOT NULL COMMENT 'Group',
 	`key` int(2) unsigned NOT NULL COMMENT 'Key',
 	`subgroup` int(2) unsigned NOT NULL COMMENT 'Subgroup',
 	`menu_heading` varchar(30) DEFAULT NULL COMMENT 'Menu Heading',
 	`applic` varchar(100) DEFAULT NULL COMMENT 'Applic',
 	`part_number` varchar(12) DEFAULT NULL COMMENT 'Path Number',
 	PRIMARY KEY (`applic_id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	DROP TABLE IF EXISTS {$this->getTable('sync/gsp')}; 
+	CREATE TABLE {$this->getTable('sync/gsp')} (
+	`gsp_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'GSP ID',
+	`customer_id` varchar(12) DEFAULT NULL COMMENT 'Customer ID',
+	`partnum` varchar(12) DEFAULT NULL COMMENT 'Part SKU',
+	`price` int(2) unsigned NOT NULL COMMENT 'Special Price',
+	`core` int(2) unsigned NOT NULL COMMENT 'Special Core Price',
+	PRIMARY KEY (`gsp_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
 
