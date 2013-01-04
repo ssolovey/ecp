@@ -109,8 +109,8 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$data = array(
 			'email'			=>	$item[13],
 			'created_in'	=>	'SYNC MODULE',
-			'firstname'		=>	$item[1],
-			'lastname'		=>	$item[1],
+			'firstname'		=>	$item[12],
+			'lastname'		=>	'-',
 			'company'		=>	$company->getId(),
 			//'state'			=>	1,
 			'group_id'			=>	6
