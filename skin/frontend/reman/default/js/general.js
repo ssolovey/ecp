@@ -427,7 +427,7 @@ Reman_QuickQuote.prototype = {
 				}
 			}
 				var template = "<div id='"+key+"' class='select_part'>"+
-										"<span class='label'>"+header+"</span>"+
+										"<span class='label'>Select "+header+"</span>"+
 										buffer
 								  "</div>";
 				// append to container
