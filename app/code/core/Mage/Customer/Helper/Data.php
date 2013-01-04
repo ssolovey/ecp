@@ -152,6 +152,26 @@ class Mage_Customer_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	}
 	/**
+     * Check for customer BANNED group
+     *
+     * @return (boolean)
+     */
+	public function isBannedGroup()
+	{
+		$groups = Mage::helper('customer')->getGroups()->toOptionArray();
+		$groupId = Mage::getSingleton('customer/session')->getCustomer()->getGroupId();
+		foreach($groups as $group){ 
+			if( $group['value'] == $groupId){
+				if($group['label'] == "BANNED"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+	
+	}
+	/**
      * Check Customer SALES Group ID
      *
      * @return int

@@ -136,19 +136,21 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
      */
     public function loginPostAction()
     {
-        if ($this->_getSession()->isLoggedIn()) {
+		
+		if ($this->_getSession()->isLoggedIn()) {
             $this->_redirect('*/*/');
             return;
         }
+		
         $session = $this->_getSession();
-
-        if ($this->getRequest()->isPost()) {
+        
+		if ($this->getRequest()->isPost()) {
             $login = $this->getRequest()->getPost('login');
             if (!empty($login['username']) && !empty($login['password'])) {
                 try {
                     $session->login($login['username'], $login['password']);
                     if ($session->getCustomer()->getIsJustConfirmed()) {
-                        $this->_welcomeCustomer($session->getCustomer(), true);
+						$this->_welcomeCustomer($session->getCustomer(), true);
                     }
                 } catch (Mage_Core_Exception $e) {
                     switch ($e->getCode()) {
@@ -171,8 +173,13 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $session->addError($this->__('Login and password are required.'));
             }
         }
-
-        $this->_loginPostRedirect();
+		/* LOGOUT USER in BANNED GROUP IS SET*/
+		if(Mage::helper('customer')->isBannedGroup()){
+			$this->logoutAction();
+			return;
+		}else{
+        	$this->_loginPostRedirect();
+		}
     }
 
     /**
@@ -215,7 +222,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
             }
         }
-        $this->_redirectUrl($session->getBeforeAuthUrl(true));
+       $this->_redirectUrl($session->getBeforeAuthUrl(true));
     }
 
     /**
