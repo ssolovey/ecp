@@ -2355,15 +2355,30 @@ background-position: 0px 20px;
 	width: 335px;
 	color: black;
 	margin-left: 25px;
-	margin-top: 40px;
+	margin-top: 15px;
 }
 
-#product_attributes tr{
-	height:20px;
+#product_attributes table{
+	float:left; 
+	border-spacing:0 5px;
 }
 
 #product_attributes .label{
 	font-weight: bold;
+	width:80px;
+}
+
+#product_attributes .value{
+	padding-left:10px;
+	width:78px;
+	word-break:break-all;
+}
+
+#product_attributes .value2{
+	padding-left:10px;
+	width:76px;
+	word-break:break-all;
+	
 }
 
 .desc_cont{

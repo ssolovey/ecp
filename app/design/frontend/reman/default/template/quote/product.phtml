@@ -65,84 +65,52 @@
             
             <div id="product_attributes">
             		
-             <table style="float:left;">
+             <table>
                     <tr>
                         <td class="label">Family:</td>
-                        <td style="padding-left:10px; width:99px;"><?php echo $_product->getData('parts_family'); ?></td>
+                        <td class="value"><?php echo $_product->getData('parts_family'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">Start Year:</td>
-                        <td style="padding-left:10px;width:99px;"><?php echo $_product->getData('parts_start_year'); ?></td>
+                        <td class="value"><?php echo $_product->getData('parts_start_year'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">Fuel:</td>
-                        <td style="padding-left:10px;width:99px;"><?php echo $_product->getData('parts_fuel'); ?></td>
+                        <td class="value"><?php echo $_product->getData('parts_fuel'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">Aspiration:</td>
-                        <td style="padding-left:10px;width:99px;"><?php echo $_product->getData('parts_aspiration'); ?></td>
+                        <td class="value"><?php echo $_product->getData('parts_aspiration'); ?></td>
+                    </tr>
+                    <tr>
+                    	 <td class="label">Original Warranty:</td>
+                          <td class="value">
+						  	<?php 
+								$partType = $_product->getName();
+								echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
+							?>
+                          </td>
                     </tr>
             </table>
             
-            <table style="float:left;">
+            <table>
                     <tr>
                         <td class="label">Drive:</td>
-                        <td style="padding-left:10px;"><?php echo $_product->getData('parts_drive'); ?></td>
+                        <td class="value2"><?php echo $_product->getData('parts_drive'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">End Year:</td>
-                        <td style="padding-left:10px;"><?php echo $_product->getData('parts_end_year'); ?></td>
+                        <td class="value2"><?php echo $_product->getData('parts_end_year'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">Engine Sizes:</td>
-                        <td style="padding-left:10px;"><?php echo $_product->getData('parts_engine'); ?></td>
+                        <td class="value2"><?php echo $_product->getData('parts_engine'); ?></td>
                     </tr>
                     <tr>
                         <td class="label">Cylinder Type:</td>
-                        <td style="padding-left:10px;"><?php echo $_product->getData('parts_cylinder_type'); ?></td>
+                        <td class="value2"><?php echo $_product->getData('parts_cylinder_type'); ?></td>
                     </tr>
             </table>
-            
-            
-            
-               <?php /*?> <div class="colmns" style="margin-right:53px;">
-                    <ul>
-                        <li class="label"><span>Family:</span></li>
-                        <li class="label"><span>Start Year:</span></li>
-                        <li class="label"><span>Fuel:</span></li>
-                        <li class="label"><span>Aspiration:</span></li>
-                       <!-- <li class="label"><span>Original Warranty:</span></li>-->
-                    </ul>
-                    <ul>
-                        <li><?php echo $_product->getData('parts_family'); ?></li>
-                        <li><?php echo $_product->getData('parts_start_year'); ?></li>
-                        <li><?php echo $_product->getData('parts_fuel'); ?></li>
-                        <li><?php echo $_product->getData('parts_aspiration'); ?></li>
-                        <li><?php 
-                            $optionId =  $_product->getData('parts_original_warranty2');
-                            echo $this->helper('catalog/product')->getOptionAttributeLable('parts_original_warranty2',$optionId );
-                        ?></li>
-                    </ul>
-                </div><?php */?>
-                <?php /*?><div class="colmns">
-                    <ul>
-                        <li class="label"><span>Drive:</span></li>
-                        <li class="label"><span>End Year:</span></li>
-                        <li class="label"><span>Engine Sizes:</span></li>
-                        <li class="label"><span>Cylinder Type:</span></li>
-                       <!-- <li class="label"><span>Commercial Warranty:</span></li>-->
-                    </ul>
-                    <ul style="margin-right:0px;">
-                        <li><?php echo $_product->getData('parts_drive'); ?></li>
-                        <li><?php echo $_product->getData('parts_end_year'); ?></li>
-                        <li><?php echo $_product->getData('parts_engine'); ?></li>
-                        <li><?php echo $_product->getData('parts_cylinder_type'); ?></li>
-                        <li><?php 
-                            $optionId =  $_product->getData('parts_commercial_warranty2');
-                            echo $this->helper('catalog/product')->getOptionAttributeLable('parts_commercial_warranty2',$optionId );
-                        ?></li>
-                    </ul>
-                </div>   	  <?php */?>
           </div>
 
         </div>
