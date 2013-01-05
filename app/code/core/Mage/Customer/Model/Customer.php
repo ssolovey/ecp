@@ -55,6 +55,7 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     const EXCEPTION_INVALID_EMAIL_OR_PASSWORD = 2;
     const EXCEPTION_EMAIL_EXISTS              = 3;
     const EXCEPTION_INVALID_RESET_PASSWORD_LINK_TOKEN = 4;
+	const EXCEPTION_BANNED = 5;
 
     const SUBSCRIBED_YES = 'yes';
     const SUBSCRIBED_NO  = 'no';
@@ -163,6 +164,13 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
                 self::EXCEPTION_INVALID_EMAIL_OR_PASSWORD
             );
         }
+		
+		if( $this->isInBannedGroup()){
+			throw Mage::exception('Mage_Core', Mage::helper('customer')->__('Your company account was disabled. Please contact ETE Reman for more details.'),
+				  self::EXCEPTION_BANNED
+			);
+		}
+		
         Mage::dispatchEvent('customer_customer_authenticated', array(
            'model'    => $this,
            'password' => $password,
@@ -170,6 +178,22 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
 
         return true;
     }
+
+
+	/**
+     * Check for customer BANNED group
+     *
+     * @return (boolean)
+     */
+	public function isInBannedGroup()
+	{
+		if(Mage::getModel('company/company')->load($this->getCompany())->getStatus() == 2 || $this->getGroupId() == 7)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
 
     /**
      * Load customer by email
