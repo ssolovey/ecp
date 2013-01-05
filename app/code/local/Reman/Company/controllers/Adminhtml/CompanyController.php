@@ -88,14 +88,18 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 				}	
 				
 				$model->save();
+				
+				Mage::getModel('company/company')->exportCompanyUpdate($model);
+				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('company')->__('Company was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
-
+				
 				if ($this->getRequest()->getParam('back')) {
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
 				}
 				$this->_redirect('*/*/');
+				
 				return;
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
