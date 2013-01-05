@@ -43,6 +43,24 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 	 * Export CSV file on Company information update
 	 */
 	public function exportCompanyUpdate($model, $admin) {
+	
+		
+		// find company admin if nessesarry
+		if (!$admin) {
+		
+			$customers = Mage::getModel('customer/customer')->getCollection();
+	
+			foreach ( $customers as $customer_data ) {
+				$customer_model =  Mage::getModel('customer/customer')->load($customer_data->getId());
+				
+				if ( $customer_model->getCompany() == $model->company_id ) {
+										
+					if ( $customer_model->getGroup_id() == 6 ) {
+						$admin = $customer_model;
+					}
+				}				
+			}
+		}
 		
 		$file = 'export/CUST-' . $model->getEte() . '.TXT';
 		$delim = "|";
