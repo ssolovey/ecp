@@ -67,8 +67,8 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			. '"' . $model->fluid  .'"' . $delim
 			. '"' . $admin->firstname .'"' . $delim //admin name
 			. '"' . $admin->email .'"' . $delim //admin email
-			. '"' . '' .'"' . $delim //admin tel
-			. '"' . '' .'"' . $delim //admin ext
+			. '"' . $admin->phone .'"' . $delim //admin tel
+			. '"' . $admin->ext .'"' . $delim //admin ext
 			. '"' . $model->ship  .'"' . $delim
 			. $model->at_war . $delim
 			. '"' . $warranties->load($model->at_war)->warranty  .'"' . $delim

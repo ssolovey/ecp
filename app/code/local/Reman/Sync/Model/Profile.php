@@ -112,6 +112,8 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			'firstname'		=>	$item[12],
 			'lastname'		=>	'-',
 			'company'		=>	$company->getId(),
+			'phone'			=>	$item[14],
+			'ext'			=>	$item[15],
 			//'state'			=>	1,
 			'group_id'			=>	6
 		);
