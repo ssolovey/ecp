@@ -11,6 +11,17 @@
                 <class>Reman_Customers_Model</class>
             </customers>
         </models>
+        <events>
+        	<adminhtml_customer_save_after>
+        		<observers>
+        			<reman_customers_save_observer>
+        				<type>singleton</type>
+        				<class>Reman_Customers_Model_Save_Observer</class>
+        				<method>export_to_csv</method>
+        			</reman_customers_save_observer>
+        		</observers>
+        	</adminhtml_customer_save_after>
+        </events>
 		<resources>
 			<customers_setup>
 				<setup>

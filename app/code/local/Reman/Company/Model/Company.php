@@ -42,7 +42,7 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 	/**
 	 * Export CSV file on Company information update
 	 */
-	public function exportCompanyUpdate($model) {
+	public function exportCompanyUpdate($model, $admin) {
 		
 		$file = 'export/CUST-' . $model->getEte() . '.TXT';
 		$delim = "|";
@@ -52,9 +52,6 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 		$warranties = Mage::getModel('warranty/warranties');
 		
 		$fh = fopen($file, 'w');
-		/*
-"12 Months/12,000 Miles"|14|"82259"|"12 Months/12,000 Miles"|14|"12 Months/12,000 Miles"|14|"82259"|"ACCT"|"ACTIVE"
-*/
 		
 		$stringData = $model->ete . $delim
 			. '"' . $model->name . '"' . $delim
@@ -68,8 +65,8 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			. $model->discount . $delim
 			. '"' . $model->splink  .'"' . $delim
 			. '"' . $model->fluid  .'"' . $delim
-			. '"' . '' .'"' . $delim //admin name
-			. '"' . '' .'"' . $delim //admin email
+			. '"' . $admin->firstname .'"' . $delim //admin name
+			. '"' . $admin->email .'"' . $delim //admin email
 			. '"' . '' .'"' . $delim //admin tel
 			. '"' . '' .'"' . $delim //admin ext
 			. '"' . $model->ship  .'"' . $delim
