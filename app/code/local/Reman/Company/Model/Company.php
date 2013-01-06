@@ -40,6 +40,22 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 	}
 	
 	/**
+	 * Get companies list as array for grid option
+	 *
+	 * @return Array
+	 */
+	public function getCompaniesOptions() {
+	
+		$companies_option = array();
+		
+		foreach ( $this->getCollection() as $item ) {
+			$companies_option[$item->company_id] = $item->name;
+		}
+	
+		return $companies_option;
+	}
+	
+	/**
 	 * Export CSV file on Company information update
 	 */
 	public function exportCompanyUpdate($model, $admin) {
