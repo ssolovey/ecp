@@ -34,5 +34,10 @@
 				<class>Reman_Quote_Helper</class>
 			</quote>
 		</helpers>
+		<models>
+            <quote>
+                <class>Reman_Quote_Model</class>
+            </quote>
+        </models>
 	</global>
 </config>
