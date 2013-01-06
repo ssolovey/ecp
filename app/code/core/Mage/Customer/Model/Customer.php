@@ -55,7 +55,8 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     const EXCEPTION_INVALID_EMAIL_OR_PASSWORD = 2;
     const EXCEPTION_EMAIL_EXISTS              = 3;
     const EXCEPTION_INVALID_RESET_PASSWORD_LINK_TOKEN = 4;
-	const EXCEPTION_BANNED = 5;
+	const EXCEPTION_CUSTOMER_DISABLED_GROUP = 5;
+	const EXCEPTION_CUSTOMER_COMPANY_DISABLED_STATUS = 6;
 
     const SUBSCRIBED_YES = 'yes';
     const SUBSCRIBED_NO  = 'no';
@@ -165,9 +166,15 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
             );
         }
 		
-		if( $this->isInBannedGroup()){
+		if( $this->isCustomerCompanyDisabled()){
 			throw Mage::exception('Mage_Core', Mage::helper('customer')->__('Your company account was disabled. Please contact ETE Reman for more details.'),
-				  self::EXCEPTION_BANNED
+				  self::EXCEPTION_CUSTOMER_COMPANY_DISABLED_STATUS
+			);
+		}
+		
+		if( $this->isCustomerDisabled()){
+			throw Mage::exception('Mage_Core', Mage::helper('customer')->__('Your account was disabled. Please contact your company administrator for more details.'),
+				  self::EXCEPTION_CUSTOMER_DISABLED_GROUP
 			);
 		}
 		
@@ -181,13 +188,28 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
 
 
 	/**
-     * Check for customer BANNED group
+     * Check for customer Disabled group
      *
      * @return (boolean)
      */
-	public function isInBannedGroup()
+	public function isCustomerDisabled()
 	{
-		if(Mage::getModel('company/company')->load($this->getCompany())->getStatus() == 2 || $this->getGroupId() == 7)
+		if($this->getGroupId() == 7)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+     * Check for customer COmpany Disabled status
+     *
+     * @return (boolean)
+     */
+	public function isCustomerCompanyDisabled()
+	{
+		if(Mage::getModel('company/company')->load($this->getCompany())->getStatus() == 2)
 		{
 			return true;
 		}else{
