@@ -50,7 +50,7 @@
                         <td class="headings">Core:</td>
                         <td class="values" id="part_core_id">$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
                     </tr>
-                    <tr>
+                    <tr style="height:60px;">
                         <td class="headings">Shipping:</td>
                         
                         	<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
@@ -60,9 +60,20 @@
                             		<td class="values" style=" font-size:12px; color:#00F;"><?php echo "to be estimated basis on ZIP";;?></td> 
 							<?php endif; ?>		
                     </tr>
+                    
+                    <tr>
+                    	 <td class="headings">Warranty:</td>
+                          <td class="values" style=" font-size:12px;">
+						  	<?php 
+								$partType = $_product->getName();
+								echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
+							?>
+                          </td>
+                    </tr>
+                    
                 </table>
             </div>
-            
+            <div class="clearer"></div>
             <div id="product_attributes">
             		
              <table>
@@ -81,15 +92,6 @@
                     <tr>
                         <td class="label">Aspiration:</td>
                         <td class="value"><?php echo $_product->getData('parts_aspiration'); ?></td>
-                    </tr>
-                    <tr>
-                    	 <td class="label">Original Warranty:</td>
-                          <td class="value">
-						  	<?php 
-								$partType = $_product->getName();
-								echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
-							?>
-                          </td>
                     </tr>
             </table>
             
@@ -118,7 +120,7 @@
     </form>
  </div>
 
-    <div class="product-collateral">      
+    <div class="product-collateral" style="margin-top:50px;">      
       	      <div style="clear:left">
               <div class="description_lable">Description:</div>
               <div class="desc_cont">

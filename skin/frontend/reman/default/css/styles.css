@@ -2257,7 +2257,7 @@ background-position: 0px 20px;
 #general_info .headings{
 	font-weight:bold;
 	font-size:15px;
-	width:170px;
+	width:150px;
 }
 
 #general_info .values{
@@ -2352,9 +2352,8 @@ background-position: 0px 20px;
 	position: relative;
 	font-size: 12px;
 	float: left;
-	width: 335px;
 	color: black;
-	margin-left: 25px;
+	margin-left: 5px;
 	margin-top: 15px;
 }
 
@@ -2365,20 +2364,15 @@ background-position: 0px 20px;
 
 #product_attributes .label{
 	font-weight: bold;
-	width:80px;
 }
 
 #product_attributes .value{
-	padding-left:10px;
-	width:78px;
-	word-break:break-all;
+	padding-left:15px;
+	width:213px;
 }
 
 #product_attributes .value2{
-	padding-left:10px;
-	width:76px;
-	word-break:break-all;
-	
+	padding-left:15px;
 }
 
 .desc_cont{
