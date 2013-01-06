@@ -25,10 +25,10 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 				
 		$where = $this->_getReadAdapter()->quoteInto("vehicle_id=? AND ", (int)$vehicle_id).$this->_getReadAdapter()->quoteInto("group_number > 0");
 		
-		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('group_number','menu_heading','applic','applic_id','subgroup'))->where($where)->order('applic');
+		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('group_number','menu_heading','applic','applic_id','subgroup'))->where($where);
 		
 		$result = $this->_getReadAdapter()->fetchAll($select); // run sql query
-
+		
 		// return result
 		return $result; 
     }

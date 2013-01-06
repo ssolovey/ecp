@@ -432,6 +432,18 @@ Reman_QuickQuote.prototype = {
 								  "</div>";
 				// append to container
 				$j('#parts_tbl').append(template);
+				
+				if($j('#'+key).find('ul').length >1){
+					
+					for(var x=0; x<= $j('#'+key).find('ul').length;x++){
+						$j($j('#'+key).find('ul')[x]).find('li').sort(sortAlpha).appendTo($j('#'+key).find('ul')[x]);
+					}
+					
+				}else{
+				
+					$j('#'+key).find('ul li').sort(sortAlpha).appendTo($j('#'+key).find('ul'));
+				}
+				
 				//Show First Group
 				$j($j('.select_part').get(0)).css('display','block');
 		}
@@ -532,3 +544,17 @@ Reman_QuickQuote.prototype = {
 		});
 	}
 }
+
+
+/* Sort */
+
+jQuery.fn.sort = function() {  
+   return this.pushStack( [].sort.apply( this, arguments ), []);  
+ };  
+  
+function sortAlpha(a,b){  
+    return a.innerHTML > b.innerHTML ? 1 : -1;  
+};  
+  
+
+
