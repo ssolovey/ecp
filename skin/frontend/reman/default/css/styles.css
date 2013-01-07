@@ -2538,3 +2538,12 @@ background-position: 0px 20px;
 	font-weight: bold;
 	color:#00F;
 }
+
+#breadcrumb_info.disabled{
+	color:#999999;
+}
+
+#breadcrumb_info.disabled .breadcrumb:hover {
+text-decoration: none;
+}
+

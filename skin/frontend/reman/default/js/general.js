@@ -116,7 +116,9 @@ Reman_QuickQuote.prototype = {
 			
 			}
 			/******************************************** BREADCRUMBS EVENTS ************************************************/
-			
+			if($j('#breadcrumb_info').hasClass('disabled')){
+				return;
+			}
 			/*Event for Breadcrumbs Goupe links*/
 			if (elem.className == 'breadcrumb group_link') {
 				$j('.select_part').hide() // hide  groups
@@ -354,6 +356,7 @@ Reman_QuickQuote.prototype = {
 				beforeSend: function(){
 					$j('#year_tbl').hide();
 					$j('#preloader_cont').css('display','block');
+					$j('#breadcrumb_info').addClass('disabled');
 				},
 				complete: function(data){
 					//parse response to JSON Object		  
@@ -377,6 +380,7 @@ Reman_QuickQuote.prototype = {
 					}
 					$j('#model_tbl').append(buffer);
 					$j('#preloader_cont').fadeOut(500,function(){
+						$j('#breadcrumb_info').removeClass('disabled');
 						$j('#model_tbl').show();
 					});
 				}
@@ -401,6 +405,7 @@ Reman_QuickQuote.prototype = {
 					$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
 					$j('#model_tbl').hide();
 					$j('#preloader_cont').css('display','block');
+					$j('#breadcrumb_info').addClass('disabled');
 				},
 				complete: function(data){
 						//parse response to JSON Object		  
@@ -507,6 +512,7 @@ Reman_QuickQuote.prototype = {
 		this.isGroupActive = true;
 		$j('#preloader_cont').fadeOut(500,function(){
 			$j('#table_container').css('min-height', '');
+			$j('#breadcrumb_info').removeClass('disabled');
 			$j('#parts_tbl').show();
 		});
 
@@ -528,6 +534,7 @@ Reman_QuickQuote.prototype = {
 							$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
 							$j('#parts_tbl').hide();
 							$j('#preloader_cont').show();
+							$j('#breadcrumb_info').addClass('disabled');
 						},
 
 						complete: function(data){
@@ -586,6 +593,7 @@ Reman_QuickQuote.prototype = {
 						// set breadcrumb info about last successful or not succssful choise
 						$j('.sel_group_link').parent().remove();
 						$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span></span>');
+						$j('#breadcrumb_info').removeClass('disabled');
 						// Show product page
 						$j('#reman-product_info').show();
 						$j('#reman-invent_info').show();
