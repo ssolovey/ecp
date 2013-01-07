@@ -31,8 +31,8 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 			. '"' . $user->email . '"' . $delim
 			. '"' . $user->firstname . '"' . $delim
 			. '"' . $user->lastname . '"' . $delim
-			. '"' . $year . '"' . $delim
 			. '"' . $make . '"' . $delim
+			. '"' . $year . '"' . $delim
 			. '"' . $model . '"' . $delim
 			. '"' . $applic . '"'
 			. "\n";

@@ -38,6 +38,7 @@ Reman_QuickQuote.prototype = {
 	currentSelectedYear: '',
 	currentSelectedModel: '',
 	currentCatSelected:'',
+	currentPartRootSelected:[],
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -127,11 +128,21 @@ Reman_QuickQuote.prototype = {
 					$j(elem).parent().nextAll().remove();
 					$j('#reman-product_info').hide(); // hide product info block
 					$j('#parts_tbl').show(); // show parts table
+					
+					for(var y=0;y<=$j(elem).parent().next().length+1;y++){
+						this.currentPartRootSelected.pop();
+					}
+					
+				}else{
+					this.currentPartRootSelected = [];
 				}
 
 				//delete this link
 				$j(elem).parent().remove();
 				this.resetSearchErrorResults();
+				
+				
+				
 				return;
 			}
 
@@ -139,6 +150,7 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb make_link'){
 				this.turnOnMakeBreadcrumb();
 				this.resetSearchErrorResults();
+				this.currentPartRootSelected = [];
 				return;
 			}
 
@@ -147,6 +159,7 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb year_link'){
 				this.turnOnYearBreadcrumb();
 				this.resetSearchErrorResults();
+				this.currentPartRootSelected = [];
 				return;
 			}
 
@@ -154,6 +167,7 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb model_link'){
 				this.turnOnModelBreadcrumb();
 				this.resetSearchErrorResults();
+				this.currentPartRootSelected = [];
 				return;
 			}
 			
@@ -161,6 +175,7 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb cat_link'){
 				this.turnOnCatBreadcrumb();
 				this.resetSearchErrorResults();
+				this.currentPartRootSelected = [];
 				return;
 			}
 
@@ -168,6 +183,7 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb sel_group_link'){
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
+				this.currentPartRootSelected.pop();
 				return;
 			}
 			elem = elem.parentNode;
@@ -525,6 +541,9 @@ Reman_QuickQuote.prototype = {
 										$j('#product_error_popup').fadeIn();
 									});
 							}else{
+								
+								Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+								
 								Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
 								Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 							}
@@ -533,17 +552,26 @@ Reman_QuickQuote.prototype = {
 			}else{
 				$j('#'+id).hide() // hide current group
 				$j('#'+subgroup).show(); // show next group according to subgroup ID
+				
+				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+				
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
 			}
 	},
 
 	loadProductInfo: function(id,name){
-		
+		console.log(111)
+		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join('>');
+		var make = Reman_QuickQuote.prototype.currentSelectedMake.trim();
 		$j.ajax({
 				url: "index/product",
 				type: 'POST',
 				data: {
-					id:id
+					id:id,
+					make: make,
+					year: Reman_QuickQuote.prototype.currentSelectedYear,
+					model: Reman_QuickQuote.prototype.currentSelectedModel,
+					applic: aplicStr
 				},
 				complete: function(data){
 
