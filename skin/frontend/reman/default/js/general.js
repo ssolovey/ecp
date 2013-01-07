@@ -560,7 +560,6 @@ Reman_QuickQuote.prototype = {
 	},
 
 	loadProductInfo: function(id,name){
-		console.log(111)
 		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join('>');
 		var make = Reman_QuickQuote.prototype.currentSelectedMake.trim();
 		$j.ajax({
