@@ -192,9 +192,9 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			
 			if ( sizeof($item) > 1 ) {
 								
-				$file = $this->_directory . $item[0];
+				$this->_file  = $this->_directory . $item[0];
 				
-				if ( file_exists($file) ) {
+				if ( file_exists($this->_file) ) {
 					
 					echo '<h3>Parse file: ' . $item[0] . '</h3>';
 					echo '<h4>'. $item[2] . '</h4>';
