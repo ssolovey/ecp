@@ -146,10 +146,10 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			$customer->setData( $data );
 		}
 		
-		//$customer->save();
+		$customer->save();
 		
 		// Delete file
-		//unlink( $this->_file );
+		unlink( $this->_file );
 	}
 	
 	// override
