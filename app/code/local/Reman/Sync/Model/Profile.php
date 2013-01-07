@@ -10,7 +10,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 {
 	
 	//path to directory to scan
-	protected $_directory = 'import/customers/';
+	protected $_directory = 'import/customers_tests/';
 	
 	// companies model
 	protected $_companies;
@@ -94,10 +94,10 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$company = $this->_companies->load($item[0],'ete');
 										
 		if ( $company->getId() ) {
-			echo '<h3>UPDATE COMPANY DATA</h3>';
+			//echo '<h3>UPDATE COMPANY DATA</h3>';
 			$company->addData( $data );
 		} else {
-			echo '<h3>ADD NEW COMPANY</h3>';
+			//echo '<h3>ADD NEW COMPANY</h3>';
 			$company->setData( $data );
 		}
 		
@@ -121,10 +121,10 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$customer = $this->_customers->loadByEmail( $item[13] );
 		
 		if ( $customer->getId() ) {
-			echo '<h3>UPDATE CUSTOMER DATA</h3>';
+			//echo '<h3>UPDATE CUSTOMER DATA</h3>';
 			$customer->addData( $data );
 		} else {
-			echo '<h3>ADD NEW CUSTOMER</h3>';
+			//echo '<h3>ADD NEW CUSTOMER</h3>';
 			
 			// deactivate current admin
 			$customers = $this->_customers->getCollection();
@@ -146,17 +146,17 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			$customer->setData( $data );
 		}
 		
-		$customer->save();
+		//$customer->save();
 		
 		// Delete file
-		unlink( $this->_file );
+		//unlink( $this->_file );
 	}
 	
 	// override
 	public function syncData()
 	{	
 	
-		$profiles = glob($this->_directory . '*.csv');
+		$profiles = glob($this->_directory . '*.TXT');
 		
 		$this->_file = $profiles[0];
 		
@@ -177,6 +177,36 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		}
 		*/
 		
+	}
+	
+	public function test()
+	{
+		$test_csv = new Varien_File_Csv();
+		
+		// Set delimiter to "\"
+		$test_csv->setDelimiter( $this->_delim );
+		
+		// Load data from CSV file
+		$data = $test_csv->getData( $this->_directory . 'test_seq.csv' );
+				
+		foreach( $data as $item ) {
+			
+			if ( sizeof($item) > 1 ) {
+								
+				$file = $this->_directory . $item[0];
+				
+				if ( file_exists($file) ) {
+					
+					echo '<h3>Parse file: ' . $item[0] . '</h3>';
+					echo '<h4>'. $item[2] . '</h4>';
+					echo '<h4><a href=".">NEXT FILE</a></h4>';
+					
+					$this->_loadFile( $this->_directory . $item[0] );
+				
+					return;
+				}								
+			}
+		}
 	}
 	
 	/*

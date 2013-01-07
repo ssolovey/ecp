@@ -50,7 +50,10 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		$data = $csv->getData( $path );
 				
 		foreach( $data as $item ) {
-			$this->_parseItem( $item );
+			
+			if ( sizeof($item) > 1 ) {
+				$this->_parseItem( $item );
+			}
 		}
 		
 		$this->syncLog();
