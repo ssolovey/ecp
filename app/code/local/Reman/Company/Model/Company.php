@@ -104,14 +104,14 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			. '"' . $admin->phone .'"' . $delim //admin tel
 			. '"' . $admin->ext .'"' . $delim //admin ext
 			. '"' . $model->ship  .'"' . $delim
-			. $model->at_war . $delim
 			. '"' . $warranties->load($model->at_war)->warranty  .'"' . $delim
+			. $model->at_war . $delim
 			. '"' . $model->at_gswlink  .'"' . $delim
-			. $model->tc_war . $delim
 			. '"' . $warranties->load($model->tc_war)->warranty  .'"' . $delim
+			. $model->tc_war . $delim
 			. '"' . $model->tc_gswlink  .'"' . $delim
-			. $model->di_war . $delim
 			. '"' . $warranties->load($model->di_war)->warranty  .'"' . $delim
+			. $model->di_war . $delim
 			. '"' . $model->di_gswlink  .'"' . $delim
 			. '"' . $model->payment  .'"' . $delim
 			. '"' . $status . '"'
