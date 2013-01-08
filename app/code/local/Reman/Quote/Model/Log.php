@@ -15,13 +15,18 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 	 * @param make:string
 	 * @param model:string
 	 * @param applic:string
+	 * @param partnum:string
 	 */
-	public function send($year, $make, $model, $applic)
+	public function send($year, $make, $model, $applic, $partnum)
 	{
 		
 		$user = Mage::getSingleton('customer/session')->getCustomer();
 		$company = Mage::getModel('company/company')->load( $user->company );
 		$delim = "|";
+		
+		if ( $partnum == "" ) {
+			$partnum = 'N/A';
+		}
 		
 		$myFile = "export/QUOTELOG.TXT";
 		$fh = fopen($myFile, 'a');
@@ -34,7 +39,8 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 			. '"' . $make . '"' . $delim
 			. '"' . $year . '"' . $delim
 			. '"' . $model . '"' . $delim
-			. '"' . $applic . '"'
+			. '"' . $applic . '"' . $delim
+			. '"' . $partnum . '"'
 			. "\n";
 		
 		fwrite($fh, $stringData);
