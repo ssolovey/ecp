@@ -1912,6 +1912,9 @@ background-position: 0px 20px;
 /* Footer ================================================================================ */
 .footer-container { }
 .footer { width:930px; margin:0 auto; padding:10px 10px 50px; }
+
+.reman_footer{border-top: 4px solid #C50A1F; margin-left:5px; width:911px; background: url(../images/content-footer-bg.png) repeat-x; height:60px; }
+.reman_copyright{color: #EFEFEF; font-size: 11px; letter-spacing: 1px; margin-left: 10px; padding-top: 10px; float:left; padding-bottom:30px;}
 .footer .store-switcher { display:inline; margin:0 5px 0 0; color:#fff; }
 .footer .store-switcher label { font-weight:bold; vertical-align:middle; }
 .footer .store-switcher select { padding:0; vertical-align:middle; }
