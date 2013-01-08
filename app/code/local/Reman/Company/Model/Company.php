@@ -78,7 +78,7 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			}
 		}
 		
-		$file = 'export/CUST-' . $model->getEte() . '.TXT';
+		$file = 'export/customers/' . $model->getEte() . '.TXT';
 		$delim = "|";
 		
 		$status = $model->status == 1 ? 'ACTIVE' : 'DELETE';
@@ -114,7 +114,7 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			. '"' . $warranties->load($model->di_war)->warranty  .'"' . $delim
 			. '"' . $model->di_gswlink  .'"' . $delim
 			. '"' . $model->payment  .'"' . $delim
-			. '"' . $status . '"' . $delim
+			. '"' . $status . '"'
 			. "\n";
 		
 		fwrite($fh, $stringData);
