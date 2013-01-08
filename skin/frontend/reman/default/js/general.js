@@ -480,7 +480,7 @@ Reman_QuickQuote.prototype = {
 				if(obj[key].heading != null){
 					header = obj[key].heading; 
 				}else{
-					header = '<span class="label">Select Group:</span>';
+					header = 'Group';
 				}
 				// Group template
 				if(i%20 == 0 && i!=0){
