@@ -349,7 +349,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                             $session->getBeforeAuthUrl(),
                             Mage::app()->getStore()->getId()
                         );
-                        $session->addSuccess($this->__('The customer has been saved'));
+                        $session->addSuccess($this->__("The new user account has been created. The password is sent to user's email."));
 //						$this->_redirectSuccess(Mage::getUrl('customer/account/login', array('_secure'=>true)));
 						//return;
                     } else {
