@@ -367,6 +367,7 @@ Reman_QuickQuote.prototype = {
 						$j('#product_error_popup').fadeIn();
 						Reman_QuickQuote.prototype.turnOnYearBreadcrumb();
 						$j('#preloader_cont').fadeOut(500,function(){
+							$j('#breadcrumb_info').removeClass('disabled');
 							$j('#year_tbl').show();
 						});	
 						return;
@@ -413,6 +414,7 @@ Reman_QuickQuote.prototype = {
 						// CHECK For DATA if NULL return
 						if(response.length == 0){
 							$j('#preloader_cont').fadeOut(500,function(){
+								$j('#breadcrumb_info').removeClass('disabled');
 								$j('#model_tbl').show();
 								//show error popup
 								$j('#product_error_popup').fadeIn();
@@ -424,6 +426,7 @@ Reman_QuickQuote.prototype = {
 
 								if(response[i].applic == null){
 								$j('#preloader_cont').fadeOut(500,function(){
+										$j('#breadcrumb_info').removeClass('disabled');
 										$j('#model_tbl').show();
 										//show error popup
 										$j('#product_error_popup').fadeIn();
@@ -543,6 +546,7 @@ Reman_QuickQuote.prototype = {
 							
 							if(!response){
 									$j('#preloader_cont').fadeOut(500,function(){
+										$j('#breadcrumb_info').removeClass('disabled');
 										$j('#parts_tbl').show();
 										//show error popup
 										$j('#product_error_popup').fadeIn();
