@@ -145,7 +145,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			$customer->setData( $data );
 		}
 		
-		//$customer->setPassword($customer->generatePassword(8));
+		$customer->setPassword( $customer->generatePassword(8) );
 		$customer->save();
 		
 		// Send confirmation email
