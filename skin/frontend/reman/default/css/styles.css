@@ -2444,7 +2444,9 @@ background-position: 0px 20px;
 	background:#e4e4e4;
 	background-image:url(../images/nav-submenu-bg.gif);
 	background-repeat:repeat-x;
-	display:none;
+	overflow:hidden;
+	height:0px;
+	/*display:none;*/
 }
 
 
