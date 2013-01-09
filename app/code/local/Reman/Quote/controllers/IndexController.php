@@ -41,14 +41,14 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			if($result_st4){
 				$productObj = new stdClass();
 				$productObj->sku = $result_st4->getSku();
-				if($productObj->sku == "N/A" || $productObj->sku[0] != $request['category'] ){
+				//if($productObj->sku == "N/A" || $productObj->sku[0] != $request['category'] ){
+				if($productObj->sku[0] != "N/A" && $productObj->sku[0] != $request['category'] ){
 					return var_export(false);
 				}else{
 					echo json_encode($productObj);
-					$this->productAction();
 				}
 			}else{
-				return var_export(false);
+				return var_export(true);
 			}
 		}
 		// close connection
@@ -61,9 +61,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		/**
 		 *Log Search Results
 		*/
-		if($request['applic'] != ''){
-			Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic']);
-		}
+		Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
 		/** 
 		 *	Load Only Custom product page for Quick Quote Block
 		*/

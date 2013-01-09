@@ -39,6 +39,7 @@ Reman_QuickQuote.prototype = {
 	currentSelectedModel: '',
 	currentCatSelected:'',
 	currentPartRootSelected:[],
+	currentPartNumber:'',
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -543,7 +544,6 @@ Reman_QuickQuote.prototype = {
 						complete: function(data){
 							//parse response to JSON Object		  
 							var response = $j.parseJSON(data.responseText);
-							
 							if(!response){
 									$j('#preloader_cont').fadeOut(500,function(){
 										$j('#breadcrumb_info').removeClass('disabled');
@@ -554,6 +554,8 @@ Reman_QuickQuote.prototype = {
 							}else{
 								
 								Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+								
+								Reman_QuickQuote.prototype.currentPartNumber = response.sku;
 								
 								Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
 								Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
@@ -571,7 +573,7 @@ Reman_QuickQuote.prototype = {
 	},
 
 	loadProductInfo: function(id,name){
-		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join('>');
+		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join(' > ');
 		var make = Reman_QuickQuote.prototype.currentSelectedMake.trim();
 		$j.ajax({
 				url: "index/product",
@@ -581,10 +583,22 @@ Reman_QuickQuote.prototype = {
 					make: make,
 					year: Reman_QuickQuote.prototype.currentSelectedYear,
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
-					applic: aplicStr
+					applic: aplicStr,
+					partnum: Reman_QuickQuote.prototype.currentPartNumber
 				},
 				complete: function(data){
-
+					if(Reman_QuickQuote.prototype.currentPartNumber == "N/A" || 
+						Reman_QuickQuote.prototype.currentPartNumber == "" || typeof(Reman_QuickQuote.prototype.currentPartNumber) == "undefined"
+					){
+						$j('#preloader_cont').fadeOut(500,function(){
+							Reman_QuickQuote.prototype.currentPartRootSelected.pop();
+							$j('#breadcrumb_info').removeClass('disabled');
+							$j('#parts_tbl').show();
+							//show error popup
+							$j('#product_error_popup').fadeIn();
+						});
+						return;
+					}					
 					// trancate group text if longer than 30 letters
 					if(name.length >30){
 						name = jQuery.trim(name).substring(0, 30).trim(this) + "...";

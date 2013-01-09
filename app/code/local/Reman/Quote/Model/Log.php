@@ -31,7 +31,7 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 		$myFile = "export/QUOTELOG.TXT";
 		$fh = fopen($myFile, 'a');
 		
-		$stringData = date('Y.n.d h:i A') . $delim
+		$stringData = date('Y.m.d h:i A') . $delim
 			. '"' . $company->name . '"' . $delim
 			. '"' . $user->email . '"' . $delim
 			. '"' . $user->firstname . '"' . $delim
