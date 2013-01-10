@@ -22,13 +22,13 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 		
 		$user = Mage::getSingleton('customer/session')->getCustomer();
 		$company = Mage::getModel('company/company')->load( $user->company );
-		$delim = "|";
+		$delim = ",";
 		
 		if ( $partnum == "" ) {
 			$partnum = 'N/A';
 		}
 		
-		$myFile = "export/QUOTELOG.TXT";
+		$myFile = "export/qoutelog.csv";
 		$fh = fopen($myFile, 'a');
 		
 		$stringData = date('Y.m.d h:i A') . $delim
