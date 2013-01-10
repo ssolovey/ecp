@@ -1,7 +1,0 @@
-2013.01.09 08:04 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"GMC"|"2003"|"Sierra 2500 HD"|"RWD > 8.1L > 1000/M74 > 3/4" COOLER LINE HOLES"|"T281203"
-2013.01.09 08:04 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"GMC"|"2003"|"Sierra 2500 HD"|"4WD > 6.6L > LARGE 7/8" COOLER LINE HOLES"|"T281210"
-2013.01.09 08:04 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"Honda"|"2003"|"Accord"|"3.0L"|"T295201"
-2013.01.09 08:05 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"Honda"|"2003"|"Accord"|"2.4L"|"T295401"
-2013.01.09 08:05 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"Honda"|"1996"|"Accord"|"A0YA"|"N/A"
-2013.01.09 08:05 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"Honda"|"1996"|"Accord"|"B0YA"|"T290501"
-2013.01.09 08:06 PM|"THE WARRANTY GROUP.."|"john@john.com"|"John"|"Smith"|"Honda"|"2003"|"Accord"|"3.0L"|"N/A"
