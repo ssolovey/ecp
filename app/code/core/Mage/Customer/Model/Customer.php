@@ -209,7 +209,7 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
      */
 	public function isCustomerCompanyDisabled()
 	{
-		if(Mage::getModel('company/company')->load($this->getCompany())->getStatus() == 2)
+		if(Mage::getModel('company/company')->load($this->getCompany())->getStatus() == 0)
 		{
 			return true;
 		}else{
