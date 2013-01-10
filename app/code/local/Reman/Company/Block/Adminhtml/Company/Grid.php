@@ -79,7 +79,7 @@ class Reman_Company_Block_Adminhtml_Company_Grid extends Mage_Adminhtml_Block_Wi
           'type'      => 'options',
           'options'   => array(
               1 => 'Enabled',
-              2 => 'Disabled'
+              0 => 'Disabled'
           )
       ));
 		

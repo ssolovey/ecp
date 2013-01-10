@@ -100,7 +100,7 @@ class Reman_Company_Block_Adminhtml_Company_Edit_Tab_General extends Mage_Adminh
               ),
 
               array(
-                  'value'     => 2,
+                  'value'     => 0,
                   'label'     => Mage::helper('company')->__('Disabled')
               )
           )

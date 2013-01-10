@@ -114,7 +114,8 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			'company'		=>	$company->getId(),
 			'phone'			=>	$item[14],
 			'ext'			=>	$item[15],
-			'group_id'		=>	$item[27] === 'DELETE' ? 7: 6
+			'group_id'		=>	$item[27] === 6,
+			//'group_id'		=>	$item[27] === 'DELETE' ? 7: 6
 		);
 		
 		$customer = $this->_customers->loadByEmail( $item[13] );
