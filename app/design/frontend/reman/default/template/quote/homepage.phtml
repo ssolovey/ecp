@@ -1,4 +1,11 @@
 <?php
+/**
+ * Reman HomePage Template
+ *
+ * @category    Reman
+ * @package     Design
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
 	if(!$this->helper('customer')->isLoggedIn()){
 		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login', $arguments= array()));
 	}else{

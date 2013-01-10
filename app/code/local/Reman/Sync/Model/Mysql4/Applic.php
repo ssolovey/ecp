@@ -32,7 +32,10 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		// return result
 		return $result; 
     }
-	
+	/*
+	 * Load Product Object
+	 * @return object 
+	*/
 	public function loadProduct ($applic_id)
 	{
 		

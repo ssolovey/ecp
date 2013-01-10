@@ -1,4 +1,11 @@
 <?php
+/**
+ * Quote IndexController
+ *
+ * @category    Reman
+ * @package     Reman_Quote
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
 class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()

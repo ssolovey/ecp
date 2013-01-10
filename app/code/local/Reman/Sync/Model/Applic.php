@@ -44,7 +44,10 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	public function loadProductId($vehicle_id){
 		return $this->getResource()->loadProductId($vehicle_id);
     }
-	
+	/**
+	 * Load Product object
+	 * @return object
+	*/
 	public function loadProduct($applic_id){
 		return $this->getResource()->loadProduct($applic_id);
     }

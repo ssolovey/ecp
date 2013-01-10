@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--
+	/**
+	 * Reman General Layout
+	 *
+	 * @category    Reman
+	 * @package     Layout
+	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+	 */
+ -->
 <layout> 
 	<default> 
 		<reference name="root"> 

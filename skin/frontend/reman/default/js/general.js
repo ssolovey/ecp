@@ -1,3 +1,11 @@
+/**
+ * Online Quick Quote frontend logic
+ *  
+ * @category    Reman
+ * @package     frontend_reman_default_js
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
+ 
 /*Resolve conflicts with prototype js default library*/
 var $j = jQuery.noConflict();
 

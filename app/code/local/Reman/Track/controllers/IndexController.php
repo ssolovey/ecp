@@ -1,4 +1,11 @@
 <?php
+/**
+ * Track IndexController
+ *
+ * @category    Reman
+ * @package     Reman_Track
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
 class Reman_Track_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()

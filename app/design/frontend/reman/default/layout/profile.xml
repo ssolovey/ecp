@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--
+	/**
+	 * Reman Profile Page Layout
+	 *
+	 * @category    Reman
+	 * @package     Layout
+	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+	 */
+ -->
 <layout version="0.1.0">
 	<!-- User Profile Content-->
 	<profile_index_index>

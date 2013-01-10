@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--
+	/**
+	 * Reman Quick Quote Page Layout
+	 *
+	 * @category    Reman
+	 * @package     Layout
+	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+	 */
+ -->
 <layout version="0.1.0">
 	<!-- Quick Quote Content-->
 	<quote_index_index>

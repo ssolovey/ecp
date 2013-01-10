@@ -1,4 +1,11 @@
 <?php
+/**
+ * Profile IndexController 
+ *
+ * @category    Reman
+ * @package     Reman_Profile
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
 class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()

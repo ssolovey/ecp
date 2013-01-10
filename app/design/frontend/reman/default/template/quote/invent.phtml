@@ -1,4 +1,11 @@
-<?php 
+<?php
+/**
+ * Reman Product Inventory Template
+ *
+ * @category    Reman
+ * @package     Design
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */ 
 		$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
 		//MKE Stock
 		$mke = $_product->getData('parts_inventory_nc');
