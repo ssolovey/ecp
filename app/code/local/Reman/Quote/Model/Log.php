@@ -28,7 +28,7 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 			$partnum = 'N/A';
 		}
 		
-		$myFile = "export/qoutelog.csv";
+		$myFile = "export/quotelog.csv";
 		$fh = fopen($myFile, 'a');
 		
 		$stringData = date('Y.m.d h:i A') . $delim
