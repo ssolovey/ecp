@@ -2552,3 +2552,14 @@ background-position: 0px 20px;
 text-decoration: none;
 }
 
+.reman_docs{
+	width:200px;
+	font-size:12px;
+	margin-left:10px;
+}
+
+.reman_docs a {
+	margin-bottom:5px;
+	float:left;
+}
+

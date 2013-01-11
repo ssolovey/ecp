@@ -122,11 +122,21 @@
 
     <div class="product-collateral" style="margin-top:50px;">      
       	      <div style="clear:left">
-              <div class="description_lable">Description:</div>
-              <div class="desc_cont">
+              <div class="description_lable" style="font-size:15px;">Description:</div>
+              <div class="desc_cont" style="font-size:12px; margin-left:10px;">
         <?php echo $this->helper('catalog/output')->productAttribute(Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')), $_description, 'description') ?>
 				</div>
-        	  <!--<div class="description_lable" style="margin-top:50px;">Manuals:</div>-->
-    		</div>
+				<?php if($_product->getData('document_sellsheet') != null && $_product->getData('document_synthetecatf') != null ): ?>
+					<div class="description_lable" style="margin-top:25px; font-size:15px;">Documentation:</div>
+					<div class="reman_docs">
+					<?php if($_product->getData('document_sellsheet') != null): ?>	
+						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_sellsheet') ?>" target="_blank">Documantation type 1</a>
+					<?php endif; ?>	
+					<?php if($_product->getData('document_synthetecatf') != null ): ?>	
+						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_synthetecatf') ?>" target="_blank">Documantation type 2</a>
+					<?php endif; ?>	
+					</div>
+				<?php endif; ?>	
+			</div>
     </div>
 </div>
