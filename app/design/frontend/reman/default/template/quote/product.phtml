@@ -130,10 +130,10 @@
 					<div class="description_lable" style="margin-top:25px; font-size:15px;">Documentation:</div>
 					<div class="reman_docs">
 					<?php if($_product->getData('document_sellsheet') != null): ?>	
-						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_sellsheet') ?>" target="_blank">Documantation type 1</a>
+						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_sellsheet') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_sellsheet')->getStoreLabel(); ?></a>
 					<?php endif; ?>	
 					<?php if($_product->getData('document_synthetecatf') != null ): ?>	
-						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_synthetecatf') ?>" target="_blank">Documantation type 2</a>
+						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_synthetecatf') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_synthetecatf')->getStoreLabel();?></a>
 					<?php endif; ?>	
 					</div>
 				<?php endif; ?>	
