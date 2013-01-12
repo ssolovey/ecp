@@ -126,7 +126,7 @@
               <div class="desc_cont" style="font-size:12px; margin-left:10px;">
         <?php echo $this->helper('catalog/output')->productAttribute(Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')), $_description, 'description') ?>
 				</div>
-				<?php if($_product->getData('document_sellsheet') != null && $_product->getData('document_synthetecatf') != null ): ?>
+				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_synthetecatf'))== false ): ?>
 					<div class="description_lable" style="margin-top:25px; font-size:15px;">Documentation:</div>
 					<div class="reman_docs">
 					<?php if($_product->getData('document_sellsheet') != null): ?>	
