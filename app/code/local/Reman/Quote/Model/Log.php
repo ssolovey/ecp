@@ -31,12 +31,12 @@ class Reman_Quote_Model_Log extends Mage_Core_Model_Abstract
 		$myFile = "export/quotelog.csv";
 		$fh = fopen($myFile, 'a');
 		
-		$stringData = date('Y.m.d h:i A') . $delim
+		$stringData = '"' . date('Y.m.d h:i A') . '"' . $delim
 			. '"' . $company->name . '"' . $delim
 			. '"' . $user->email . '"' . $delim
 			. '"' . $user->firstname . '"' . $delim
 			. '"' . $user->lastname . '"' . $delim
-			. $_SERVER['REMOTE_ADDR'] . $delim
+			. '"' .  $_SERVER['REMOTE_ADDR'] . '"' . $delim
 			. '"' . $make . '"' . $delim
 			. '"' . $year . '"' . $delim
 			. '"' . $model . '"' . $delim
