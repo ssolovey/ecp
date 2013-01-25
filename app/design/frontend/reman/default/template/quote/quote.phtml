@@ -11,40 +11,46 @@
 	 endif;
 ?>
 <div id="steps">
+
+<div id="welcome_bunner"></div>
+
 <!-- First Step Quick quote (MAKE DATA)-->
 <div id="breadcrumb_info"></div>
+	<table id="steps_info">
+    	<tr>
+        	<td id="step_1" class="step_lable">STEP ONE:</td>
+            <td id="step_1_message">How we can help you today?</td>
+        </tr>
+        <tr id="step_2_block" style="display:none;">
+        	<td id="step_2" class="step_lable">STEP TWO:</td>
+            <td id="step_2_message"></td>
+        </tr>
+    </table>
+
+
 	<div id="table_container">
 		<!--Preloader-->
         <div id="preloader_cont">
 			<div id="reman_preloader"></div>
 		</div>
         <!--Group Selects-->
-        <div id="group_select">
-        	 <span class="label">Select Category:</span>	
-			 <ul class="list">
-                    <li class="cat_select" cat="T">AUTO TRANSMISSION</li>
-                    <li class="cat_select" cat="X">TRANSFER CASE</li>
-             </ul>
+        <div id="group_select"> 
+            <div id="autotrans" class="cat_select" cat="T"></div>
+             <!-- ADD class="cat_select" to enable !!!!!! -->
+            <div id="transcase"  cat="X"></div>
         </div>
         <!--Make Selection-->
 		<div id="make_tbl" style="display:none;">
-			 <span class="label">Select Make:</span>	
-			 <ul class="list">
-			 <?php  foreach($this->getMake() as $index => $value): ?>
-				<li class="make_select"  value="<?php echo $value['make_id']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
-					<?php echo $value['make'] ?>
-				</li>
-			<?php $index +=1 ?>
-			<?php if($index%25 == 0 && $index != 0): ?>
+			 <ul class="list_make">
+				 <?php  foreach($this->getMake() as $index => $value): ?>
+                    <li class="make_select"  value="<?php echo $value['make_id']?>" name="<?php echo $value['make']?>" startyear="<?php echo $value['start_year']?>" endyear="<?php echo $value['end_year']?>">
+                        <img src="<?php echo $this->getSkinUrl('images/makes/'.$value['make'].'.png') ?>" alt="<?php echo $value['make'] ?>" />
+                    </li>
+                 <?php endforeach; ?>
 			</ul>
-			<ul class="list">
-			<?php endif; ?>			
-			<?php endforeach; ?>
-		
 		</div>
 		<!--Year Selection-->
 		<div id="year_tbl" style="display:none;">
-			<span class="label">Select Production Year:</span>
 		</div>   
 		<!--Model Selection-->
 		<div id="model_tbl" style="display:none;">
@@ -62,10 +68,10 @@
     	</div> 
 	</div>
     <!--Assistant Info -->
-    <div id="reman-invent_info" style="display:none;"></div>
+    <!--<div id="reman-invent_info" style="display:none;"></div>
 	<div id="assis_info">
         <div class="banner"></div>
     	<span>For assistant with your Order or for any question you may have, please contanct our Customer Loyalty Team at 1-800-924-9479</span>
 	</div>
-    <div class="product_error"></div>
+    <div class="product_error"></div>-->
 </div>

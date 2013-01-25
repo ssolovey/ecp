@@ -22,7 +22,6 @@
 				<remove name="right.permanent.callout" /> <!--remove banner block-->
 				<remove name="cart_sidebar"></remove> <!--remove shoping cart -->
 			</reference>
-			 
 		</reference>
 	</default>
 </layout>

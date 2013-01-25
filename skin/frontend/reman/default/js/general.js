@@ -74,8 +74,13 @@ Reman_QuickQuote.prototype = {
 					this.currentCatSelected = $j(elem).attr('cat');
 					$j('#group_select').hide(); // hide category block
 					$j('#make_tbl').show(); // show make block
+					
 					// update bread crumb link
-					$j('#breadcrumb_info').append('<span><span class="breadcrumb cat_link">'+elem.innerHTML+'</span></span>');
+					if(this.currentCatSelected == 'T'){
+						$j('#step_1_message').html("You are looking for automation transmission? Well, you've come to the right place!");
+					}else{
+						//TODO When Trasfer Case will be enable !!!!!
+					}
 					return;
 					
 					break;
@@ -85,7 +90,7 @@ Reman_QuickQuote.prototype = {
 					// calculate production years
 					var year_range = $j(elem).attr('endyear') - $j(elem).attr('startyear');
 					// current Selected Make
-					this.currentSelectedMake = $j(elem).html();
+					this.currentSelectedMake = $j(elem).attr('name');
 					// Select Make
 					this.selectMake($j(elem).attr('value'),Number(year_range),Number($j(elem).attr('startyear')));
 					// Need to reset All errors if necessary
@@ -162,7 +167,7 @@ Reman_QuickQuote.prototype = {
 			}
 
 			/*Event for Breadcrumbs Make links*/
-			if (elem.className == 'breadcrumb make_link'){
+			if (elem.id == 'step_2'){
 				this.turnOnMakeBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
@@ -187,7 +192,7 @@ Reman_QuickQuote.prototype = {
 			}
 			
 			/*Event for Breadcrumbs Cat links*/
-			if (elem.className == 'breadcrumb cat_link'){
+			if (elem.id == 'step_1'){
 				this.turnOnCatBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
@@ -224,7 +229,19 @@ Reman_QuickQuote.prototype = {
 		// year table active true
 		this.isYearActive = true;
 		// update bread crumb link
-		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span></span>');
+		
+		var vowels = ['A','E','I','O','U'];
+		var prefix = 'A';
+		for(var v = 0; v <= vowels.length -1; v++){
+			if(this.currentSelectedMake[0] == vowels[v]){
+				var prefix = 'An';
+			}
+		}
+		
+		
+		$j('#step_2_message').html(prefix+' '+this.currentSelectedMake+" transmision? You're in luck! We've got bunches.");
+		$j('#step_2_block').show();
+		//$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span></span>');
 	},
 	/**
 	 * Reset Search Errors Info
@@ -311,7 +328,8 @@ Reman_QuickQuote.prototype = {
 			this.clearModel();
 			this.clearGroup();
 			this.clearProductInfo();
-			$j('.make_link').parent().remove();
+			$j('#step_2_block').hide();
+			//$j('.make_link').parent().remove();
 			//show make table
 			$j('#make_tbl').show();
 		}
@@ -344,7 +362,9 @@ Reman_QuickQuote.prototype = {
 			this.clearModel();
 			this.clearGroup();
 			this.clearProductInfo();
-			$j('.cat_link').remove();
+			//$j('.cat_link').remove();
+			$j('#step_1_message').html("How we can help you today?");
+			$j('#step_2_block').hide();
 			//show cat table
 			$j('#group_select').show();
 			this.currentCatSelected = '';
