@@ -78,11 +78,11 @@ Default layout, loads most of the pages
 						<url helper="quote/getQuickQuoteUrl" />
 						<title>Online Quote</title>
 					</action>
-					<action method="addLink" translate="label title" module="track">
+					<!--<action method="addLink" translate="label title" module="track">
 						<label>Order Tracking</label>
 						<url helper="track/getOrderTrackUrl" />
 						<title>Order Tracking</title>
-					</action>
+					</action>-->
 					<action method="addLink" translate="label title" module="track">
 						<label>My Profile</label>
 						<url helper="profile/getProfileUrl" />
