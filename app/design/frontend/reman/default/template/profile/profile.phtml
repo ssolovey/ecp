@@ -16,7 +16,13 @@
 ?>	
 	
  <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
-    <?php if (count($result) == 0): ?>
+    
+   
+   	<a style="font-size:14px;" href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Add new user') ?></a>
+        
+	
+	
+	<?php if (count($result) == 0): ?>
         <span>No records found</span>
 	<?php endif; ?>
     <?php if (count($result) > 0): ?>
