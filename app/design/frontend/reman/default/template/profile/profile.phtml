@@ -1,4 +1,4 @@
-﻿<!--
+﻿<?php 
 	/**
 	 * Reman Profile Template
 	 *
@@ -6,5 +6,53 @@
 	 * @package     Design
 	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
 	 */
- -->
-<div class="reman_page_heading">My Profile Page</div>
+?>
+ 
+<?php 
+	/* Get Companies Customers*/
+	$result = Mage::helper('company')->getCompanyCustomers();
+	/* Define action URL */
+	$action = Mage::getUrl('profile/index');
+?>	
+	
+ <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
+    <?php if (count($result) == 0): ?>
+        <span>No records found</span>
+	<?php endif; ?>
+    <?php if (count($result) > 0): ?>
+        <table class="reman_users_table">
+            <tr>
+                <td class="lable">First name</td>
+                <td class="lable">Last name</td>
+                <td class="lable">User e-mail</td>
+                <td class="lable">Status</td>
+            </tr>
+			<?php  foreach($result as $key => $value): ?>
+                <?php 
+					/**
+						Define Action Method
+					*/
+					if($value['group_id'] == 1){
+						$actionMethod = "disableAccount";
+					}else if($value['group_id'] == 7){
+						$actionMethod = "enableAccount";
+					}
+					 /**
+					 	Define selected user ID
+					 */
+					$selectedUserID =  $value['entity_id'];
+				?>
+                <tr>
+                    <td><?php echo $value['firstname'] ?></td>
+                    <td><?php echo $value['lastname'] ?></td>
+                    <td><?php echo $value['email'] ?></td>
+                    <td>
+                    	<a href="<?php 
+							echo $action.''.$actionMethod.'/params?id='.$selectedUserID ?>"><?php echo $value['group_id'] == 1 ? "Deactivate" : "Activate"; ?>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>    
+	<?php endif; ?>
+<?php endif; ?>

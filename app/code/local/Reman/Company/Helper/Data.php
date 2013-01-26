@@ -95,4 +95,29 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
   		$discount = $company->discount;
 		return $discount;
 	 }
+	  /**
+     * Retrieve current logged Admin Users customers Data
+     *
+     * @return Array
+     */
+	 function getCompanyCustomers() {
+		 
+		//customer ID
+		$customer_id =  Mage::getSingleton('customer/session')->getCustomer()->getId();	
+		  
+		/* Get customer model, run a query */
+		$collection = Mage::getModel('customer/customer')
+					  ->getCollection()
+					  ->addAttributeToSelect('*');
+		$result = array();
+		foreach ($collection as $customer) {
+			$customerArr = $customer->toArray();
+			if($customerArr['entity_id'] != $customer_id ){
+				if($customerArr['company'] == $this->getCompanyId()){
+					$result[] = $customer->toArray();
+				}
+			}
+		}
+		return $result;
+	}
 }

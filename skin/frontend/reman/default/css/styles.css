@@ -118,6 +118,8 @@ ul,ol         { list-style:none; }
 	background-color: #F2F2F2;
 	padding: 20px;
 	border-radius: 15px;
+	width:601px;
+	height:400px;
 }
 .col-right { 
 	float:right; 
@@ -2631,3 +2633,24 @@ text-decoration: none;
 	float:left;
 }
 
+
+/*Profile Page Styles*/
+.reman_users_table {
+	border-color: black;
+	border-style: solid;
+	border-width: 0 1px 1px 0
+}
+
+.reman_users_table .lable{
+	font-weight:bold;
+}
+
+.reman_users_table td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px 0 0 1px;
+	text-align: center;
+	width: 100px;
+	font-size: 12px;
+	padding: 5px;
+}

@@ -11,6 +11,21 @@
 <layout version="0.1.0">
 	<!-- User Profile Content-->
 	<profile_index_index>
+		<!-- 
+			Add Reman Assistant Static block to Online Quote Layout
+			This static block can be changed for Admin -> CMS -> Static Blocks -> Assistant banner  
+		-->
+		<reference name="right">
+			<block type="cms/block" name="reman_assistant_banner" before="-">
+				<action method="setBlockId"><block_id>reman_assistant_banner</block_id></action>
+			</block>
+		</reference>
+		<!--Set Two column layout-->
+		<reference name="root">
+			<action method="setTemplate">
+				<template>page/2columns-right.phtml</template>
+			</action>
+		</reference>
 		<reference name="head">
 			 <action method="setTitle" translate="title" module="profile">
 				  <title>My Profile</title>
