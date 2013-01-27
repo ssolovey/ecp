@@ -87,23 +87,51 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	}
 	
 	/**
-	* Retrieve order create model
-	*
-	* @return  Mage_Adminhtml_Model_Sales_Order_Create
-	*/
+	 * Retrieve order create model
+	 *
+	 * @return  Mage_Adminhtml_Model_Sales_Order_Create
+	 */
 	protected function _getOrderCreateModel()
 	{
 		return Mage::getSingleton('adminhtml/sales_order_create');
 	}
 	
 	/**
-	* Retrieve session object
-	*
-	* @return Mage_Adminhtml_Model_Session_Quote
-	*/
+	 * Retrieve session object
+	 *
+	 * @return Mage_Adminhtml_Model_Session_Quote
+	 */
 	protected function _getSession()
 	{
 		return Mage::getSingleton('adminhtml/session_quote');
+	}
+	
+	/**
+	 * Initialize order creation session data
+	 *
+	 * @param array $data
+	 * @return Mage_Adminhtml_Sales_Order_CreateController
+	 */
+	protected function _initSession($data)
+	{
+		// Get/identify customer
+		if (!empty($data['customer_id'])) {
+			$this->_getSession()->setCustomerId((int) $data['customer_id']);
+		}
+		// Get/identify store
+		if (!empty($data['store_id'])) {
+			$this->_getSession()->setStoreId((int) $data['store_id']);
+		}
+		return $this;
+	}
+	
+	
+	/**
+	 * Creates order
+	 */
+	public function create()
+	{
+		
 	}
 	
 	// override
