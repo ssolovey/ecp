@@ -35,8 +35,51 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		// Get customer model	
 		$customer = $this->_customers->loadByEmail( $item[2] );
 		
+		// Get customer adress
+		$customer_adress = array(
+			//'customer_address_id' => '',
+			'prefix'		=> '',
+			'firstname'		=> $item[1],
+			'middlename'	=> '',
+			'lastname'		=> '_',
+			'suffix' 		=> '',
+			'company' 		=> '',
+			'street' 		=> array($item[5],$item[6]),
+			'city' 			=> $item[7],
+			'country_id' 	=> 'US',
+			'region' 		=> '',
+			'region_id' 	=> $item[8],
+			'postcode' 		=> $item[9],
+			'telephone' 	=> '',
+			'fax' 			=> ''
+		);
+		
+		// Order data mapping
 		$orderData = array(
-			
+			'session'       => array(
+				'customer_id'   => $customer->getId(),
+				'store_id'      => '1',
+			),
+			'payment'       => array(
+				'method'    => 'checkmo',
+			),
+			'add_products'  =>array(
+				$product->getId() => array('qty' => 1),
+			),
+			'order' => array(
+				'currency' => 'USD',
+				'account' => array(
+					'group_id'	=> $customer->_groupId,
+					'email' 	=> $customer->getEmail()
+				),
+				'billing_address' => $customer_adress,
+				'shipping_address' => $customer_adress,
+				'shipping_method' => 'flatrate_flatrate',
+				'comment' => array(
+					'customer_note' => 'This order has been programmatically created via import script.',
+				),
+				'send_confirmation' => '0'
+			)
 		);
 		
 		// Delete file
