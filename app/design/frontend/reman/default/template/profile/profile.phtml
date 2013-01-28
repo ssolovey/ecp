@@ -14,14 +14,13 @@
 	/* Define action URL */
 	$action = Mage::getUrl('profile/index');
 ?>	
-	
+
+<div id="remaqn_users_cont" style="display:none; top: -20px; position: relative;">
+	<div class="page-title">
+        <h1><?php echo $this->__('Company Users') ?></h1>
+    </div>
  <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
     
-   
-   	<a style="font-size:14px;" href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Add new user') ?></a>
-        
-	
-	
 	<?php if (count($result) == 0): ?>
         <span>No records found</span>
 	<?php endif; ?>
@@ -61,4 +60,6 @@
             <?php endforeach; ?>
         </table>    
 	<?php endif; ?>
+    <a class="add_new_user_link" href="<?php echo Mage::getUrl('customer/account/create'); ?>"><?php echo $this->__('Add new user') ?></a>
 <?php endif; ?>
+</div>

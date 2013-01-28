@@ -75,7 +75,8 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             'resetpassword',
             'resetpasswordpost',
             'confirm',
-            'confirmation'
+            'confirmation',
+			'changepassword'
         );
         $pattern = '/^(' . implode('|', $openActions) . ')/i';
 
@@ -745,7 +746,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
     public function editPostAction()
     {
         if (!$this->_validateFormKey()) {
-            return $this->_redirect('*/*/edit');
+            //return $this->_redirect('profile');
         }
 
         if ($this->getRequest()->isPost()) {
@@ -808,7 +809,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 foreach ($errors as $message) {
                     $this->_getSession()->addError($message);
                 }
-                $this->_redirect('*/*/edit');
+                //$this->_redirect('customer/account');
                 return $this;
             }
 
@@ -818,7 +819,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $this->_getSession()->setCustomer($customer)
                     ->addSuccess($this->__('The account information has been saved.'));
 
-                $this->_redirect('customer/account');
+                //$this->_redirect('customer/account');
                 return;
             } catch (Mage_Core_Exception $e) {
                 $this->_getSession()->setCustomerFormData($this->getRequest()->getPost())
@@ -829,7 +830,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             }
         }
 
-        $this->_redirect('*/*/edit');
+        //$this->_redirect('customer/account');
     }
 
     /**

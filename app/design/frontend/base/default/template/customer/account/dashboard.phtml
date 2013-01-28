@@ -25,9 +25,9 @@
  */
 ?>
 <?php
-	if($this->helper('customer')->isLoggedIn()):
+	if($this->helper('customer')->isLoggedIn()){
 		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('quote', $arguments= array()));
-	 endif;
+	}
 ?>
 <div class="dashboard">
     <div class="page-title">

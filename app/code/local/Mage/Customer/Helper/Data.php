@@ -93,6 +93,11 @@ class Mage_Customer_Helper_Data extends Mage_Core_Helper_Abstract
      * @var Mage_Customer_Model_Entity_Group_Collection
      */
     protected $_groups;
+	
+	public function getProfileUrl()
+    {
+        return $this->_getUrl('customer/account');
+    }
 
     /**
      * Check customer is logged in

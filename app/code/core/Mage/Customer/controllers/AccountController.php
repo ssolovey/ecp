@@ -218,7 +218,8 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
             }
         }
-       $this->_redirectUrl($session->getBeforeAuthUrl(true));
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('quote', $arguments= array()));
+       //$this->_redirectUrl($session->getBeforeAuthUrl(true));
     }
 
     /**
@@ -745,7 +746,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
     public function editPostAction()
     {
         if (!$this->_validateFormKey()) {
-            return $this->_redirect('*/*/edit');
+            return $this->_redirect('customer/account');
         }
 
         if ($this->getRequest()->isPost()) {
@@ -808,7 +809,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 foreach ($errors as $message) {
                     $this->_getSession()->addError($message);
                 }
-                $this->_redirect('*/*/edit');
+                $this->_redirect('customer/account');
                 return $this;
             }
 
@@ -829,7 +830,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             }
         }
 
-        $this->_redirect('*/*/edit');
+        $this->_redirect('customer/account');
     }
 
     /**
