@@ -14,6 +14,13 @@
 					<frontName>profile</frontName>
 				</args>
 			</profile>
+			<customer><!-- Name of core module to be overridden-->
+         		<args>
+					<modules>
+						<Reman_Profile before="Mage_Customer">Reman_Profile</Reman_Profile><!-- Tell Magento to call our custom module before the Mage/Checkout module -->
+					</modules>
+         		</args>
+    		</customer>
 		</routers>
 		<layout> 
             <updates>
