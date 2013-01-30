@@ -103,9 +103,10 @@ ul,ol         { list-style:none; }
 .page-empty { background:#fff; padding:20px; text-align:left; }
 .page-popup { background:#fff; padding:25px 30px; text-align:left; }
 .main-container {
-
+	position:relative;
+	top:-15px;
 }
-.main { width:860px; margin:0 auto; min-height:400px; padding:25px 25px 80px; text-align:left; 
+.main { width:850px; margin:0 auto; min-height:400px; padding:25px 25px 80px; text-align:left; 
 	background-image: url("http://etereman.com/images/content-main-fade-bg.png");
 	background-color:#F2F2F2;
 	background-repeat: repeat-x;
@@ -127,7 +128,7 @@ ul,ol         { list-style:none; }
 	padding:0 0 1px; 
 	background-repeat: no-repeat;
 	background-color: #F2F2F2;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 15px; 
 	height:400px;
 }
@@ -150,7 +151,7 @@ ul,ol         { list-style:none; }
 .col2-set .col-2 { float:right; width:48.5%; }
 
 /* Custom Reman login */
-.col2-set_reman .col-2_reman { width:45.5%; margin:0 auto; }
+.col2-set_reman .col-2_reman {/* width:45.5%; margin:0 auto;*/ }
 
 
 .col2-set .col-narrow { width:32%; }
@@ -602,8 +603,9 @@ tr.summary-details-excluded { font-style:italic; }
 	color: #29266B;
 	text-shadow: .1em 0em white;
 	font-size:13px;
-	padding: 8px 6px 12px 7px;
+	padding: 8px 15px 12px 15px;
 	display:block;
+	font-weight:bold;
 }
 
 #header_menu li a:hover {
@@ -711,7 +713,7 @@ tr.summary-details-excluded { font-style:italic; }
 }
 
 .logo { float:left; }
-.header-container { background-image:url(../images/masthead-img-vehicleowners.jpg); height:250px; width: 920px;
+.header-container { /*background-image:url(../images/masthead-img-vehicleowners.jpg);*/ height:250px; width: 920px;
 margin: 0 auto;
 background-repeat: no-repeat;
 background-position: 0px 20px;
@@ -1703,7 +1705,7 @@ background-position: 0px 20px;
 
 
 /* Account Login/Create Pages ============================================================ */
-.account-login .content { min-height:345px; padding:14px 21px; background:#faf7ee url(../../../shop/default/images/bkg_login-box.gif) 0 0 repeat-x; border:1px solid #bbb6a5; border-bottom:0; }
+.account-login .content { /*min-height:345px; padding:14px 21px; background:#faf7ee url(../../../shop/default/images/bkg_login-box.gif) 0 0 repeat-x; border:1px solid #bbb6a5; border-bottom:0;*/ }
 .account-login .content h2 { font-weight:bold; font-size:13px; margin:0 0 14px; padding:0 0 5px 23px; border-bottom:1px solid #ddd; background-position:0 1px; background-repeat:no-repeat; text-transform:uppercase; color:#e76200; }
 .account-login .new-users h2 { background-image:url(../../../shop/default/images/i_page1.gif)}
 .account-login .registered-users h2 { background-image:url(../../../shop/default/images/i_page2.gif); }
@@ -1924,8 +1926,8 @@ background-position: 0px 20px;
 .footer-container { }
 .footer { width:930px; margin:0 auto; padding:10px 10px 50px; }
 
-.reman_footer{border-top: 4px solid #C50A1F; margin-left:5px; width:910px; background: url(../images/content-footer-bg.png) repeat-x; height:60px; }
-.reman_copyright{color: #EFEFEF; font-size: 11px; letter-spacing: 1px; margin-left: 10px; padding-top: 10px; float:left; padding-bottom:30px;}
+.reman_footer{border-top: 4px solid #C50A1F; margin-left:10px; width:900px; background: url(../images/content-footer-bg.png) repeat-x; height:60px; position:relative; top:-15px;}
+.reman_copyright{color: #EFEFEF; font-size: 11px; letter-spacing: 1px; margin-left: 10px; float:left; padding-bottom:30px;}
 .footer .store-switcher { display:inline; margin:0 5px 0 0; color:#fff; }
 .footer .store-switcher label { font-weight:bold; vertical-align:middle; }
 .footer .store-switcher select { padding:0; vertical-align:middle; }
@@ -2459,16 +2461,60 @@ background-position: 0px 20px;
 	margin-bottom: 5px;
 }
 
+/* LOGIN*/
+
 .reman_login_content{
-	min-height:220px !important; 
-	background:none !important; 
-	border: 1px solid #999 !important;
+	height:273px !important;
+	width:479px !important; 
+	background:url(../images/login_bg.png) no-repeat !important; 
+	border: none !important;
+	margin:0 auto;
 }
 
 .reman_user_login_lable{
-	font-size: 18px;
-	color: black;
-	font-weight:bold;
+	font-size: 26px;
+	color: #cb1f30;
+	font-weight: bold;
+	padding-top: 20px;
+	padding-left: 30px;
+}
+
+.reman_login_form{
+    padding-left: 90px;
+    padding-top: 20px;
+}
+
+.input-box_reman{
+	margin-bottom:20px;
+}
+
+.inputs_login{
+	border: 1px solid #000 !important;
+	width: 248px;
+	height: 36px;
+	font-size: 17px;
+	line-height: 21px;
+	padding-left: 5px !important;
+}
+
+#reman_forgot_pass{
+	position: relative;
+	float: left;
+	font-size: 12px;
+	margin-top: 30px;
+	margin-left: 35px;
+}
+
+#reman_forgot_pass span {
+	float: left;
+	color: #cb1f30;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+#reman_forgot_pass a {
+	text-decoration: none;
+	color: #000;
 }
 
 
@@ -2479,9 +2525,29 @@ background-position: 0px 20px;
 	height:20px;
 }
 
+.reman_login_button{
+	background:url(../images/login_btn.png) no-repeat !important;
+	width:155px;
+	height:41px;
+	float:right;
+	margin-right:65px;
+	cursor:pointer; 
+}
+
+#register_btn{
+	background: url(../images/register_btn.png) no-repeat;
+	height: 78px;
+	width: 478px;
+	margin: 0 auto;
+	top: -5px;
+	position: relative;
+	cursor:pointer;
+}
+
+
 .reqmark{
 	position: relative;
-	float: right;
+	float: left;
 	line-height: 27px;
 	color: red;
 	padding-left: 5px;
@@ -2491,7 +2557,7 @@ background-position: 0px 20px;
 	position: relative;
 	float: right;
 	margin-right: 20px;
-	margin-top: 9px;
+	margin-top: 6px;
 	font-size: 12px;
 }
 /*Login form*/

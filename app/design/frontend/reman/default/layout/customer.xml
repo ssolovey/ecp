@@ -84,11 +84,21 @@ Layout for customer login page
     <customer_account_login translate="label">
         <label>Customer Account Login Form</label>
         <!-- Mage_Customer -->
-        <remove name="right"/>
+        <!--<remove name="right"/>-->
         <remove name="left"/>
-
+		<!-- 
+			Add Reman Assistant Static block to Online Quote Layout
+			This static block can be changed for Admin -> CMS -> Static Blocks -> Assistant banner  
+		-->
+		<reference name="right">
+			<block type="cms/block" name="reman_assistant_banner" before="-">
+				<action method="setBlockId"><block_id>reman_assistant_banner</block_id></action>
+			</block>
+		</reference>
         <reference name="root">
-            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="setTemplate">
+				<template>page/2columns-right.phtml</template>
+			</action>
         </reference>
         <reference name="content">
             <block type="customer/form_login" name="customer_form_login" template="customer/form/login.phtml" />

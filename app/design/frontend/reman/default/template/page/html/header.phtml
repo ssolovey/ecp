@@ -83,33 +83,37 @@
             <?php echo $this->getChildHtml('store_language') ?><?php */?>
             
             <ul id="header_menu">
-            	<li id="about_reman_link"  style="width:160px; text-align:left; height:48px">
-					<a class="reman_about_link" href="http://etereman.com/philosophy.php"><?php echo $this->__('About ETE REMAN') ?></a>
-					<div class="downarrowclass"></div>
-					<ul id="dropdown_menu">
-						<li><a href="http://etereman.com/philosophy.php">Philosophy</a></li>
-						<li><a href="http://etereman.com/people.php">People</a></li>
-						<li><a href="http://etereman.com/testimonials.php">Testimonials</a></li>
-						<li><a href="http://etereman.com/customerloyalty.php">Customer Loyalty</a></li>
-						<li><a href="http://etereman.com/news/">News</a></li>
-						<li><a href="http://etereman.com/overview-video.php">Video</a></li>
-						<li><a href="http://etereman.com/employment.php">Employment</a></li>
-					</ul>
-				</li>
-                <li><a href="http://etereman.com/planttour.php"><?php echo $this->__('Plant Tour') ?></a></li>
-                <li><a href="http://etereman.com/remanu"><?php echo $this->__('Reman U') ?></a></li>
-                <li><a href="http://etereman.com/warrantyinfo.php"><?php echo $this->__('Warranty Info') ?></a></li>
-                <li><a href="http://etereman.com/carcarecenters.php"><?php echo $this->__('Car Care Centers') ?></a></li>
-                <li><a href="http://etereman.com/contact.php"><?php echo $this->__('Contact') ?></a></li>
-                <li class="online_quotes_lable"><a href="<?php echo $this->getUrl('quote')?>"><?php echo $this->__('Online Quotes') ?></a></li>
-                <!-- <li class="online_quotes_lable">Online Quotes</li> -->
+                <li><a href="http://etereman.com"><?php echo $this->__('ETE REMAN HOME') ?></a></li>
+                <li><a href="<?php 
+								if(Mage::getSingleton('customer/session')->isLoggedIn()){ 
+									echo $this->getUrl('quote');
+								}else{
+									echo $this->getUrl('customer/account/login/');
+								}
+							?>">
+							<?php echo $this->__('CATALOG') ?></a>
+                </li>
+                 <?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                	<li><a href="<?php echo $this->getUrl('customer/account')?>"><?php echo $this->__('MY PROFILE') ?></a></li>
+                 <?php endif; ?>
             </ul>
-  
+            <div class="login_links">
+				<?php if($this->helper('customer')->isLoggedIn()): ?>
+                <span style="font-size: 13px; margin-right: 5px">
+                <?php 
+                    echo $customer->getFirstname().' '.$customer->getLastname(); 
+                ?>
+                </span>
+                <?php endif?>	
+                <?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                     <a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Logout') ?></a>
+                <?php endif; ?>
+            </div>
         </div>
         <?php echo $this->getChildHtml('topContainer'); ?>
     </div>
-    <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>
-    <div id="main-menu">
+   <!-- <div id="online_quotes_big_lable"><span class="online_lable">ONLINE</span><span class="quote_lable">QUOTES</span></div>-->
+    <?php /*?><div id="main-menu">
 	<?php 
 		if($this->helper('customer')->isLoggedIn()){
 			echo $this->getChildHtml('header_links');
@@ -129,5 +133,5 @@
                     <a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Logout') ?></a>
         <?php endif; ?>
     </div>
-</div>
+</div><?php */?>
 <?php echo $this->getChildHtml('topMenu') ?>

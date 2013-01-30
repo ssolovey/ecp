@@ -31,7 +31,7 @@
  * @see Mage_Customer_Block_Form_Login
  */
 ?>
-<div class="account-login">
+<div class="account-login" style="margin-top:25px;">
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <?php /* Extensions placeholder */ ?>
     <?php echo $this->getChildHtml('customer.form.login.extra')?>
@@ -39,46 +39,44 @@
         <div class="col2-set_reman">
             <div class="col-2_reman registered-users">
                 <div class="content reman_login_content">
+                    <div class="reman_user_login_lable">Welcome back!</div>
                     <table class="reman_login_form">
-                    	<tr>
-                            <td><span class="reman_user_login_lable">User Login:</span></td>
-                        </tr>
                         <tr>
-                        	<td style="color:#000;"><label for="email" class="required"><?php echo $this->__('email:') ?></label></td>
                             <td>
                                 <div class="input-box_reman">
-                                    <input style="border:1px solid #000; width:200px;" type="text" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" />
+                                    <input  type="text" name="login[username]" value="" id="email" class="input-text required-entry validate-email inputs_login" title="<?php echo $this->__('Email Address') ?>" placeholder="email adress" />
                                 </div>
                             </td>
                              <td><div class="reqmark">*</div></td>
                         </tr>
                         <tr>
-                        	<td style="color:#000;"> <label for="pass" class="required"><?php echo $this->__('password:') ?></label></td>
                             <td>
                             	<div class="input-box_reman">
-                                <input style="border:1px solid #000; width:200px;" type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" />
+                                <input  type="password" name="login[password]" class="input-text required-entry validate-password inputs_login" id="pass" title="<?php echo $this->__('Password') ?>" placeholder="password" />
                             	</div>
                             
                             </td>
                             <td><div class="reqmark">*</div></td>
                         </tr>
-                        <tr>
-                        	<td></td>
-                        	<td style="float:right">
-                            	<button style="width:80px;" type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
-                            </td>
-                        </tr>
-                        <tr class="links">
+                       <?php /*?> <tr class="links">
                         	<td></td>
                             <td style="float:right;"><a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left"><?php echo $this->__('Forgot Your Password?') ?></a></td>
                         </tr>
                         <tr class="links">
                         	<td></td>
                             <td style="float:right;"><a href="<?php echo Mage::getUrl('register'); ?>">Register</a></td>
-                        </tr>
+                        </tr><?php */?>
                     </table>
+                    <div id="reman_forgot_pass">
+                    	<span>>></span>
+                        <a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left">Uh-oh. I fogot my password.</a>
+                    </div>
+                    <div id="send2" name="send" class="reman_login_button" onclick="$j('#login-form').submit(); return false;"></div>
+                    
+                    <?php /*?><button type="submit" class="reman_login_button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"></button><?php */?>
                 </div>
             </div>
+            <div id="register_btn" onclick="window.location.href = '<?php echo Mage::getUrl('register'); ?>'; return false;"></div>
         </div>
     </form>
     <script type="text/javascript">
