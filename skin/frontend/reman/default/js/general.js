@@ -11,12 +11,12 @@ var $j = jQuery.noConflict();
 
 /* Document ready event*/
 $j(document).ready(function(){
-	
+
 	/*Initiate events on Quick Quote links */
 	$j('#steps').bind('click',function(event){
 		Reman_QuickQuote.prototype.eventsHandler(event);
 	});
-	
+
 	/* Slide Down About reman list*/
 	$j('#about_reman_link').bind('mouseenter', function(){
 		$j('.reman_about_link').addClass('hover');
@@ -44,7 +44,7 @@ Reman_QuickQuote.prototype = {
 	isYearActive: false,
 	isModelActive: false,
 	isGroupActive: false,
-	
+
 	// Current Selected values
 	currentSelectedMake: '',
 	currentSelectedYear: '',
@@ -61,12 +61,12 @@ Reman_QuickQuote.prototype = {
 		if(elem.tagName == 'A'){ 
 			return;
 		}
-		
+
 		//Hide error popup
 		$j('#product_error_popup').fadeOut();
-		
+
 		while (elem) {
-			
+
 			switch (elem.className){
 				/*Event for Category Select*/	
 				case 'cat_select':{
@@ -74,15 +74,13 @@ Reman_QuickQuote.prototype = {
 					this.currentCatSelected = $j(elem).attr('cat');
 					$j('#group_select').hide(); // hide category block
 					$j('#make_tbl').show(); // show make block
-					
 					// update bread crumb link
-					if(this.currentCatSelected == 'T'){
-						$j('#step_1_message').html("You are looking for automation transmission? Well, you've come to the right place!");
-					}else{
-						//TODO When Trasfer Case will be enable !!!!!
-					}
-					return;
+					$j('#breadcrumb_info').append('<span><span class="breadcrumb cat_link">'+elem.innerHTML+'</span></span>');
+					//Update Banner text
+					$j('#welcome_bunner').html('What is the vehicle make?');
 					
+					return;
+
 					break;
 				}
 				/*Event for Make Table*/
@@ -92,11 +90,13 @@ Reman_QuickQuote.prototype = {
 					// current Selected Make
 					this.currentSelectedMake = $j(elem).attr('name');
 					// Select Make
-					this.selectMake($j(elem).attr('value'),Number(year_range),Number($j(elem).attr('startyear')));
+					this.selectMake($j(elem).attr('value'),Number(year_range),Number($j(elem).attr('endyear'))+1);
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
+					//Update Banner text
+					$j('#welcome_bunner').html('What is the model year?');
 					return;
-					
+
 					break;
 				}
 				/*Event for Year Table*/
@@ -108,7 +108,7 @@ Reman_QuickQuote.prototype = {
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();		
 					return;
-					
+
 					break;
 				}
 				/*Event for Model Table*/
@@ -118,20 +118,20 @@ Reman_QuickQuote.prototype = {
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
 					return;
-					
+
 					break;
 				}
-			
+
 				case 'parts_select':{
 					//selectPart(applic_id,subgroup,id,name)
 					this.selectPart($j(elem).attr('value'),$j(elem).attr('type'),elem.parentElement.parentElement.id, elem.innerHTML);
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
 					return;
-				
+
 					break;
 				}
-			
+
 			}
 			/******************************************** BREADCRUMBS EVENTS ************************************************/
 			if($j('#breadcrumb_info').hasClass('disabled')){
@@ -141,6 +141,8 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb group_link') {
 				$j('.select_part').hide() // hide  groups
 				$j('#'+$j(elem).attr('prevgroup')).show(); // show next group according to subgroup ID
+				//Update Banner text
+				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type').toLowerCase()+' type?');
 				$j('#reman-invent_info').hide();
 				$j('#reman-invent_info').html('');
 				// deleted other groups
@@ -148,11 +150,11 @@ Reman_QuickQuote.prototype = {
 					$j(elem).parent().nextAll().remove();
 					$j('#reman-product_info').hide(); // hide product info block
 					$j('#parts_tbl').show(); // show parts table
-					
+
 					for(var y=0;y<=$j(elem).parent().next().length+1;y++){
 						this.currentPartRootSelected.pop();
 					}
-					
+
 				}else{
 					this.currentPartRootSelected = [];
 				}
@@ -160,14 +162,14 @@ Reman_QuickQuote.prototype = {
 				//delete this link
 				$j(elem).parent().remove();
 				this.resetSearchErrorResults();
-				
-				
-				
+
+
+
 				return;
 			}
 
 			/*Event for Breadcrumbs Make links*/
-			if (elem.id == 'step_2'){
+			if (elem.className == 'breadcrumb make_link'){
 				this.turnOnMakeBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
@@ -190,9 +192,9 @@ Reman_QuickQuote.prototype = {
 				this.currentPartRootSelected = [];
 				return;
 			}
-			
+
 			/*Event for Breadcrumbs Cat links*/
-			if (elem.id == 'step_1'){
+			if (elem.className == 'breadcrumb cat_link'){
 				this.turnOnCatBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
@@ -210,13 +212,19 @@ Reman_QuickQuote.prototype = {
 		}
 	},
 
-	selectMake: function(makeid,range,startyear){
+	selectMake: function(makeid,range,endyear){
 		var buffer = '<ul class="list list_first">'; // buffer string 
+		range+=1;
 		for(var i = 1; i<=range; i++){  
-			buffer += '<li class="year_select" value="'+makeid+'" year="'+(startyear+=1)+'">'+startyear+'</li>';
-			if(i%10 == 0){
+			buffer += '<li class="year_select" value="'+makeid+'" year="'+(endyear-=1)+'">'+endyear+'</li>';
+			
+			if(endyear == 2010 || endyear == 2000 || endyear == 1990 ){
 				buffer += '</ul><ul class="list">';
 			}
+			
+			/*if(i%10 == 0){
+				buffer += '</ul><ul class="list">';
+			}*/
 		}
 		//append new info to year table
 		$j('#year_tbl').append(buffer);
@@ -229,19 +237,7 @@ Reman_QuickQuote.prototype = {
 		// year table active true
 		this.isYearActive = true;
 		// update bread crumb link
-		
-		var vowels = ['A','E','I','O','U'];
-		var prefix = 'A';
-		for(var v = 0; v <= vowels.length -1; v++){
-			if(this.currentSelectedMake[0] == vowels[v]){
-				var prefix = 'An';
-			}
-		}
-		
-		
-		$j('#step_2_message').html(prefix+' '+this.currentSelectedMake+" transmision? You're in luck! We've got bunches.");
-		$j('#step_2_block').show();
-		//$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span></span>');
+		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb make_link">'+this.currentSelectedMake+'</span></span>');
 	},
 	/**
 	 * Reset Search Errors Info
@@ -328,13 +324,14 @@ Reman_QuickQuote.prototype = {
 			this.clearModel();
 			this.clearGroup();
 			this.clearProductInfo();
-			$j('#step_2_block').hide();
-			//$j('.make_link').parent().remove();
+			$j('.make_link').parent().remove();
 			//show make table
 			$j('#make_tbl').show();
+			//Update Banner text
+			$j('#welcome_bunner').html('What is the vehicle make?');
 		}
 	},
-	
+
 	turnOnYearBreadcrumb: function(){
 		if(this.isModelActive){
 			this.clearModel();
@@ -343,6 +340,8 @@ Reman_QuickQuote.prototype = {
 			$j('.year_link').parent().remove();
 			//show year table
 			$j('#year_tbl').show();
+			//Update Banner text
+			$j('#welcome_bunner').html('What is the model year?');
 		}
 	},
 	turnOnModelBreadcrumb: function(){
@@ -351,23 +350,26 @@ Reman_QuickQuote.prototype = {
 			this.clearProductInfo();
 			$j('.model_link').parent().remove();
 			$j('.sel_group_link').parent().remove();
+			//Update Banner text
+			$j('#welcome_bunner').html('What is the model?');
 			//show model table
 			$j('#model_tbl').show();
 		}
 	},
-	
+
 	turnOnCatBreadcrumb: function(){
 			this.clearMake();
 			this.clearYear();
 			this.clearModel();
 			this.clearGroup();
 			this.clearProductInfo();
-			//$j('.cat_link').remove();
-			$j('#step_1_message').html("How we can help you today?");
-			$j('#step_2_block').hide();
+			$j('.cat_link').remove();
 			//show cat table
 			$j('#group_select').show();
 			this.currentCatSelected = '';
+			
+			//Update Banner text
+			$j('#welcome_bunner').html('Welcome! How we can help tou today?');
 	},
 
 	turnOnGroupBreadcrumb: function(){
@@ -408,7 +410,7 @@ Reman_QuickQuote.prototype = {
 				var buffer = '<ul class="list list_first">'; // buffer string 
 					for(var i = 0; i<=response.length-1; i++){ // nest select with options 
 						buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
-						if(i%15 == 0 && i!=0){
+						if(i%10 == 0 && i!=0){
 							buffer += '</ul><ul class="list">';
 						}
 					}
@@ -422,10 +424,14 @@ Reman_QuickQuote.prototype = {
 
 		/*Update breadcrumb*/
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb year_link">'+this.currentSelectedYear+'</span></span>');
+		
+		//Update Banner text
+		$j('#welcome_bunner').html('What is the model?');
+		
 		this.isModelActive = true;
 	},
 	selectModel: function(vehicle_id,name){
-		
+
 			$j.ajax({
 				url: "index/ajax",
 				type: 'POST',
@@ -498,7 +504,7 @@ Reman_QuickQuote.prototype = {
 				}
 			});
 	},
-	
+
 	formSelectGroupBlock: function(obj,name){
 		for (key in obj){
 			// buffer string 
@@ -506,14 +512,18 @@ Reman_QuickQuote.prototype = {
 			// heading
 			var header = '';
 			var block_counter = 0;
-			
+
 			for(var i = 0; i<=obj[key].applic.length-1; i++){
 				// form link to part id
 				buffer += '<li class="parts_select" type="'+obj[key].applic[i].subgroup+'" value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</li>';
 				if(obj[key].heading != null){
-					header = obj[key].heading; 
+					if(obj[key].heading == "CYL TYPE"){
+						header = "CYL"; 
+					}else{
+						header = obj[key].heading;
+					}
 				}else{
-					header = 'Group';
+					header = 'group';
 				}
 				// Group template
 				if(i%20 == 0 && i!=0){
@@ -521,29 +531,30 @@ Reman_QuickQuote.prototype = {
 					buffer += '</ul><ul class="select_part_box block_'+block_counter+'">';
 				}
 			}
-				var template = "<div id='"+key+"' class='select_part'>"+
-										"<span class='label'>Select "+header+"</span>"+
+				var template = "<div id='"+key+"' type='"+header+"' class='select_part'>"+
 										buffer
 								  "</div>";
 				// append to container
 				$j('#parts_tbl').append(template);
 				// Sort Values
 				if($j('#'+key).find('ul').length >1){
-					
+
 					for(var x=0; x<= $j('#'+key).find('ul').length;x++){
 						$j($j('#'+key).find('ul')[x]).find('li').sort(sortAlpha).appendTo($j('#'+key).find('ul')[x]);
 					}
-					
+
 				}else{
-				
+
 					$j('#'+key).find('ul li').sort(sortAlpha).appendTo($j('#'+key).find('ul'));
 				}
-				
+
 				//Show First Group
 				$j($j('.select_part').get(0)).show();
+				//Update Banner text
+				$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type').toLowerCase()+' type?');
 		}
 		this.currentSelectedModel = name;
-			
+
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+this.currentSelectedModel+'</span></span>');
 		this.isGroupActive = true;
 		$j('#preloader_cont').fadeOut(500,function(){
@@ -576,7 +587,7 @@ Reman_QuickQuote.prototype = {
 						complete: function(data){
 							//parse response to JSON Object		  
 							var response = $j.parseJSON(data.responseText);
-								
+
 							//Set current Group Name 
 							Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 							// Set Current Part Number Name
@@ -585,15 +596,18 @@ Reman_QuickQuote.prototype = {
 							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
-							
+
 						}
 				});
 			}else{
 				$j('#'+id).hide() // hide current group
 				$j('#'+subgroup).show(); // show next group according to subgroup ID
 				
-				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+				//Update Banner text
+				$j('#welcome_bunner').html('What is the '+$j('#'+subgroup).attr('type').toLowerCase()+' type?');
 				
+				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
 			}
 	},
@@ -646,7 +660,7 @@ Reman_QuickQuote.prototype = {
 				}
 		});
 	},
-	
+
 	loadInventoryInfo: function(id){
 		$j.ajax({
 
@@ -672,6 +686,3 @@ jQuery.fn.sort = function() {
 function sortAlpha(a,b){  
     return a.innerHTML > b.innerHTML ? 1 : -1;  
 };  
-  
-
-

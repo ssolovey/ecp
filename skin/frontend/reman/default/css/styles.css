@@ -117,7 +117,7 @@ ul,ol         { list-style:none; }
 .col-main { float:left; /*width:685px;*/ padding:0 0 1px; 
 	background-repeat: no-repeat;
 	background-color: #F2F2F2;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 15px;
 	width:601px;
 	min-height:400px;
@@ -2030,9 +2030,15 @@ background-position: 0px 20px;
 }
 
 #welcome_bunner{
-	background:url(../images/welcome.png) no-repeat;
+	background:url(../images/top_banner.png) no-repeat;
 	width:601px;
 	height:75px;
+	margin-top:22px;
+	padding-top: 8px;
+	padding-left: 15px;
+	color: #fff;
+	font-size: 25px;
+	font-weight: bold;
 }
 /*Group select block*/
 #group_select{
@@ -2047,6 +2053,7 @@ background-position: 0px 20px;
 	position:relative;
 	float:left;
 	cursor:pointer;
+	text-indent: -10000px;
 }
 
 #transcase{
@@ -2055,6 +2062,7 @@ background-position: 0px 20px;
 	height:300px;
 	position:relative;
 	float:left;
+	text-indent: -10000px;
 	/*cursor:pointer;*/
 }
 /* END Group select block*/
@@ -2092,9 +2100,8 @@ background-position: 0px 20px;
 
 .select_part_box li {
 	cursor:pointer;
-	color:blue;
+	color:#000;
 	margin-left:10px;
-	text-decoration: underline;
 	margin-top:5px;
 	font-size:14px;
 }
@@ -2171,6 +2178,7 @@ background-position: 0px 20px;
 	margin-bottom: 15px;
 	font-size: 12px;
 	color: #233E89;
+	margin-left:5px;
 }
 
 #breadcrumb_info span {
@@ -2182,11 +2190,6 @@ background-position: 0px 20px;
 
 #breadcrumb_info .breadcrumb{
 	cursor:pointer;
-}
-
-
-#breadcrumb_info .breadcrumb:hover {
-	text-decoration:underline;
 }
 
 #table_container{
@@ -2210,8 +2213,18 @@ background-position: 0px 20px;
 	min-width:160px;
 }
 
+
+#table_container  #year_tbl .list{
+	min-width:130px !important;
+}
+
 #table_container .list.list_first{
 	margin-left:12px !important;
+}
+
+/*Year Table*/
+#year_tbl, #model_tbl{
+	width:601px;
 }
 
 
@@ -2236,12 +2249,7 @@ background-position: 0px 20px;
 	cursor:pointer;
 	font-size:14px;
 	margin-bottom:5px;
-	color:#0000FF;
-	text-decoration:underline;
-}
-
-#table_container .list li:hover {
-	text-decoration:underline;
+	color:#000;
 }
 
 
@@ -2363,7 +2371,7 @@ background-position: 0px 20px;
 
 #preloader_cont{
 	background-color:#F2F2F2;
-	width:99%;
+	width:601px;
 	min-height:360px;
 	z-index:1;
 	position:absolute;
@@ -2624,7 +2632,7 @@ background-position: 0px 20px;
 	z-index: 5;
 	position: absolute;
 	background: white;
-	left: 210px;
+	left: 150px;
 	top: 50px;
 	display:none;
 }
