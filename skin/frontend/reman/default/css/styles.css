@@ -2214,6 +2214,10 @@ background-position: 0px 20px;
 }
 
 
+#table_container #model_tbl .list {
+	min-width:138px !important;
+}
+
 #table_container  #year_tbl .list{
 	min-width:130px !important;
 }
