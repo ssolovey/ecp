@@ -21,6 +21,8 @@
 				<remove name="paypal.partner.right.logo" /> <!--remove paypal logo -->
 				<remove name="right.permanent.callout" /> <!--remove banner block-->
 				<remove name="cart_sidebar"></remove> <!--remove shoping cart -->
+				<!-- Remove Order Side Bar -->
+				<remove name="sale.reorder.sidebar"></remove>
 			</reference>
 			
 			<reference name="left">
