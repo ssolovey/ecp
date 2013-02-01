@@ -15,72 +15,63 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// current file path
 	protected $_file;
 	
-	// customers model
-	protected $_customers;
-	
-	public function _construct()
-	{
-		parent::_construct();
-		
-		$this->_customers		=	Mage::getModel('customer/customer');
-		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
-	}
-	
 	// override
 	protected function _parseItem( $item )
 	{
-		// Get product model
-		$product = Mage::getModel('catalog/product')->load(5111);
-				
-		// Get customer model	
-		$customer = $this->_customers->loadByEmail( $item[2] );
 		
-		// Get customer adress
-		$customer_adress = array(
-			//'customer_address_id' => '',
-			'prefix'		=> '',
+		$quote = Mage::getModel('sales/quote')
+        	->setStoreId(Mage::app()->getStore('default')->getId());
+		
+		
+		$customer = Mage::getModel('customer/customer')
+                ->setWebsiteId(1)
+                ->loadByEmail($item[2]);
+        
+        $quote->assignCustomer($customer);
+		
+		// add product(s)
+		$product = Mage::getModel('catalog/product')->load(3420);
+
+		$buyInfo = array(
+		        'qty' => 1,
+		        // custom option id => value id
+		        // or
+		        // configurable attribute id => value id
+		);
+		
+		$quote->addProduct($product, new Varien_Object($buyInfo));
+		
+		
+		$addressData = array(
 			'firstname'		=> $item[1],
-			'middlename'	=> '',
 			'lastname'		=> '_',
-			'suffix' 		=> '',
-			'company' 		=> '',
 			'street' 		=> array($item[5],$item[6]),
 			'city' 			=> $item[7],
 			'country_id' 	=> 'US',
-			'region' 		=> '',
 			'region_id' 	=> $item[8],
 			'postcode' 		=> $item[9],
-			'telephone' 	=> '',
-			'fax' 			=> ''
+			'telephone' 	=> '555-555'
 		);
 		
-		// Order data mapping
-		$orderData = array(
-			'session'       => array(
-				'customer_id'   => $customer->getId(),
-				'store_id'      => '1',
-			),
-			'payment'       => array(
-				'method'    => 'checkmo',
-			),
-			'add_products'  =>array(
-				$product->getId() => array('qty' => 1),
-			),
-			'order' => array(
-				'currency' => 'USD',
-				'account' => array(
-					'group_id'	=> $customer->_groupId,
-					'email' 	=> $customer->getEmail()
-				),
-				'billing_address' => $customer_adress,
-				'shipping_address' => $customer_adress,
-				'shipping_method' => 'flatrate_flatrate',
-				'comment' => array(
-					'customer_note' => 'This order has been programmatically created via import script.',
-				),
-				'send_confirmation' => '0'
-			)
-		);
+		
+		$billingAddress = $quote->getBillingAddress()->addData($addressData);
+		$shippingAddress = $quote->getShippingAddress()->addData($addressData);
+ 
+		$shippingAddress->setCollectShippingRates(true)->collectShippingRates()
+	        ->setShippingMethod('flatrate_flatrate')
+	        ->setPaymentMethod('checkmo');
+	
+			
+		$quote->getPayment()->importData(array('method' => 'checkmo'));
+		
+		
+		$service = Mage::getModel('sales/service_quote', $quote);
+		$service->submitAll();
+		$order = $service->getOrder();
+		 
+		printf("Created order %s\n", $order->getIncrementId());
+				
+		//$this->create( $orderData, $product );
 		
 		// Delete file
 		//unlink( $this->_file );
@@ -122,16 +113,68 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		if (!empty($data['store_id'])) {
 			$this->_getSession()->setStoreId((int) $data['store_id']);
 		}
+		
 		return $this;
 	}
 	
+	protected function _processQuote($data = array())
+	{
+		/* Saving order data */
+		if (!empty($data['order'])) {
+			$this->_getOrderCreateModel()->importPostData($data['order']);
+		}
+		$this->_getOrderCreateModel()->getBillingAddress();
+		$this->_getOrderCreateModel()->setShippingAsBilling(true);
+		
+		/* Just like adding products from Magento admin grid */
+		if (!empty($data['add_products'])) {
+			$this->_getOrderCreateModel()->addProducts($data['add_products']);
+		}
+		
+		/* Collect shipping rates */
+		$this->_getOrderCreateModel()->collectShippingRates();
+		
+		/* Add payment data */
+		if (!empty($data['payment'])) {
+			$this->_getOrderCreateModel()->getQuote()->getPayment()->addData($data['payment']);
+		}
+		
+		$this->_getOrderCreateModel()
+			->initRuleData()
+			->saveQuote();
+
+		return $this;
+	}
 	
 	/**
 	 * Creates order
 	 */
-	public function create()
+	public function create( $orderData, $product )
 	{
-		
+		if (!empty($orderData)) {
+			$this->_initSession($orderData['session']);
+			//try {
+				$this->_processQuote($orderData);
+				if (!empty($orderData['payment'])) {
+					$this->_getOrderCreateModel()->setPaymentData($orderData['payment']);
+					$this->_getOrderCreateModel()->getQuote()->getPayment()->addData($orderData['payment']);
+				}
+				$item = $this->_getOrderCreateModel()->getQuote()->getItemByProduct($product);
+				
+				Mage::app()->getStore()->setConfig(Mage_Sales_Model_Order::XML_PATH_EMAIL_ENABLED, "0");
+				$_order = $this->_getOrderCreateModel()
+					->importPostData($orderData['order'])
+					->createOrder();
+				$this->_getSession()->clear();
+				Mage::unregister('rule_data');
+				return $_order;
+			//}
+			//catch (Exception $e){
+			//	echo $e;
+			//	echo "<h1>Order save error</h1>";
+			//}
+		}
+		return null;
 	}
 	
 	// override
