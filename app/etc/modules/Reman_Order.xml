@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Reman Order module
+ * 
+ * This module used with Magento E-commerse software
+ * to extend base magento Order
+ *
+ * @category    Reman
+ * @package     Reman_Customers
+ * @author		Artem Petrosyan (artpetrosyan@gmail.com)
+ */
+-->
+
+<config>
+	<modules>
+		<Reman_Order>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Reman_Order>
+	</modules>
+</config>

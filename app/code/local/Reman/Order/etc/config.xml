@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Reman_Order>
+			<version>1.0.0</version>
+		</Reman_Order>
+	</modules>
+	<global>
+		<models>
+            <order>
+                <class>Reman_Order_Model</class>
+            </order>
+        </models>
+        <events>
+        	<sales_order_place_after>
+        		<observers>
+        			<reman_customers_save_observer>
+        				<type>singleton</type>
+        				<class>Reman_Order_Model_Order_Observer</class>
+        				<method>export_new_order</method>
+        			</reman_customers_save_observer>
+        		</observers>
+        	</sales_order_place_after>
+        </events>
+	</global>
+</config>
