@@ -587,7 +587,9 @@ Reman_QuickQuote.prototype = {
 						complete: function(data){
 							//parse response to JSON Object		  
 							var response = $j.parseJSON(data.responseText);
-
+							
+							//Set current Parts Family 
+							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
 							//Set current Group Name 
 							Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 							// Set Current Part Number Name
@@ -681,9 +683,13 @@ Reman_QuickQuote.prototype = {
 						var cat = 'TRANSFER CASE';
 					}
 					//Update Banner text
-					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartNumber +' '+cat);
+					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
 				}
 		});
+	},
+	
+	getSelectedYear: function(){				
+		return Reman_QuickQuote.prototype.currentSelectedYear;
 	}
 }
 

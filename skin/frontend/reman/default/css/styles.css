@@ -2474,7 +2474,8 @@ background-position: 0px 20px;
 }
 
 .desc_cont{
-	margin-bottom:10px;
+	margin-bottom:30px;
+	color:#000;
 
 }
 
@@ -2727,12 +2728,14 @@ text-decoration: none;
 .reman_docs{
 	width:100px;
 	font-size:12px;
-	margin-left:10px;
+	float:left;
 }
 
 .reman_docs a {
 	margin-bottom:5px;
 	float:left;
+	color:#000;
+	text-decoration:none;
 }
 
 

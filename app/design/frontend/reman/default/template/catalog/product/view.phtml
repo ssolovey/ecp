@@ -145,12 +145,12 @@
 
    <div class="product-collateral">      
       	      <div style="clear:left">
-              <div class="description_lable" style="font-size:15px;">Description:</div>
+              <div class="description_lable" style="font-size:15px; float: left; margin-right: 10px;">Description:</div>
               <div class="desc_cont" style="font-size:12px; margin-left:10px;">
         			<?php echo $_description; ?>
 			   </div>
 				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_synthetecatf'))== false ): ?>
-					<div class="description_lable" style="margin-top:25px; font-size:15px;">Documentation:</div>
+					<div class="description_lable" style="font-size:15px; font-size: 15px; float: left; margin-right: 10px;">Documentation:</div>
 					<div class="reman_docs">
 					<?php if($_product->getData('document_sellsheet') != null): ?>	
 						<a href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_sellsheet') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_sellsheet')->getStoreLabel(); ?></a>

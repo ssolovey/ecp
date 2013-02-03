@@ -40,15 +40,11 @@
 	</quote_index_index>
 	<!--Quick Quote Ajax action for product load-->
 	<quote_index_product> 
-		<!--<block type="quote/quote" name="product" output="toHtml" template="quote/product.phtml" />-->
-		
 		<remove name="right"/>
     	<remove name="left"/>
 		<block type="catalog/product_view" name="root" output="toHtml" template="catalog/product/view.phtml">
 		 	<block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml"/>
 		</block>
-		
-		
 	</quote_index_product>
 	<!--Quick Quote Ajax action for product store inventory info load-->
 	<quote_index_invent>
