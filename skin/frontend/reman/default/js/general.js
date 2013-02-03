@@ -660,7 +660,7 @@ Reman_QuickQuote.prototype = {
 						
 						
 						$j('#reman-product_info').html(data.responseText);
-
+						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 					});
 				}
 		});
@@ -686,10 +686,6 @@ Reman_QuickQuote.prototype = {
 					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
 				}
 		});
-	},
-	
-	getSelectedYear: function(){				
-		return Reman_QuickQuote.prototype.currentSelectedYear;
 	}
 }
 
