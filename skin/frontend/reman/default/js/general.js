@@ -206,11 +206,7 @@ Reman_QuickQuote.prototype = {
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected.pop();
-				if($j('#'+$j(elem).attr('prevgroup')).length == 0){
-					$j('#welcome_bunner').html('What is the model?');
-				}else{
-					$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
-				}
+				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
 				return;
 			}
 			elem = elem.parentNode;
@@ -566,6 +562,7 @@ Reman_QuickQuote.prototype = {
 	},
 
 	selectPart: function(applic_id,subgroup,id,name){
+			Reman_QuickQuote.prototype.prevgroup = $j($j('#parts_tbl').children()[0]).attr('id');
 			if(subgroup == 0) {
 					$j.ajax({
 						url: "index/ajax",
@@ -678,9 +675,9 @@ Reman_QuickQuote.prototype = {
 					$j('#reman-invent_info').html(data.responseText);
 					$j('#reman-invent_info').show();
 					if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
-						var cat = 'TRANSMISSION';
+						var cat = 'Transmission';
 					}else{
-						var cat = 'TRANSFER CASE';
+						var cat = 'Transfer Case';
 					}
 					//Update Banner text
 					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);

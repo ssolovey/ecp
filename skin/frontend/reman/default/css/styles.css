@@ -111,7 +111,7 @@ ul,ol         { list-style:none; }
 	position:relative;
 	top:-15px;
 }
-.main { width:850px; margin:0 auto; min-height:400px; padding:25px 25px 80px; text-align:left; 
+.main { width:850px; margin:0 auto;  padding:25px 25px 0px; text-align:left; 
 	background-image: url("http://etereman.com/images/content-main-fade-bg.png");
 	background-color:#F2F2F2;
 	background-repeat: repeat-x;
@@ -135,7 +135,7 @@ ul,ol         { list-style:none; }
 	background-color: #F2F2F2;
 	padding: 15px 10px 15px 10px;
 	border-radius: 15px; 
-	height:400px;
+	height:270px;
 }
 
 .col-right-productinfo { 

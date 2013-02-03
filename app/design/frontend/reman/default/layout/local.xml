@@ -23,6 +23,9 @@
 				<remove name="cart_sidebar"></remove> <!--remove shoping cart -->
 				<!-- Remove Order Side Bar -->
 				<remove name="sale.reorder.sidebar"></remove>
+				<remove name="catalog.compare.sidebar"></remove>
+				<remove name="right.reports.product.viewed"></remove>
+				
 			</reference>
 			
 			<reference name="left">
