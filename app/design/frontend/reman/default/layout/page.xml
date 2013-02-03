@@ -62,6 +62,14 @@ Default layout, loads most of the pages
 
                 <action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
+				<!-- PRODUCT PAGE-->
+				<action method="addJs"><script>varien/product.js</script></action>
+				<action method="addJs"><script>varien/configurable.js</script></action>
+	
+				<action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
+				<action method="addItem"><type>js</type><name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+				<action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+				
             </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">
@@ -118,7 +126,7 @@ Default layout, loads most of the pages
             <block type="core/text_list" name="right" as="right" translate="label">
                 <label>Right Column</label>
             </block>
-
+			
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml">
                 <block type="page/html_wrapper" name="bottom.container" as="bottomContainer" translate="label">
                     <label>Page Footer</label>

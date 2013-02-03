@@ -60,7 +60,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// close connection
 		die;
 	}
-	
+	/** 
+	 *	Load Only Custom product page for Quick Quote Block
+	*/
 	public function productAction(){
 		// parse request data
 		$request = $this->getRequest()->getPost();
@@ -68,10 +70,14 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		 *Log Search Results
 		*/
 		Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
-		/** 
-		 *	Load Only Custom product page for Quick Quote Block
-		*/
-		$this->loadLayout('product');
+		
+		
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$request['partnum']);
+		
+		$productId = $product->getId();
+		Mage::helper('catalog/product')->initProduct($productId, $this);
+		
+		$this->loadLayout();
 		 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 

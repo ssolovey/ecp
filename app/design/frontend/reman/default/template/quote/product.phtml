@@ -22,99 +22,57 @@
         <div class="product-shop">
  			
               <div class="product-img-box">
+         
                    <p class="product-image">
+                   	
                         <?php
-                            $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />';
+							
+                            $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->htmlEscape(Mage::getModel('catalog/product')->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />';
                             echo $_helper->productAttribute($_product, $_img, 'image');
                         ?>
                     </p>
+                    
              </div>
             
             	           
-            <div class="product-name">
+           <?php /*?> <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-            </div>
+            </div><?php */?>
             
             <div id="general_info">
-                
-                <table>
-                    <tr>
-                        <td class="headings">MSRP:</td>
-                        <td class="values" id="part_msrp_id">$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
-                    </tr>
-                    <tr>
-                        <td style="color:#00F;" class="headings">Your Price:</td>
-                        <td style="color:#00F;" class="values" id="part_price_id">$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
-                    </tr>
-                    <tr>
-                        <td class="headings">Core:</td>
-                        <td class="values" id="part_core_id">$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
-                    </tr>
-                    <tr style="height:60px;">
-                        <td class="headings">Shipping:</td>
+                  <table>
+                        <tr>
+                        	<td class="label">Part Number:</td>
+                            <td><?php echo $_product->getData('sku'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Drive:</td>
+                            <td><?php echo $_product->getData('parts_drive'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Year:</td>
+                            <td><?php echo $_product->getData('parts_start_year'); ?></td>
+                        </tr>
                         
-                        	<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
-									<td class="values"><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
-							<?php endif; ?>
-                            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>	
-                            		<td class="values" style=" font-size:12px; color:#00F;"><?php echo "to be estimated basis on ZIP";;?></td> 
-							<?php endif; ?>		
-                    </tr>
-                    
-                    <tr>
-                    	 <td class="headings">Warranty:</td>
-                          <td class="values" style=" font-size:12px;">
-						  	<?php 
-								$partType = $_product->getName();
-								echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
-							?>
-                          </td>
-                    </tr>
-                    
+                        <tr>
+                            <td class="label">Fuel:</td>
+                            <td><?php echo $_product->getData('parts_fuel'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Engine Sizes:</td>
+                            <td><?php echo $_product->getData('parts_engine'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Aspiration:</td>
+                            <td><?php echo $_product->getData('parts_aspiration'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Cylinder Type:</td>
+                            <td><?php echo $_product->getData('parts_cylinder_type'); ?></td>
+                   		</tr>
                 </table>
+               
             </div>
-            <div class="clearer"></div>
-            <div id="product_attributes">
-            		
-             <table>
-                    <tr>
-                        <td class="label">Family:</td>
-                        <td class="value"><?php echo $_product->getData('parts_family'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Start Year:</td>
-                        <td class="value"><?php echo $_product->getData('parts_start_year'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Fuel:</td>
-                        <td class="value"><?php echo $_product->getData('parts_fuel'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Aspiration:</td>
-                        <td class="value"><?php echo $_product->getData('parts_aspiration'); ?></td>
-                    </tr>
-            </table>
-            
-            <table>
-                    <tr>
-                        <td class="label">Drive:</td>
-                        <td class="value2"><?php echo $_product->getData('parts_drive'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">End Year:</td>
-                        <td class="value2"><?php echo $_product->getData('parts_end_year'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Engine Sizes:</td>
-                        <td class="value2"><?php echo $_product->getData('parts_engine'); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Cylinder Type:</td>
-                        <td class="value2"><?php echo $_product->getData('parts_cylinder_type'); ?></td>
-                    </tr>
-            </table>
-          </div>
-
         </div>
         <div class="clearer"></div>
     </form>

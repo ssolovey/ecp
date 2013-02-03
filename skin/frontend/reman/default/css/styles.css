@@ -26,6 +26,11 @@
 /* Reset ================================================================================= */
 * { margin:0; padding:0; }
 
+/* Prevent Page Shifting when right scrollbar appears*/
+html{
+	overflow-y: scroll;
+}
+
 body          { /*background:#496778 url(../images/bkg_body.gif) 50% 0 repeat-y;*/
 				 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 				 color:#666; text-align:center; 
@@ -131,6 +136,18 @@ ul,ol         { list-style:none; }
 	padding: 15px 10px 15px 10px;
 	border-radius: 15px; 
 	height:400px;
+}
+
+.col-right-productinfo { 
+	float:right; 
+	width:182px; 
+	padding:0 0 1px; 
+	background-repeat: no-repeat;
+	background-color: #F2F2F2;
+	padding: 15px 10px 15px 10px;
+	border-radius: 15px; 
+	height: 330px;
+	margin-bottom: 15px;
 }
 
 /* 1 Column Layout */
@@ -1185,9 +1202,9 @@ background-position: 0px 20px;
 .add-to-box .add-to-links li .separator { display:none !important; }
 
 
-.product-view { border:1px solid #c4c6c8; width:615px; }
+.product-view { border:1px solid #c4c6c8; width:601px; }
 /* Custom Quote Product View block*/
-.product-view_quote { width:100%; padding:5px; min-height: 550px;}
+.product-view_quote { width:100%; padding:5px;}
 
 .product-view_quote .product-name{
 	margin-left: 25px;
@@ -1206,7 +1223,7 @@ background-position: 0px 20px;
 
 .product-essential h2 { font:bold 13px/1.35 Arial, Helvetica, sans-serif; }
 
-.product-collateral { background:#faf7ee url(../../../shop/default/images/bkg_product_collateral.gif) 0 0 repeat-x; padding:5px; }
+.product-collateral { /*background:#faf7ee url(../../../shop/default/images/bkg_product_collateral.gif) 0 0 repeat-x;*/ padding:5px; }
 /* Custom Quote Product View block*/
 .product-view_quote .product-collateral { background:none;}
 
@@ -1231,6 +1248,12 @@ background-position: 0px 20px;
 .product-view .product-img-box .more-views ul { margin-left:-9px }
 .product-view .product-img-box .more-views li { float:left; margin:0 0 8px 9px; }
 .product-view .product-img-box .more-views li a { float:left; width:56px; height:56px; border:2px solid #ddd; overflow:hidden; }
+
+.#product-view_quote .more-views h2 { font-size:11px; border-bottom:1px solid #ccc; margin:0 0 8px; text-transform:uppercase; }
+.product-view_quote .more-views ul { margin-left:-9px }
+.product-view_quote .more-views li { float:left; margin:0 0 8px 9px; }
+.product-view_quote .more-views li a { float:left; width:56px; height:56px; border:2px solid #ddd; overflow:hidden; }
+
 
 .product-image-popup { margin:0 auto; }
 .product-image-popup .buttons-set { float:right; clear:none; border:0; margin:0; padding:0; }
@@ -2089,12 +2112,12 @@ background-position: 0px 20px;
 
 .select_part_box{
 	position:relative;
-	min-width:160px;
+	min-width:138px;
 	float:left;
 	margin-bottom:10px;
 }
 
-.select_part_box.block_3{
+.select_part_box.block_4{
 	clear:both;
 }
 
@@ -2193,7 +2216,7 @@ background-position: 0px 20px;
 }
 
 #table_container{
-	width: 77%;
+	width: 601px;
 	min-height: 360px;
 	position: relative;
 	float: left;
@@ -2332,37 +2355,25 @@ background-position: 0px 20px;
 }
 
 #general_info .label {
-	position: relative;
-	float: left;
-	margin-top: 10px;
-	margin-left: 10px;
-	font-weight: bold;
-	font-size:14px;
-	width:100%;
-}
-
-#general_info .headings{
-	font-weight:bold;
-	font-size:15px;
-	width:150px;
-}
-
-#general_info .values{
-	font-size:15px;
+	padding-right: 5px;
+	font-size: 12px;
+	width: 100px;
+	text-align: right;
 	font-weight:bold;
 }
 
 #general_info table {
 	position:relative;
 	float:left;
-	margin-left:25px;
-	margin-top:20px;
+	margin-left:70px;
+	font-size: 12px;
+	color: #000;
 }
 
 #general_info table tr{
 	display:block;
 	position:relative;
-	height:25px;
+	height:18px;
 }
 
 .disable_by_opacity{
@@ -2636,7 +2647,7 @@ background-position: 0px 20px;
 	z-index: 5;
 	position: absolute;
 	background: white;
-	left: 150px;
+	left: 192px;
 	top: 50px;
 	display:none;
 }
@@ -2651,45 +2662,58 @@ background-position: 0px 20px;
 /*Inventory Info BLock*/
 
 #stock_avl{
-	border: 1px solid black;
+	/*border: 1px solid black;
 	float: left;
 	width: 20%;
 	margin-left: 5px;
 	margin-bottom: 5px;
-	height:274px;
+	height:274px;*/
 }
 
 #stock_avl table {
-	margin-top: 26px;
+	margin-top: 15px;
 	margin-left: 10px;
 	font-size: 12px;
 	color:#000;
 }
 
 #stock_avl table tr{
-	height:25px;
+	height:18px;
 }
 
 #stock_avl .title{
-	font-size: 16px;
-	font-weight: bold;
-	margin-left: 10px;
-	margin-top: 18px;
+	font-size: 14px;
 	color: #000;
+	text-align:center;
+	font-weight:bold;
 }
+
+#stock_avl .pricing .lable{
+	padding-right: 5px;
+	font-size: 12px;
+	width: 60px;
+	text-align: right;
+}
+
 
 #stock_avl .lable{
 	padding-right: 5px;
 	font-size: 12px;
+	text-align: right;
 	
 }
 
 #stock_avl .bottom_message{
-	font-size: 14px;
+	font-size: 12px;
 	margin-left: 20px;
-	margin-top: 35px;
+	margin-top: 20px;
 	font-weight: bold;
-	color:#00F;
+	color: #f6193a;
+}
+
+#stock_avl .bottom_message div{
+	text-align: center;
+	width: 125px;
 }
 
 #breadcrumb_info.disabled{

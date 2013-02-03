@@ -20,20 +20,55 @@
 ?>
 <!-- Stock Availability-->
 <div id="stock_avl">
-	<div class="title">Availability</div>
+	<div class="title">Pricing</div>
+    <table class="pricing">
+    	<tr>
+        	<td class="lable">Your price:</td>
+            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
+        </tr>
+        <tr>
+        	<td class="lable">Core:</td>
+            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+        </tr>
+        <tr>
+        	<td class="lable">Shiping:</td>
+            <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
+                    <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
+            <?php endif; ?>
+            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>	
+                    <td><?php echo "to be estimated basis on ZIP";?></td> 
+            <?php endif; ?>		
+        </tr>
+        <tr style="height:30px;">
+        	<td class="lable">MSRP:</td>
+            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
+        </tr>
+        <tr>
+            <td class="lable">Warranty:</td>
+            <td>
+            <?php 
+                $partType = $_product->getName();
+                echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
+            ?>
+            </td>
+        </tr>
+    </table>
+    
+    
+    <div style="margin-top:20px;" class="title">Availability</div>
     <table>
         <tr>
             <td class="lable">Milwaukee, WI (MKE):</td>
-            <td id="mke"><?php echo 'Yes';?></td>
+            <td id="mke"><?php echo '<span style="color:#f6193a">YES</span>';?></td>
         </tr>
         <tr>
             <td class="lable">Baltimore, MD (BWI):</td>
             <td id="bwi">
 				<?php 
 					if($bwi == 0 || $bwi == null){
-						echo 'No';
+						echo 'NO';
 					}else{
-						echo 'Yes';
+						echo '<span style="color:#f6193a">YES</span>';
 					}
 				?>
             </td>
@@ -43,9 +78,9 @@
             <td id="ont">
 				<?php 
 					if($ont == 0 || $ont == null){
-						echo 'No';
+						echo 'NO';
 					}else{
-						echo 'Yes';
+						echo '<span style="color:#f6193a">YES</span>';
 					}
 				?>
             </td>
@@ -55,9 +90,9 @@
             <td id="atl">
 				<?php 
 					if($atl == 0 || $atl == null){
-						echo 'No';
+						echo 'NO';
 					}else{
-						echo 'Yes';
+						echo '<span style="color:#f6193a">YES</span>';
 					}
 				?>
             </td>
@@ -67,9 +102,9 @@
     <div class="bottom_message">
     	<?php
         if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null)){
-        	echo "Call for availability";
+        	echo "<div>CAll FOR availability AVAILABILITY</div>";
 		}else{
-			echo "Available for immediate delivery";
+			echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
 		}
 		?>
     </div>

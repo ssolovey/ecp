@@ -20,6 +20,7 @@
 				<action method="setBlockId"><block_id>reman_assistant_banner</block_id></action>
 			</block>
 		</reference>
+		
 		<!--Set Two column layout-->
 		<reference name="root">
 			<action method="setTemplate">
@@ -38,15 +39,19 @@
 		</reference>
 	</quote_index_index>
 	<!--Quick Quote Ajax action for product load-->
-	<quote_index_product>
-		 <reference name="content">
-				<block type="quote/quote" name="quote" output="toHtml" template="quote/product.phtml" />
-		 </reference>
+	<quote_index_product> 
+		<!--<block type="quote/quote" name="product" output="toHtml" template="quote/product.phtml" />-->
+		
+		<remove name="right"/>
+    	<remove name="left"/>
+		<block type="catalog/product_view" name="root" output="toHtml" template="catalog/product/view.phtml">
+		 	<block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml"/>
+		</block>
+		
+		
 	</quote_index_product>
 	<!--Quick Quote Ajax action for product store inventory info load-->
 	<quote_index_invent>
-		 <reference name="content">
-				<block type="quote/quote" name="quote" output="toHtml" template="quote/invent.phtml" />
-		 </reference>
+		<block type="quote/quote" name="quote" output="toHtml"  template="quote/invent.phtml" />
 	</quote_index_invent>
 </layout>

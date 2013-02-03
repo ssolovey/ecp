@@ -18,21 +18,21 @@ $j(document).ready(function(){
 	});
 
 	/* Slide Down About reman list*/
-	$j('#about_reman_link').bind('mouseenter', function(){
+	/*$j('#about_reman_link').bind('mouseenter', function(){
 		$j('.reman_about_link').addClass('hover');
 		$j("#dropdown_menu").animate({
 			height: '190px'
 		},500);
 		$j("#dropdown_menu").clearQueue();
-	});
+	});*/
 	/* Slide DUp About reman list*/
-	$j('#about_reman_link').bind('mouseleave', function(event){
+	/*$j('#about_reman_link').bind('mouseleave', function(event){
 		$j('.reman_about_link').removeClass('hover');
 		$j("#dropdown_menu").animate({
 			height: '0px'
 		},500);
 		$j("#dropdown_menu").clearQueue();
-	});
+	});*/
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -142,7 +142,7 @@ Reman_QuickQuote.prototype = {
 				$j('.select_part').hide() // hide  groups
 				$j('#'+$j(elem).attr('prevgroup')).show(); // show next group according to subgroup ID
 				//Update Banner text
-				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type').toLowerCase()+' type?');
+				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
 				$j('#reman-invent_info').hide();
 				$j('#reman-invent_info').html('');
 				// deleted other groups
@@ -206,6 +206,11 @@ Reman_QuickQuote.prototype = {
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected.pop();
+				if($j('#'+$j(elem).attr('prevgroup')).length == 0){
+					$j('#welcome_bunner').html('What is the model?');
+				}else{
+					$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
+				}
 				return;
 			}
 			elem = elem.parentNode;
@@ -221,7 +226,6 @@ Reman_QuickQuote.prototype = {
 			if(endyear == 2010 || endyear == 2000 || endyear == 1990 ){
 				buffer += '</ul><ul class="list">';
 			}
-			
 			/*if(i%10 == 0){
 				buffer += '</ul><ul class="list">';
 			}*/
@@ -369,7 +373,7 @@ Reman_QuickQuote.prototype = {
 			this.currentCatSelected = '';
 			
 			//Update Banner text
-			$j('#welcome_bunner').html('Welcome! How we can help tou today?');
+			$j('#welcome_bunner').html('Welcome! How we can help you today?');
 	},
 
 	turnOnGroupBreadcrumb: function(){
@@ -517,11 +521,7 @@ Reman_QuickQuote.prototype = {
 				// form link to part id
 				buffer += '<li class="parts_select" type="'+obj[key].applic[i].subgroup+'" value="'+obj[key].applic[i].id+'">'+obj[key].applic[i].name+'</li>';
 				if(obj[key].heading != null){
-					if(obj[key].heading == "CYL TYPE"){
-						header = "CYL"; 
-					}else{
-						header = obj[key].heading;
-					}
+					header = obj[key].heading;
 				}else{
 					header = 'group';
 				}
@@ -531,7 +531,7 @@ Reman_QuickQuote.prototype = {
 					buffer += '</ul><ul class="select_part_box block_'+block_counter+'">';
 				}
 			}
-				var template = "<div id='"+key+"' type='"+header+"' class='select_part'>"+
+				var template = "<div id='"+key+"' type='"+header.toLowerCase()+"' class='select_part'>"+
 										buffer
 								  "</div>";
 				// append to container
@@ -551,7 +551,7 @@ Reman_QuickQuote.prototype = {
 				//Show First Group
 				$j($j('.select_part').get(0)).show();
 				//Update Banner text
-				$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type').toLowerCase()+' type?');
+				$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type')+'?');
 		}
 		this.currentSelectedModel = name;
 
@@ -593,7 +593,7 @@ Reman_QuickQuote.prototype = {
 							// Set Current Part Number Name
 							Reman_QuickQuote.prototype.currentPartNumber = response.sku;
 							// Load Product Page
-							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name);		
+							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name,Reman_QuickQuote.prototype.prevgroup);		
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 
@@ -604,15 +604,16 @@ Reman_QuickQuote.prototype = {
 				$j('#'+subgroup).show(); // show next group according to subgroup ID
 				
 				//Update Banner text
-				$j('#welcome_bunner').html('What is the '+$j('#'+subgroup).attr('type').toLowerCase()+' type?');
+				$j('#welcome_bunner').html('What is the '+$j('#'+subgroup).attr('type')+'?');
 				
 				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
+				Reman_QuickQuote.prototype.prevgroup = subgroup;
 			}
 	},
 
-	loadProductInfo: function(id,name){
+	loadProductInfo: function(id,name,prevgroup){
 		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join(' > ');
 		var make = Reman_QuickQuote.prototype.currentSelectedMake.trim();
 		$j.ajax({
@@ -649,11 +650,13 @@ Reman_QuickQuote.prototype = {
 						$j('#table_container').css('min-height', '');
 						// set breadcrumb info about last successful or not succssful choise
 						$j('.sel_group_link').parent().remove();
-						$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link">'+name+'</span></span>');
+						$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'">'+name+'</span></span>');
 						$j('#breadcrumb_info').removeClass('disabled');
 						// Show product page
 						$j('#reman-product_info').show();
 						$j('#reman-invent_info').show();
+						
+						
 						$j('#reman-product_info').html(data.responseText);
 
 					});
@@ -671,6 +674,14 @@ Reman_QuickQuote.prototype = {
 				},
 				complete: function(data){
 					$j('#reman-invent_info').html(data.responseText);
+					$j('#reman-invent_info').show();
+					if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
+						var cat = 'TRANSMISSION';
+					}else{
+						var cat = 'TRANSFER CASE';
+					}
+					//Update Banner text
+					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartNumber +' '+cat);
 				}
 		});
 	}
