@@ -15,6 +15,8 @@
 		$ont = $_product->getData('parts_inventory_sw');
 		//ATL Stock
 		$atl = $_product->getData('parts_inventory_se');
+		//DALLAS Stock
+		$dal = $_product->getData('parts_inventory_mc');
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
 ?>
@@ -31,7 +33,7 @@
             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
         </tr>
         <tr>
-        	<td class="lable">Shiping:</td>
+        	<td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
                     <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
             <?php endif; ?>
@@ -58,11 +60,11 @@
     <div style="margin-top:20px;" class="title">Availability</div>
     <table>
         <tr>
-            <td class="lable">Milwaukee, WI (MKE):</td>
+            <td class="lable">Milwaukee, WI:</td>
             <td id="mke"><?php echo '<span style="color:#f6193a">YES</span>';?></td>
         </tr>
         <tr>
-            <td class="lable">Baltimore, MD (BWI):</td>
+            <td class="lable">Baltimore, MD:</td>
             <td id="bwi">
 				<?php 
 					if($bwi == 0 || $bwi == null){
@@ -74,7 +76,7 @@
             </td>
         </tr>
         <tr>
-            <td class="lable">Ontario, CA (ONT) :</td>
+            <td class="lable">Ontario, CA:</td>
             <td id="ont">
 				<?php 
 					if($ont == 0 || $ont == null){
@@ -86,10 +88,22 @@
             </td>
         </tr>
         <tr>
-            <td class="lable">Atlanta, GA (ATL):</td>
+            <td class="lable">Atlanta, GA:</td>
             <td id="atl">
 				<?php 
 					if($atl == 0 || $atl == null){
+						echo 'NO';
+					}else{
+						echo '<span style="color:#f6193a">YES</span>';
+					}
+				?>
+            </td>
+        </tr>
+        <tr>
+            <td class="lable">Dallas, TX:</td>
+            <td id="dal">
+				<?php 
+					if($dal == 0 || $dal == null){
 						echo 'NO';
 					}else{
 						echo '<span style="color:#f6193a">YES</span>';
@@ -101,7 +115,7 @@
     
     <div class="bottom_message">
     	<?php
-        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null)){
+        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
         	echo "<div>CAll FOR availability AVAILABILITY</div>";
 		}else{
 			echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";

@@ -72,14 +72,15 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		*/
 		Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
 		
-		
+		/* Load Current selected product object*/
 		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$request['partnum']);
-		
+		/* Get Product ID*/
 		$productId = $product->getId();
+		/* Init Product Object*/
 		Mage::helper('catalog/product')->initProduct($productId, $this);
 		
+		/* Render FrontEnd */
 		$this->loadLayout();
-		 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	
