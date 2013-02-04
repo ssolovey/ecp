@@ -135,7 +135,7 @@ ul,ol         { list-style:none; }
 	background-color: #F2F2F2;
 	padding: 15px 10px 15px 10px;
 	border-radius: 15px; 
-	height:270px;
+	height:300px;
 }
 
 .col-right-productinfo { 
@@ -2803,3 +2803,28 @@ text-decoration: none;
 	float: left;
 }
 
+#reman_phone{
+	margin-top: 25px;
+	position: relative;
+	float: left;
+	font-size: 12px;
+	line-height:25px;
+	color:#000;
+}
+
+#reman_phone .ico{
+	background:url(../images/phone_ico.png) no-repeat;
+	height:20px;
+	width:28px;
+	position:relative;
+	float:left;
+	margin-right:5px;
+}
+
+#reman_phone .number{
+	color:#cb1f30;
+	font-size:18px;
+	font-weight:bold;
+	margin-left: 30px;
+	margin-top: 20px;
+}
