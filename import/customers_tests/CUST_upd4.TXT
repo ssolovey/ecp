@@ -1,2 +1,2 @@
-82259|"THE WARRANTY GROUP - new name"|"PARTS UNITS / SCOTT CARNEY"|"P O BOX 802748"|"CHICAGO"|"IL"|"60680"|""|""|20|"82259"|"R"|"THE WARRANTY GROUP new admin name"|"ssas@ukr.net"|"312-356-2740"|""|251|"12 Months/12,000 Miles"|14|"82259"|"12 Months/12,000 Miles"|14|"82259"|"12 Months/12,000 Miles"|14|"82259"|"ACCT"|"ACTIVE"
+82259|"THE WARRANTY GROUP - new name"|"PARTS UNITS / SCOTT CARNEY"|"P O BOX 802748"|"CHICAGO"|"IL"|"60680"|""|""|20|"82259"|"R"|"THE WARRANTY GROUP new admin name"|"ssas@ukr.net"|"312-356-2740"|""|251|"12 Months/12,000 Miles"|13|"82259"|"12 Months/12,000 Miles"|13|"82259"|"12 Months/12,000 Miles"|13|"82259"|"ACCT"|"ACTIVE"
 

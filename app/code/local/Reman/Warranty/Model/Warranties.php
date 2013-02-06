@@ -21,8 +21,11 @@ class Reman_Warranty_Model_Warranties extends Mage_Core_Model_Abstract
 	 * @return Array
 	 */
 	public function getWarrantiesArray() {
-	
+		
 		$warranties_list = array();
+		
+		// Add blank select option
+		array_push($warranties_list, array());
 		
 		foreach ( $this->getCollection() as $item ) {
 			array_push($warranties_list, array(
