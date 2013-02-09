@@ -24,27 +24,26 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="block block-account">
-    <div class="block-title">
-        <strong><span><?php echo $this->__('My Account'); ?></span></strong>
-    </div>
+<div class="reman_profile_side_menu">
+    <div class="heading"></div>
     <div class="block-content">
         <ul id="reman_nav_list">  
-            <li id="cpas_link" class="current  <?php if (!Mage::helper('customer')->isCompanyAdminUser()): ?> last<?php endif; ?>" style="cursor:pointer;">Change Password</li>
+            <li id="cpas_link" class="current" style="margin-bottom:15px;">Change My Password</li>
              <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
-            	<li id="userslink_link" class="last" style="cursor:pointer;">Users</li>
+            	<li id="userslink_link" >Manage Users</li>
              <?php endif; ?>
         </ul>
     </div>
 </div>
 <script type="text/javascript">
+//<![CDATA[
 	if(window.location.hash == "#users/"){
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#userslink_link').addClass('current');
 		$j('#reman_cp_cont').hide();
 		$j('#remaqn_users_cont').show();
 	}
-//<![CDATA[
+
     $j('#userslink_link').click(function(){
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#userslink_link').addClass('current');

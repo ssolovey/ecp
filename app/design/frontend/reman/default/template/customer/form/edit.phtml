@@ -26,9 +26,6 @@
 ?>
 
 <div id="reman_cp_cont">
-    <div class="page-title">
-        <h1><?php echo $this->__('Change Account Password') ?></h1>
-    </div>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" id="form-validate">
         <div class="fieldset" style="display:none;">
@@ -61,35 +58,29 @@
                 </li>
             </ul>
         </div>
-        <div class="fieldset">
-            <h2 class="legend"><?php echo $this->__('Change Password') ?></h2>
-            <ul class="form-list">
+        <div class="reman_change_pass">
+        	<div class="heading"><span>Change My Password</span></div>
+            <ul class="cp_list">
                 <li>
-                    <label for="current_password" class="required"><em>*</em><?php echo $this->__('Current Password') ?></label>
                     <div class="input-box">
-                        <input type="password" title="<?php echo $this->__('Current Password') ?>" class="input-text" name="current_password" id="current_password" />
+                       <input type="password" title="<?php echo $this->__('Current Password') ?>" class="input-text required-entry" name="current_password" id="current_password" placeholder="current password" />
                     </div>
                 </li>
-                <li class="fields">
-                    <div class="field">
-                        <label for="password" class="required"><em>*</em><?php echo $this->__('New Password') ?></label>
-                        <div class="input-box">
-                            <input type="password" title="<?php echo $this->__('New Password') ?>" class="input-text validate-password" name="password" id="password" />
-                        </div>
+                <li>
+                    <div class="input-box">
+                        <input type="password" title="<?php echo $this->__('New Password') ?>" class="input-text required-entry validate-password" name="password" id="password" placeholder="new password" />
                     </div>
-                    <div class="field" style="margin-top:5px;">
-                        <label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm New Password') ?></label>
-                        <div class="input-box">
-                            <input type="password" title="<?php echo $this->__('Confirm New Password') ?>" class="input-text validate-cpassword" name="confirmation" id="confirmation" />
-                        </div>
+                    
+                  </li>
+                  <li>
+                    <div class="input-box">
+                        <input type="password" title="<?php echo $this->__('Confirm New Password') ?>" class="input-text required-entry validate-cpassword" name="confirmation" id="confirmation" placeholder="confirm new password" />
                     </div>
                 </li>
             </ul>
+             <div class="reman_changepass_button"><input class="submit" type="submit" /></div>
         </div>
-        <div class="buttons-set">
-            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-            <button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save Password') ?></span></span></button>
-        </div>
+          <?php /*?> <button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save Password') ?></span></span></button><?php */?>
     </form>
 </div>
 <script type="text/javascript">

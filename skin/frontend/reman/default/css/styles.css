@@ -2745,49 +2745,7 @@ background-position: 0px 20px;
 	height:18px;
 	font-size:14px;
 }
-/*About Reman Drop Down menu*/
 
-#dropdown_menu{
-	top:47px; 
-	left:0px; 
-	width:160px; 
-	position:absolute;
-	background:#e4e4e4;
-	background-image:url(../images/nav-submenu-bg.gif);
-	background-repeat:repeat-x;
-	overflow:hidden;
-	height:0px;
-	/*display:none;*/
-}
-
-
-
-#dropdown_menu li{
-	position:relative;
-	float:none;
-	width:160px;
-	left:0px;
-}
-
-#dropdown_menu li a{
-	width:150px;
-	padding:5px;
-	border-bottom:1px solid #999;
-	display:block;
-	text-align:left;
-}
-#dropdown_menu li a:hover{
-	background-image:url(../images/nav-subnav-item-over.gif) repeat-x;
-	background-repeat:repeat-x;
-}
-.downarrowclass{
-	position: absolute;
-	top: 12px;
-	right: 7px;
-	background:url(../images/down.gif) no-repeat;
-	width:11px;
-	height:8px;
-}
 /*Error Part Number Popup*/
 #product_error_popup{
 	width: 260px;
@@ -2812,15 +2770,6 @@ background-position: 0px 20px;
 }
 
 /*Inventory Info BLock*/
-
-#stock_avl{
-	/*border: 1px solid black;
-	float: left;
-	width: 20%;
-	margin-left: 5px;
-	margin-bottom: 5px;
-	height:274px;*/
-}
 
 #stock_avl table {
 	margin-top: 15px;
@@ -2912,14 +2861,6 @@ text-decoration: none;
 	padding: 5px;
 }
 
-#reman_nav_list li{
-	border-bottom: 1px solid #ddd;
-	padding: 3px 0;
-}
-
-#reman_nav_list li.last{
-	border-bottom: none;
-}
 
 .add_new_user_link{
 	font-size: 14px;
@@ -2979,5 +2920,95 @@ text-decoration: none;
 	margin-left: 30px;
 	margin-top: 20px;
 }
+
+/*Profile Right Navigation Side Menu*/
+.reman_profile_side_menu{
+	background-color: #F2F2F2;
+	border-radius: 15px;
+	width:201px;
+	height:122px;
+	position: relative;
+	float:left;
+}
+
+.reman_profile_side_menu .heading{
+	background:url(../images/myprofile-header.png) no-repeat;
+	width:201px;
+	height:49px;
+	position: relative;
+	float:left;
+}
+
+#reman_nav_list{
+	position: relative;
+	float: left;
+	margin-top: 15px;
+	margin-left: 20px;
+}
+
+#reman_nav_list li{
+	font-size:12px;
+	cursor:pointer;
+}
+
+#reman_nav_list li.current{
+	color:#c9282d;
+}
+
+/* Change Password Page*/
+
+.reman_change_pass{
+	position: relative;
+}
+
+.reman_change_pass .cp_list{
+	margin-left: 45px;
+}
+
+.reman_change_pass .cp_list .input-box{
+	margin-bottom: 15px;
+
+}
+
+.reman_change_pass .cp_list .input-box input{
+	width: 245px;
+	height: 30px;
+	font-size: 17px;
+	padding-left: 5px;
+	border: 1px solid #000;
+	
+}
+
+.reman_change_pass .heading{
+	margin-left:40px;
+	margin-bottom:40px;
+
+}
+
+.reman_change_pass .heading span{
+	font-size: 26px;
+	font-weight: bold;
+	color: #cb1f30;
+}
+
+.reman_changepass_button .submit{
+	width:252px;
+	height:37px;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.reman_changepass_button{
+	background:url(../images/savepass-btn.png) no-repeat;
+	width:252px;
+	height:37px;
+	position: relative;
+	float:left;
+	margin-left:45px;
+	margin-top:20px;
+}
+
+
+
 /*Validation Failed*/
 .validation-failed { border:1px dashed #eb340a !important; background:#faebe7 !important; }
