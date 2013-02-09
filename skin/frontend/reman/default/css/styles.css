@@ -353,6 +353,8 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 
 .fieldset { border:1px solid #bbafa0; background:#fbfaf6; padding:22px 25px 12px 33px; margin:28px 0; }
 
+/* REMAN REGISTER COMPANY FORM*/
+
 .fieldset_reman {
 	background:url(../images/register_bg.png) no-repeat;
 	width:478px;
@@ -409,6 +411,7 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 	height: 35px;
 	font-size: 17px;
 	padding-left: 5px;
+	border: 1px solid #000;
 	
 }
 
@@ -425,6 +428,12 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 	color: #cb1f30;
 }
 
+.fieldset_reman .submit{
+	width: 156px;
+	height: 46px;
+	opacity: 0;
+	cursor: pointer;
+}
 
 .reman_sign_button{
 	background:url(../images/singup-btn.png) no-repeat;
@@ -437,14 +446,13 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 	cursor:pointer;
 }
 
-
+/* END REMAN REGISTER COMPANY FORM*/
 
 
 .fieldset .legend { float:left; font-weight:bold; font-size:13px; border:1px solid #f19900; background:#f9f3e3; color:#e76200; margin:-33px 0 0 -10px; padding:0 8px; position:relative; }
 
 /* Form Validation */
 .validation-advice { clear:both; min-height:13px; margin:3px 0 0; padding-left:17px; font-size:11px; font-weight:bold; line-height:13px; background:url(../../../shop/default/images/validation_advice_bg.gif) 2px 0 no-repeat; color:#eb340a; }
-.validation-failed { border:1px dashed #eb340a !important; background:#faebe7 !important; }
 .validation-passed {}
 p.required { font-size:11px; text-align:right; color:#EB340A; }
 /* Expiration date and CVV number validation fix */
@@ -2569,8 +2577,60 @@ background-position: 0px 20px;
 	margin-bottom: 5px;
 }
 
-/* LOGIN*/
+/* FORGOT PASSWORD FORM*/
+#reman_forgotpass{
+	height:273px;
+	width:479px; 
+	background:url(../images/login_bg.png) no-repeat;
+	position: relative;
+	float: left;
+	margin-left: 65px;
+	margin-top: 15px;
+}
 
+#reman_forgotpass .heading{
+	margin-top:25px;
+	margin-left:40px;
+
+}
+
+#reman_forgotpass .heading span{
+	font-size: 25px;
+	font-weight: bold;
+	color: #cb1f30;
+}
+
+#reman_forgotpass  .info{
+	margin-top: 15px;
+	margin-left: 55px;
+	width: 345px;
+}
+
+#reman_forgotpass  .info span{
+	font-size: 10px;
+	color: #000;
+}
+
+.reman_reset_button{
+	background:url(../images/reset-btn.png) no-repeat;
+	width:159px;
+	height:42px;
+	position: relative;
+	float: right;
+	margin-right: 35px;
+	margin-top: 10px;
+	cursor:pointer;
+}
+
+.reman_reset_button .submit{
+	width:159px;
+	height:42px;
+	opacity:0;
+	cursor:pointer;
+}
+
+
+/* LOGIN*/
 .reman_login_content{
 	height:273px !important;
 	width:479px !important; 
@@ -2640,6 +2700,13 @@ background-position: 0px 20px;
 	float:right;
 	margin-right:65px;
 	cursor:pointer; 
+}
+
+.reman_login_button .submit{
+	width:155px;
+	height:41px;
+	opacity:0;
+	cursor:pointer;
 }
 
 #register_btn{
@@ -2912,3 +2979,5 @@ text-decoration: none;
 	margin-left: 30px;
 	margin-top: 20px;
 }
+/*Validation Failed*/
+.validation-failed { border:1px dashed #eb340a !important; background:#faebe7 !important; }

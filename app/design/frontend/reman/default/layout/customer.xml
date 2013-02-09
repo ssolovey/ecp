@@ -139,7 +139,7 @@ New customer registration
 
     <customer_account_forgotpassword translate="label">
         <label>Customer Forgot Password Form</label>
-        <remove name="right"/>
+       <!-- <remove name="right"/>-->
         <remove name="left"/>
 
         <reference name="head">
