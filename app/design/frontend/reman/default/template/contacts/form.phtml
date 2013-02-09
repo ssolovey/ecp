@@ -25,67 +25,48 @@
  */
 ?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
-<div id="reg_title" class="page-title" style="margin:0px;">
-    <h1><?php echo Mage::helper('contacts')->__('Online custom quote company registration') ?></h1>
-</div>
 <form action="<?php echo $this->getUrl('contacts/index/post'); ?>" id="contactForm" method="post">
-    <div class="fieldset_reman" style="margin-right:15px; width:270px;">
-        <ul class="form-list">
+    <div class="fieldset_reman">
+        <div class="heading"><span>Sign Up for an Account</span></div>
+        <div class="info"><span>We need a bit information to set up your company account. It's like ripping off a band-aid - just get it over as quickly as possible.</span></div>
+        
+        <ul class="reman-form-list">
             <li>
-                    <label for="name" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('First Name') ?></label>
                     <div class="input-box">
-                        <input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('First Name') ?>" value="" class="input-text required-entry" type="text" />
+                        <input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('First Name') ?>" value="" class="input-text required-entry" type="text"  placeholder="First Name" /><em>*</em>
                     </div>
            </li>
            <li>
-                    <label for="lname" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Last Name') ?></label>
                     <div class="input-box">
-                        <input name="lname" id="lname" title="<?php echo Mage::helper('contacts')->__('Last Name') ?>" value="" class="input-text required-entry" type="text" />
+                        <input name="lname" id="lname" title="<?php echo Mage::helper('contacts')->__('Last Name') ?>" value="" class="input-text required-entry" type="text"  placeholder="Last Name"/><em>*</em>
                     </div>
            </li>
            <li> 
-             <label for="company" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Company') ?></label>
                 <div class="input-box">
-                    <input name="company" id="company" title="<?php echo Mage::helper('contacts')->__('Company') ?>" value="" class="input-text required-entry" type="text" />
+                    <input name="company" id="company" title="<?php echo Mage::helper('contacts')->__('Company') ?>" value="" class="input-text required-entry" type="text"  placeholder="Company" /><em>*</em>
                 </div>
                 
             </li>
             <li>
-               <label for="telephone" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Phone') ?></label>
                 <div class="input-box">
-                    <input name="telephone" id="telephone" title="<?php echo Mage::helper('contacts')->__('Phone') ?>" value="" class="input-text required-entry" type="text" />
+                    <input name="telephone" id="telephone" title="<?php echo Mage::helper('contacts')->__('Phone') ?>" value="" class="input-text required-entry" type="text"  placeholder="Phone" /><em>*</em>
                 </div>
             </li>
             <li>
-                    
-            <label for="email" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Email') ?></label>
             <div class="input-box">
-                <input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="" class="input-text required-entry validate-email" type="text" />
+                <input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="" class="input-text required-entry validate-email" type="text"  placeholder="Email" /><em>*</em>
             </div>
             </li>
         </ul>
-        <div class="buttons-set">
-        <p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p>
+       
         <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
-        <button type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
+         <div class="required-note"><span>*Required</span></div>
+         <div class="reman_sign_button" onclick="$j('#contactForm').submit(); return false;"></div>
+        
+        
+       <?php /*?> <button  type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button><?php */?>
+   
     </div>
-    </div>
-     <div class="fieldset_reman" style="width:440px;"> 
-     	 <ul class="form-list">
-            <li>
-                <label>Requirements:</label>
-                 <div class="input-box" style="margin-top: 5px; position: relative; float: left;">
-                 	some text.................
-                 </div>
-           </li>
-           <li>
-           		<label style="margin-top:120px;">Instructions:</label>
-                 <div class="input-box" style="margin-top: 5px; position: relative; float: left;">
-                 	some text.................
-                 </div>
-           </li>
-           </ul>
-     </div>
 </form>
 <script type="text/javascript">
 //<![CDATA[

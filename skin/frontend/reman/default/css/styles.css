@@ -353,7 +353,91 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 
 .fieldset { border:1px solid #bbafa0; background:#fbfaf6; padding:22px 25px 12px 33px; margin:28px 0; }
 
-.fieldset_reman { border:1px solid #bbafa0; background:#fbfaf6; padding:22px 25px 12px 15px; margin-top:15px; min-height: 365px; float:left;}
+.fieldset_reman {
+	background:url(../images/register_bg.png) no-repeat;
+	width:478px;
+	height: 478px;
+	position:relative;
+	float:left;
+	margin-left:65px;
+	
+}
+
+.fieldset_reman .heading{
+	margin-top:25px;
+	margin-left:40px;
+
+}
+
+.fieldset_reman .heading span{
+	font-size: 25px;
+	font-weight: bold;
+	color: #cb1f30;
+}
+
+
+.fieldset_reman .info{
+	margin-top: 15px;
+	margin-left: 40px;
+	width: 355px;
+}
+
+.fieldset_reman em {
+	top: -12px;
+	position: relative;
+	color: #cb1f30;
+}
+
+.fieldset_reman .info span{
+	font-size: 12px;
+	color: #000;
+}
+
+
+.reman-form-list{
+	margin-top: 20px;
+	margin-left: 96px;
+}
+
+.reman-form-list .input-box{
+	margin-bottom: 10px;
+
+}
+
+.reman-form-list .input-box input {
+	width: 245px;
+	height: 35px;
+	font-size: 17px;
+	padding-left: 5px;
+	
+}
+
+.fieldset_reman .required-note {
+	position: relative;
+	float: left;
+	margin-left: 50px;
+	margin-top: 34px;
+}
+
+.fieldset_reman .required-note span{
+	font-size: 12px;
+	font-weight: bold;
+	color: #cb1f30;
+}
+
+
+.reman_sign_button{
+	background:url(../images/singup-btn.png) no-repeat;
+	width:159px;
+	height:42px;
+	position: relative;
+	float: right;
+	margin-right: 35px;
+	margin-top: 10px;
+	cursor:pointer;
+}
+
+
 
 
 .fieldset .legend { float:left; font-weight:bold; font-size:13px; border:1px solid #f19900; background:#f9f3e3; color:#e76200; margin:-33px 0 0 -10px; padding:0 8px; position:relative; }
