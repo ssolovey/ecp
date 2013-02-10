@@ -2839,36 +2839,6 @@ text-decoration: none;
 }
 
 
-/*Profile Page Styles*/
-.reman_users_table {
-	border-color: black;
-	border-style: solid;
-	border-width: 0 1px 1px 0;
-	margin-top:20px;
-}
-
-.reman_users_table .lable{
-	font-weight:bold;
-}
-
-.reman_users_table td {
-	border-color: black;
-	border-style: solid;
-	border-width: 1px 0 0 1px;
-	text-align: center;
-	width: 100px;
-	font-size: 12px;
-	padding: 5px;
-}
-
-
-.add_new_user_link{
-	font-size: 14px;
-	margin-top: 15px;
-	position: relative;
-	float: left;
-}
-
 /*ASSISTANT STATIC BLOCK STYLE*/
 
 #assis_poster{
@@ -3009,6 +2979,56 @@ text-decoration: none;
 	margin-top:20px;
 }
 
+/* My profile User List*/
+
+.reman_users_table {
+	border-color: black;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	margin-top:20px;
+	background-color:#fff;
+	margin-left:40px;
+}
+
+.reman_users_table td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px 0 0 0px;
+	text-align: center;
+	width: 100px;
+	font-size: 11px;
+	padding: 5px;
+	color:#000;
+}
+
+
+.add_new_user_link{
+	margin-top: 25px;
+	margin-left:46px;
+	position: relative;
+	float: left;
+	background:url(../images/adduser-btn.png) no-repeat;
+	width:252px;
+	height:37px;
+}
+
+.add_new_user_link a{
+	padding-right: 252px;
+	padding-bottom: 19px;
+}
+
+
+#remaqn_users_cont .heading{
+	margin-left:40px;
+	margin-bottom:40px;
+
+}
+
+#remaqn_users_cont .heading span{
+	font-size: 26px;
+	font-weight: bold;
+	color: #cb1f30;
+}
 
 
 /*Validation Failed*/
