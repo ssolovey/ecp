@@ -17,22 +17,13 @@ $j(document).ready(function(){
 		Reman_QuickQuote.prototype.eventsHandler(event);
 	});
 
-	/* Slide Down About reman list*/
-	/*$j('#about_reman_link').bind('mouseenter', function(){
-		$j('.reman_about_link').addClass('hover');
-		$j("#dropdown_menu").animate({
-			height: '190px'
-		},500);
-		$j("#dropdown_menu").clearQueue();
-	});*/
-	/* Slide DUp About reman list*/
-	/*$j('#about_reman_link').bind('mouseleave', function(event){
-		$j('.reman_about_link').removeClass('hover');
-		$j("#dropdown_menu").animate({
-			height: '0px'
-		},500);
-		$j("#dropdown_menu").clearQueue();
-	});*/
+	/** Remove validation error red borders from focused input*/
+
+	$j('input').click(function(e){
+		if($j(e.target).hasClass('validation-failed')){
+			$j(e.target).removeClass('validation-failed');
+		}
+	});
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -695,4 +686,4 @@ jQuery.fn.sort = function() {
   
 function sortAlpha(a,b){  
     return a.innerHTML > b.innerHTML ? 1 : -1;  
-};  
+}; 

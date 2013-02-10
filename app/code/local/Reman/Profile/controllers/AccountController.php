@@ -364,7 +364,7 @@ class Reman_Profile_AccountController extends Mage_Customer_AccountController
             }
         }
 
-        $this->_redirectError(Mage::getUrl('*/*/create', array('_secure' => true)));
+        $this->_redirectError(Mage::getUrl('customer/account#add', array('_secure' => true)));
     }
 
     /**

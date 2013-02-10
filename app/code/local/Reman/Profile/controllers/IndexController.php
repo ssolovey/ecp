@@ -26,7 +26,7 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 		$customer->setGroupId(Mage::helper('customer')->getSalesGroupId());
 		$customer->save();
 		// redirect to profile page
-		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/#users'));
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account#edit'));
 	}
 	/** 
 	  *Disable Customers's profile
@@ -40,7 +40,7 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 		$customer->setGroupId(7); // Disabled Group ID = 7
 		$customer->save();
 		// redirect to profile page
-		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/#users'));
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account#edit'));
 	}
 	
 }

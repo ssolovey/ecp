@@ -37,26 +37,52 @@
 </div>
 <script type="text/javascript">
 //<![CDATA[
-	if(window.location.hash == "#users/"){
+	
+    $j('#userslink_link').bind('click', function(){
+		window.location.hash = "edit";
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#userslink_link').addClass('current');
 		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').hide();
 		$j('#remaqn_users_cont').show();
-	}
-
-    $j('#userslink_link').click(function(){
-		$j('#reman_nav_list li').removeClass('current');
-		$j('#userslink_link').addClass('current');
-		$j('#reman_cp_cont').hide();
-		$j('#remaqn_users_cont').show();
+		$j('.messages').remove();
 	});
 	
+	if(window.location.hash == "#edit" || window.location.hash == "#edit/"){
+		$j('#reman_nav_list li').removeClass('current');
+		$j('#userslink_link').addClass('current');
+		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').hide();
+		$j('#remaqn_users_cont').show();
+		$j('.messages').remove();
+	}
+	
 	$j('#cpas_link').click(function(){
+		window.location.hash = "";
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#cpas_link').addClass('current');
 		$j('#remaqn_users_cont').hide();
+		$j('#reman_add_user').hide();
 		$j('#reman_cp_cont').show();
+		$j('.messages').remove();
 	});
+	
+	$j('.add_new_user_link').click(function(){
+		window.location.hash = "add";
+		$j('#remaqn_users_cont').hide();
+		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').show();
+		$j('.messages').remove();
+	});
+	
+	if(window.location.hash == "#add" || window.location.hash == "#add/"){
+		$j('#reman_nav_list li').removeClass('current');
+		$j('#userslink_link').addClass('current');
+		$j('#remaqn_users_cont').hide();
+		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').show();
+	}
+	
 	
 //]]>
 </script>

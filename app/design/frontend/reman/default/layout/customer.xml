@@ -257,6 +257,11 @@ Customer account home dashboard layout
         <reference name="my.account.wrapper">
 			<block type="customer/form_edit" name="customer_edit" template="customer/form/edit.phtml"/>
             <block type="profile/profile" name="profile" template="profile/profile.phtml" />
+			<block type="customer/form_register" name="customer_form_register" template="persistent/customer/form/register.phtml">
+                <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+                    <label>Form Fields Before</label>
+                </block>
+            </block>
 			<!--<block type="customer/account_dashboard" name="customer_account_dashboard" template="customer/account/dashboard.phtml">
                 <block type="customer/account_dashboard_hello" name="customer_account_dashboard_hello" as="hello" template="customer/account/dashboard/hello.phtml"/>
                 <block type="core/template" name="customer_account_dashboard_top" as="top" />

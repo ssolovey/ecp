@@ -3010,11 +3010,7 @@ text-decoration: none;
 	background:url(../images/adduser-btn.png) no-repeat;
 	width:252px;
 	height:37px;
-}
-
-.add_new_user_link a{
-	padding-right: 252px;
-	padding-bottom: 19px;
+	cursor:pointer;
 }
 
 
@@ -3029,6 +3025,26 @@ text-decoration: none;
 	font-weight: bold;
 	color: #cb1f30;
 }
+
+/*Add New User */
+
+.reman_activete_user_button .submit{
+	width:252px;
+	height:37px;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.reman_activete_user_button{
+	background:url(../images/activate-user-btn.png) no-repeat;
+	width:252px;
+	height:37px;
+	position: relative;
+	float:left;
+	margin-left:45px;
+	margin-top:20px;
+}
+
 
 
 /*Validation Failed*/
