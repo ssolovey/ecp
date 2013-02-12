@@ -605,7 +605,7 @@ Reman_QuickQuote.prototype = {
 
 	loadProductInfo: function(id,name,prevgroup){
 		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join(' > ');
-		var make = Reman_QuickQuote.prototype.currentSelectedMake.trim();
+		var make = $j.trim(Reman_QuickQuote.prototype.currentSelectedMake);
 		$j.ajax({
 				url: "index/product",
 				type: 'POST',
@@ -646,8 +646,11 @@ Reman_QuickQuote.prototype = {
 						$j('#reman-product_info').show();
 						$j('#reman-invent_info').show();
 						
-						
-						$j('#reman-product_info').html(data.responseText);
+						if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) { // Check for IE8 USE Native innerHTML method
+						 	$j('#reman-product_info')[0].innerHTML = data.responseText;
+						}else{
+						 	$j('#reman-product_info').html(data.responseText);
+						}
 						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 					});
 				}
