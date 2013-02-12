@@ -2172,13 +2172,13 @@ background-position: 0px 20px;
 }
 
 #transcase{
-	background:url(../images/tranCaseX.png) no-repeat;
+	background:url(../images/tranCase.png) no-repeat;
 	width:300px;
 	height:300px;
 	position:relative;
 	float:left;
 	text-indent: -10000px;
-	/*cursor:pointer;*/
+	cursor:pointer;
 }
 /* END Group select block*/
 
