@@ -644,7 +644,6 @@ Reman_QuickQuote.prototype = {
 						$j('#breadcrumb_info').removeClass('disabled');
 						// Show product page
 						$j('#reman-product_info').show();
-						$j('#reman-invent_info').show();
 						
 						if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) { // Check for IE8 USE Native innerHTML method
 						 	$j('#reman-product_info')[0].innerHTML = data.responseText;
@@ -666,16 +665,24 @@ Reman_QuickQuote.prototype = {
 					id:id
 				},
 				complete: function(data){
-					$j('#reman-invent_info').html(data.responseText);
-					$j('#reman-invent_info').show();
-					if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
-						var cat = 'Transmission';
-					}else{
-						var cat = 'Transfer Case';
+					if(Reman_QuickQuote.prototype.currentPartNumber == "N/A" || 
+						Reman_QuickQuote.prototype.currentPartNumber == "" ){
+							
+							return; // Abort request
+					}		
+					
+						$j('#reman-invent_info').show();
+						$j('#reman-invent_info').html(data.responseText);
+						
+						if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
+							var cat = 'Transmission';
+						}else{
+							var cat = 'Transfer Case';
+						}
+						//Update Banner text
+						$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
 					}
-					//Update Banner text
-					$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
-				}
+				
 		});
 	}
 }
