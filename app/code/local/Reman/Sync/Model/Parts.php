@@ -25,7 +25,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 	public function loadProductsData() {
 
 		// Location of CSV file
-		$file	=	'import/parts.csv';
+		$file	=	'import/PARTS.TXT';
 
 		$csv	=	new Varien_File_Csv();
 
@@ -36,14 +36,15 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 		$data	=	$csv->getData($file);
 		
 		foreach( $data as $item ) {			
-			
-			$product = $this->_getProductBySku( $item[0] );
-
-			if ( $product ) {
-				$this->_updateProductAttributes($product, $item);
-			} else {
-				$this->_addProduct($this->_products, $item);			
-			}			
+			if ( sizeof($item) > 1 ) {
+				$product = $this->_getProductBySku( $item[0] );
+	
+				if ( $product ) {
+					$this->_updateProductAttributes($product, $item);
+				} else {
+					$this->_addProduct($this->_products, $item);			
+				}
+			}	
 		}
 	}
 	
@@ -54,7 +55,7 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 	public function loadInventoryData() {
 
 		// Location of CSV file
-		$file	=	'import/inven.csv';
+		$file	=	'import/INVEN.TXT';
 
 		$csv	=	new Varien_File_Csv();
 
@@ -64,8 +65,10 @@ class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
 		// Load data from CSV file
 		$data	=	$csv->getData($file);
 				
-		foreach( $data as $item ) {			
-			$this->_updateInventory($item);
+		foreach( $data as $item ) {
+			if ( sizeof($item) > 1 ) {		
+				$this->_updateInventory($item);
+			}
 		}
 	}
 	

@@ -35,7 +35,7 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	public function syncData()
 	{
 		$this->getResource()->trancateTable();	
-		$this->_loadFile( 'import/applic.csv' );
+		$this->_loadFile( 'import/APPLIC.TXT' );
 	}
 	
 	/** 

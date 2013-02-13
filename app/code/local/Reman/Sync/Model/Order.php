@@ -28,12 +28,12 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
                 ->loadByEmail($item[2]);
         
         $quote->assignCustomer($customer);
-		
+        
 		// add product(s)
 		$product = Mage::getModel('catalog/product')->load(3420);
 
 		$buyInfo = array(
-		        'qty' => 1,
+		        'qty'	=> 1
 		        // custom option id => value id
 		        // or
 		        // configurable attribute id => value id

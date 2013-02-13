@@ -22,5 +22,13 @@
         		</observers>
         	</sales_order_place_after>
         </events>
+		<resources>
+			<order_setup>
+				<setup>
+					<module>Reman_Order</module>
+					<class>Mage_Sales_Model_Mysql4_Setup</class>
+				</setup>
+			</order_setup>
+		</resources>
 	</global>
 </config>
