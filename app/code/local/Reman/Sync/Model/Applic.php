@@ -24,7 +24,8 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 				'subgroup'			=>		$item[5],
 				'menu_heading'		=>		$item[6],
 				'applic'			=>		$item[4],
-				'part_number'		=>		$item[7]
+				'part_number'		=>		$item[7],
+				'part_type'			=>		$item[1]
 			)		    	
 		);
 		

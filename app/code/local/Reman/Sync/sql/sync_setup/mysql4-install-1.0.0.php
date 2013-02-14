@@ -38,7 +38,8 @@ $installer->run("
 	`subgroup` int(2) unsigned NOT NULL COMMENT 'Subgroup',
 	`menu_heading` varchar(30) DEFAULT NULL COMMENT 'Menu Heading',
 	`applic` varchar(100) DEFAULT NULL COMMENT 'Applic',
-	`part_number` varchar(12) DEFAULT NULL COMMENT 'Path Number',
+	`part_number` varchar(12) DEFAULT NULL COMMENT 'Part Number',
+	`part_type` varchar(12) DEFAULT NULL COMMENT 'Part Type',
 	PRIMARY KEY (`applic_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	DROP TABLE IF EXISTS {$this->getTable('sync/gsp')}; 
