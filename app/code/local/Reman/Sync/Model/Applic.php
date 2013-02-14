@@ -42,8 +42,8 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	/** 
 	 * SQL query for select year production from reman_model table
 	*/
-	public function loadProductId($vehicle_id){
-		return $this->getResource()->loadProductId($vehicle_id);
+	public function loadProductId($vehicle_id, $category){
+		return $this->getResource()->loadProductId($vehicle_id, $category);
     }
 	/**
 	 * Load Product object

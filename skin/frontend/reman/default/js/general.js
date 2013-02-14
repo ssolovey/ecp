@@ -213,9 +213,6 @@ Reman_QuickQuote.prototype = {
 			if(endyear == 2010 || endyear == 2000 || endyear == 1990 ){
 				buffer += '</ul><ul class="list">';
 			}
-			/*if(i%10 == 0){
-				buffer += '</ul><ul class="list">';
-			}*/
 		}
 		//append new info to year table
 		$j('#year_tbl').append(buffer);
@@ -428,7 +425,8 @@ Reman_QuickQuote.prototype = {
 				type: 'POST',
 				data: {
 					step: 3,  
-					id:vehicle_id
+					id:vehicle_id,
+					category: Reman_QuickQuote.prototype.currentCatSelected
 				},
 				beforeSend: function(){
 					//hide model table

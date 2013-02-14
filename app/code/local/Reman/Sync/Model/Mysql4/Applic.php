@@ -21,9 +21,9 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 	/** 
 	 * SQL query for select product ID from reman_applic table
 	*/
-	public function loadProductId($vehicle_id){
-				
-		$where = $this->_getReadAdapter()->quoteInto("vehicle_id=? AND ", (int)$vehicle_id).$this->_getReadAdapter()->quoteInto("group_number > 0");
+	public function loadProductId($vehicle_id, $category){
+		if($category != "T"){$category = "C";}
+		$where = $this->_getReadAdapter()->quoteInto("vehicle_id=? AND ", (int)$vehicle_id).$this->_getReadAdapter()->quoteInto("group_number > 0 AND ").$this->_getReadAdapter()->quoteInto("part_type=? ", strval($category));
 		
 		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('group_number','menu_heading','applic','applic_id','subgroup'))->where($where);
 		

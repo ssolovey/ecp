@@ -35,7 +35,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		{
 			
 			// get years accprding to selected make
-			$result_st3 = Mage::getModel('sync/applic')->loadProductId($request['id']);
+			$result_st3 = Mage::getModel('sync/applic')->loadProductId($request['id'],$request['category']);
 			
 			echo json_encode($result_st3);
 		
@@ -49,9 +49,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			if($result_st4){
 				$productObj->sku = $result_st4->getSku();
 				$productObj->family = $result_st4->getData('parts_family');
-				if($productObj->sku[0] != $request['category'] ){
+				/*if($productObj->sku[0] != $request['category'] ){
 					$productObj->sku = "";
-				}
+				}*/
 			}else{
 				$productObj->sku = "";
 			}
