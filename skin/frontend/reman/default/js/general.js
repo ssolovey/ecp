@@ -43,6 +43,7 @@ Reman_QuickQuote.prototype = {
 	currentCatSelected:'',
 	currentPartRootSelected:[],
 	currentPartNumber:'',
+	currentSelectedEngine:'',
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -114,8 +115,14 @@ Reman_QuickQuote.prototype = {
 				}
 
 				case 'parts_select':{
+					
+					if($j(elem).parent().parent().attr('type') == 'engine'){
+						this.currentSelectedEngine = $j(elem).html();
+					}
+					
 					//selectPart(applic_id,subgroup,id,name)
 					this.selectPart($j(elem).attr('value'),$j(elem).attr('type'),elem.parentElement.parentElement.id, elem.innerHTML);
+					
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
 					return;
@@ -649,6 +656,16 @@ Reman_QuickQuote.prototype = {
 						 	$j('#reman-product_info').html(data.responseText);
 						}
 						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
+						
+						if(Reman_QuickQuote.prototype.currentSelectedEngine != ''){
+							$j('#current_selected_engine').html(Reman_QuickQuote.prototype.currentSelectedEngine.replace('L',''));
+							$j('#current_selected_engine_db').hide();
+							$j('#current_selected_engine').show();
+							
+						}
+						
+						Reman_QuickQuote.prototype.currentSelectedEngine = '';
+						
 					});
 				}
 		});
