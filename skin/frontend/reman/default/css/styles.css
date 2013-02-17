@@ -3071,7 +3071,18 @@ text-decoration: none;
 	color: #000;
 }
 
-#vehicle_info{
+#reman_order .buttons{
+	position: relative;
+	width: 205px;
+	margin: 0 auto;
+}
+
+#reman_order .buttons button{
+	height: 30px;
+	width: 100px;
+}
+
+#vehicle_info , #sold-to{
 	position: relative;
 	float: left;
 	width: 296px;
@@ -3080,14 +3091,43 @@ text-decoration: none;
 	margin-right: 20px;
 }
 
-#vehicle_info .title{
+#vehicle_info .title , #sold-to .title{
 	position: absolute;
 	background: #F2F2F2;
 	top: -10px;
 	left: 5px;
 }
 
-#order_details{
+#vehicle_info table , #order_details table , #sold-to table , #ship-to table{
+	position: relative;
+	float: left;
+	margin-top: 15px;
+	margin-left: 15px;
+	font-size: 12px;
+	color: #000;
+}
+
+#sold-to table , #ship-to table  {
+	margin-left: 5px;
+	margin-top: 30px;
+}
+
+#vehicle_info table tr , #order_details table tr{
+	height:20px;
+}
+
+#vehicle_info .vin tr , #order_details .vin tr , #sold-to .vin tr , #ship-to .vin tr {
+	height:25px;
+}
+
+#vehicle_info .label , #order_details .label , #sold-to .label ,  #ship-to .label {
+	text-align:right;
+	padding-right:5px;
+	font-weight:bold;
+	
+}
+
+#order_details , #ship-to{
 	position: relative;
 	float: left;
 	width: 280px;
@@ -3095,13 +3135,62 @@ text-decoration: none;
 	height: 260px;
 }
 
-#order_details .title{
+#order_details .title , #ship-to .title{
 	position: absolute;
 	background: #F2F2F2;
 	top: -10px;
 	left: 5px;
 }
 
+#order_details .family{
+	margin-left: 50px;
+	position: relative;
+	float: left;
+}
+
+#sold-to .adress , #ship-to .adress {
+	margin-top:0px;
+	margin-left:104px;
+}
+
+#sold-to .adress .input-1, #ship-to .adress .input-1 {
+	padding-right:5px;
+}
+
+#sold-to .adress .input-1 input , #sold-to .adress .input-zip input , #ship-to .adress .input-1 input , #ship-to .adress .input-zip input {
+	width:55px;
+}
+
+#warranty-info , #order-notes{
+	position: relative;
+	float: left;
+	width: 598px;
+	border: 1px solid #999;
+	height: 70px;
+	margin-top: 25px;
+}
+
+#warranty-info .title , #order-notes .title{
+	position: absolute;
+	background: #F2F2F2;
+	top: -10px;
+	left: 5px;
+	
+}
+#warranty-info select{
+	position: relative;
+	float: left;
+	margin-top: 22px;
+	margin-left: 30px;
+	width:200px;
+}
+
+ #order-notes textarea{
+	position: relative;
+	float: left;
+	margin-top: 10px;
+	margin-left: 35px;
+}
 
 
 /*Validation Failed*/
