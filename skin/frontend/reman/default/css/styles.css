@@ -3045,6 +3045,50 @@ text-decoration: none;
 	margin-top:20px;
 }
 
+/* Order */
+
+#reman_order{
+	position: relative;
+	float: left;
+	width: 601px;
+}
+
+#reman_order .title{
+	margin-bottom: 20px;
+	color: #000;
+}
+
+#vehicle_info{
+	position: relative;
+	float: left;
+	width: 296px;
+	border: 1px solid #999;
+	height: 260px;
+	margin-right: 20px;
+}
+
+#vehicle_info .title{
+	position: absolute;
+	background: #F2F2F2;
+	top: -10px;
+	left: 5px;
+}
+
+#order_details{
+	position: relative;
+	float: left;
+	width: 280px;
+	border: 1px solid #999;
+	height: 260px;
+}
+
+#order_details .title{
+	position: absolute;
+	background: #F2F2F2;
+	top: -10px;
+	left: 5px;
+}
+
 
 
 /*Validation Failed*/

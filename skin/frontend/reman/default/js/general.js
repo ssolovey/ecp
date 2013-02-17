@@ -44,6 +44,7 @@ Reman_QuickQuote.prototype = {
 	currentPartRootSelected:[],
 	currentPartNumber:'',
 	currentSelectedEngine:'',
+	currentSelectedDrive:'',
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -118,6 +119,10 @@ Reman_QuickQuote.prototype = {
 					
 					if($j(elem).parent().parent().attr('type') == 'engine'){
 						this.currentSelectedEngine = $j(elem).html();
+					}
+					
+					if($j(elem).parent().parent().attr('type') == 'drive'){
+						this.currentSelectedDrive = $j(elem).html();
 					}
 					
 					//selectPart(applic_id,subgroup,id,name)
@@ -657,6 +662,7 @@ Reman_QuickQuote.prototype = {
 						}
 						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 						
+						
 						if(Reman_QuickQuote.prototype.currentSelectedEngine != ''){
 							$j('#current_selected_engine').html(Reman_QuickQuote.prototype.currentSelectedEngine.replace('L',''));
 							$j('#current_selected_engine_db').hide();
@@ -664,7 +670,17 @@ Reman_QuickQuote.prototype = {
 							
 						}
 						
+						
+						if(Reman_QuickQuote.prototype.currentSelectedDrive != ''){
+							$j('#current_selected_drive').html(Reman_QuickQuote.prototype.currentSelectedDrive);
+							$j('#current_selected_drive_db').hide();
+							$j('#current_selected_drive').show();
+							
+						}
+						
+						
 						Reman_QuickQuote.prototype.currentSelectedEngine = '';
+						Reman_QuickQuote.prototype.currentSelectedDrive = '';
 						
 					});
 				}

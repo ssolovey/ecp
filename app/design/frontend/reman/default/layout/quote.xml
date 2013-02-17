@@ -20,6 +20,7 @@
 		<!--Add Quote Main content-->
 		<reference name="content">
 			<block type="quote/quote" name="quote" template="quote/quote.phtml" />
+			<!--<block type="quote/quote" name="quote" template="quote/order.phtml" />-->
 		</reference>
 	</quote_index_index>
 	<!--Quick Quote Ajax action for product load-->

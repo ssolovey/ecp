@@ -58,7 +58,8 @@
                         </tr>
                         <tr>
                             <td class="label">Drive:</td>
-                            <td><?php echo $_product->getData('parts_drive'); ?></td>
+                            <td style="display:none;" id="current_selected_drive"></td>
+                            <td id="current_selected_drive_db"><?php echo $_product->getData('parts_drive'); ?></td>
                         </tr>
                         <tr>
                             <td class="label">Year:</td>
