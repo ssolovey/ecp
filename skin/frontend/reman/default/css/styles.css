@@ -31,6 +31,12 @@ html{
 	overflow-y: scroll;
 }
 
+
+.placeholder
+{
+  color: #999;
+}
+
 body          { /*background:#496778 url(../images/bkg_body.gif) 50% 0 repeat-y;*/
 				 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 				 color:#666; text-align:center; 
@@ -432,6 +438,7 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 	width: 156px;
 	height: 46px;
 	opacity: 0;
+	filter: alpha(opacity=0);
 	cursor: pointer;
 }
 
@@ -2626,6 +2633,7 @@ background-position: 0px 20px;
 	width:159px;
 	height:42px;
 	opacity:0;
+	filter: alpha(opacity=0);
 	cursor:pointer;
 }
 
@@ -2706,6 +2714,7 @@ background-position: 0px 20px;
 	width:155px;
 	height:41px;
 	opacity:0;
+	filter: alpha(opacity=0);
 	cursor:pointer;
 }
 
@@ -2966,6 +2975,7 @@ text-decoration: none;
 	width:252px;
 	height:37px;
 	opacity: 0;
+	filter: alpha(opacity=0);
 	cursor: pointer;
 }
 
@@ -3032,6 +3042,7 @@ text-decoration: none;
 	width:252px;
 	height:37px;
 	opacity: 0;
+	filter: alpha(opacity=0);
 	cursor: pointer;
 }
 

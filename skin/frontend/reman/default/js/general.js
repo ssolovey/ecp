@@ -24,6 +24,30 @@ $j(document).ready(function(){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
+	
+	// Released under MIT license: http://www.opensource.org/licenses/mit-license.php
+ 	if ($j.browser.msie) { 
+		/*$j('[placeholder]').focus(function() {
+		  var input = $j(this);
+		  if (input.val() == input.attr('placeholder')) {
+			input.val('');
+			input.removeClass('placeholder');
+		  }
+		}).blur(function() {
+		  var input = $j(this);
+		  if (input.val() == '' || input.val() == input.attr('placeholder')) {
+			input.addClass('placeholder');
+			input.val(input.attr('placeholder'));
+		  }
+		}).blur().parents('form').submit(function() {
+		  $j(this).find('[placeholder]').each(function() {
+			var input = $(this);
+			if (input.val() == input.attr('placeholder')) {
+			  input.val('');
+			}
+		  })
+		});*/
+	}
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -563,9 +587,6 @@ Reman_QuickQuote.prototype = {
 	},
 
 	selectPart: function(applic_id,subgroup,id,name){
-			if(!Reman_QuickQuote.prototype.prevgroup){
-				Reman_QuickQuote.prototype.prevgroup = $j($j('#parts_tbl').children()[0]).attr('id');
-			}
 			if(subgroup == 0) {
 					$j.ajax({
 						url: "index/ajax",
@@ -595,7 +616,7 @@ Reman_QuickQuote.prototype = {
 							// Set Current Part Number Name
 							Reman_QuickQuote.prototype.currentPartNumber = response.sku;
 							// Load Product Page
-							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name,Reman_QuickQuote.prototype.prevgroup);		
+							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name,id);		
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 
@@ -611,8 +632,6 @@ Reman_QuickQuote.prototype = {
 				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
-				
-				Reman_QuickQuote.prototype.prevgroup = subgroup;
 			}
 	},
 
@@ -730,4 +749,4 @@ jQuery.fn.sort = function() {
   
 function sortAlpha(a,b){  
     return a.innerHTML > b.innerHTML ? 1 : -1;  
-}; 
+};
