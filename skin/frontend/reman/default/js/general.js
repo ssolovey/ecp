@@ -563,7 +563,9 @@ Reman_QuickQuote.prototype = {
 	},
 
 	selectPart: function(applic_id,subgroup,id,name){
-			Reman_QuickQuote.prototype.prevgroup = $j($j('#parts_tbl').children()[0]).attr('id');
+			if(!Reman_QuickQuote.prototype.prevgroup){
+				Reman_QuickQuote.prototype.prevgroup = $j($j('#parts_tbl').children()[0]).attr('id');
+			}
 			if(subgroup == 0) {
 					$j.ajax({
 						url: "index/ajax",
@@ -609,6 +611,7 @@ Reman_QuickQuote.prototype = {
 				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
+				
 				Reman_QuickQuote.prototype.prevgroup = subgroup;
 			}
 	},
@@ -654,15 +657,15 @@ Reman_QuickQuote.prototype = {
 						$j('#breadcrumb_info').removeClass('disabled');
 						// Show product page
 						$j('#reman-product_info').show();
-						
-						if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) { // Check for IE8 USE Native innerHTML method
+						// Check for IE8 USE Native innerHTML method
+						if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) { 
 						 	$j('#reman-product_info')[0].innerHTML = data.responseText;
 						}else{
 						 	$j('#reman-product_info').html(data.responseText);
 						}
 						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 						
-						
+						// Set up current sected Engine type to product page
 						if(Reman_QuickQuote.prototype.currentSelectedEngine != ''){
 							$j('#current_selected_engine').html(Reman_QuickQuote.prototype.currentSelectedEngine.replace('L',''));
 							$j('#current_selected_engine_db').hide();
@@ -670,7 +673,7 @@ Reman_QuickQuote.prototype = {
 							
 						}
 						
-						
+						// Set up current sected Drive type to product page
 						if(Reman_QuickQuote.prototype.currentSelectedDrive != ''){
 							$j('#current_selected_drive').html(Reman_QuickQuote.prototype.currentSelectedDrive);
 							$j('#current_selected_drive_db').hide();
@@ -678,7 +681,7 @@ Reman_QuickQuote.prototype = {
 							
 						}
 						
-						
+						// Reset Drive and Engine variables
 						Reman_QuickQuote.prototype.currentSelectedEngine = '';
 						Reman_QuickQuote.prototype.currentSelectedDrive = '';
 						
