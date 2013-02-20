@@ -436,7 +436,7 @@ Reman_QuickQuote.prototype = {
 		this.isModelActive = true;
 	},
 	selectModel: function(vehicle_id,name){
-
+			this.currentSelectedModel = name;
 			$j.ajax({
 				url: "index/ajax",
 				type: 'POST',
@@ -456,6 +456,15 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 						//parse response to JSON Object		  
 						var response = $j.parseJSON(data.responseText);
+						
+						//If Group == 0 and Subgroup == 0 and Part_number in not null
+						if(response.length == 1){
+							if(response[0].part_number != null){
+								 Reman_QuickQuote.prototype.selectPart(response[0].applic_id,0,1,'');
+								return;
+							}
+						}
+						
 						// CHECK For DATA if NULL return
 						if(response.length == 0){
 							$j('#preloader_cont').fadeOut(500,function(){
@@ -467,8 +476,7 @@ Reman_QuickQuote.prototype = {
 							return;
 						}
 						var obj= {}; // create empty object to handle response data
-						for(var i=0; i<=response.length-1;i++)						{
-
+						for(var i=1; i<=response.length-1;i++)						{
 								if(response[i].applic == null){
 								$j('#preloader_cont').fadeOut(500,function(){
 										$j('#breadcrumb_info').removeClass('disabled');
@@ -555,7 +563,6 @@ Reman_QuickQuote.prototype = {
 				//Update Banner text
 				$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type')+'?');
 		}
-		this.currentSelectedModel = name;
 
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+this.currentSelectedModel+'</span></span>');
 		this.isGroupActive = true;
@@ -653,7 +660,15 @@ Reman_QuickQuote.prototype = {
 						$j('#table_container').css('min-height', '');
 						// set breadcrumb info about last successful or not succssful choise
 						$j('.sel_group_link').parent().remove();
-						$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'">'+name+'</span></span>');
+						
+						if(name == ""){
+							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+Reman_QuickQuote.prototype.currentSelectedModel+'</span></span>');
+							Reman_QuickQuote.prototype.isGroupActive = true;
+						}else{
+							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'">'+name+'</span></span>');
+						
+						}
+
 						$j('#breadcrumb_info').removeClass('disabled');
 						// Show product page
 						$j('#reman-product_info').show();
