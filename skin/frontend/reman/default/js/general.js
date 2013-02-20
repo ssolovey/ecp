@@ -27,26 +27,7 @@ $j(document).ready(function(){
 	
 	// Released under MIT license: http://www.opensource.org/licenses/mit-license.php
  	if ($j.browser.msie) { 
-		/*$j('[placeholder]').focus(function() {
-		  var input = $j(this);
-		  if (input.val() == input.attr('placeholder')) {
-			input.val('');
-			input.removeClass('placeholder');
-		  }
-		}).blur(function() {
-		  var input = $j(this);
-		  if (input.val() == '' || input.val() == input.attr('placeholder')) {
-			input.addClass('placeholder');
-			input.val(input.attr('placeholder'));
-		  }
-		}).blur().parents('form').submit(function() {
-		  $j(this).find('[placeholder]').each(function() {
-			var input = $(this);
-			if (input.val() == input.attr('placeholder')) {
-			  input.val('');
-			}
-		  })
-		});*/
+
 	}
 });
 
@@ -737,7 +718,41 @@ Reman_QuickQuote.prototype = {
 					}
 				
 		});
+	},
+	
+	loadShippingEstimate : function(id){
+		$j.ajax({
+
+				url: "index/shipping",
+				type: 'POST',
+				data: {
+					id:id
+				},
+				beforeSend: function(){
+						$j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
+						$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
+						$j('#parts_tbl').hide();
+						$j('#preloader_cont').show();
+						$j('#breadcrumb_info').addClass('disabled');
+						// Hide product page
+						$j('#reman-product_info').hide();
+				},
+						
+				complete: function(data){
+					$j('#preloader_cont').fadeOut(500,function(){
+						$j('#table_container').css('min-height', '');
+						$j('#reman-shipping_estimate').html(data.responseText);
+						$j('#reman-shipping_estimate').show();
+						
+					});	
+						
+				}
+				
+		});
+	
+	
 	}
+	
 }
 
 

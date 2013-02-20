@@ -3191,6 +3191,13 @@ text-decoration: none;
 	margin-top: 10px;
 	margin-left: 35px;
 }
+/* Shipping Estimation*/
+
+#reman-shipping_estimate{
+	position:relative;
+	float:left;
+	width:601px;
+}
 
 
 /*Validation Failed*/

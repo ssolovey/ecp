@@ -35,4 +35,10 @@
 	<quote_index_invent>
 		<block type="quote/quote" name="quote" output="toHtml"  template="quote/invent.phtml" />
 	</quote_index_invent>
+	
+	<!--Quick Quote Ajax action for estimate shipping page load-->
+	<quote_index_shipping>
+		<block type="quote/quote" name="quote" output="toHtml"  template="quote/shipping.phtml" />
+	</quote_index_shipping>
+	
 </layout>

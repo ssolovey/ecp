@@ -1,0 +1,16 @@
+
+<?php 
+	
+
+	//$api = "http://services.afs.net/Rate/RateService_v2.asmx?WSDL";
+	$api = "http://services.afs.net/rate/rateservice_v2.asmx?WSDL";
+	$client = new SoapClient($api);
+	
+	
+	
+	//function GetRateEstimate(clientID, carrierID, shipDate, IOT, origZip, destZip, classes, weight, acc, userID, password, quotePercent)
+	
+	//var_dump( $client->GetQuoteXML('ETE','ALL','02/19/2013','I','30344','53223','500','175','SS','0','etereturns','ete','0'));
+	echo $client->GetLTLRateQuote('02/18/2013','53223', '30344' , '500', 'NOD');
+	
+?>

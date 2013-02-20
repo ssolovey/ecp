@@ -78,7 +78,6 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		$productId = $product->getId();
 		/* Init Product Object*/
 		Mage::helper('catalog/product')->initProduct($productId, $this);
-		
 		/* Render FrontEnd */
 		$this->loadLayout();
         //This function processes and displays all layout phtml and php files.
@@ -91,6 +90,16 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			Load Inventory info block page for Quick Quote Block
 		*/
 		$this->loadLayout('invent'); 
+        //This function processes and displays all layout phtml and php files.
+		$this->renderLayout(); 
+	
+	}
+	
+	public function shippingAction(){
+		/** 
+			Load Inventory info block page for Quick Quote Block
+		*/
+		$this->loadLayout('shipping'); 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	
