@@ -8,15 +8,24 @@
 	<global>
 		<models>
             <order>
-                <class>Reman_Order_Model</class>
-            </order>
+				<class>Reman_Order_Model</class>
+				<resourceModel>order_mysql4</resourceModel>
+			</order>
+			<order_mysql4>
+				<class>Reman_Order_Model_Mysql4</class>
+				<entities>
+					<order> 
+						<table>reman_order</table>
+					</order>
+				</entities>
+			</order_mysql4>
         </models>
         <events>
         	<sales_order_place_after>
         		<observers>
         			<reman_customers_save_observer>
         				<type>singleton</type>
-        				<class>Reman_Order_Model_Order_Observer</class>
+        				<class>Reman_Order_Model_Export_Observer</class>
         				<method>export_new_order</method>
         			</reman_customers_save_observer>
         		</observers>
@@ -26,9 +35,21 @@
 			<order_setup>
 				<setup>
 					<module>Reman_Order</module>
-					<class>Mage_Sales_Model_Mysql4_Setup</class>
 				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
 			</order_setup>
+			<order_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</order_write>
+			<order_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</order_read>
 		</resources>
 	</global>
 </config>

@@ -1,13 +1,13 @@
 <?php
 /**
- * Order Observer
+ * Export Order Observer
  * should call after new order created
  *
  * @category    Reman
  * @package     Reman_Order
  * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
-class Reman_Order_Model_Order_Observer
+class Reman_Order_Model_Export_Observer
 {
 	public function __construct()
 	{
