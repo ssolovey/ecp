@@ -10,6 +10,8 @@
 		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login', $arguments= array()));
 	 endif;
 ?>
+<div id="order-wrapper"></div>
+<div class="reman_preloader_big" style="display:none;"></div>
 <div id="steps">
 <!-- First Step Quick quote (MAKE DATA)-->
 <div id="breadcrumb_info"></div>
@@ -17,7 +19,7 @@
 	<div id="table_container">
 		<!--Preloader-->
         <div id="preloader_cont">
-			<div id="reman_preloader"></div>
+			<div class="reman_preloader"></div>
 		</div>
         <!--Group Selects-->
         <div id="group_select"> 

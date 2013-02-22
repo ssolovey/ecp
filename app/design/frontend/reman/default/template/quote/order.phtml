@@ -1,5 +1,39 @@
+<?php
+/**
+ * Reman Quick Quote Order Template
+ *
+ * @category    Reman
+ * @package     Design
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
+?>
+
+<?php 
+	// Load Product Object	
+	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
+
+
+	// Load Warranty Object
+	$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray(); 
+	
+	$company = Mage::helper('company')->getCustomerCompanyObject();
+		
+	if($this->getRequest()->getPost('case')== "T"){
+		
+		$warrantyID = $company->at_war;
+	
+	}else if($case == "X"){
+	
+		$warrantyID = $company->tc_war;
+	}
+	
+	// Load Current Logged Customer Object
+	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+	$customer = Mage::getModel('customer/customer')->load($customer_id); 
+?>
+
 <div id="reman_order">
-    <form action="#">
+    <form action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" method="post" id="form-order">
         <div class="title">Order</div>
             
             <div id="vehicle_info">
@@ -7,24 +41,41 @@
                 <table>
                         <tr>
                             <td class="label">Year:</td>
-                            <td></td>
+                            <td><?php echo $this->getRequest()->getPost('year') ?></td>
+                            <input type="hidden" name="year" value="<?php echo $this->getRequest()->getPost('year') ?>" />
                         </tr>
                         
                         <tr>
                             <td class="label">Make:</td>
-                            <td></td>
+                            <td><?php echo $this->getRequest()->getPost('make') ?></td>
+                             <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
+                            
                         </tr>
                         <tr>
                             <td class="label">Model:</td>
-                            <td></td>
+                            <td><?php echo $this->getRequest()->getPost('model') ?></td>
                         </tr>
                         <tr>
                             <td class="label">Engine:</td>
-                            <td></td>
+                            <td><?php 
+										if($this->getRequest()->getPost('engine') == ""){
+											echo $_product->getData('parts_engine');
+										}else{
+											echo $this->getRequest()->getPost('engine');
+										}
+								?>
+                            </td>
                         </tr>
                         <tr>
                             <td class="label">Drive:</td>
-                            <td></td>
+                            <td><?php 
+									if($this->getRequest()->getPost('drive') == ""){
+										echo $_product->getData('parts_drive');
+									}else{
+										echo $this->getRequest()->getPost('drive');
+									}
+								?>
+                            </td>
                         </tr>
                         <tr>
                             <td class="label">Notes:</td>
@@ -35,11 +86,11 @@
                 <table class="vin">
                     <tr>
                         <td class="label">VIN:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="vin" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Mileage:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
                     </tr>
                 </table>
                 <table class="vin" style="margin-top:0px;">
@@ -53,28 +104,29 @@
             
             <div id="order_details">
                 <div class="title">Order Details</div>
-                
+                            
+                <div id="family_order">
+                    <div class="lable">Family:</div>
+                    <div class="value"><?php echo $_product->getData('parts_family') ?></div>
+                </div>
                 <table>
                         <tr>
                             <td class="label">Product Name:</td>
-                            <td></td>
+                            <td><?php echo $_product->getName();?></td>
                         </tr>
                         
                         <tr>
                             <td class="label">Part Num:</td>
-                            <td></td>
-                            
-                            <td class="label family">Family:</td>
-                            <td></td>
+                            <td><?php echo $_product->getSku();?></td>
                             
                         </tr>
                         <tr>
                             <td class="label">Price:</td>
-                            <td></td>
+                            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
                         </tr>
                         <tr>
                             <td class="label">Core:</td>
-                            <td></td>
+                            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
                         </tr>
                         <tr>
                             <td class="label">Shipping:</td>
@@ -89,19 +141,19 @@
                 <table class="vin">
                     <tr>
                         <td class="label">PO #:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="po" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Claim #:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="claim" /></td>
                     </tr>
                     <tr>
                         <td class="label">RO #:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="ro" /></td>
                     </tr>
                     <tr>
                         <td class="label">End User Name:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="end_user_name" /></td>
                     </tr>
                 </table>
             </div>
@@ -113,19 +165,19 @@
                 <table class="vin">
                     <tr>
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="comany_name_st" value="<?php echo $this->helper('company')->getCompanyName(); ?>" /></td>
                     </tr>
                     <tr>
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="contact_name_st" value="<?php echo $customer->getFirstname(); ?>"/></td>
                     </tr>
                     <tr>
                         <td class="label">Phone:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="phone_st" value="<?php echo $customer->phone; ?>" /></td>
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="adress_st" /></td>
                     </tr>
                 </table>
                 
@@ -151,23 +203,23 @@
                 <table class="vin">
                     <tr>
                         <td class="label">Same as Sold To:</td>
-                        <td><input type="checkbox" /></td>
+                        <td><input id="same-as-sold" type="checkbox" /></td>
                     </tr>
                     <tr>
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="company_name_sh" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="contact_name_sh" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Phone:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="phone_sh" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
-                        <td><input type="text" /></td>
+                        <td><input type="text" name="adress_sh" class="required-entry" /><em>*</em></td>
                     </tr>
                 </table>
                 
@@ -179,7 +231,7 @@
                                 <option>...</option>
                             </select>
                         </td>
-                        <td class="input-zip"><input type="text" /></td>
+                        <td class="input-zip"><input style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
                     </tr>
                 </table>
             
@@ -188,7 +240,16 @@
             <div id="warranty-info">
                 <div class="title">Warranty</div>
                 <select>
-                    <option>...</option>
+                    <?php  foreach($warrantyArray as $index): ?>
+                    	 <?php if($index['value'] == ''): ?>
+                           <option value="">...</option>
+                         
+						 <?php else: ?>
+						 	 <option <?php if($index['value'] == $warrantyID): ?> selected="selected" <?php endif; ?> value="<?php echo $index['value'] ?>"><?php echo $index['label'] ?></option>
+						 <?php endif; ?>
+                         
+                       
+                    <?php endforeach; ?>
                 </select>
             
             </div>
@@ -196,13 +257,40 @@
             
             <div id="order-notes" style="margin-bottom:20px;">
                 <div class="title">Order Notes</div>
-                <textarea rows="3" cols="100">
+                <textarea rows="3" cols="100" name="notes">
                 </textarea>
             </div>
             
             <div class="buttons">
-                <button type="reset">Cancel</button>
+                <button type="reset" onclick="Reman_QuickQuote.prototype.resetOrder(); return false;">Cancel</button>
                 <button type="submit">Submit Order</button>
             </div>
     </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('form-order', true);
+    //]]>
+		$j('#reman_order input').click(function(e){
+			if($j(e.target).hasClass('validation-failed')){
+				$j(e.target).removeClass('validation-failed');
+			}
+		});
+		
+		$j('#same-as-sold').click(function() {
+			if($j(this).is(':checked')) {
+				
+				for( var i = 0; i<=$j('#sold-to input').length-1; i++){
+					$j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
+				}
+				
+			} else {
+				
+				for( var i = 1; i<=$j('#ship-to input').length-1; i++){
+					$j('#ship-to input')[i].value = "";
+				}
+				
+   	    	}
+		});
+		
+    </script>
 </div>

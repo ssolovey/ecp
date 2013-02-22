@@ -105,4 +105,21 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 	
 	}
 	
+	public function orderAction(){
+		/** 
+			Load Order page 
+		*/
+		$this->loadLayout('order');   
+        //This function processes and displays all layout phtml and php files.
+		$this->renderLayout(); 
+	
+	}
+	
+	public function ordersubmitAction(){
+	
+		$request = $this->getRequest()->getPost();
+		
+		var_dump($request);
+	}
+	
 }

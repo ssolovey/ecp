@@ -20,7 +20,6 @@
 		<!--Add Quote Main content-->
 		<reference name="content">
 			<block type="quote/quote" name="quote" template="quote/quote.phtml" />
-			<!--<block type="quote/quote" name="quote" template="quote/order.phtml" />-->
 		</reference>
 	</quote_index_index>
 	<!--Quick Quote Ajax action for product load-->
@@ -40,5 +39,11 @@
 	<quote_index_shipping>
 		<block type="quote/quote" name="quote" output="toHtml"  template="quote/shipping.phtml" />
 	</quote_index_shipping>
+	
+	
+	<!--Quick Quote Ajax action for Order page load-->
+	<quote_index_order>
+		<block type="quote/quote" name="quote" output="toHtml" template="quote/order.phtml" />
+	</quote_index_order>
 	
 </layout>

@@ -334,6 +334,9 @@ Reman_QuickQuote.prototype = {
 			$j('#make_tbl').show();
 			//Update Banner text
 			$j('#welcome_bunner').html('What is the vehicle make?');
+			// Reset Drive and Engine variables
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
 
@@ -347,6 +350,10 @@ Reman_QuickQuote.prototype = {
 			$j('#year_tbl').show();
 			//Update Banner text
 			$j('#welcome_bunner').html('What is the model year?');
+			
+			// Reset Drive and Engine variables
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
 	turnOnModelBreadcrumb: function(){
@@ -359,6 +366,10 @@ Reman_QuickQuote.prototype = {
 			$j('#welcome_bunner').html('What is the model?');
 			//show model table
 			$j('#model_tbl').show();
+			
+			// Reset Drive and Engine variables
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
 
@@ -375,6 +386,10 @@ Reman_QuickQuote.prototype = {
 			
 			//Update Banner text
 			$j('#welcome_bunner').html('Welcome! How we can help you today?');
+			
+			// Reset Drive and Engine variables
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 	},
 
 	turnOnGroupBreadcrumb: function(){
@@ -696,9 +711,7 @@ Reman_QuickQuote.prototype = {
 							
 						}
 						
-						// Reset Drive and Engine variables
-						Reman_QuickQuote.prototype.currentSelectedEngine = '';
-						Reman_QuickQuote.prototype.currentSelectedDrive = '';
+						Reman_QuickQuote.prototype.currentApplic_id = id;
 						
 					});
 				}
@@ -734,6 +747,42 @@ Reman_QuickQuote.prototype = {
 				
 		});
 	},
+	loadOrder : function(){
+		$j.ajax({
+
+				url: "index/order",
+				type: 'POST',
+				data: {
+					id: Reman_QuickQuote.prototype.currentApplic_id,
+					year: Reman_QuickQuote.prototype.currentSelectedYear,
+					model: Reman_QuickQuote.prototype.currentSelectedModel,
+					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
+					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
+					make: Reman_QuickQuote.prototype.currentSelectedMake,
+					case: Reman_QuickQuote.prototype.currentCatSelected
+				},
+				
+				beforeSend: function(){
+							$j('#steps').hide();
+							$j('.reman_preloader_big').show();
+				},
+						
+				complete: function(data){
+					$j('.reman_preloader_big').hide();
+					$j('#order-wrapper').html(data.responseText);
+				}
+				
+		});
+	
+	
+	},
+	
+	resetOrder : function(){
+		$j('#order-wrapper').html('');
+		$j('#steps').show();
+	
+	},
+	
 	
 	loadShippingEstimate : function(id){
 		$j.ajax({
