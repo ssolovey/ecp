@@ -18,189 +18,86 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
-		
-		$quote = Mage::getModel('sales/quote')
-        	->setStoreId(Mage::app()->getStore('default')->getId());
+		echo '<h1>Parsed ' . $item[0] . '</h1>';
 		
 		
-		$customer = Mage::getModel('customer/customer')
-                ->setWebsiteId(1)
-                ->loadByEmail($item[2]);
-        
-        $quote->assignCustomer($customer);
-        
-		// add product(s)
-		$product = Mage::getModel('catalog/product')->load(3420);
-
-		$buyInfo = array(
-		        'qty'	=> 1
-		        // custom option id => value id
-		        // or
-		        // configurable attribute id => value id
-		);
-		
-		$quote->addProduct($product, new Varien_Object($buyInfo));
-		
-		
-		$addressData = array(
-			'firstname'		=> $item[1],
-			'lastname'		=> '_',
-			'street' 		=> array($item[5],$item[6]),
-			'city' 			=> $item[7],
-			'country_id' 	=> 'US',
-			'region_id' 	=> $item[8],
-			'postcode' 		=> $item[9],
-			'telephone' 	=> '555-555'
-		);
-		
-		
-		$billingAddress = $quote->getBillingAddress()->addData($addressData);
-		$shippingAddress = $quote->getShippingAddress()->addData($addressData);
- 
-		$shippingAddress->setCollectShippingRates(true)->collectShippingRates()
-	        ->setShippingMethod('flatrate_flatrate')
-	        ->setPaymentMethod('checkmo');
-	
-			
-		$quote->getPayment()->importData(array('method' => 'checkmo'));
-		
-		
-		$service = Mage::getModel('sales/service_quote', $quote);
-		$service->submitAll();
-		$order = $service->getOrder();
-		 
-		printf("Created order %s\n", $order->getIncrementId());
-				
-		//$this->create( $orderData, $product );
-		
-		// Delete file
-		//unlink( $this->_file );
-	}
-	
-	/**
-	 * Retrieve order create model
-	 *
-	 * @return  Mage_Adminhtml_Model_Sales_Order_Create
-	 */
-	protected function _getOrderCreateModel()
-	{
-		return Mage::getSingleton('adminhtml/sales_order_create');
-	}
-	
-	/**
-	 * Retrieve session object
-	 *
-	 * @return Mage_Adminhtml_Model_Session_Quote
-	 */
-	protected function _getSession()
-	{
-		return Mage::getSingleton('adminhtml/session_quote');
-	}
-	
-	/**
-	 * Initialize order creation session data
-	 *
-	 * @param array $data
-	 * @return Mage_Adminhtml_Sales_Order_CreateController
-	 */
-	protected function _initSession($data)
-	{
-		// Get/identify customer
-		if (!empty($data['customer_id'])) {
-			$this->_getSession()->setCustomerId((int) $data['customer_id']);
-		}
-		// Get/identify store
-		if (!empty($data['store_id'])) {
-			$this->_getSession()->setStoreId((int) $data['store_id']);
-		}
-		
-		return $this;
-	}
-	
-	protected function _processQuote($data = array())
-	{
-		/* Saving order data */
-		if (!empty($data['order'])) {
-			$this->_getOrderCreateModel()->importPostData($data['order']);
-		}
-		$this->_getOrderCreateModel()->getBillingAddress();
-		$this->_getOrderCreateModel()->setShippingAsBilling(true);
-		
-		/* Just like adding products from Magento admin grid */
-		if (!empty($data['add_products'])) {
-			$this->_getOrderCreateModel()->addProducts($data['add_products']);
-		}
-		
-		/* Collect shipping rates */
-		$this->_getOrderCreateModel()->collectShippingRates();
-		
-		/* Add payment data */
-		if (!empty($data['payment'])) {
-			$this->_getOrderCreateModel()->getQuote()->getPayment()->addData($data['payment']);
-		}
-		
-		$this->_getOrderCreateModel()
-			->initRuleData()
-			->saveQuote();
-
-		return $this;
-	}
-	
-	/**
-	 * Creates order
-	 */
-	public function create( $orderData, $product )
-	{
-		if (!empty($orderData)) {
-			$this->_initSession($orderData['session']);
-			//try {
-				$this->_processQuote($orderData);
-				if (!empty($orderData['payment'])) {
-					$this->_getOrderCreateModel()->setPaymentData($orderData['payment']);
-					$this->_getOrderCreateModel()->getQuote()->getPayment()->addData($orderData['payment']);
-				}
-				$item = $this->_getOrderCreateModel()->getQuote()->getItemByProduct($product);
-				
-				Mage::app()->getStore()->setConfig(Mage_Sales_Model_Order::XML_PATH_EMAIL_ENABLED, "0");
-				$_order = $this->_getOrderCreateModel()
-					->importPostData($orderData['order'])
-					->createOrder();
-				$this->_getSession()->clear();
-				Mage::unregister('rule_data');
-				return $_order;
-			//}
-			//catch (Exception $e){
-			//	echo $e;
-			//	echo "<h1>Order save error</h1>";
-			//}
-		}
-		return null;
+		echo '<table width="600px" border="1" cellspacing="0" cellpadding="5">';
+		echo '<tr><td>Order/Inv #</td><td>' . $item[0] . '</td></tr>';
+		echo '<tr><td>Invoice Date</td><td>' . $item[1] . '</td></tr>';
+		echo '<tr><td>Order Date</td><td>' . $item[2] . '</td></tr>';
+		echo '<tr><td>Order Status</td><td>' . $item[3] . '</td></tr>';
+		echo '<tr><td>Order Type</td><td>' . $item[4] . '</td></tr>';
+		echo '<tr><td>ETE Cust Rep</td><td>' . $item[5] . '</td></tr>';
+		echo '<tr><td>Sold To Customer Number</td><td>' . $item[6] . '</td></tr>';
+		echo '<tr><td>Sold To Customer Name</td><td>' . $item[7] . '</td></tr>';
+		echo '<tr><td>Sold To Contact Name</td><td>' . $item[8] . '</td></tr>';
+		echo '<tr><td>Sold To Phone</td><td>' . $item[9] . '</td></tr>';
+		echo '<tr><td>Sold To Phone Ext</td><td>' . $item[10] . '</td></tr>';
+		echo '<tr><td>PO#</td><td>' . $item[11] . '</td></tr>';
+		echo '<tr><td>Bill To Customer Number</td><td>' . $item[12] . '</td></tr>';
+		echo '<tr><td>Bill To Customer Name</td><td>' . $item[13] . '</td></tr>';
+		echo '<tr><td>Bill To Address 1</td><td>' . $item[14] . '</td></tr>';
+		echo '<tr><td>Bill To Address 2</td><td>' . $item[15] . '</td></tr>';
+		echo '<tr><td>Bill To City</td><td>' . $item[16] . '</td></tr>';
+		echo '<tr><td>Bill To State</td><td>' . $item[17] . '</td></tr>';
+		echo '<tr><td>Bill To Zip</td><td>' . $item[18] . '</td></tr>';
+		echo '<tr><td>Ship To Customer Number</td><td>' . $item[19] . '</td></tr>';
+		echo '<tr><td>Ship To Customer Name</td><td>' . $item[20] . '</td></tr>';
+		echo '<tr><td>Ship To Address 1</td><td>' . $item[21] . '</td></tr>';
+		echo '<tr><td>Ship To Address 2</td><td>' . $item[22] . '</td></tr>';
+		echo '<tr><td>Ship To City</td><td>' . $item[23] . '</td></tr>';
+		echo '<tr><td>Ship To State</td><td>' . $item[24] . '</td></tr>';
+		echo '<tr><td>Ship To Zip</td><td>' . $item[25] . '</td></tr>';
+		echo '<tr><td>Ship To Contact Name</td><td>' . $item[26] . '</td></tr>';
+		echo '<tr><td>Ship To Phone</td><td>' . $item[27] . '</td></tr>';
+		echo '<tr><td>Ship To Phone Ext</td><td>' . $item[28] . '</td></tr>';
+		echo '<tr><td>Vehicle VIN</td><td>' . $item[29] . '</td></tr>';
+		echo '<tr><td>Vehicle Make</td><td>' . $item[30] . '</td></tr>';
+		echo '<tr><td>Vehicle Year</td><td>' . $item[31] . '</td></tr>';
+		echo '<tr><td>Vehicle Model</td><td>' . $item[32] . '</td></tr>';
+		echo '<tr><td>Vehicle Engine</td><td>' . $item[33] . '</td></tr>';
+		echo '<tr><td>Vehicle Aspiration</td><td>' . $item[34] . '</td></tr>';
+		echo '<tr><td>Vehicle Cyl Type</td><td>' . $item[35] . '</td></tr>';
+		echo '<tr><td>Vehicle Fuel</td><td>' . $item[36] . '</td></tr>';
+		echo '<tr><td>Vehicle Drive</td><td>' . $item[37] . '</td></tr>';
+		echo '<tr><td>Unit Tag #</td><td>' . $item[38] . '</td></tr>';
+		echo '<tr><td>End User Name</td><td>' . $item[39] . '</td></tr>';
+		echo '<tr><td>RO #</td><td>' . $item[40] . '</td></tr>';
+		echo '<tr><td>Vehicle Mileage</td><td>' . $item[41] . '</td></tr>';
+		echo '<tr><td>Claim #</td><td>' . $item[42] . '</td></tr>';
+		echo '<tr><td>Part #</td><td>' . $item[43] . '</td></tr>';
+		echo '<tr><td>Serial #</td><td>' . $item[44] . '</td></tr>';
+		echo '<tr><td>Family</td><td>' . $item[45] . '</td></tr>';
+		echo '<tr><td>Alt Part #</td><td>' . $item[46] . '</td></tr>';
+		echo '<tr><td>Unit Type</td><td>' . $item[47] . '</td></tr>';
+		echo '<tr><td>Warranty Terms</td><td>' . $item[48] . '</td></tr>';
+		echo '<tr><td>Carrier</td><td>' . $item[49] . '</td></tr>';
+		echo '<tr><td>Carrier Service</td><td>' . $item[50] . '</td></tr>';
+		echo '<tr><td>Carrier Options</td><td>' . $item[51] . '</td></tr>';
+		echo '<tr><td>Ship By Date</td><td>' . $item[52] . '</td></tr>';
+		echo '<tr><td>Deliver By Date</td><td>' . $item[53] . '</td></tr>';
+		echo '<tr><td>Ship From</td><td>' . $item[54] . '</td></tr>';
+		echo '<tr><td>Tracking #</td><td>' . $item[55] . '</td></tr>';
+		echo '<tr><td>Original Invoice</td><td>' . $item[56] . '</td></tr>';
+		echo '<tr><td>Return Auth #</td><td>' . $item[57] . '</td></tr>';
+		echo '<tr><td>CSI #</td><td>' . $item[58] . '</td></tr>';
+		echo '<tr><td>Web Order #</td><td>' . $item[59] . '</td></tr>';
+		echo '<tr><td>Unit Amount</td><td>' . $item[60] . '</td></tr>';
+		echo '<tr><td>Core Amount</td><td>' . $item[61] . '</td></tr>';
+		echo '<tr><td>Parts Amount</td><td>' . $item[62] . '</td></tr>';
+		echo '<tr><td>Tax %</td><td>' . $item[63] . '</td></tr>';
+		echo '<tr><td>Tax Amount</td><td>' . $item[64] . '</td></tr>';
+		echo '<tr><td>Shipping Amount</td><td>' . $item[65] . '</td></tr>';
+		echo '<tr><td>Deposit Received</td><td>' . $item[66] . '</td></tr>';
+		echo '<tr><td>Total Amount</td><td>' . $item[67] . '</td></tr>';
+		echo '<tr><td>Transaction Type</td><td>' . $item[68] . '</td></tr>';
+		echo '<tr><td>Commercial App</td><td>' . $item[69] . '</td></tr>';
+		echo '</table>';
 	}
 	
 	// override
 	public function syncData()
 	{	
-	
-		$profiles = glob($this->_directory . '*.TXT');
-		
-		$this->_file = $profiles[0];
-		
-		if ( $this->_file  ) {
-			echo '<h3>Parse file: ' . $this->_file . '</h3>';
-			echo '<h4><a href=".">NEXT FILE</a></h4>';
-		
-			$this->_loadFile( $this->_file );
-		} else {
-			echo '<h3>No more files to parse in directory: ' . $this->_directory . '</h3>';
-		}
-		
-		/*
-		foreach($profiles as $file)
-		{
-			echo'<h3>Parse file: ' . $file . '</h3>';
-			$this->_loadFile( $file );
-		}
-		*/
-		
+		$this->_loadFile( 'import/ORDERS.TXT' );
 	}
 }

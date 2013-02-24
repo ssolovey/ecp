@@ -11,7 +11,7 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		//Mage::getModel('sync/gsp')->loadGspData();
 		//Mage::getModel('sync/applic')->syncData();
 		//Mage::getModel('sync/profile')->test();
-		//Mage::getModel('sync/order')->syncData();
+		Mage::getModel('sync/order')->syncData();
 		/*
 		$setup = new Mage_Eav_Model_Entity_Setup('core_setup');
 		$setup->removeAttribute('customer', 'state');
