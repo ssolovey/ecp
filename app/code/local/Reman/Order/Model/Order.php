@@ -17,21 +17,28 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	/**
 	 * Create new order
 	 *
-	 * @param order data Array
+	 * @param customer email
+	 * @param part number
+	 * @param order data (Array)
 	 */
-	public function createOrder( $data )
+	public function createOrder( $customer_email, $part_number, $data )
 	{
+		
+		echo var_dump( $data );
+		
+		return false;
+		
 		$quote = Mage::getModel('sales/quote')
         	->setStoreId(Mage::app()->getStore('default')->getId());
 		
 		$customer = Mage::getModel('customer/customer')
                 ->setWebsiteId(1)
-                ->loadByEmail($data[2]);
+                ->loadByEmail($customer_email);
         
         $quote->assignCustomer($customer);
         
 		// add product(s)
-		$product = Mage::getModel('catalog/product')->load(3420);
+		$product = Mage::getModel('catalog/product')->load($part_number);
 
 		$buyInfo = array(
 		        'qty'	=> 1
@@ -66,7 +73,13 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$service = Mage::getModel('sales/service_quote', $quote);
 		$service->submitAll();
 		$order = $service->getOrder();
-		 
-		//printf("Created order %s\n", $order->getIncrementId());
+				
+		$this->setData(
+			array(
+				'order_id'		=>		$order->getIncrementId()
+			)		    	
+		);
+		
+		$this->save();
 	}
 }

@@ -93,6 +93,59 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		echo '<tr><td>Transaction Type</td><td>' . $item[68] . '</td></tr>';
 		echo '<tr><td>Commercial App</td><td>' . $item[69] . '</td></tr>';
 		echo '</table>';
+		
+		$data = array(
+			'date_invoice' => $item[1],
+			'date_order' => $item[2],
+			'order_type' => $item[4],
+			'po' => $item[11],
+			// addresses part to be clarified
+			'vin' => $item[29],
+			'make' => $item[30],
+			'year' => $item[31],
+			'model' => $item[32],
+			'engine' => $item[33],
+			'aspiration' => $item[34],
+			'cyl_type' => $item[35],
+			'fuel' => $item[36],
+			'drive' => $item[37],
+			'tag' => $item[38],
+			// End User Name to be clarified
+			'ro' => $item[40],
+			'mileage' => $item[41],
+			'claim' => $item[42],
+			'serial' => $item[44],
+			'family' => $item[45],
+			'alt_partnum' => $item[46],
+			'unit_type' => $item[47],
+			'warrenty_terms' => $item[48],
+			'carrier' => $item[49],
+			'carrier_service' => $item[50],
+			'carrier_options' => $item[51],
+			'date_ship' => $item[52],
+			'date_deliver' => $item[53],
+			'ship_from' => $item[54],
+			'tracknum' => $item[55],
+			'original_invoice' => $item[56],
+			'return_auth' => $item[57],
+			'csi' => $item[58],
+			'unit_amount' => $item[60],
+			'core_amount' => $item[61],
+			'parts_amount' => $item[62],
+			'tax_percent' => $item[63],
+			'tax_amount' => $item[64],
+			'ship_amount' => $item[65],
+			'deposit_received' => $item[67],
+			'total_amount' => $item[68],
+			'transaction_type' => $item[69],
+			'commercial_app' => $item[70]
+		);
+		
+		Mage::getModel('order/order')->createOrder(
+			'user@email.com', // will be changed to user id
+			'SKU1231231', // part SKU
+			$data
+		);
 	}
 	
 	// override
