@@ -763,7 +763,7 @@ Reman_QuickQuote.prototype = {
 				},
 				
 				beforeSend: function(){
-							$j('#steps').hide();
+							$j('#shipping-wrapper').hide();
 							$j('.reman_preloader_big').show();
 				},
 						
@@ -779,40 +779,78 @@ Reman_QuickQuote.prototype = {
 	
 	resetOrder : function(){
 		$j('#order-wrapper').html('');
+		$j('#shipping-wrapper').show();
+	
+	},
+	
+	resetShipping : function(){
+		$j('#shipping-wrapper').html('');
 		$j('#steps').show();
 	
 	},
 	
 	
-	loadShippingEstimate : function(id){
+	loadShippingEstimate : function(){
 		$j.ajax({
 
 				url: "index/shipping",
 				type: 'POST',
+				
 				data: {
-					id:id
+					id: Reman_QuickQuote.prototype.currentApplic_id
+				
 				},
+				
 				beforeSend: function(){
-						$j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
-						$j('#table_container').css('min-height', $j('#table_container').height() + 'px');
-						$j('#parts_tbl').hide();
-						$j('#preloader_cont').show();
-						$j('#breadcrumb_info').addClass('disabled');
-						// Hide product page
-						$j('#reman-product_info').hide();
+						$j('#steps').hide();
+						$j('.reman_preloader_big').show();
 				},
 						
 				complete: function(data){
-					$j('#preloader_cont').fadeOut(500,function(){
-						$j('#table_container').css('min-height', '');
-						$j('#reman-shipping_estimate').html(data.responseText);
-						$j('#reman-shipping_estimate').show();
-						
-					});	
+					$j('.reman_preloader_big').hide();
+					$j('#shipping-wrapper').html(data.responseText);
 						
 				}
 				
 		});
+	
+	
+	},
+	
+	estimateShipping : function(stocks,destzip){
+		
+		$j.ajax({
+
+				url: "index/estimateshipping",
+				type: 'POST',
+				
+				data: {
+					stocks: stocks,
+					destzip: destzip
+				},
+				
+				beforeSend: function(){
+						$j('.reman_preloader_shipping').show();
+				},
+				
+				error: function(error){
+				
+					alert('Error !!!!');
+					
+					return;
+				},
+						
+				complete: function(data){
+					$j('.reman_preloader_shipping').hide();
+					$j('.result-estimate').show();
+					$j('#days_result').html(data.responseText);
+						
+				}
+				
+		});
+		
+	
+	
 	
 	
 	}

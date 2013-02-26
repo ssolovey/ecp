@@ -12,28 +12,31 @@
 	// Load Product Object	
 	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
 
-
 	// Load Warranty Object
 	$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray(); 
 	
 	$company = Mage::helper('company')->getCustomerCompanyObject();
 		
 	if($this->getRequest()->getPost('case')== "T"){
-		
 		$warrantyID = $company->at_war;
-	
 	}else if($case == "X"){
-	
 		$warrantyID = $company->tc_war;
 	}
 	
 	// Load Current Logged Customer Object
 	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
-	$customer = Mage::getModel('customer/customer')->load($customer_id); 
+	$customer = Mage::getModel('customer/customer')->load($customer_id);
+	
+  	//state names
+    $states = Mage::getModel('directory/country')->load('US')->getRegions();
 ?>
 
 <div id="reman_order">
     <form action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" method="post" id="form-order">
+        <input type="hidden" name="aspiration" value="<?php echo $_product->getData('parts_aspiration'); ?>" />
+        <input type="hidden" name="fuel" value="<?php echo $_product->getData('parts_fuel'); ?>" />
+        <input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
+        
         <div class="title">Order</div>
             
             <div id="vehicle_info">
@@ -48,33 +51,40 @@
                         <tr>
                             <td class="label">Make:</td>
                             <td><?php echo $this->getRequest()->getPost('make') ?></td>
-                             <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
+                            <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
                             
                         </tr>
                         <tr>
                             <td class="label">Model:</td>
-                            <td><?php echo $this->getRequest()->getPost('model') ?></td>
+                            <td><?php echo $this->getRequest()->getPost('model'); ?></td>
+                            <input type="hidden" name="model" value="<?php echo $this->getRequest()->getPost('model'); ?>" />
                         </tr>
                         <tr>
                             <td class="label">Engine:</td>
                             <td><?php 
 										if($this->getRequest()->getPost('engine') == ""){
-											echo $_product->getData('parts_engine');
+											$engine = $_product->getData('parts_engine');
 										}else{
-											echo $this->getRequest()->getPost('engine');
+											$engine =  $this->getRequest()->getPost('engine');
 										}
+										
+										echo $engine;
 								?>
+                            <input type="hidden" name="engine" value="<?php echo $engine; ?>" />    
                             </td>
                         </tr>
                         <tr>
                             <td class="label">Drive:</td>
                             <td><?php 
 									if($this->getRequest()->getPost('drive') == ""){
-										echo $_product->getData('parts_drive');
+										$drive = $_product->getData('parts_drive');
 									}else{
-										echo $this->getRequest()->getPost('drive');
+										$drive = $this->getRequest()->getPost('drive');
 									}
+									echo $drive;
 								?>
+                             
+                             <input type="hidden" name="drive" value="<?php echo $drive; ?>" />     
                             </td>
                         </tr>
                         <tr>
@@ -96,7 +106,8 @@
                 <table class="vin" style="margin-top:0px;">
                      <tr>
                         <td class="label">Commercial Application:</td>
-                        <td><input type="checkbox" /></td>
+                        <td><input id="commercial_app" type="checkbox" /></td>
+                        <input id="commercial_app_value" type="hidden" name="commercial_app" value="N" />  
                     </tr>
                 </table>
             </div>
@@ -107,7 +118,8 @@
                             
                 <div id="family_order">
                     <div class="lable">Family:</div>
-                    <div class="value"><?php echo $_product->getData('parts_family') ?></div>
+                    <div class="value"><?php echo $_product->getData('parts_family'); ?></div>
+                    <input type="hidden" name="family" value="<?php echo $_product->getData('parts_family'); ?>" />
                 </div>
                 <table>
                         <tr>
@@ -118,6 +130,7 @@
                         <tr>
                             <td class="label">Part Num:</td>
                             <td><?php echo $_product->getSku();?></td>
+                            <input type="hidden" name="partnum" value="<?php echo $_product->getSku(); ?>" />
                             
                         </tr>
                         <tr>
@@ -185,8 +198,10 @@
                     <tr>
                         <td class="input-1"><input type="text" /></td>
                         <td style="padding-right:5px;">
-                            <select>
-                                <option>...</option>
+                            <select id="sold-to-states" style="width:160px;">
+                             <?php  foreach($states as $state): ?>
+                                <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
+                             <?php endforeach; ?>   
                             </select>
                         </td>
                         <td class="input-zip"><input type="text" /></td>
@@ -223,12 +238,14 @@
                     </tr>
                 </table>
                 
-                <table style="margin-left:108px;" class="adress">
+                <table class="adress">
                     <tr>
                         <td class="input-1"><input type="text" /></td>
                         <td style="padding-right:5px;">
-                            <select>
-                                <option>...</option>
+                            <select id="ship-to-states" style="width:135px;">
+                               <?php  foreach($states as $state): ?>
+                                 <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
+                               <?php endforeach; ?>   
                             </select>
                         </td>
                         <td class="input-zip"><input style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
@@ -239,19 +256,16 @@
             
             <div id="warranty-info">
                 <div class="title">Warranty</div>
-                <select>
+                <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', this.value); return false;" >
                     <?php  foreach($warrantyArray as $index): ?>
                     	 <?php if($index['value'] == ''): ?>
                            <option value="">...</option>
-                         
 						 <?php else: ?>
 						 	 <option <?php if($index['value'] == $warrantyID): ?> selected="selected" <?php endif; ?> value="<?php echo $index['value'] ?>"><?php echo $index['label'] ?></option>
 						 <?php endif; ?>
-                         
-                       
                     <?php endforeach; ?>
                 </select>
-            
+            	<input id="order_warrenty" type="hidden" name="warrenty_terms" value="" />
             </div>
             
             
@@ -270,6 +284,13 @@
     //<![CDATA[
         var dataForm = new VarienForm('form-order', true);
     //]]>
+		
+		$j(document).ready(function(){
+			// Set selected warrenty value on Order Load
+			$j('#order_warrenty').attr('value', $j('#warrenty_select').attr('value')); 
+		});
+		
+		
 		$j('#reman_order input').click(function(e){
 			if($j(e.target).hasClass('validation-failed')){
 				$j(e.target).removeClass('validation-failed');
@@ -283,14 +304,29 @@
 					$j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
 				}
 				
-			} else {
+				for (var s = 0; s<=$j('#ship-to-states option').length; s++){
+					if($j('#sold-to-states option:selected').val() == $j($j('#ship-to-states option')[s]).val() ){
+						$j($j('#ship-to-states option')[s]).attr('selected','selected');
+					}
+				}
 				
+			} else {
 				for( var i = 1; i<=$j('#ship-to input').length-1; i++){
 					$j('#ship-to input')[i].value = "";
 				}
-				
+				$j($j('#ship-to-states option')[0]).attr('selected','selected');
    	    	}
 		});
+		
+		$j('#commercial_app').click(function(){
+			if($j(this).is(':checked')){
+				$j('#commercial_app_value').attr('value',"Y");
+			}else{
+				$j('#commercial_app_value').attr('value',"N");
+			}
+		});
+		
+		
 		
     </script>
 </div>

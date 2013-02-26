@@ -1,16 +1,76 @@
 
-<?php 
+<?php
 	
+	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
+	//MKE Stock
+	$mke = $_product->getData('parts_inventory_nc');
+	//BWI Stock
+	$bwi = $_product->getData('parts_inventory_ne');
+	//ONT Stock
+	$ont = $_product->getData('parts_inventory_sw');
+	//ATL Stock
+	$atl = $_product->getData('parts_inventory_se');
+	
+	$array = array();
 
-	//$api = "http://services.afs.net/Rate/RateService_v2.asmx?WSDL";
-	$api = "http://services.afs.net/rate/rateservice_v2.asmx?WSDL";
-	$client = new SoapClient($api);
 	
+	if($bwi != 0 && $bwi != null){
+		
+		array_push($array, "21113");
+			
+	}
 	
+	if($mke != 0 && $mke != null){
+		
+		array_push($array, "53223");
+			
+	}
 	
-	//function GetRateEstimate(clientID, carrierID, shipDate, IOT, origZip, destZip, classes, weight, acc, userID, password, quotePercent)
+	if($ont != 0 && $ont != null){
+		
+		array_push($array, "91761");
+			
+	}
 	
-	//var_dump( $client->GetQuoteXML('ETE','ALL','02/19/2013','I','30344','53223','500','175','SS','0','etereturns','ete','0'));
-	echo $client->GetLTLRateQuote('02/18/2013','53223', '30344' , '500', 'NOD');
+	if($atl != 0 && $atl != null){
+		
+		array_push($array, "30344");
+			
+	}
+	 
 	
 ?>
+
+
+<div class="reman_preloader_shipping" style="display:none;"></div>
+<div id="estimate-shipping">
+	
+	<div class="ship-to-zip">
+ 		<div class="heading">Shipping Details</div>
+        <table>
+        	<tr>
+            	<td style="padding-right:5px;">Ship to Zip:</td>
+                <td><input id="zip_value" value="53223" style="width:70px;" type="text" /></td>
+            <tr>    
+        </table>
+        <button onclick='if($j("#zip_value").attr("value") != ""){Reman_QuickQuote.prototype.estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"))}; return false;'>Submit</button> 
+        
+        
+        <button onclick="Reman_QuickQuote.prototype.resetShipping(); return false;">Cancel</button>
+          
+    </div>
+    
+    
+    <div class="result-estimate" style=" font-weight:bold; display:none;">
+    	<table>
+        	<tr>
+            	<td style="margin-right:5px;">Estimated Delivery Time:</td>
+                <td><span id="days_result" style="color:#F00;"></span> Days</td>
+            
+            </tr>
+        </table>
+        
+        <button onclick="Reman_QuickQuote.prototype.loadOrder(); return false;">Order</button>
+    </div>
+</div>
+

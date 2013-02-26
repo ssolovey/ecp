@@ -2504,6 +2504,17 @@ background-position: 0px 20px;
 	margin-top: 105px;
 }
 
+.reman_preloader_shipping{
+	background-image:url(../images/preloader.gif);
+	background-repeat:no-repeat;
+	position:absolute;
+	height:100px;
+	width:100px;
+	margin-left: 327px;
+	margin-top: 52px;
+
+}
+
 
 .sku{
 	color:#000;
@@ -3082,7 +3093,8 @@ text-decoration: none;
 #reman_order .buttons{
 	position: relative;
 	width: 205px;
-	margin: 0 auto;
+	float: left;
+	margin-left: 200px;
 }
 
 #reman_order .buttons button{
@@ -3180,7 +3192,7 @@ text-decoration: none;
 
 #sold-to .adress , #ship-to .adress {
 	margin-top:0px;
-	margin-left:104px;
+	margin-left:5px;
 }
 
 #sold-to .adress .input-1, #ship-to .adress .input-1 {
@@ -3224,10 +3236,47 @@ text-decoration: none;
 }
 /* Shipping Estimation*/
 
-#reman-shipping_estimate{
+#estimate-shipping {
+	width:601px;
+	position: relative;
+	float:left;
+}
+
+
+#estimate-shipping .ship-to-zip{
+	width: 170px;
+	height: 150px;
+	border: 1px solid #999;
+	margin-top: 25px;
+	position: relative;
+	float: left;
+	color: #000;
+	font-size: 12px;
+}
+
+#estimate-shipping .ship-to-zip .heading{
+	font-size: 14px;
+	background: #F2F2F2;
+	width: 103px;
+	position: relative;
+	top: -9px;
+	left: 5px;
+}
+
+#estimate-shipping table{
 	position:relative;
 	float:left;
-	width:601px;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+#estimate-shipping button{
+	position: relative;
+	float: left;
+	width: 70px;
+	height: 25px;
+	margin-top: 20px;
+	margin-left: 10px;
 }
 
 
