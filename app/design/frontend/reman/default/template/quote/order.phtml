@@ -61,16 +61,8 @@
                         </tr>
                         <tr>
                             <td class="label">Engine:</td>
-                            <td><?php 
-										if($this->getRequest()->getPost('engine') == ""){
-											$engine = $_product->getData('parts_engine');
-										}else{
-											$engine =  $this->getRequest()->getPost('engine');
-										}
-										
-										echo $engine;
-								?>
-                            <input type="hidden" name="engine" value="<?php echo $engine; ?>" />    
+                            <td><?php echo $_product->getData('engine_size'); ?>
+                            <input type="hidden" name="engine" value="<?php  $_product->getData('parts_engine'); ?>" />    
                             </td>
                         </tr>
                         <tr>

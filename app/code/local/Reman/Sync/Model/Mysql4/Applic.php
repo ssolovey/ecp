@@ -41,11 +41,11 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		
 		$where = $this->_getReadAdapter()->quoteInto("applic_id=?", $applic_id);
 		
-		$select = $this->_getReadAdapter()->select()->from('reman_applic','part_number')->where($where);
+		$select = $this->_getReadAdapter()->select()->from('reman_applic',array('part_number','engine_size'))->where($where);
 		
-		$sku = $this->_getReadAdapter()->fetchAll($select); // run sql query
+		$result = $this->_getReadAdapter()->fetchAll($select); // run sql query
 		
-		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$result[0]['part_number']);
 		
 		if(!$product){
 			
@@ -62,7 +62,11 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			if($specialPrices['core'] != ""){
 				 $product->setData('parts_core_price',$specialPrices['core']);
 			}
-					
+			 
+			 if($result[0]['engine_size']){
+			 	 $product->setData('parts_engine',$result[0]['engine_size']);
+			 }
+			 
 			 return $product;
 		}
 	}

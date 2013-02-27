@@ -334,8 +334,7 @@ Reman_QuickQuote.prototype = {
 			$j('#make_tbl').show();
 			//Update Banner text
 			$j('#welcome_bunner').html('What is the vehicle make?');
-			// Reset Drive and Engine variables
-			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
@@ -350,9 +349,7 @@ Reman_QuickQuote.prototype = {
 			$j('#year_tbl').show();
 			//Update Banner text
 			$j('#welcome_bunner').html('What is the model year?');
-			
-			// Reset Drive and Engine variables
-			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
@@ -367,8 +364,7 @@ Reman_QuickQuote.prototype = {
 			//show model table
 			$j('#model_tbl').show();
 			
-			// Reset Drive and Engine variables
-			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 		}
 	},
@@ -387,8 +383,7 @@ Reman_QuickQuote.prototype = {
 			//Update Banner text
 			$j('#welcome_bunner').html('Welcome! How we can help you today?');
 			
-			// Reset Drive and Engine variables
-			Reman_QuickQuote.prototype.currentSelectedEngine = '';
+			// Reset Drive and variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 	},
 
@@ -699,14 +694,6 @@ Reman_QuickQuote.prototype = {
 						}
 						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 						
-						// Set up current sected Engine type to product page
-						if(Reman_QuickQuote.prototype.currentSelectedEngine != ''){
-							$j('#current_selected_engine').html(Reman_QuickQuote.prototype.currentSelectedEngine.replace('L',''));
-							$j('#current_selected_engine_db').hide();
-							$j('#current_selected_engine').show();
-							
-						}
-						
 						// Set up current sected Drive type to product page
 						if(Reman_QuickQuote.prototype.currentSelectedDrive != ''){
 							$j('#current_selected_drive').html(Reman_QuickQuote.prototype.currentSelectedDrive);
@@ -760,7 +747,6 @@ Reman_QuickQuote.prototype = {
 					id: Reman_QuickQuote.prototype.currentApplic_id,
 					year: Reman_QuickQuote.prototype.currentSelectedYear,
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
-					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					case: Reman_QuickQuote.prototype.currentCatSelected
