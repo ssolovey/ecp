@@ -40,6 +40,7 @@ $installer->run("
 	`applic` varchar(100) DEFAULT NULL COMMENT 'Applic',
 	`part_number` varchar(12) DEFAULT NULL COMMENT 'Part Number',
 	`part_type` varchar(12) DEFAULT NULL COMMENT 'Part Type',
+	`engine_size` varchar(6) DEFAULT NULL COMMENT 'Engine Size',
 	PRIMARY KEY (`applic_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	DROP TABLE IF EXISTS {$this->getTable('sync/gsp')}; 
