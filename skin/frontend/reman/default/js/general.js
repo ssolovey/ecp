@@ -576,7 +576,11 @@ Reman_QuickQuote.prototype = {
 				//Show First Group
 				$j($j('.select_part').get(0)).show();
 				//Update Banner text
-				$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type')+'?');
+				if(header == "group"){
+					$j('#welcome_bunner').html('Please select');
+				}else{
+					$j('#welcome_bunner').html('What is the '+$j($j('.select_part').get(0)).attr('type')+'?');
+				}
 		}
 
 		$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+this.currentSelectedModel+'</span></span>');
