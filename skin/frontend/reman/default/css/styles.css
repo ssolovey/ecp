@@ -3263,12 +3263,40 @@ text-decoration: none;
 	left: 5px;
 }
 
-#estimate-shipping table{
+#estimate-shipping .ship-to-zip table{
 	position:relative;
 	float:left;
 	margin-top: 20px;
 	margin-left: 10px;
 }
+
+#estimate-shipping .result-estimate{
+	position:relative;
+	float:left;
+	margin-top:25px;
+}
+
+#estimate-shipping .result-estimate table{
+	border-color: black;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	background-color: #fff;
+	margin-left: 10px;
+	margin-bottom:15px;
+}
+
+#estimate-shipping .result-estimate table td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px 0 0 0px;
+	text-align: center;
+	width: 150px;
+	font-size: 11px;
+	padding: 5px;
+	color:#000;
+}
+
+
 
 #estimate-shipping button{
 	position: relative;

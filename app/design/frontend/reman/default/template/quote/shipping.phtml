@@ -50,27 +50,20 @@
         <table>
         	<tr>
             	<td style="padding-right:5px;">Ship to Zip:</td>
-                <td><input id="zip_value" value="53223" style="width:70px;" type="text" /></td>
+                <td><input id="zip_value" value="" style="width:70px;" type="text" /></td>
             <tr>    
         </table>
-        <button onclick='if($j("#zip_value").attr("value") != ""){Reman_QuickQuote.prototype.estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"))}; return false;'>Submit</button> 
+        <button onclick='if($j("#zip_value").attr("value") != ""){estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"))}; return false;'>Submit</button> 
         
         
-        <button onclick="Reman_QuickQuote.prototype.resetShipping(); return false;">Cancel</button>
+        <button onclick="resetShipping(); return false;">Cancel</button>
           
     </div>
     
     
-    <div class="result-estimate" style=" font-weight:bold; display:none;">
-    	<table>
-        	<tr>
-            	<td style="margin-right:5px;">Estimated Delivery Time:</td>
-                <td><span id="days_result" style="color:#F00;"></span> Days</td>
-            
-            </tr>
-        </table>
+    <div class="result-estimate" style="display:none;">
         
-        <button onclick="Reman_QuickQuote.prototype.loadOrder(); return false;">Order</button>
+       <!-- <button onclick="Reman_QuickQuote.prototype.loadOrder(); return false;">Order</button>-->
     </div>
 </div>
 

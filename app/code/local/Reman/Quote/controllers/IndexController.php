@@ -111,14 +111,14 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		$array = array();
 		$client = new SoapClient("http://services.beta.afs.net/Rate/RateService_v2.asmx?WSDL"); 
 	
-		 // foreach($request['stocks'] as $value){
+		  foreach($request['stocks'] as $value){
 				$params = array(
 					   "clientId" => "1481",
 					   "carrierId" => "0",
 					   "shipmentDate" => date("m.d.y"),
-					   "transportationMode" => "I",
-					   "originPostalCode" => "15656",
-					   "destinationPostalCode" => "53223",
+					   "transportationMode" => "T",
+					   "originPostalCode" => $value,
+					   "destinationPostalCode" => $request['destzip'],
 					   "rateItems" => "50|100",
 					   "rateAccessorials" => "",
 					   "rateIncrease" => "0",
@@ -130,11 +130,11 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			
 				$response = simplexml_load_string($data->GetLTLRateQuoteAdvancedResult);
 				
-				//array_push($array, $response->RateQuote1->ServiceDays);
-		  //}
+				$array[$value] =  $response;
+		  }
 	
 		
-		echo $response->RateQuote1->ServiceDays;	
+		echo json_encode($array);	
 	
 	}
 	
