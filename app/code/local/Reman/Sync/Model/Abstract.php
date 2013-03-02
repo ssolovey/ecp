@@ -15,6 +15,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected $_delim = '|';
 	
 	// sync folder path
+	//protected $_folder = 'import/';
 	protected $_folder = 'ftpex/Download/';
 	
 	// current file path
@@ -68,7 +69,13 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			$this->_beforeParseFile();
 			
 			$this->_parseFile( $path );
+			
+			$message = 'Synced';
+		} else {
+			$message = 'Not found';
 		}
+		
+		$this->syncLog($path, $message);
 	}
 	/**
 	 * Do some action before parsing file
@@ -101,19 +108,17 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		}
 					
 		unlink($path);
-		
-		$this->syncLog($path);
 	}
 	
 	/**
 	 * Log message in cronlog
 	 * after sync complete
 	 */
-	protected function syncLog($path)
+	protected function syncLog($path, $message)
 	{
 		$myFile = "cronlog.html";
 		$fh = fopen($myFile, 'a');
-		$stringData = $path . ': ' . date('l jS \of F Y h:i:s A') . '<br/>';
+		$stringData = $message . ': ' . $path . ' @ ' . date('Y.m.d h:i A') . '<br/>';
 		fwrite($fh, $stringData);
 		fclose($fh);
    	}

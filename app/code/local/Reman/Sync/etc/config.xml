@@ -73,9 +73,49 @@
 	</global>
 	<crontab>
 		<jobs>
+			<sync_order>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/order::syncData</model>
+				</run>
+			</sync_order>
+			<sync_inventory>
+				<schedule>
+					<cron_expr>*/15 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/inventory::syncData</model>
+				</run>
+			</sync_inventory>
+			<sync_profile>
+				<schedule>
+					<cron_expr>0 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/profile::syncData</model>
+				</run>
+			</sync_profile>
+			<sync_gsp>
+				<schedule>
+					<cron_expr>0 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/gsp::syncData</model>
+				</run>
+			</sync_gsp>
+			<sync_gsw>
+				<schedule>
+					<cron_expr>0 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/gsw::syncData</model>
+				</run>
+			</sync_gsw>
 			<sync_make>
 				<schedule>
-					<cron_expr>0 3 * * *</cron_expr>
+					<cron_expr>0 */12 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>sync/make::syncData</model>
@@ -83,7 +123,7 @@
 			</sync_make>
 			<sync_model>
 				<schedule>
-					<cron_expr>0 3 * * *</cron_expr>
+					<cron_expr>0 */12 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>sync/model::syncData</model>
@@ -91,12 +131,20 @@
 			</sync_model>
 			<sync_applic>
 				<schedule>
-					<cron_expr>0 3 * * *</cron_expr>
+					<cron_expr>0 */12 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>sync/applic::syncData</model>
 				</run>
 			</sync_applic>
+			<sync_parts>
+				<schedule>
+					<cron_expr>0 */12 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>sync/parts::syncData</model>
+				</run>
+			</sync_parts>
 		</jobs>
 	</crontab>
 </config>
