@@ -47,46 +47,65 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected function _scanFolder( $folder ) 
 	{
 		
-		$files = glob( $this._folder . $folder . '*.TXT' );
+		$files = glob( $this->_folder . $folder . '*.TXT' );
 
 		foreach($files as $file)
 		{
-			$this->_loadFile( $file );
+			$this->_parseFile( $file );
 		}
 	}
 	
 	/**
-	 * Load CSV file
+	 * Load file
 	 *
 	 */
-	protected function _loadFile( $path )
+	protected function _loadFile( $filename )
 	{
-	
-		if ( file_exists($path) ) {
-		
-			$csv = new Varien_File_Csv();
-			
-			// Set delimiter to "\"
-			$csv->setDelimiter( $this->_delim );
-			
-			// Load data from CSV file
-			$data = $csv->getData( $path );
-					
-			foreach( $data as $item ) {
+		$path = $this->_folder . $filename;
 				
-				if ( sizeof($item) > 1 ) {
-					$this->_parseItem( $item );
-				}
-			}
-						
-			unlink($path);
+		if ( file_exists($path) ) {
+			
+			$this->_beforeParseFile();
+			
+			$this->_parseFile( $path );
 		}
+	}
+	/**
+	 * Do some action before parsing file
+	 * (if necessary) 
+	 */
+	protected function _beforeParseFile()
+	{
+		
+	}
+	
+	/**
+	 * Parse file
+	 *
+	 */
+	protected function _parseFile( $path )
+	{
+		$csv = new Varien_File_Csv();
+			
+		// Set delimiter to "\"
+		$csv->setDelimiter( $this->_delim );
+		
+		// Load data from CSV file
+		$data = $csv->getData( $path );
+				
+		foreach( $data as $item ) {
+			
+			if ( sizeof($item) > 1 ) {
+				$this->_parseItem( $item );
+			}
+		}
+					
+		unlink($path);
 		
 		$this->syncLog($path);
 	}
 	
 	/**
-	 * TEMPERARY
 	 * Log message in cronlog
 	 * after sync complete
 	 */

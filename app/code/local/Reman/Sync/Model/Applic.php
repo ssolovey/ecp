@@ -34,9 +34,13 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	}
 	
 	// override
+	protected function _beforeParseFile() {
+		$this->getResource()->trancateTable();	
+	}
+	
+	// override
 	public function syncData()
 	{
-		$this->getResource()->trancateTable();	
 		$this->_loadFile( 'APPLIC.TXT' );
 	}
 	

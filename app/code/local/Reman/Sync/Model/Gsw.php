@@ -33,9 +33,13 @@ class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
 	}
 	
 	// override
+	protected function _beforeParseFile() {
+		$this->_gsw->getResource()->trancateTable();	
+	}
+	
+	// override
 	public function syncData()
 	{
-		$this->getResource()->trancateTable();	
 		$this->_loadFile( 'GSW.TXT' );
 	}
 }
