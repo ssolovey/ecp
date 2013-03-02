@@ -78,7 +78,7 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 			}
 		}
 		
-		$file = 'export/customers/' . $model->getEte() . '.TXT';
+		$file = 'ftpex/Upload/Customers/' . $model->getEte() . '.TXT';
 		$delim = "|";
 		
 		$status = $model->status == 1 ? 'ACTIVE' : 'DELETE';

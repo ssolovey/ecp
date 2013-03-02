@@ -25,7 +25,7 @@ class Reman_Order_Model_Export_Observer
 		Mage::log("reached export_new_order");
 		try
 		{
-			$dumpFile = fopen('export/testdump', 'w+');
+			$dumpFile = fopen('ftpex/Upload/Orders/testdump', 'w+');
 			fwrite($dumpFile, 'this is a test!');
 		}
 		catch (Exception $e)
