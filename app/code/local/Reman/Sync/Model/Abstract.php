@@ -14,6 +14,12 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 */
 	protected $_delim = '|';
 	
+	// sync folder path
+	protected $_folder = 'ftpex/Download/';
+	
+	// current file path
+	protected $_file;
+	
 	/**
 	 * Sync resource data
 	 * should be overrides in each model
@@ -36,27 +42,47 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	}
 	
 	/**
+	 * Scan folder for data files
+	 */
+	protected function _scanFolder( $folder ) 
+	{
+		
+		$files = glob( $this._folder . $folder . '*.TXT' );
+
+		foreach($files as $file)
+		{
+			$this->_loadFile( $file );
+		}
+	}
+	
+	/**
 	 * Load CSV file
 	 *
 	 */
 	protected function _loadFile( $path )
 	{
-		$csv = new Varien_File_Csv();
+	
+		if ( file_exists($path) ) {
 		
-		// Set delimiter to "\"
-		$csv->setDelimiter( $this->_delim );
-		
-		// Load data from CSV file
-		$data = $csv->getData( $path );
-				
-		foreach( $data as $item ) {
+			$csv = new Varien_File_Csv();
 			
-			if ( sizeof($item) > 1 ) {
-				$this->_parseItem( $item );
+			// Set delimiter to "\"
+			$csv->setDelimiter( $this->_delim );
+			
+			// Load data from CSV file
+			$data = $csv->getData( $path );
+					
+			foreach( $data as $item ) {
+				
+				if ( sizeof($item) > 1 ) {
+					$this->_parseItem( $item );
+				}
 			}
+						
+			unlink($path);
 		}
 		
-		$this->syncLog();
+		$this->syncLog($path);
 	}
 	
 	/**
@@ -64,11 +90,11 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 * Log message in cronlog
 	 * after sync complete
 	 */
-	protected function syncLog()
+	protected function syncLog($path)
 	{
 		$myFile = "cronlog.html";
 		$fh = fopen($myFile, 'a');
-		$stringData = $this->getResourceName() . ': ' . date('l jS \of F Y h:i:s A') . '<br/>';
+		$stringData = $path . ': ' . date('l jS \of F Y h:i:s A') . '<br/>';
 		fwrite($fh, $stringData);
 		fclose($fh);
    	}

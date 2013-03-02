@@ -33,7 +33,7 @@ class Reman_Sync_Model_Model extends Reman_Sync_Model_Abstract
 	public function syncData()
 	{
 		$this->getResource()->trancateTable();	
-		$this->_loadFile( 'import/MODELS.TXT' );
+		$this->_loadFile( 'MODELS.TXT' );
 	}
 	
 	/** 

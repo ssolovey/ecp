@@ -33,7 +33,7 @@ class Reman_Sync_Model_Make extends Reman_Sync_Model_Abstract
 	public function syncData()
 	{
 		$this->getResource()->trancateTable();	
-		$this->_loadFile( 'import/MAKES.TXT' );
+		$this->_loadFile( 'MAKES.TXT' );
 	}
 
 	/**
