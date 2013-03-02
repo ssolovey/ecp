@@ -153,36 +153,17 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$customer->sendNewAccountEmail('confirmation');
 		
 		// Delete file
-		unlink( $this->_file );
+		//unlink( $this->_file );
 	}
 	
 	// override
 	public function syncData()
 	{	
-	
-		$profiles = glob($this->_directory . '*.TXT');
-		
-		$this->_file = $profiles[0];
-		
-		if ( $this->_file  ) {
-			echo '<h3>Parse file: ' . $this->_file . '</h3>';
-			echo '<h4><a href=".">NEXT FILE</a></h4>';
-		
-			$this->_loadFile( $this->_file );
-		} else {
-			echo '<h3>No more files to parse in directory: ' . $this->_directory . '</h3>';
-		}
-		
-		/*
-		foreach($profiles as $file)
-		{
-			echo'<h3>Parse file: ' . $file . '</h3>';
-			$this->_loadFile( $file );
-		}
-		*/
-		
+		$this->_scanFolder('customers/');
 	}
 	
+	
+	/*
 	public function test()
 	{
 		$test_csv = new Varien_File_Csv();
@@ -211,49 +192,6 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 				}								
 			}
 		}
-	}
-	
-	/*
-	protected function _createCustomer( $customer, $data )
-	{
-		$customer->setData( 
-			array(
-				'eteid'			=>	$data[0],
-				'email'			=>	$data[13],
-				'firstname'		=>	$data[1],
-				'lastname'		=>	'-',
-				'splink'		=>	$data[10],
-				'fluid'			=>	$data[11],
-				'discount'		=>	$data[9],
-				'payment'		=>	$data[23],
-				'atwar'			=>	$data[18],
-				'tcwar'			=>	$data[21]
-				
-			)
-		);
-		
-		$this->_customers->save();
-				
-		$address = Mage::getModel('customer/address');
-		
-		$address->setCustomerId($customer->getId());
-
-
-		$address->firstname		=	$customer->firstname;
-		$address->lastname		=	$customer->lastname;
-		$address->country_id	=	'US';
-		$address->postcode		=	$data[6];
-		$address->city			=	$data[4];
-		$address->region		=	$data[5];
-		//$address->telephone	=	'';
-		//$address->fax			=	'';
-		//$address->company		=	'';
-		$address->street		=	array($data[2],$data[3]);
-		$address->is_default_billing = true;
-		$address->is_default_shipping = true;
-		
-		
-		$address->save();
 	}
 	*/
 }

@@ -14,6 +14,13 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 */
 	protected $_delim = '|';
 	
+	// sync folder path
+	//protected $_folder = 'import/';
+	protected $_folder = 'ftpex/Download/';
+	
+	// current file path
+	protected $_file;
+	
 	/**
 	 * Sync resource data
 	 * should be overrides in each model
@@ -36,13 +43,57 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	}
 	
 	/**
-	 * Load CSV file
+	 * Scan folder for data files
+	 */
+	protected function _scanFolder( $folder ) 
+	{
+		
+		$files = glob( $this->_folder . $folder . '*.TXT' );
+
+		foreach($files as $file)
+		{
+			$this->_parseFile( $file );
+		}
+	}
+	
+	/**
+	 * Load file
 	 *
 	 */
-	protected function _loadFile( $path )
+	protected function _loadFile( $filename )
+	{
+		$path = $this->_folder . $filename;
+				
+		if ( file_exists($path) ) {
+			
+			$this->_beforeParseFile();
+			
+			$this->_parseFile( $path );
+			
+			$message = 'Synced';
+		} else {
+			$message = 'Not found';
+		}
+		
+		$this->syncLog($path, $message);
+	}
+	/**
+	 * Do some action before parsing file
+	 * (if necessary) 
+	 */
+	protected function _beforeParseFile()
+	{
+		
+	}
+	
+	/**
+	 * Parse file
+	 *
+	 */
+	protected function _parseFile( $path )
 	{
 		$csv = new Varien_File_Csv();
-		
+			
 		// Set delimiter to "\"
 		$csv->setDelimiter( $this->_delim );
 		
@@ -55,20 +106,19 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				$this->_parseItem( $item );
 			}
 		}
-		
-		$this->syncLog();
+					
+		unlink($path);
 	}
 	
 	/**
-	 * TEMPERARY
 	 * Log message in cronlog
 	 * after sync complete
 	 */
-	protected function syncLog()
+	protected function syncLog($path, $message)
 	{
 		$myFile = "cronlog.html";
 		$fh = fopen($myFile, 'a');
-		$stringData = $this->getResourceName() . ': ' . date('l jS \of F Y h:i:s A') . '<br/>';
+		$stringData = $message . ': ' . $path . ' @ ' . date('Y.m.d h:i A') . '<br/>';
 		fwrite($fh, $stringData);
 		fclose($fh);
    	}

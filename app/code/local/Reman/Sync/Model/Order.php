@@ -151,6 +151,6 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// override
 	public function syncData()
 	{	
-		$this->_loadFile( 'import/ORDERS.TXT' );
+		$this->_loadFile( 'ORDERS.TXT' );
 	}
 }

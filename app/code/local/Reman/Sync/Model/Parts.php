@@ -6,136 +6,27 @@
  * @package     Reman_Sync
  * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
-class Reman_Sync_Model_Parts extends Mage_Core_Model_Abstract
-{
-
-	protected $_products;
-	
-	public function _construct()
+class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
+{	
+	// override
+	protected function _parseItem( $item )
 	{
-		parent::_construct();
-		
-		$this->_products	=	Mage::getModel('catalog/product');
-	}
+		$product = $this->_getProductBySku( $item[0] );
 	
-	/**
-	 * Load products data form CSV file
-	 *
-	 */
-	public function loadProductsData() {
-
-		// Location of CSV file
-		$file	=	'import/PARTS.TXT';
-
-		$csv	=	new Varien_File_Csv();
-
-		// Set delimiter to "\"
-		$csv->setDelimiter('|');
-
-		// Load data from CSV file
-		$data	=	$csv->getData($file);
-		
-		foreach( $data as $item ) {			
-			if ( sizeof($item) > 1 ) {
-				$product = $this->_getProductBySku( $item[0] );
-	
-				if ( $product ) {
-					$this->_updateProductAttributes($product, $item);
-				} else {
-					$this->_addProduct($this->_products, $item);			
-				}
-			}	
-		}
-	}
-	
-	/**
-	 * Load inventory data form CSV file
-	 *
-	 */
-	public function loadInventoryData() {
-
-		// Location of CSV file
-		$file	=	'import/INVEN.TXT';
-
-		$csv	=	new Varien_File_Csv();
-
-		// Set delimiter to "\"
-		$csv->setDelimiter('|');
-
-		// Load data from CSV file
-		$data	=	$csv->getData($file);
-				
-		foreach( $data as $item ) {
-			if ( sizeof($item) > 1 ) {		
-				$this->_updateInventory($item);
-			}
-		}
-	}
-	
-	/**
-	 * Get product by SKU
-	 *
-	 * @param string $sku
-	 */
-	protected function _getProductBySku($sku)
-	{		
-		$product = $this->_products->loadByAttribute( 'sku', $sku );
-		
 		if ( $product ) {
-			return $product;
+			$this->_updateProductAttributes($product, $item);
 		} else {
-			return false;		
-		}
+			$this->_addProduct($this->_products, $item);			
+		}		
 	}
 	
-	/**
-	 * Update product inventory
-	 *
-	 * @param array $data
-	 */
-	protected function _updateInventory($data)
-	{		
-		$product	=	$this->_getProductBySku( $data[0] );
-		$totalStock	=	0;
 		
-		
-		if ( $product ) {
-			
-			$stockData	=	array(
-				'parts_inventory_nw'	=>	$data[1],
-				'parts_inventory_nc'	=>	$data[2],
-				'parts_inventory_ne'	=>	$data[3],
-				'parts_inventory_mc'	=>	$data[4],
-				'parts_inventory_me'	=>	$data[5],
-				'parts_inventory_sw'	=>	$data[6],
-				'parts_inventory_sc'	=>	$data[7],
-				'parts_inventory_se'	=>	$data[8],
-				'parts_inventory_ip'	=>	$data[9]
-			);
-			
-			foreach ( $stockData as $key=>$value ) {
-				if ( $value ) {
-					$product->setData( $key, $value );
-					$totalStock = $totalStock + $value;
-				} else {
-					$product->setData( $key, 0 );
-				}
-			}
-			
-			$product->save();
-			
-			
-			$productId = $product->getId();
-			$stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
-			$stockItemId = $stockItem->getId();
-			
-			//$stockItem->setData('manage_stock', 1);
-			$stockItem->setData('qty', $totalStock);
-			
-			
-			$stockItem->save();
-		}
-	}
+	// override
+	public function syncData()
+	{	
+		$this->_loadFile( 'PARTS.TXT' );
+	}	
+
 
 	/**
 	 * Add new product
