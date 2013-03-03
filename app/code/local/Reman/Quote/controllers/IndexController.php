@@ -119,7 +119,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 					   "transportationMode" => "T",
 					   "originPostalCode" => $value,
 					   "destinationPostalCode" => $request['destzip'],
-					   "rateItems" => "50|100",
+					   "rateItems" => "50|175",
 					   "rateAccessorials" => "",
 					   "rateIncrease" => "0",
 					   "userName"      => "eteweb", 
