@@ -25,6 +25,11 @@ $j(document).ready(function(){
 		}
 	});
 	
+	
+	if(window.location.hash == 'quote'){
+		
+	}
+	
 	// Released under MIT license: http://www.opensource.org/licenses/mit-license.php
  	if ($j.browser.msie) { 
 
@@ -214,7 +219,11 @@ Reman_QuickQuote.prototype = {
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected.pop();
-				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
+				if($j('#'+$j(elem).attr('prevgroup')).attr('type') == "group"){
+					$j('#welcome_bunner').html('Please select');
+				}else{	
+					$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
+				}
 				return;
 			}
 			elem = elem.parentNode;
@@ -771,80 +780,7 @@ Reman_QuickQuote.prototype = {
 		$j('#order-wrapper').html('');
 		$j('#shipping-wrapper').show();
 	
-	},
-	
-	resetShipping : function(){
-		$j('#shipping-wrapper').html('');
-		$j('#steps').show();
-	
-	},
-	
-	
-	loadShippingEstimate : function(){
-		$j.ajax({
-
-				url: "index/shipping",
-				type: 'POST',
-				
-				data: {
-					id: Reman_QuickQuote.prototype.currentApplic_id
-				
-				},
-				
-				beforeSend: function(){
-						$j('#steps').hide();
-						$j('.reman_preloader_big').show();
-				},
-						
-				complete: function(data){
-					$j('.reman_preloader_big').hide();
-					$j('#shipping-wrapper').html(data.responseText);
-						
-				}
-				
-		});
-	
-	
-	},
-	
-	estimateShipping : function(stocks,destzip){
-		
-		$j.ajax({
-
-				url: "index/estimateshipping",
-				type: 'POST',
-				
-				data: {
-					stocks: stocks,
-					destzip: destzip
-				},
-				
-				beforeSend: function(){
-						$j('.reman_preloader_shipping').show();
-				},
-				
-				error: function(error){
-				
-					alert('Error !!!!');
-					
-					return;
-				},
-						
-				complete: function(data){
-					$j('.reman_preloader_shipping').hide();
-					$j('.result-estimate').show();
-					$j('#days_result').html(data.responseText);
-						
-				}
-				
-		});
-		
-	
-	
-	
-	
 	}
-	
 }
 
 
