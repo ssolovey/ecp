@@ -63,12 +63,30 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 				 $product->setData('parts_core_price',$specialPrices['core']);
 			}
 			 
+			 
+			 
 			 if($result[0]['engine_size']){
 			 	 $product->setData('parts_engine',$result[0]['engine_size']);
 			 }
 			 
 			 return $product;
 		}
+	}
+	
+	/*
+	 * Get Product Engine Value
+	 * @return string 
+	*/
+	public function getProductEngine ($applic_id){
+		
+		$where = $this->_getReadAdapter()->quoteInto("applic_id=?", $applic_id);
+		
+		$select = $this->_getReadAdapter()->select()->from('reman_applic','engine_size')->where($where);
+		
+		$result = $this->_getReadAdapter()->fetchAll($select); // run sql query
+		
+		return $result[0]['engine_size'];
+	
 	}
 	
 	/**
