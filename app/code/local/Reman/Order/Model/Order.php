@@ -17,11 +17,10 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	/**
 	 * Create new order
 	 *
-	 * @param customer email
-	 * @param part number
+	 * @param customer id
 	 * @param order data (Array)
 	 */
-	public function createOrder( $customer_email, $part_number, $data )
+	public function createOrder( $customer_id, $data )
 	{
 		
 		echo var_dump( $data );
@@ -33,12 +32,12 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		
 		$customer = Mage::getModel('customer/customer')
                 ->setWebsiteId(1)
-                ->loadByEmail($customer_email);
+                ->load($customer_id);
         
         $quote->assignCustomer($customer);
         
 		// add product(s)
-		$product = Mage::getModel('catalog/product')->load($part_number);
+		$product = Mage::getModel('catalog/product')->load($data->partnum);
 
 		$buyInfo = array(
 		        'qty'	=> 1
@@ -47,7 +46,18 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$quote->addProduct($product, new Varien_Object($buyInfo));
 		
 		
-		$addressData = array(
+		$billingData = array(
+			'firstname'		=> $data[1],
+			'lastname'		=> '_',
+			'street' 		=> array($data[5],$data[6]),
+			'city' 			=> $data[7],
+			'country_id' 	=> 'US',
+			'region_id' 	=> $data[8],
+			'postcode' 		=> $data[9],
+			'telephone' 	=> '555-555'
+		);
+		
+		$shippingData = array(
 			'firstname'		=> $data[1],
 			'lastname'		=> '_',
 			'street' 		=> array($data[5],$data[6]),
@@ -59,8 +69,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		);
 		
 		
-		$billingAddress = $quote->getBillingAddress()->addData($addressData);
-		$shippingAddress = $quote->getShippingAddress()->addData($addressData);
+		$billingAddress = $quote->getBillingAddress()->addData($billingData);
+		$shippingAddress = $quote->getShippingAddress()->addData($shippingData);
  
 		$shippingAddress->setCollectShippingRates(true)->collectShippingRates()
 	        ->setShippingMethod('flatrate_flatrate')
@@ -73,12 +83,11 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$service = Mage::getModel('sales/service_quote', $quote);
 		$service->submitAll();
 		$order = $service->getOrder();
+		
+		
+		$data->order_id = $order->getIncrementId();
 				
-		$this->setData(
-			array(
-				'order_id'		=>		$order->getIncrementId()
-			)		    	
-		);
+		$this->setData( $data );
 		
 		$this->save();
 	}
