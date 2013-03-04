@@ -10,7 +10,12 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
     {
-        $this->loadLayout();  //This function read all layout files and loads them in memory
+        
+		//Gerate random qoute ID in order to block history back button from quote module
+		Mage::getSingleton('core/session')->setPid(rand(10,100));
+		
+		
+		$this->loadLayout();  //This function read all layout files and loads them in memory
         $this->renderLayout(); //This function processes and displays all layout phtml and php files.
         
         // Quote Logger

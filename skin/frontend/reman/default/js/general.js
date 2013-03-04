@@ -24,16 +24,6 @@ $j(document).ready(function(){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
-	
-	
-	if(window.location.hash == 'quote'){
-		
-	}
-	
-	// Released under MIT license: http://www.opensource.org/licenses/mit-license.php
- 	if ($j.browser.msie) { 
-
-	}
 });
 
 /*Create NameSpace for Quick Quote module*/

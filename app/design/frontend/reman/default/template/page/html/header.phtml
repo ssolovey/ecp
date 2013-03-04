@@ -95,7 +95,7 @@
 							<?php echo $this->__('CATALOG') ?></a>
                 </li>
                  <?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-                	<li><a href="<?php echo $this->getUrl('customer/account')?>"><?php echo $this->__('MY PROFILE') ?></a></li>
+                	<li><a href="<?php echo $this->getUrl('customer/account').'?pid='.Mage::getSingleton('core/session')->getPid();?>"><?php echo $this->__('MY PROFILE') ?></a></li>
                  <?php endif; ?>
             </ul>
             <div class="login_links">

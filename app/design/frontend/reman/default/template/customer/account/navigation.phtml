@@ -24,6 +24,16 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php
+    /*
+	 * Check Quote Session ID if History Back button was click ID will be different from Profile Id link
+	 * So Quote page will be refreshed
+	*/
+    if (Mage::getSingleton('core/session')->getPid() != $_GET[pid]) {
+        	header("location:".$this->getUrl('quote'));
+	}
+    
+?>
 <div class="reman_profile_side_menu">
     <div class="heading"></div>
     <div class="block-content">
@@ -82,7 +92,6 @@
 		$j('#reman_cp_cont').hide();
 		$j('#reman_add_user').show();
 	}
-	
 	
 //]]>
 </script>
