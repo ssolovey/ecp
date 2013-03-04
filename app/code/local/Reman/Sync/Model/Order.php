@@ -95,11 +95,35 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		echo '</table>';
 		
 		$data = array(
+			'ete_order_id' => $item[0],
 			'date_invoice' => $item[1],
 			'date_order' => $item[2],
+			'order_status' => $item[3],
 			'order_type' => $item[4],
+			'ete_cust' => $item[5],
+			'so_cust_num' => $item[6],
+			'so_cust_name' => $item[7],
+			'so_cont_name' => $item[8],
+			'so_phone' => $item[9],
+			'so_phone_ext' => $item[10],
 			'po' => $item[11],
-			// addresses part to be clarified
+			'bt_cust_num' => $item[12],
+			'bt_cust_name' => $item[13],
+			'bt_addr1' => $item[14],
+			'bt_addr2' => $item[15],
+			'bt_city' => $item[16],
+			'bt_state' => $item[17],
+			'bt_zip' => $item[18],
+			'st_cust_num' => $item[19],
+			'st_cust_name' => $item[20],
+			'st_addr1' => $item[21],
+			'st_addr2' => $item[22],
+			'st_city' => $item[23],
+			'st_state' => $item[24],
+			'st_zip' => $item[25],
+			'st_cont_name' => $item[26],
+			'st_phone' => $item[27],
+			'st_phone_ext' => $item[28],
 			'vin' => $item[29],
 			'make' => $item[30],
 			'year' => $item[31],
@@ -110,10 +134,11 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'fuel' => $item[36],
 			'drive' => $item[37],
 			'tag' => $item[38],
-			// End User Name to be clarified
+			'end_username' => $item[39],
 			'ro' => $item[40],
 			'mileage' => $item[41],
 			'claim' => $item[42],
+			'partnum' => $item[43],
 			'serial' => $item[44],
 			'family' => $item[45],
 			'alt_partnum' => $item[46],
@@ -143,7 +168,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		
 		Mage::getModel('order/order')->createOrder(
 			'user@email.com', // will be changed to user id
-			'SKU1231231', // part SKU
+			$item[43], // part SKU
 			$data
 		);
 	}
