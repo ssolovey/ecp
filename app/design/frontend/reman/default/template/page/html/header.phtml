@@ -77,12 +77,7 @@
         <?php else:?>
         <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
         <?php endif?>
-        <div class="quick-access">
-           <?php /*?><?php echo $this->getChildHtml('topSearch') ?>
-            <p class="welcome-msg"><?php echo $this->getWelcome() ?> <?php echo $this->getAdditionalHtml() ?></p>
-            <?php echo $this->getChildHtml('topLinks') ?>
-            <?php echo $this->getChildHtml('store_language') ?><?php */?>
-            
+        <div class="quick-access">  
             <ul id="header_menu">
                 <li><a href="http://etereman.com"><?php echo $this->__('ETE REMAN HOME') ?></a></li>
                 <li><a href="<?php 
@@ -95,7 +90,7 @@
 							<?php echo $this->__('CATALOG') ?></a>
                 </li>
                  <?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-                	<li><a href="<?php echo $this->getUrl('customer/account')?>"><?php echo $this->__('MY PROFILE') ?></a></li>
+                	<li><a href="<?php echo $this->getUrl('customer/account').'?pid='.Mage::getSingleton('core/session')->getPid();?>"><?php echo $this->__('MY PROFILE') ?></a></li>
                  <?php endif; ?>
             </ul>
             <div class="login_links">

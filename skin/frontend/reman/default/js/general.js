@@ -18,17 +18,11 @@ $j(document).ready(function(){
 	});
 
 	/** Remove validation error red borders from focused input*/
-
 	$j('input').click(function(e){
 		if($j(e.target).hasClass('validation-failed')){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
-	
-	// Released under MIT license: http://www.opensource.org/licenses/mit-license.php
- 	if ($j.browser.msie) { 
-
-	}
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -214,7 +208,11 @@ Reman_QuickQuote.prototype = {
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected.pop();
-				$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
+				if($j('#'+$j(elem).attr('prevgroup')).attr('type') == "group"){
+					$j('#welcome_bunner').html('Please select');
+				}else{	
+					$j('#welcome_bunner').html('What is the '+$j('#'+$j(elem).attr('prevgroup')).attr('type')+'?');
+				}
 				return;
 			}
 			elem = elem.parentNode;
