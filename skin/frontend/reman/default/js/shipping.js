@@ -1,7 +1,13 @@
-	
-	
-
-
+/**
+ * Shipping Estimate frontend logic
+ *  
+ * @category    Reman
+ * @package     frontend_reman_default_js
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
+ 
+ var MAXCOST = 200;
+ 	
  var storeZIP = {
 	53223: 'Milwaukee, WI',   // TODO Dallas, TX 
 	91761: 'Ontario, CA',
@@ -46,7 +52,7 @@ function estimateShipping (stocks,destzip){
 			
 			beforeSend: function(){
 				$j('.result-estimate').hide();
-				$j('.result-estimate').html('');
+				$j('#best-carriers').html('');
 				$j('.reman_preloader_shipping').show();
 			},
 			
@@ -74,7 +80,7 @@ function filterBestResult(data){
 		
 		var store = {};
 
-		var MinServiceDays = 'Math.min('
+		var MinServiceDays = [];
 		
 		var responseLength = Object.keys(data[key]).length;
 		
@@ -88,19 +94,25 @@ function filterBestResult(data){
 			
 			iterationIndex ++;
 			
-			store[data[key][s].CarrierName] = {
-					'servicedays' : data[key][s].ServiceDays,
-			}
-			
-			if(iterationIndex < responseLength){
-				MinServiceDays += store[data[key][s].CarrierName].servicedays + ',';
+			if( carriers.store == "Milwaukee, WI"){
+				var servicedays = Number(data[key][s].ServiceDays) +2;
 			}else{
-				MinServiceDays += store[data[key][s].CarrierName].servicedays + ')';
+				var servicedays = Number(data[key][s].ServiceDays);
 			}
 			
+			
+			if(data[key][s].TrueCost < MAXCOST){
+			
+				store[data[key][s].CarrierName] = {
+						'servicedays' : servicedays,
+						'truecost' : data[key][s].TrueCost
+				}
+				
+				MinServiceDays.push(store[data[key][s].CarrierName].servicedays);	
+			}
 		}
 		
-		var bestCarrier =  eval(MinServiceDays);
+		var bestCarrier =  MinServiceDays.min();
 		
 		for(c in store){
 			
@@ -116,23 +128,23 @@ function filterBestResult(data){
 				}
 				
 				carriers[c] = {
-					'servicedays': days
-				}
-				
-			}
-			
-		}
-		
+					'servicedays': days,
+					'truecost' : store[c].truecost
+				}	
+			}	
+		}	
 		dataArray.push(carriers);
 	}
-		
 	return dataArray;
-
 }
 
 
 function buildTableResults(data){
 	
+	 var costFilter = [];
+	 
+	 var daysFilter = [];
+	 
 	 for (key in data){
 			
 			var storeName =  data[key].store;
@@ -140,8 +152,15 @@ function buildTableResults(data){
 			for (k in data[key]){
 				if(k != 'store'){
 					var carrier =  k;
-					var days = data[key][k].servicedays;
+					var days = Number(data[key][k].servicedays); // Add One more day to estimated
+					var truecost = data[key][k].truecost;
+			
 					if(carrier && days){
+						
+						//costFilter.push(Number(truecost));
+						
+						daysFilter.push(Number(days));
+						
 						var table = '<table>'+
 								'<tr>'+
 									'<td style="font-weight:bold">Delivery from</td>'+
@@ -155,21 +174,79 @@ function buildTableResults(data){
 									'<td style="font-weight:bold">Service Days</td>'+
 									'<td>'+days+'</td>'+
 								'</tr>'+
+								'<tr>'+
+									'<td style="font-weight:bold">True Cost</td>'+
+									'<td>'+truecost+'$</td>'+
+								'</tr>'+
 							'</table>';
 							
-						 $j('.result-estimate').append(table);
+						 $j('#best-carriers').append(table);
 					}
 
 				}
 			}			
 	 }
 	 
-	 $j('.reman_preloader_shipping').hide();
-	 $j('.result-estimate').show();
+	 getMinDaysCarrirer(data,daysFilter.min());
 }
 
+
+function getMinDaysCarrirer(data,mindays){
+  var minDaysDelivery = {};
+  var minPrice = []; 
+  for (key in data){
+	for (k in data[key]){
+		var hash = Math.floor((Math.random()*10)+1);
+		if( mindays == data[key][k].servicedays){
+			minDaysDelivery[data[key].store+'_'+hash] = {
+				'carrier'    : k,
+				'servicedays': data[key][k].servicedays,
+				'truecost' : data[key][k].truecost
+			}
+			
+			minPrice.push(Number(minDaysDelivery[data[key].store+'_'+hash].truecost)); 
+		}
+	}
+  }
+   bestPrice(minDaysDelivery,minPrice);
+}
+
+function bestPrice(data,minPrice){
+	var bestCarrier = {};
+	var price = minPrice.min();
+	for (key in data){
+		if(price == Number(data[key].truecost)){
+			var store = key;
+			bestCarrier[key] = {
+				'carrier'    : data[key].carrier,
+				'servicedays': data[key].servicedays,
+				'truecost' : data[key].truecost
+			}
+		}
+ 	 }
+	 
+	 
+	 if(bestCarrier[store].servicedays > 1){
+		var result_text =  bestCarrier[store].servicedays+' Days or less';	
+	 }else{
+	 	var result_text =  bestCarrier[store].servicedays+' Day';
+	 }
+	 
+	 $j('#shipping-result').html(result_text);
+	 
+	 $j('.reman_preloader_shipping').hide();
+	 $j('.result-estimate').show();
+	 
+	 console.log(bestCarrier);
+	 
+}
 
 function resetShipping(){
 	$j('#shipping-wrapper').html('');
 	$j('#steps').show();
-}	
+}
+
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
+	

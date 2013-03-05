@@ -1,4 +1,12 @@
-
+<?php
+/**
+ * Reman Shipping Estimate Template
+ *
+ * @category    Reman
+ * @package     Design
+ * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+ */
+?>
 <?php
 	
 	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
@@ -12,33 +20,18 @@
 	$atl = $_product->getData('parts_inventory_se');
 	
 	$array = array();
-
-	
 	if($bwi != 0 && $bwi != null){
-		
 		array_push($array, "21113");
-			
 	}
 	
-	
-		
 	array_push($array, "53223");
-			
 	
-	
-	if($ont != 0 && $ont != null){
-		
+	if($ont != 0 && $ont != null){	
 		array_push($array, "91761");
-			
 	}
-	
-	if($atl != 0 && $atl != null){
-		
+	if($atl != 0 && $atl != null){	
 		array_push($array, "30344");
-			
 	}
-	 
-	
 ?>
 
 
@@ -60,10 +53,19 @@
           
     </div>
     
+    <div id="best-shipping" class="result-estimate" style="display:none;">
+    	<table>
+        	<tr>
+            	<td style="font-size:17px; padding-top:15px;">Estimate Delivery Time:</td>
+                <td id="shipping-result" style="font-size:17px; width:111px; font-weight:bold; padding-top:16px;"></td>
+                <td style="width:90px;"><button style="margin-top:0px; height:40px;" onclick="Reman_QuickQuote.prototype.loadOrder(); return false;">Order</button></td>
+            </tr>
+        </table>
+    </div>
     
-    <div class="result-estimate" style="display:none;">
-        
-       <!-- <button onclick="Reman_QuickQuote.prototype.loadOrder(); return false;">Order</button>-->
+    
+    <div style="clear:both;"></div>
+    <div id="best-carriers" class="result-estimate" style="display:none;">
     </div>
 </div>
 
