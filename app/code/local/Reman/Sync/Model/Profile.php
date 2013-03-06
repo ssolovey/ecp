@@ -159,7 +159,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 	// override
 	public function syncData()
 	{	
-		$this->_scanFolder('customers/');
+		$this->_scanFolder('Customers/');
 	}
 	
 	
