@@ -18,6 +18,8 @@
 	$ont = $_product->getData('parts_inventory_sw');
 	//ATL Stock
 	$atl = $_product->getData('parts_inventory_se');
+	//DALLAS Stock
+	$dal = $_product->getData('parts_inventory_mc');
 	
 	$array = array();
 	if($bwi != 0 && $bwi != null){
@@ -32,6 +34,11 @@
 	if($atl != 0 && $atl != null){	
 		array_push($array, "30344");
 	}
+	
+	if($dal != 0 && $dal != null){	
+		array_push($array, "75261");
+	}
+	
 ?>
 
 

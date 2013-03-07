@@ -9,10 +9,11 @@
  var MAXCOST = 200;
  	
  var storeZIP = {
-	53223: 'Milwaukee, WI',   // TODO Dallas, TX 
+	53223: 'Milwaukee, WI',
 	91761: 'Ontario, CA',
 	30344: 'Atlanta, GA',
-	21113: 'Baltimore, MD' 
+	21113: 'Baltimore, MD',
+	75261: 'Dulles, TX'
  }
 	
 function loadShippingPage(){
