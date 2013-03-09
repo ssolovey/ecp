@@ -50,7 +50,7 @@
             <td>
             <?php 
                 $partType = $_product->getName();
-                echo Mage::helper('warranty')->getOriginalWarranty($partType[0]); 
+                echo Mage::helper('warranty')->getBaseWarranty($partType[0],$_product); 
             ?>
             </td>
         </tr>
