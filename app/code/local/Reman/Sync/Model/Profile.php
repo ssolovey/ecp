@@ -150,7 +150,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$customer->save();
 		
 		// Send confirmation email
-		$customer->sendNewAccountEmail('confirmation');
+		//$customer->sendNewAccountEmail('confirmation');
 		
 		// Delete file
 		//unlink( $this->_file );
