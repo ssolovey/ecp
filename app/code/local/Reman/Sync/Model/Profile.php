@@ -23,17 +23,18 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 
 	public function _construct()
 	{
-		parent::_construct();
-		
-		$this->_companies		=	Mage::getModel('company/company');
-		
-		$this->_customers		=	Mage::getModel('customer/customer');
-		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
+		parent::_construct();				
 	}
 	
 	// override
 	protected function _parseItem( $item )
 	{
+		
+		$this->_companies		=	Mage::getModel('company/company');
+		
+		$this->_customers		=	Mage::getModel('customer/customer');
+		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
+		
 		echo '<table width="600px" border="1" cellspacing="0" cellpadding="5">';
 		echo '<tr><td>Customer Num</td><td>' . $item[0] . '</td></tr>';
 		echo '<tr><td>Cust Name</td><td>' . $item[1] . '</td></tr>';

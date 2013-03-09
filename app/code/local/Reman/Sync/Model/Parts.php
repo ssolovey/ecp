@@ -94,9 +94,10 @@ class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
 	 */
 	protected function _updateProductAttributes($product, $data)
 	{
-
-		$product->setParts_commercial_warranty2(	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ) );
-		$product->setParts_original_warranty2(		$this->getOptionId( $product->getResource()->getAttribute('parts_original_warranty2'), $data[15] ) );
+		$product->setParts_commercial_warranty(		$data[17] );
+		$product->setParts_original_warranty(		$data[15] );
+		//$product->setParts_commercial_warranty2(	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ) );
+		//$product->setParts_original_warranty2(		$this->getOptionId( $product->getResource()->getAttribute('parts_original_warranty2'), $data[15] ) );
 
 		$product->setPrice(							$data[12] );
 		$product->setParts_msrp(					$data[12] );
