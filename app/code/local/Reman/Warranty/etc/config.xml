@@ -35,9 +35,6 @@
 			<warranty_mysql4>
 				<class>Reman_Warranty_Model_Mysql4</class>
 				<entities>
-					<gsw> 
-						<table>reman_gsw</table>
-					</gsw>
 					<warranties> 
 						<table>reman_warranties</table>
 					</warranties>

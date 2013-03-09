@@ -47,6 +47,9 @@
 					<gsp> 
 						<table>reman_gsp</table>
 					</gsp>
+					<gsw> 
+						<table>reman_gsw</table>
+					</gsw>
 				</entities>
 			</sync_mysql4>
 		</models>
