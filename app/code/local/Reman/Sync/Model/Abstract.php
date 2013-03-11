@@ -54,6 +54,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		{
 			$this->_parseFile( $file );
 		}
+		
+		$this->syncLog($folder, "Scaned");
 	}
 	
 	/**
@@ -70,13 +72,11 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			
 			$this->_parseFile( $path );
 			
-			$message = 'Synced';
 		} else {
-			$message = 'Not found';
-		}
-		
-		$this->syncLog($path, $message);
+			$this->syncLog($path, "Not found");
+		}		
 	}
+	
 	/**
 	 * Do some action before parsing file
 	 * (if necessary) 
@@ -108,6 +108,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		}
 					
 		unlink($path);
+		
+		$this->syncLog($path, "Synced");
 	}
 	
 	/**
