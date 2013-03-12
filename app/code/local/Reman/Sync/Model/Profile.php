@@ -124,6 +124,8 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		if ( $customer->getId() ) {
 			//echo '<h3>UPDATE CUSTOMER DATA</h3>';
 			$customer->addData( $data );
+			
+			$customer->save();
 		} else {
 			//echo '<h3>ADD NEW CUSTOMER</h3>';
 			
@@ -145,14 +147,14 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			
 			// create new admin			
 			$customer->setData( $data );
+			
+			$customer->setPassword( $customer->generatePassword(8) );
+			
+			$customer->save();
+			
+			// Send confirmation email
+			$customer->sendNewAccountEmail('confirmation');
 		}
-		
-		$customer->setPassword( $customer->generatePassword(8) );
-		$customer->save();
-		
-		// Send confirmation email
-		//$customer->sendNewAccountEmail('confirmation');
-		
 		// Delete file
 		//unlink( $this->_file );
 	}
