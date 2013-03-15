@@ -413,7 +413,10 @@ Reman_QuickQuote.prototype = {
 					// If Session Expired
 					if(response.end_session) {
 						//show error popup
+						$j('#preloader_cont').hide();
 						$j('#session_error_popup').fadeIn();
+						
+						return;
 					}
 					
 					// CHECK For DATA if NULL return
@@ -474,7 +477,10 @@ Reman_QuickQuote.prototype = {
 						// If Session Expired
 						if(response.end_session) {
 							//show error popup
+							$j('#preloader_cont').hide();
 							$j('#session_error_popup').fadeIn();
+							
+							return;
 						}
 						//If Group == 0 and Subgroup == 0 and Part_number in not null
 						if(response.length == 1){
@@ -622,7 +628,10 @@ Reman_QuickQuote.prototype = {
 							// If Session Expired
 							if(response.end_session) {
 								//show error popup
+								$j('#preloader_cont').hide();
 								$j('#session_error_popup').fadeIn();
+								
+								return;
 							}
 							//Set current Parts Family 
 							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
