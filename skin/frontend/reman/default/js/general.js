@@ -410,6 +410,12 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 					//parse response to JSON Object		  
 					var response =  $j.parseJSON(data.responseText);
+					// If Session Expired
+					if(response.end_session) {
+						//show error popup
+						$j('#session_error_popup').fadeIn();
+					}
+					
 					// CHECK For DATA if NULL return
 					if(response.length == 0){
 						//show error popup
@@ -465,7 +471,11 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 						//parse response to JSON Object		  
 						var response = $j.parseJSON(data.responseText);
-						
+						// If Session Expired
+						if(response.end_session) {
+							//show error popup
+							$j('#session_error_popup').fadeIn();
+						}
 						//If Group == 0 and Subgroup == 0 and Part_number in not null
 						if(response.length == 1){
 							if(response[0].part_number != null){
@@ -609,7 +619,11 @@ Reman_QuickQuote.prototype = {
 						complete: function(data){
 							//parse response to JSON Object		  
 							var response = $j.parseJSON(data.responseText);
-							
+							// If Session Expired
+							if(response.end_session) {
+								//show error popup
+								$j('#session_error_popup').fadeIn();
+							}
 							//Set current Parts Family 
 							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
 							//Set current Group Name 

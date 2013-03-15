@@ -26,6 +26,20 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// parse request data
 		$request = $this->getRequest()->getPost();
 		
+		// If User Session expired redirect to login page
+		if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+			
+			// value for MSRP and CORE prices
+			$check_session = array(
+				"end_session" => true
+			);	
+			
+			echo json_encode($check_session);	
+			
+			die;	
+				
+		}
+		
 		if($request['step'] == 2)
 		{
 			// get years accprding to selected make

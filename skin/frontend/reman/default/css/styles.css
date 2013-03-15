@@ -2770,7 +2770,7 @@ background-position: 0px 20px;
 }
 
 /*Error Part Number Popup*/
-#product_error_popup{
+#product_error_popup , #session_error_popup{
 	width: 260px;
 	height: 90px;
 	border: 1px solid #E06060;
@@ -2785,7 +2785,7 @@ background-position: 0px 20px;
 	display:none;
 }
 
-#product_error_popup button{
+#product_error_popup button , #session_error_popup button{
 	width: 80px;
 	height: 25px;
 	margin-top: 10px;
