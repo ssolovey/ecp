@@ -832,6 +832,13 @@ function manageUserAccount(action,id,el){
 					}
 					$j(el).parent().find('a.ac_'+data.responseText).html(data.responseText);
 					$j('.lite-loader').remove();
+					
+					if(data.responseText == 'Deactivate'){
+						$j(el).parent().find('a.ac_'+data.responseText).parent().prev().html('Active');
+					}else if(data.responseText == 'Activate'){
+						$j(el).parent().find('a.ac_'+data.responseText).parent().prev().html('Disabled');
+					}
+					
 					$j(el).parent().find('a.ac_'+data.responseText).show();
 				}
 		});

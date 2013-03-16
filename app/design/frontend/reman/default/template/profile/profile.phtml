@@ -30,6 +30,7 @@
                 <td class="lable">Last name</td>
                 <td class="lable">User e-mail</td>
                 <td class="lable">Status</td>
+                <td class="lable"></td>
             </tr>
 			<?php  foreach($result as $key => $value): ?>
                  <?php if ($value['group_id'] != 6): ?>
@@ -44,6 +45,17 @@
                         <td><?php echo $value['firstname'] ?></td>
                         <td><?php echo $value['lastname'] ?></td>
                         <td><?php echo $value['email'] ?></td>
+                        <td>
+                        	<?php 
+									if ($value['group_id'] == 7){
+										echo 'Disabled';
+									}else{
+										echo 'Active';
+									}
+							?>	
+                                
+                        
+                        </td>
                          <td class="activate_links">
                             <a class="ac_Deactivate" <?php if ($value['group_id'] == 7): ?>style="display:none" <?php endif; ?> onclick=" manageUserAccount('<?php echo $action.'disable'; ?>', <?php echo $selectedUserID ?> , this); return false;">Deactivate</a>
                             
