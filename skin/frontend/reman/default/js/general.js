@@ -806,3 +806,35 @@ jQuery.fn.sort = function() {
 function sortAlpha(a,b){  
     return a.innerHTML > b.innerHTML ? 1 : -1;  
 };
+
+/*Profile Enable Account*/
+
+function manageUserAccount(action,id,el){
+		$j.ajax({
+				url: action,
+				type: 'POST',
+				data: {
+					id: id,	
+				},
+				
+				beforeSend: function(){
+					$j(el).parent().find('a').hide();
+					$j(el).parent().append('<div class="lite-loader"></div>');
+				},
+						
+				complete: function(data){
+					// If Session Expired
+					if(data.responseText == 'end_session') {
+						//show error popup
+						$j('#session_error_popup_profile').fadeIn();
+						
+						return;
+					}
+					$j(el).parent().find('a.ac_'+data.responseText).html(data.responseText);
+					$j('.lite-loader').remove();
+					$j(el).parent().find('a.ac_'+data.responseText).show();
+				}
+		});
+}
+
+

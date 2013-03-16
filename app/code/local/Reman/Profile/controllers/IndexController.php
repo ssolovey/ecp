@@ -17,7 +17,17 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 	/** 
 	  *Enable Customers's profile
 	*/
-	public function enableAccountAction() {
+	public function enableAction() {
+		
+		// If User Session expired redirect to login page
+		if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+			
+			echo "end_session";	
+			
+			die;	
+				
+		}
+		
 		//get Selected User ID
 		$request = $this->getRequest()->getParams();	
 		// Load Users Object Data
@@ -25,13 +35,22 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 		//  Set SALES Group to Customer Profile
 		$customer->setGroupId(Mage::helper('customer')->getSalesGroupId());
 		$customer->save();
-		// redirect to profile page
-		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account#edit'));
+		
+		echo 'Deactivate';
+		
 	}
 	/** 
 	  *Disable Customers's profile
 	*/
-	public function disableAccountAction() {
+	public function disableAction() {
+		// If User Session expired redirect to login page
+		if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+			
+			echo "end_session";	
+			
+			die;	
+				
+		}
 		//get Selected User ID
 		$request = $this->getRequest()->getParams();	
 		// Load Users Object Data
@@ -39,8 +58,8 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 		//  Set DIsabled Group to Customer Profile
 		$customer->setGroupId(7); // Disabled Group ID = 7
 		$customer->save();
-		// redirect to profile page
-		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account#edit'));
+		
+		echo 'Activate';
 	}
 	
 }

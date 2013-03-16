@@ -2792,6 +2792,28 @@ background-position: 0px 20px;
 	cursor:pointer;
 }
 
+#session_error_popup_profile{
+	width: 260px;
+	height: 90px;
+	border: 1px solid #E06060;
+	text-align: center;
+	padding-top: 40px;
+	font-weight: bold;
+	z-index: 5;
+	position: absolute;
+	background: white;
+	left: 163px;
+	top: 82px;
+	display:none;
+}
+
+#session_error_popup_profile button{
+	width: 80px;
+	height: 25px;
+	margin-top: 10px;
+	cursor:pointer;
+}
+
 /*Inventory Info BLock*/
 
 #stock_avl table {
@@ -3021,7 +3043,7 @@ text-decoration: none;
 	text-align: center;
 	width: 100px;
 	font-size: 11px;
-	padding: 5px;
+	padding: 6px;
 	color:#000;
 }
 
@@ -3069,6 +3091,21 @@ text-decoration: none;
 	margin-left:45px;
 	margin-top:20px;
 }
+
+.reman_users_table .activate_links {
+	cursor:pointer;
+	position:relative;
+}
+
+.lite-loader {
+	background:url(../images/lite-loader.gif) no-repeat;
+	width:24px;
+	height:24px;
+	position: absolute;
+	bottom: 1px;
+	left: 44px;
+}
+
 
 /* Order */
 
