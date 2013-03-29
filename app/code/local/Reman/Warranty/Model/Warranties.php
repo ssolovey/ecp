@@ -37,4 +37,22 @@ class Reman_Warranty_Model_Warranties extends Mage_Core_Model_Abstract
 	
 		return $warranties_list;
 	}
+	
+	
+	/**
+	 * Get warranty waight value
+	 * data preformed from database 
+	 *
+	 * @return string
+	 */
+	public function getWarrantyWeight($id) {
+	
+		foreach ( $this->getCollection() as $item ) {
+			
+			if($id == $item->warranty_id)
+			{
+				return $item->value;
+			}
+		}
+	}
 }

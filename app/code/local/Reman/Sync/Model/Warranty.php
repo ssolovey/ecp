@@ -6,35 +6,40 @@
  * @package     Reman_Sync
  * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
-class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
-{	
+class Reman_Sync_Model_Warranty extends Reman_Sync_Model_Abstract
+{
+	
+	protected $_model;
+	
 	public function _construct()
 	{
 		parent::_construct();
-		$this->_init('sync/gsw'); 
+		
+		$this->_model	=	Mage::getModel('warranty/warranties');
 	}
 	
 	// override
 	protected function _parseItem( $item )
 	{
-		$this->setData(
+		$this->_model->setData(
 			array(
-				'customer_id'	=>		$item[0],
-				'type'			=>		$item[1],
-				'warranty_id'	=>		$item[4]
+				'warranty_id'	=>		$item[0],
+				'value'			=>		$item[1],
+				'warranty'		=>		$item[2]
 			)		    	
 		);
-		$this->save();		
+		
+		$this->_model->save();		
 	}
 	
 	// override
 	protected function _beforeParseFile() {
-		$this->getResource()->trancateTable();	
+		$this->_model->getResource()->trancateTable();	
 	}
 	
 	// override
 	public function syncData()
 	{
-		$this->_loadFile( 'GSW.TXT' );
+		$this->_loadFile( 'WARRANTY.TXT' );
 	}
 }

@@ -409,6 +409,15 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 					//parse response to JSON Object		  
 					var response =  $j.parseJSON(data.responseText);
+					// If Session Expired
+					if(response.end_session) {
+						//show error popup
+						$j('#preloader_cont').hide();
+						$j('#session_error_popup').fadeIn();
+						
+						return;
+					}
+					
 					// CHECK For DATA if NULL return
 					if(response.length == 0){
 						//show error popup
@@ -464,7 +473,14 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 						//parse response to JSON Object		  
 						var response = $j.parseJSON(data.responseText);
-						
+						// If Session Expired
+						if(response.end_session) {
+							//show error popup
+							$j('#preloader_cont').hide();
+							$j('#session_error_popup').fadeIn();
+							
+							return;
+						}
 						//If Group == 0 and Subgroup == 0 and Part_number in not null
 						if(response.length == 1){
 							if(response[0].part_number != null){
@@ -608,7 +624,14 @@ Reman_QuickQuote.prototype = {
 						complete: function(data){
 							//parse response to JSON Object		  
 							var response = $j.parseJSON(data.responseText);
-							
+							// If Session Expired
+							if(response.end_session) {
+								//show error popup
+								$j('#preloader_cont').hide();
+								$j('#session_error_popup').fadeIn();
+								
+								return;
+							}
 							//Set current Parts Family 
 							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
 							//Set current Group Name 
@@ -782,3 +805,42 @@ jQuery.fn.sort = function() {
 function sortAlpha(a,b){  
     return a.innerHTML > b.innerHTML ? 1 : -1;  
 };
+
+/*Profile Enable Account*/
+
+function manageUserAccount(action,id,el){
+		$j.ajax({
+				url: action,
+				type: 'POST',
+				data: {
+					id: id,	
+				},
+				
+				beforeSend: function(){
+					$j(el).parent().find('a').hide();
+					$j(el).parent().append('<div class="lite-loader"></div>');
+				},
+						
+				complete: function(data){
+					// If Session Expired
+					if(data.responseText == 'end_session') {
+						//show error popup
+						$j('#session_error_popup_profile').fadeIn();
+						
+						return;
+					}
+					$j(el).parent().find('a.ac_'+data.responseText).html(data.responseText);
+					$j('.lite-loader').remove();
+					
+					if(data.responseText == 'Deactivate'){
+						$j(el).parent().find('a.ac_'+data.responseText).parent().prev().html('Active');
+					}else if(data.responseText == 'Activate'){
+						$j(el).parent().find('a.ac_'+data.responseText).parent().prev().html('Disabled');
+					}
+					
+					$j(el).parent().find('a.ac_'+data.responseText).show();
+				}
+		});
+}
+
+

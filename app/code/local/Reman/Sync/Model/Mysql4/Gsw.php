@@ -6,11 +6,11 @@
  * @package     Reman_Warranty
  * @author		Artem Petrosyan (artpetrosyan@gmail.com)
  */
-class Reman_Warranty_Model_Mysql4_Gsw extends Mage_Core_Model_Mysql4_Abstract
+class Reman_Sync_Model_Mysql4_Gsw extends Mage_Core_Model_Mysql4_Abstract
 {
 	public function _construct()
 	{
-		$this->_init('warranty/gsw',	'gsw_id');
+		$this->_init('sync/gsw',	'gsw_id');
 		$this->_isPkAutoIncrement = false;
 	}
 	

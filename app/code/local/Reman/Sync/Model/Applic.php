@@ -64,6 +64,5 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	*/
 	public function getProductEngine ($applic_id){
 		return $this->getResource()->getProductEngine($applic_id);
-	
 	}
 }

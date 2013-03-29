@@ -85,7 +85,7 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 		
 		$result = $this->_getReadAdapter()->fetchAll($select); // run sql query
 		
-		return $result[0]['engine_size'];
+		return $result[0]['engine_size'];	
 	}
 	
 	/**

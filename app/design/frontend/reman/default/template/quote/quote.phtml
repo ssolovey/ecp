@@ -56,6 +56,12 @@
 		<div id="product_error_popup">
     		<span>Part number for selected configuration is not available.</span>
             <button onclick="$j('#product_error_popup').fadeOut();">OK</button>
+    	</div>
+        
+        <div id="session_error_popup">
+    		<span>Sorry, your current session has expired. Please login again</span>
+            <button onclick="window.location.href = '<?php echo Mage::getUrl('customer/account/login'); ?>'; return false;">OK</button>
     	</div> 
+         
 	</div>
 </div>

@@ -11,6 +11,7 @@
 <?php 
 	/* Get Companies Customers*/
 	$result = Mage::helper('company')->getCompanyCustomers();
+
 	/* Define action URL */
 	$action = Mage::getUrl('profile/index');
 ?>	
@@ -29,35 +30,49 @@
                 <td class="lable">Last name</td>
                 <td class="lable">User e-mail</td>
                 <td class="lable">Status</td>
+                <td class="lable"></td>
             </tr>
 			<?php  foreach($result as $key => $value): ?>
-                <?php 
-					/**
-						Define Action Method
-					*/
-					if($value['group_id'] == 1){
-						$actionMethod = "disableAccount";
-					}else if($value['group_id'] == 7){
-						$actionMethod = "enableAccount";
-					}
-					 /**
-					 	Define selected user ID
-					 */
-					$selectedUserID =  $value['entity_id'];
-				?>
-                <tr>
-                    <td><?php echo $value['firstname'] ?></td>
-                    <td><?php echo $value['lastname'] ?></td>
-                    <td><?php echo $value['email'] ?></td>
-                    <td>
-                    	<a href="<?php 
-							echo $action.''.$actionMethod.'/params?id='.$selectedUserID ?>"><?php echo $value['group_id'] == 1 ? "Deactivate" : "Activate"; ?>
-                        </a>
-                    </td>
-                </tr>
+                 <?php if ($value['group_id'] != 6): ?>
+					<?php 
+                         /**
+                            Define selected user ID
+                         */
+                        $selectedUserID =  $value['entity_id'];
+					
+                    ?>
+                    <tr>
+                        <td><?php echo $value['firstname'] ?></td>
+                        <td><?php echo $value['lastname'] ?></td>
+                        <td><?php echo $value['email'] ?></td>
+                        <td>
+                        	<?php 
+									if ($value['group_id'] == 7){
+										echo 'Disabled';
+									}else{
+										echo 'Active';
+									}
+							?>	
+                                
+                        
+                        </td>
+                         <td class="activate_links">
+                            <a class="ac_Deactivate" <?php if ($value['group_id'] == 7): ?>style="display:none" <?php endif; ?> onclick=" manageUserAccount('<?php echo $action.'disable'; ?>', <?php echo $selectedUserID ?> , this); return false;">Deactivate</a>
+                            
+                            <a class="ac_Activate" <?php if ($value['group_id'] == 1): ?>style="display:none" <?php endif; ?> onclick=" manageUserAccount('<?php echo $action.'enable' ?>', <?php echo $selectedUserID ?> , this); return false;">Activate</a>
+                            
+                            
+                        </td>
+                        
+                    </tr>
+                <?php endif; ?>
             <?php endforeach; ?>
         </table>    
 	<?php endif; ?>
     <div class="add_new_user_link"></div>
 <?php endif; ?>
+<div id="session_error_popup_profile">
+    <span>Sorry, your current session has expired. Please login again</span>
+    <button onclick="window.location.href = '<?php echo Mage::getUrl('customer/account/login'); ?>'; return false;">OK</button>
+</div> 
 </div>
