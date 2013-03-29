@@ -22,7 +22,7 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 	 * 
      * @return string
      */
-    public function getBaseWarranty($case,$product)
+    public function getBaseWarrantyId($case,$product)
     {
        	$company = Mage::helper('company')->getCustomerCompanyObject();
 		
@@ -41,7 +41,8 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		{
 			foreach($warrantyArray as $index){
 				if( $index['value'] == $warrantyID){ // return Base Warranty Value from comapny profile if parts original is empty
-					return $index['label'];
+					//return $index['label'];
+					return $index['value'];
 				}
 			}
 		}else{
@@ -68,4 +69,16 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 			}	
 		}
     }
+	
+	public function getBaseWarrantyLabel($case,$product){
+		// Warranty Array
+		$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
+		$warrantyId = $this->getBaseWarrantyId($case,$product);
+		foreach($warrantyArray as $index){
+			if( $index['value'] == $warrantyId){
+				return  $index['label'];
+			}
+		}
+	}
+	
 }

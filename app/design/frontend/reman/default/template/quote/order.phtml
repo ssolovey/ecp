@@ -11,22 +11,19 @@
 <?php 
 	// Load Product Object	
 	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
-
 	// Load Warranty Object
-	$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray(); 
-	
+	$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
+	//Product Type
+	$partType = $_product->getName();
+	// Calculated Warranty Id
+	$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
+	// Parts Commercial Warranty value
+	$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty'); 
+	// Current Logged Company
 	$company = Mage::helper('company')->getCustomerCompanyObject();
-		
-	if($this->getRequest()->getPost('case')== "T"){
-		$warrantyID = $company->at_war;
-	}else if($case == "X"){
-		$warrantyID = $company->tc_war;
-	}
-	
 	// Load Current Logged Customer Object
 	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
 	$customer = Mage::getModel('customer/customer')->load($customer_id);
-	
   	//state names
     $states = Mage::getModel('directory/country')->load('US')->getRegions();
 ?>
@@ -250,11 +247,18 @@
                 <div class="title">Warranty</div>
                 <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', this.value); return false;" >
                     <?php  foreach($warrantyArray as $index): ?>
-                    	 <?php if($index['value'] == ''): ?>
-                           <option value="">...</option>
-						 <?php else: ?>
-						 	 <option <?php if($index['value'] == $warrantyID): ?> selected="selected" <?php endif; ?> value="<?php echo $index['value'] ?>"><?php echo $index['label'] ?></option>
-						 <?php endif; ?>
+						 	 <option <?php if($index['value'] == $warrantyId): ?> selected="selected"  <?php else: ?> 
+                             <?php /*?>
+								Display all warranties Names whose value 
+								retrieved from the Warranty File is less than or equal to the BWV
+								(calculated in (a))
+							 <?php */?>
+                             
+                             <?php if ($index['value'] > $warrantyId):?>
+                             	style="display:none;"
+                             <?php endif; ?>   
+
+							 <?php endif; ?>value="<?php echo $index['value'] ?>"><?php echo $index['label'] ?></option>
                     <?php endforeach; ?>
                 </select>
             	<input id="order_warrenty" type="hidden" name="warrenty_terms" value="" />
@@ -275,6 +279,11 @@
     <script type="text/javascript">
     //<![CDATA[
         var dataForm = new VarienForm('form-order', true);
+		
+		// Parts Commercial Warranty value
+		var comWarrantyId = <?php echo $parts_commercial_warrantyId; ?>;
+		var baseWarrantyId = <?php echo $warrantyId; ?>;
+		
     //]]>
 		
 		$j(document).ready(function(){
@@ -313,8 +322,41 @@
 		$j('#commercial_app').click(function(){
 			if($j(this).is(':checked')){
 				$j('#commercial_app_value').attr('value',"Y");
+				
+				/*
+					iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
+						 AND the retrieved Commwar value is less than the BWV, then the values retrieved form
+						 the Warranty File become the BW and the BWV
+				*/
+				
+				if(comWarrantyId < baseWarrantyId){
+					$j('#warrenty_select option').filter(function(index) {
+							if(this.value == comWarrantyId){
+								$j(this).attr('selected','selected');
+								$j(this).show();
+							}
+							if(this.value > comWarrantyId){
+								$j(this).hide();
+							}
+					});
+				}
+				
 			}else{
 				$j('#commercial_app_value').attr('value',"N");
+				
+				if(comWarrantyId < baseWarrantyId){
+					$j('#warrenty_select option').filter(function(index) {
+							if(this.value > baseWarrantyId){
+								$j(this).hide();
+							}else if(this.value <= baseWarrantyId){
+								$j(this).show();
+							}
+							if(this.value == baseWarrantyId){
+								$j(this).attr('selected','selected');
+							}
+					});
+				}
+				
 			}
 		});
 		
