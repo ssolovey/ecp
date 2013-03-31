@@ -37,4 +37,10 @@ class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
 	{
 		$this->_loadFile( 'GSW.TXT' );
 	}
+	
+	
+	public function loadWarranryID($gsw_link, $category){
+		return $this->getResource()->loadWarranryID($gsw_link, $category);
+	}
+	
 }

@@ -30,6 +30,7 @@ class Reman_Warranty_Model_Warranties extends Mage_Core_Model_Abstract
 		foreach ( $this->getCollection() as $item ) {
 			array_push($warranties_list, array(
 					'value'     => $item->warranty_id,
+					'weight'    => $item->value,
 					'label'     => $item->warranty
 				)
 			);

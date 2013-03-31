@@ -34,7 +34,7 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		// Warranty Array
 		$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
-		// Parts Original Warranty value
+		// Parts Original Warranty ID
 		$parts_original_warrantyId = $product->getData('parts_original_warranty');
 		
 		if(is_null($parts_original_warrantyId))
@@ -56,14 +56,14 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 			{
 				foreach($warrantyArray as $index){
 					if( $index['value'] == $parts_original_warrantyId){
-						return  $index['label'];	// Parts Warranty Became Base Warranty
+						return  $index['value'];	// Parts Warranty Became Base Warranty
 					}
 				}
 			}else{
 				
 				foreach($warrantyArray as $index){
 					if( $index['value'] == $warrantyID){
-						return  $index['label'];  // Company Warranty Became Base Warranty
+						return  $index['value'];  // Company Warranty Became Base Warranty
 					}
 				}
 			}	
@@ -79,6 +79,15 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 				return  $index['label'];
 			}
 		}
+	}
+	
+	
+	public function getAdditionalWarranty($gsw_link, $type){
+		
+		$AdditionalWarrantyId = Mage::getModel('sync/gsw')->loadWarranryID($gsw_link, $type); 
+		
+		return $AdditionalWarrantyId;
+	
 	}
 	
 }

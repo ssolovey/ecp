@@ -15,10 +15,17 @@
 	$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
 	//Product Type
 	$partType = $_product->getName();
+	
 	// Calculated Warranty Id
 	$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
-	// Parts Commercial Warranty value
-	$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty'); 
+	//Get BaseWarrantyWeightID
+	$warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
+	// Parts Commercial Warranty ID
+	$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
+	// Parts Commercial Warranty Weight ID
+	$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
+	
+	 
 	// Current Logged Company
 	$company = Mage::helper('company')->getCustomerCompanyObject();
 	// Load Current Logged Customer Object
@@ -26,6 +33,34 @@
 	$customer = Mage::getModel('customer/customer')->load($customer_id);
   	//state names
     $states = Mage::getModel('directory/country')->load('US')->getRegions();
+	
+	
+	switch($partType[0]){
+		
+		case 'T':{
+			
+			$GSW_link = $company->at_gswlink;
+			$type = 'AUTO TRANS';
+			break;
+		}
+		
+		case 'X':{
+			
+			$GSW_link = $company->tc_gswlink;
+			$type = 'TRANSFER CASE';
+			break;
+		}
+	
+	}
+	
+	$AdditionalWarrantyID_array = Mage::helper('warranty')->getAdditionalWarranty($GSW_link,$type);
+	
+	$AdditionalWarrantyWeights = array();
+	
+	foreach($AdditionalWarrantyID_array as $index){
+		
+		array_push($AdditionalWarrantyWeights, Mage::getModel('warranty/warranties')->getWarrantyWeight($index['warranty_id']));
+	}
 ?>
 
 <div id="reman_order">
@@ -247,18 +282,19 @@
                 <div class="title">Warranty</div>
                 <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', this.value); return false;" >
                     <?php  foreach($warrantyArray as $index): ?>
-						 	 <option <?php if($index['value'] == $warrantyId): ?> selected="selected"  <?php else: ?> 
+						 	 <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"  
+							 <?php else: ?> 
                              <?php /*?>
 								Display all warranties Names whose value 
 								retrieved from the Warranty File is less than or equal to the BWV
 								(calculated in (a))
 							 <?php */?>
                              
-                             <?php if ($index['value'] > $warrantyId):?>
+                             <?php if ($index['weight'] > $warrantyWeightID):?>
                              	style="display:none;"
                              <?php endif; ?>   
 
-							 <?php endif; ?>value="<?php echo $index['value'] ?>"><?php echo $index['label'] ?></option>
+							 <?php endif; ?>value="<?php echo $index['value'] ?>" weight="<?php echo $index['weight'] ?>"><?php echo $index['label'] ?></option>
                     <?php endforeach; ?>
                 </select>
             	<input id="order_warrenty" type="hidden" name="warrenty_terms" value="" />
@@ -281,8 +317,8 @@
         var dataForm = new VarienForm('form-order', true);
 		
 		// Parts Commercial Warranty value
-		var comWarrantyId = <?php echo $parts_commercial_warrantyId; ?>;
-		var baseWarrantyId = <?php echo $warrantyId; ?>;
+		var comWarrantyId = <?php echo $parts_commercial_warranty_weightId; ?>;
+		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 		
     //]]>
 		
@@ -331,11 +367,11 @@
 				
 				if(comWarrantyId < baseWarrantyId){
 					$j('#warrenty_select option').filter(function(index) {
-							if(this.value == comWarrantyId){
+							if($j(this).attr('weight') == comWarrantyId){
 								$j(this).attr('selected','selected');
 								$j(this).show();
 							}
-							if(this.value > comWarrantyId){
+							if($j(this).attr('weight') > comWarrantyId){
 								$j(this).hide();
 							}
 					});
@@ -346,12 +382,12 @@
 				
 				if(comWarrantyId < baseWarrantyId){
 					$j('#warrenty_select option').filter(function(index) {
-							if(this.value > baseWarrantyId){
+							if($j(this).attr('weight') > baseWarrantyId){
 								$j(this).hide();
-							}else if(this.value <= baseWarrantyId){
+							}else if($j(this).attr('weight') <= baseWarrantyId){
 								$j(this).show();
 							}
-							if(this.value == baseWarrantyId){
+							if($j(this).attr('weight') == baseWarrantyId){
 								$j(this).attr('selected','selected');
 							}
 					});
