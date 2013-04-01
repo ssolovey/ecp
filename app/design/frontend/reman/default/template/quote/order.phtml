@@ -34,7 +34,18 @@
   	//state names
     $states = Mage::getModel('directory/country')->load('US')->getRegions();
 	
-	
+	//Flued Options
+	/*
+	 * Parts Value: 7 = Required , 6 = Optional , 5 = None
+	 * Company VAlue: R = Required , O = Optional , N = None
+	 *
+	*/
+	if($_product->parts_fluid_option == 5){
+		$fluid = 'N';
+	}else{
+		$fluid = $company->fluid;
+	}
+
 	switch($partType[0]){
 		
 		case 'T':{
@@ -277,6 +288,29 @@
                 </table>
             
             </div>
+            
+            <?php if($partType[0] == 'T'): ?>	
+                <div id="fuid-info">
+                    <div class="title">Fluid</div>
+                    <?php if($fluid == 'O'): ?>	
+                        <div class="optional">
+                            <span>Optional: </span><input type="checkbox" name="fluid" value="1" />
+                        </div>
+                    <?php endif; ?> 
+                    
+                     <?php if($fluid == 'R'): ?>	
+                        <div class="text">
+                            <span>Fluid Required</span>
+                        </div>
+                     <?php endif; ?>
+                     
+                     <?php if($fluid == 'N'): ?>	
+                        <div class="text">
+                            <span>No Fluid Required</span>
+                        </div>
+                     <?php endif; ?>
+                </div>
+             <?php endif; ?>
             
             <div id="warranty-info">
                 <div class="title">Warranty</div>

@@ -3240,7 +3240,7 @@ text-decoration: none;
 	width:55px;
 }
 
-#warranty-info , #order-notes{
+#warranty-info , #order-notes , #fuid-info{
 	position: relative;
 	float: left;
 	width: 598px;
@@ -3250,7 +3250,7 @@ text-decoration: none;
 	z-index:1;
 }
 
-#warranty-info .title , #order-notes .title{
+#warranty-info .title , #order-notes .title , #fuid-info .title{
 	position: absolute;
 	background: #F2F2F2;
 	top: -10px;
@@ -3265,12 +3265,33 @@ text-decoration: none;
 	width:230px;
 }
 
+#fuid-info .optional, #fuid-info .text {
+	margin-top: 22px;
+	margin-left: 25px;
+}
+#fuid-info .optional span{
+	font-weight: bold;
+	font-size: 12px;
+	margin-right: 5px;
+	color:#000;
+
+}
+
+#fuid-info .text span{
+	font-size: 14px;
+	margin-right: 5px;
+	color:#cb1f30;
+
+}
+
  #order-notes textarea{
 	position: relative;
 	float: left;
 	margin-top: 10px;
 	margin-left: 35px;
 }
+
+
 /* Shipping Estimation*/
 
 #estimate-shipping {
