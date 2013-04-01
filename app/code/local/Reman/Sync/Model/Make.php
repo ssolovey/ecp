@@ -8,6 +8,9 @@
  */
 class Reman_Sync_Model_Make extends Reman_Sync_Model_Abstract
 {
+	// model log name
+	protected $_logid = 'make';
+	
 	public function _construct()
 	{
 		parent::_construct();

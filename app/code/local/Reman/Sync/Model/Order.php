@@ -8,6 +8,9 @@
  */
 class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 {
+	// model log name
+	protected $_logid = 'order';
+	
 	// override
 	protected function _parseItem( $item )
 	{

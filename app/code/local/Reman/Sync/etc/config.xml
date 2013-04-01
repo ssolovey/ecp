@@ -35,6 +35,9 @@
 			<sync_mysql4>
 				<class>Reman_Sync_Model_Mysql4</class>
 				<entities>
+					<log>
+						<table>reman_log</table>
+					</log>
 					<make> 
 						<table>reman_make</table>
 					</make>

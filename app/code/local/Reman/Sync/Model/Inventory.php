@@ -8,6 +8,9 @@
  */
 class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 {
+	// model log name
+	protected $_logid = 'inventory';
+	
 	// override
 	protected function _parseItem( $item )
 	{

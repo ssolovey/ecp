@@ -8,6 +8,9 @@
  */
 class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
 {	
+	// model log name
+	protected $_logid = 'gsw';
+	
 	public function _construct()
 	{
 		parent::_construct();

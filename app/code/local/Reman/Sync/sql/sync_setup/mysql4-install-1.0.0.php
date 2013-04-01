@@ -13,6 +13,14 @@ $installer = $this;
 $installer->startSetup();
 
 $installer->run("
+	DROP TABLE IF EXISTS {$this->getTable('sync/log')}; 
+	CREATE TABLE {$this->getTable('sync/log')} (
+	`model_id` varchar(16) NOT NULL COMMENT 'Model Name',
+	`sync_date` varchar(35) DEFAULT NULL COMMENT 'Sync Date',
+	`sync_items` int(4) NOT NULL DEFAULT '0' COMMENT 'Synced items',
+	`cron_date` varchar(35) DEFAULT NULL COMMENT 'Cron Date',
+	PRIMARY KEY (`model_id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	DROP TABLE IF EXISTS {$this->getTable('sync/make')}; 
 	CREATE TABLE {$this->getTable('sync/make')} (
 	`make_id` int(4) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Make ID',

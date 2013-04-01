@@ -8,6 +8,8 @@
  */
 class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 {
+	// model log name
+	protected $_logid = 'profile';
 	
 	//path to directory to scan
 	protected $_directory = 'import/customers_tests/';
