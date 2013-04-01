@@ -233,12 +233,14 @@ function bestPrice(data,minPrice){
 	 	var result_text =  bestCarrier[store].servicedays+' Day';
 	 }
 	 
+	 window.servicedays = bestCarrier[store].servicedays;
+	 window.truecost = bestCarrier[store].truecost;
+	 window.carrier = bestCarrier[store].carrier;
+	 
 	 $j('#shipping-result').html(result_text);
 	 
 	 $j('.reman_preloader_shipping').hide();
 	 $j('.result-estimate').show();
-	 
-	 console.log(bestCarrier);
 	 
 }
 

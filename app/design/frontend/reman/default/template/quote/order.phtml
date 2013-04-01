@@ -34,6 +34,12 @@
   	//state names
     $states = Mage::getModel('directory/country')->load('US')->getRegions();
 	
+	//Fluid Price
+	$FlUIDE_PRICE = 5;
+	
+	//Fluid Amount
+	$fliud_amount = $_product->parts_fluid_quantity;
+	
 	//Flued Options
 	/*
 	 * Parts Value: 7 = Required , 6 = Optional , 5 = None
@@ -42,8 +48,15 @@
 	*/
 	if($_product->parts_fluid_option == 5){
 		$fluid = 'N';
+		$fliudPrice = 0;
 	}else{
 		$fluid = $company->fluid;
+		
+		if($fluid == "R"){
+			$fliudPrice = $_product->parts_fluid_quantity * $FlUIDE_PRICE;
+		}else if( $fluid == "O"){
+			$fliudPrice = 0;
+		}
 	}
 
 	switch($partType[0]){
@@ -76,10 +89,22 @@
 
 <div id="reman_order">
     <form action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" method="post" id="form-order">
+        
+        <input type="hidden" name="data_order" value="<?php echo date("m.d.y");?>" />
+        <input type="hidden" name="ete_cust" value="<?php echo Mage::helper('company')->getCompanyAdminEmail();?>" />
         <input type="hidden" name="aspiration" value="<?php echo $_product->getData('parts_aspiration'); ?>" />
         <input type="hidden" name="fuel" value="<?php echo $_product->getData('parts_fuel'); ?>" />
         <input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
+        <input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
         
+        <!-- Fluid Price-->
+        <input type="hidden" id="fluid-amount" name="parts_amount" value="<?php echo $fliudPrice  ?>" />
+        
+        <!--Shipping-->
+        <input type="hidden" name="ship_amount" id="shippingcost" value="" />
+        <input type="hidden" name="carrier" id="shippingcarrier" value="" />
+        <input type="hidden" name="carrier_service" id="shippingdays" value="" />
+       
         <div class="title">Order</div>
             
             <div id="vehicle_info">
@@ -171,10 +196,12 @@
                         <tr>
                             <td class="label">Price:</td>
                             <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
+                            <input type="hidden" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
                         </tr>
                         <tr>
                             <td class="label">Core:</td>
                             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+                            <input type="hidden" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
                         </tr>
                         <tr>
                             <td class="label">Shipping:</td>
@@ -201,7 +228,7 @@
                     </tr>
                     <tr>
                         <td class="label">End User Name:</td>
-                        <td><input type="text" name="end_user_name" /></td>
+                        <td><input type="text" name="end_username" /></td>
                     </tr>
                 </table>
             </div>
@@ -213,20 +240,21 @@
                 <table class="vin">
                     <tr>
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" name="comany_name_st" value="<?php echo $this->helper('company')->getCompanyName(); ?>" /></td>
+                        <td><input type="text" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" /></td>
                     </tr>
                     <tr>
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" name="contact_name_st" value="<?php echo $customer->getFirstname(); ?>"/></td>
+                        <td><input type="text" name="so_cont_name" value="<?php echo $customer->getFirstname(); ?>"/></td>
                     </tr>
                     <tr>
                         <td class="label">Phone:</td>
-                        <td><input type="text" name="phone_st" value="<?php echo $customer->phone; ?>" /></td>
+                        <td><input type="text" name="so_phone" value="<?php echo $customer->phone; ?>" /></td>
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
                         <td><input type="text" name="adress_st" /></td>
                     </tr>
+                    <input type="hidden" name="so_phone_ext" value="" />
                 </table>
                 
                 <table class="adress">
@@ -257,33 +285,36 @@
                     </tr>
                     <tr>
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" name="company_name_sh" class="required-entry" /><em>*</em></td>
+                        <td><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" name="contact_name_sh" class="required-entry" /><em>*</em></td>
+                        <td><input type="text" name="st_cont_name" class="required-entry" /><em>*</em></td>
                     </tr>
                     <tr>
                         <td class="label">Phone:</td>
-                        <td><input type="text" name="phone_sh" class="required-entry" /><em>*</em></td>
+                        <td><input type="text" name="st_phone" class="required-entry" /><em>*</em></td>
+                        <input type="hidden" name="st_phone_ext" value="" />
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
-                        <td><input type="text" name="adress_sh" class="required-entry" /><em>*</em></td>
+                        <td><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
+                        <input type="hidden" name="st_addr2" value="" />
                     </tr>
                 </table>
                 
                 <table class="adress">
                     <tr>
-                        <td class="input-1"><input type="text" /></td>
+                        <td class="input-1"><input name="st_city" type="text" /></td>
                         <td style="padding-right:5px;">
-                            <select id="ship-to-states" style="width:135px;">
+                            <select id="ship-to-states" style="width:135px;" onchange="$j('#st_state').attr('value', this.value); return false;" >
                                <?php  foreach($states as $state): ?>
                                  <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
                                <?php endforeach; ?>   
                             </select>
+                            <input id="st_state" type="hidden" name="st_state" value="" />
                         </td>
-                        <td class="input-zip"><input style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
+                        <td class="input-zip"><input name="st_zip" style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
                     </tr>
                 </table>
             
@@ -294,7 +325,7 @@
                     <div class="title">Fluid</div>
                     <?php if($fluid == 'O'): ?>	
                         <div class="optional">
-                            <span>Optional: </span><input type="checkbox" name="fluid" value="1" />
+                            <span>Optional: </span><input onchange="calculateFluid(this.checked);" type="checkbox"  />
                         </div>
                     <?php endif; ?> 
                     
@@ -353,14 +384,21 @@
 		// Parts Commercial Warranty value
 		var comWarrantyId = <?php echo $parts_commercial_warranty_weightId; ?>;
 		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
+		var fluidAmount = <?php echo $fliud_amount; ?>;
 		
     //]]>
 		
 		$j(document).ready(function(){
 			// Set selected warrenty value on Order Load
-			$j('#order_warrenty').attr('value', $j('#warrenty_select').attr('value')); 
-		});
+			$j('#order_warrenty').attr('value', $j('#warrenty_select').attr('value'));
 		
+			// Set Shipping values
+			$j('#shippingcost').attr('value',  window.truecost );
+			$j('#shippingcarrier').attr('value', window.carrier );
+			$j('#shippingdays').attr('value', window.servicedays );
+			
+			 
+		});
 		
 		$j('#reman_order input').click(function(e){
 			if($j(e.target).hasClass('validation-failed')){
@@ -430,6 +468,15 @@
 			}
 		});
 		
+		
+		function calculateFluid(checked){
+			if(checked){
+			   var total = fluidAmount * 5;
+			   $j('#fluid-amount').attr('value', total ); 
+			}else{
+			   $j('#fluid-amount').attr('value', 0 ); 
+			}
+		}
 		
 		
     </script>
