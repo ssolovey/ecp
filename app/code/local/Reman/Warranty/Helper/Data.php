@@ -84,10 +84,95 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function getAdditionalWarranty($gsw_link, $type){
 		
-		$AdditionalWarrantyId = Mage::getModel('sync/gsw')->loadWarranryID($gsw_link, $type); 
+		$AdditionalWarrantyIds = Mage::getModel('sync/gsw')->loadWarranryID($gsw_link, $type); 
 		
-		return $AdditionalWarrantyId;
+		$AdditionalWarrantyWeights = array();
+	
+		foreach($AdditionalWarrantyIds as $index){
+			array_push($AdditionalWarrantyWeights, Mage::getModel('warranty/warranties')->getWarrantyWeight($index['warranty_id']));
+		}
+		
+		return $AdditionalWarrantyWeights;
 	
 	}
+	
+	
+	
+	
+	
+	
+	/* 
+	 * Get Calculated Warrantry List according to Reman documentation
+	 * Return BaseWarranty + Additional warranties if their weight less than Base Warranty	
+	 * @return Array
+	 *
+	*/
+	
+	public function getCalculatedWarrantyList($partType,$_product){
+		// Current Logged Company
+		$company = Mage::helper('company')->getCustomerCompanyObject();
+		// Waaranty Collection
+		$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
+		// Calculated Base Warranty Id
+		$warrantyId =$this->getBaseWarrantyId($partType,$_product);
+		//Get BaseWarrantyWeightID
+		$warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
+		// Parts Commercial Warranty ID
+		$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
+		// Parts Commercial Warranty Weight ID
+		$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
+		
+		$warranties = array();
+		
+		switch($partType){
+			case 'T':{
+				$GSW_link = $company->at_gswlink;
+				$type = 'AUTO TRANS';
+				break;
+			}
+			case 'X':{
+				$GSW_link = $company->tc_gswlink;
+				$type = 'TRANSFER CASE';
+				break;
+			}
+		}
+		
+		
+	
+		/* Form Calculated Warranty list*/
+	
+		foreach ($warrantyArray as $item) {
+			
+			if($item['weight'] == $warrantyWeightID){ //Base Warranty
+					
+				array_push($warranties , $item);		
+			}
+			
+			if($warrantyWeightID > $parts_commercial_warranty_weightId){ // If Commercial Warranty weight less than BaseWarranty 
+					
+				if($item['weight'] == $parts_commercial_warranty_weightId){ //Commercial Warranty
+				
+						array_push($warranties , $item);		
+				}
+			}
+		
+			foreach($this->getAdditionalWarranty($GSW_link,$type) as $additemWeight){ // Add all Additional warranties if they les than base warranty
+					
+				if($warrantyWeightID > $additemWeight){
+				
+					if($item['weight'] == $additemWeight){
+					
+						array_push($warranties , $item);
+					
+					}
+								
+				}
+			}	
+		}
+		
+		
+		return $warranties;
+	}
+	
 	
 }
