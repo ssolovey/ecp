@@ -76,3 +76,17 @@
     <button onclick="window.location.href = '<?php echo Mage::getUrl('customer/account/login'); ?>'; return false;">OK</button>
 </div> 
 </div>
+
+<div id="reman_users_orders" style="display:none; top: -20px; position: relative;">
+
+	<div class="heading">
+    
+    	<span>Orders list</span>
+    </div>
+    <ul>
+		<?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
+        	<li>#<?php echo $value ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+</div>

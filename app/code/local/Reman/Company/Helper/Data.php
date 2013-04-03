@@ -147,4 +147,31 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 	}
+	
+	/**
+     * Retrieve current logged Admin User Id
+     *
+     * @return Int
+     */
+	 function getCompanyAdminId() {
+		
+		/* Get customer model, run a query */
+		$collection = Mage::getModel('customer/customer')
+					  ->getCollection()
+					  ->addAttributeToSelect('*');
+		$result = array();
+		foreach ($collection as $customer) {
+			$customerArr = $customer->toArray();
+			if($customerArr['company'] == $this->getCompanyId()){
+				$result[] = $customer->toArray();
+			}
+		}
+		
+		foreach ( $result as $key => $value ) {
+			if($value['group_id'] == 6){
+				return $value['entity_id'];
+			}
+		}
+	}
+	
 }

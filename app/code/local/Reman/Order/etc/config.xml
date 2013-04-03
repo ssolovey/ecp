@@ -20,6 +20,11 @@
 				</entities>
 			</order_mysql4>
         </models>
+		<helpers>
+			<order>
+				<class>Reman_Order_Helper</class>
+			</order>
+		</helpers>
         <events>
         	<sales_order_place_after>
         		<observers>

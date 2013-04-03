@@ -39,8 +39,9 @@
         <ul id="reman_nav_list">  
             <li id="cpas_link" class="current" style="margin-bottom:15px;">Change My Password</li>
              <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
-            	<li id="userslink_link" >Manage Users</li>
+            	<li id="userslink_link" style="margin-bottom:15px;" >Manage Users</li>
              <?php endif; ?>
+             <li id="orders_link" >Orders</li>
         </ul>
     </div>
 </div>
@@ -53,9 +54,22 @@
 		$j('#userslink_link').addClass('current');
 		$j('#reman_cp_cont').hide();
 		$j('#reman_add_user').hide();
+		$j('#reman_users_orders').hide();
 		$j('#remaqn_users_cont').show();
 		$j('.messages').remove();
 	});
+	
+	 $j('#orders_link').bind('click', function(){
+		$j('#reman_nav_list li').removeClass('current');
+		$j('#orders_link').addClass('current');
+		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').hide();
+		$j('#remaqn_users_cont').hide();
+		$j('#reman_users_orders').show();
+		$j('.messages').remove();
+	});
+	
+	
 	
 	if(window.location.hash == "#edit" || window.location.hash == "#edit/"){
 		$j('#reman_nav_list li').removeClass('current');
@@ -72,6 +86,7 @@
 		$j('#cpas_link').addClass('current');
 		$j('#remaqn_users_cont').hide();
 		$j('#reman_add_user').hide();
+		$j('#reman_users_orders').hide();
 		$j('#reman_cp_cont').show();
 		$j('.messages').remove();
 	});
