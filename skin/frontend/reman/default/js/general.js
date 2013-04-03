@@ -334,6 +334,7 @@ Reman_QuickQuote.prototype = {
 			$j('#welcome_bunner').html('What is the vehicle make?');
 			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
 
@@ -349,6 +350,7 @@ Reman_QuickQuote.prototype = {
 			$j('#welcome_bunner').html('What is the model year?');
 			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
 	turnOnModelBreadcrumb: function(){
@@ -364,6 +366,7 @@ Reman_QuickQuote.prototype = {
 			
 			// Reset Drive variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
 
@@ -383,6 +386,7 @@ Reman_QuickQuote.prototype = {
 			
 			// Reset Drive and variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
+			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 	},
 
 	turnOnGroupBreadcrumb: function(){
@@ -770,6 +774,7 @@ Reman_QuickQuote.prototype = {
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
+					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
 					case: Reman_QuickQuote.prototype.currentCatSelected
 				},
 				
