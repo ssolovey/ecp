@@ -771,7 +771,7 @@ Reman_QuickQuote.prototype = {
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
-					case: Reman_QuickQuote.prototype.currentCatSelected
+					type: Reman_QuickQuote.prototype.currentCatSelected
 				},
 				
 				beforeSend: function(){
@@ -814,7 +814,7 @@ function manageUserAccount(action,id,el){
 				url: action,
 				type: 'POST',
 				data: {
-					id: id,	
+					id: id	
 				},
 				
 				beforeSend: function(){
