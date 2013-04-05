@@ -76,6 +76,8 @@ function estimateShipping (stocks,destzip){
 function filterBestResult(data){
 	
 	var dataArray = [];
+	
+	var id = 0;
 					
 	for(key in data){ // Store Key (ZIP)
 		
@@ -115,10 +117,11 @@ function filterBestResult(data){
 		
 		var bestCarrier =  MinServiceDays.min();
 		
+		
 		for(c in store){
 			
 			if(bestCarrier == store[c].servicedays){
-				
+				id ++;
 				if(store[c].servicedays == 0){
 					
 					var days = 1;
@@ -130,7 +133,8 @@ function filterBestResult(data){
 				
 				carriers[c] = {
 					'servicedays': days,
-					'truecost' : store[c].truecost
+					'truecost' : store[c].truecost,
+					'id': id
 				}	
 			}	
 		}	
@@ -155,6 +159,7 @@ function buildTableResults(data){
 					var carrier =  k;
 					var days = Number(data[key][k].servicedays); // Add One more day to estimated
 					var truecost = data[key][k].truecost;
+					var id =  data[key][k].id;
 			
 					if(carrier && days){
 						
@@ -162,10 +167,10 @@ function buildTableResults(data){
 						
 						daysFilter.push(Number(days));
 						
-						var table = '<table>'+
+						var table = '<table id="'+id+'">'+
 								'<tr>'+
-									'<td style="font-weight:bold">Delivery from</td>'+
-									'<td>'+storeName+'</td>'+
+									'<td class="noborder" style="font-weight:bold">Delivery from</td>'+
+									'<td class="noborder">'+storeName+'</td>'+
 								'</tr>'+
 								'<tr>'+
 									'<td style="font-weight:bold">Carrier</td>'+
@@ -202,7 +207,8 @@ function getMinDaysCarrirer(data,mindays){
 			minDaysDelivery[data[key].store+'_'+hash] = {
 				'carrier'    : k,
 				'servicedays': data[key][k].servicedays,
-				'truecost' : data[key][k].truecost
+				'truecost' : data[key][k].truecost,
+				'id': data[key][k].id
 			}
 			
 			minPrice.push(Number(minDaysDelivery[data[key].store+'_'+hash].truecost)); 
@@ -221,7 +227,8 @@ function bestPrice(data,minPrice){
 			bestCarrier[key] = {
 				'carrier'    : data[key].carrier,
 				'servicedays': data[key].servicedays,
-				'truecost' : data[key].truecost
+				'truecost' : data[key].truecost,
+				'id': data[key].id
 			}
 		}
  	 }
@@ -240,6 +247,9 @@ function bestPrice(data,minPrice){
 	 $j('#shipping-result').html(result_text);
 	 
 	 $j('.reman_preloader_shipping').hide();
+	 
+	 $j('#'+ bestCarrier[store].id).addClass('best-sipping-price');
+	 
 	 $j('.result-estimate').show();
 	 
 }
