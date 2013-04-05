@@ -122,6 +122,8 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		// Parts Commercial Warranty Weight ID
 		$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
 		
+		$added_comm_war_weight = null;
+		
 		$warranties = array();
 		
 		switch($partType){
@@ -148,17 +150,19 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 				array_push($warranties , $item);		
 			}
 			
-			if($warrantyWeightID > $parts_commercial_warranty_weightId){ // If Commercial Warranty weight less than BaseWarranty 
+			if($parts_commercial_warranty_weightId < $warrantyWeightID ){ // If Commercial Warranty weight less than BaseWarranty 
 					
 				if($item['weight'] == $parts_commercial_warranty_weightId){ //Commercial Warranty
-				
+						
+						$added_comm_war_weight = $parts_commercial_warranty_weightId;
+						
 						array_push($warranties , $item);		
 				}
 			}
 		
 			foreach($this->getAdditionalWarranty($GSW_link,$type) as $additemWeight){ // Add all Additional warranties if they les than base warranty
 					
-				if($warrantyWeightID > $additemWeight){
+				if(($additemWeight < $warrantyWeightID) && ($additemWeight != $added_comm_war_weight)){
 				
 					if($item['weight'] == $additemWeight){
 					
