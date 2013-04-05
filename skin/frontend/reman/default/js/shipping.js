@@ -250,6 +250,8 @@ function bestPrice(data,minPrice){
 	 
 	 $j('#'+ bestCarrier[store].id).addClass('best-sipping-price');
 	 
+	 $j('#estimated-price').html('$'+window.truecost);
+	 
 	 $j('.result-estimate').show();
 	 
 }
