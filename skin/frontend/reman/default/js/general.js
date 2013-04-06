@@ -380,7 +380,7 @@ Reman_QuickQuote.prototype = {
 			this.currentCatSelected = '';
 			
 			//Update Banner text
-			$j('#welcome_bunner').html('Welcome! How we can help you today?');
+			$j('#welcome_bunner').html('Welcome! How can we help you today?');
 			
 			// Reset Drive and variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
