@@ -14,6 +14,7 @@
 
 	/* Define action URL */
 	$action = Mage::getUrl('profile/index');
+	
 ?>	
 
 <div id="remaqn_users_cont" style="display:none; top: -20px; position: relative;">
@@ -83,10 +84,21 @@
     
     	<span>Orders list</span>
     </div>
-    <ul>
+    <ul id="profile-order-list">
 		<?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
-        	<li>#<?php echo $value ?></li>
+        	<li value="<?php echo $value ?>">#<?php echo $value ?></li>
         <?php endforeach; ?>
     </ul>
 
 </div>
+
+<div id="reman_users_order_details" style="display:none;">
+</div>
+
+<div class="reman_preloader_order" style="display:none;"></div>
+
+<script type="text/javascript">
+	$j('#profile-order-list li').bind('click' , function(e){ 
+		openOrder('<?php echo $action.'orderdetails';?>',this.value);  
+	});
+</script>

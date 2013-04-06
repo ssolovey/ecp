@@ -1,0 +1,96 @@
+
+<?php
+$request = $this->getRequest()->getPost();
+$item = Mage::getModel('order/order')->load($request['id'])->_data;
+
+	$labels = array(
+			'Order/Inv #',
+			'Order/ETE ID #',
+			'Invoice Date',
+			'Order Date',
+			'Order Status',
+			'Order Type',
+			'ETE Cust Rep',
+			'Sold To Customer Number',
+			'Sold To Customer Name',
+			'Sold To Contact Name',
+			'Sold To Phone',
+			'Sold To Phone Ext',
+			'PO#',
+			'Bill To Customer Number',
+			'Bill To Customer Name',
+			'Bill To Address 1',
+			'Bill To Address 2',
+			'Bill To City',
+			'Bill To State',
+			'Bill To Zip',
+			'Ship To Customer Number',
+			'Ship To Customer Name',
+			'Ship To Address 1',
+			'Ship To Address 2',
+			'Ship To City',
+			'Ship To State',
+			'Ship To Zip',
+			'Ship To Contact Name',
+			'Ship To Phone',
+			'Ship To Phone Ext',
+			'Vehicle VIN',
+			'Vehicle Make',
+			'Vehicle Year',
+			'Vehicle Model',
+			'Vehicle Engine',
+			'Vehicle Aspiration',
+			'Vehicle Cyl Type',
+			'Vehicle Fuel',
+			'Vehicle Drive',
+			'Unit Tag #',
+			'End User Name',
+			'RO #',
+			'Vehicle Mileage',
+			'Claim #',
+			'Part #',
+			'Serial #',
+			'Family',
+			'Alt Part #',
+			'Unit Type',
+			'Warranty Terms',
+			'Carrier',
+			'Carrier Service',
+			'Carrier Options',
+			'Ship By Date',
+			'Deliver By Date',
+			'Ship From',
+			'Tracking #',
+			'Original Invoice',
+			'Return Auth #',
+			'CSI #',
+			'Unit Amount',
+			'Core Amount',
+			'Parts Amount',
+			'Tax %',
+			'Tax Amount',
+			'Shipping Amount',
+			'Deposit Received',
+			'Total Amount',
+			'Transaction Type',
+			'Commercial App'
+		);
+?>
+
+<div class="heading">
+    <span>Order # <?php echo $item['order_id'];  ?></span>
+</div>
+
+<table class="reman_order_table">
+	<?php
+		$index = 0; 
+	?>
+    <?php  foreach($item as $value): ?>
+    <tr>
+    	<td><?php echo $labels[$index]; ?></td>
+        <td><?php echo $value; ?></td>
+    </tr>
+     <?php $index++; ?>
+     <?php endforeach; ?>
+</table>
+

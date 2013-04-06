@@ -2494,7 +2494,7 @@ background-position: 0px 20px;
 	display:none;
 }
 
-.reman_preloader , .reman_preloader_big{
+.reman_preloader , .reman_preloader_big , .reman_preloader_order{
 	background-image:url(../images/preloader.gif);
 	background-repeat:no-repeat;
 	position:absolute;
@@ -2995,13 +2995,13 @@ text-decoration: none;
 	
 }
 
-.reman_change_pass .heading , #reman_users_orders .heading{
+.reman_change_pass .heading , #reman_users_orders .heading , #reman_users_order_details .heading{
 	margin-left:40px;
 	margin-bottom:40px;
 
 }
 
-.reman_change_pass .heading span , #reman_users_orders .heading span{
+.reman_change_pass .heading span , #reman_users_orders .heading span , #reman_users_order_details .heading span{
 	font-size: 26px;
 	font-weight: bold;
 	color: #cb1f30;
@@ -3055,6 +3055,29 @@ text-decoration: none;
 	border-width: 1px 0 0 0px;
 	text-align: center;
 	width: 80px;
+	font-size: 11px;
+	padding: 6px;
+	color:#000;
+}
+
+
+
+/* My Profile Order Table*/
+
+.reman_order_table {
+	border-color: black;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	margin-top:20px;
+	background-color:#fff;
+	margin-left:40px;
+}
+
+.reman_order_table td {
+	border-color: black;
+	border-style: solid;
+	border-width: 1px 0 0 0px;
+	width: 160px;
 	font-size: 11px;
 	padding: 6px;
 	color:#000;

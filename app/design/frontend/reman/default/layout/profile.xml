@@ -19,6 +19,14 @@
 		<reference name="content">
 			<block type="customer/form_edit" name="customer_edit" template="customer/form/edit.phtml" />
 			<block type="profile/profile" name="profile" template="profile/profile.phtml" />
+			
 		</reference>
 	</profile_index_index>
+	
+
+	<profile_index_orderdetails>
+		<block type="profile/profile" name="profile"  output="toHtml" template="profile/order.phtml" />
+	</profile_index_orderdetails>
+	
+	
 </layout>

@@ -62,4 +62,16 @@ class Reman_Profile_IndexController extends Mage_Core_Controller_Front_Action
 		echo 'Activate';
 	}
 	
+	public function orderdetailsAction(){
+	
+		
+		$this->loadLayout('order'); 
+        //This function processes and displays all layout phtml and php files.
+		$this->renderLayout(); 
+	
+	
+	}
+	
+	
+	
 }

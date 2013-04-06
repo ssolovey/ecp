@@ -23,6 +23,7 @@ $j(document).ready(function(){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
+	
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -848,4 +849,27 @@ function manageUserAccount(action,id,el){
 		});
 }
 
+
+function openOrder(action,id){
+	$j.ajax({
+				url: action,
+				type: 'POST',
+				data: {
+					id: id,	
+				},
+				
+				beforeSend: function(){
+					$j('#reman_users_orders').hide();
+					$j('.reman_preloader_order').show();
+				},
+						
+				complete: function(data){
+					$j('#reman_users_order_details').html(data.responseText);
+					$j('.reman_preloader_order').hide();
+					$j('#reman_users_order_details').show();
+				}
+		});
+
+
+}
 

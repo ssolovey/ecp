@@ -174,5 +174,4 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		var_dump($request);
 	}
 	
-	
 }

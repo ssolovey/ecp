@@ -55,27 +55,40 @@
 		$j('#reman_cp_cont').hide();
 		$j('#reman_add_user').hide();
 		$j('#reman_users_orders').hide();
+		$j('#reman_users_order_details').hide();
 		$j('#remaqn_users_cont').show();
 		$j('.messages').remove();
 	});
 	
 	 $j('#orders_link').bind('click', function(){
+		window.location.hash = "order";
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#orders_link').addClass('current');
 		$j('#reman_cp_cont').hide();
 		$j('#reman_add_user').hide();
 		$j('#remaqn_users_cont').hide();
+		$j('#reman_users_order_details').hide();
 		$j('#reman_users_orders').show();
 		$j('.messages').remove();
 	});
 	
-	
+	if(window.location.hash == "#order" || window.location.hash == "#order/"){
+		$j('#reman_nav_list li').removeClass('current');
+		$j('#orders_link').addClass('current');
+		$j('#reman_cp_cont').hide();
+		$j('#reman_add_user').hide();
+		$j('#remaqn_users_cont').hide();
+		$j('#reman_users_order_details').hide();
+		$j('#reman_users_orders').show();
+		$j('.messages').remove();
+	}
 	
 	if(window.location.hash == "#edit" || window.location.hash == "#edit/"){
 		$j('#reman_nav_list li').removeClass('current');
 		$j('#userslink_link').addClass('current');
 		$j('#reman_cp_cont').hide();
 		$j('#reman_add_user').hide();
+		$j('#reman_users_order_details').hide();
 		$j('#remaqn_users_cont').show();
 		$j('.messages').remove();
 	}
@@ -87,6 +100,7 @@
 		$j('#remaqn_users_cont').hide();
 		$j('#reman_add_user').hide();
 		$j('#reman_users_orders').hide();
+		$j('#reman_users_order_details').hide();
 		$j('#reman_cp_cont').show();
 		$j('.messages').remove();
 	});
@@ -104,6 +118,7 @@
 		$j('#userslink_link').addClass('current');
 		$j('#remaqn_users_cont').hide();
 		$j('#reman_cp_cont').hide();
+		$j('#reman_users_order_details').hide();
 		$j('#reman_add_user').show();
 	}
 	
