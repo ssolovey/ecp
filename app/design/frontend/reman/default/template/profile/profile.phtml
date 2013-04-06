@@ -84,6 +84,11 @@
     
     	<span>Orders list</span>
     </div>
+    
+    <?php if(count(Mage::helper('order')->getCompanyOrdersIds()) == 0): ?>
+		<div style="color: #000; margin-left: 150px; font-size: 20px;"> You Dont Have Any Orders</div>
+	<?php endif; ?>
+    
     <ul id="profile-order-list">
 		<?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
         	<li value="<?php echo $value ?>">#<?php echo $value ?></li>
