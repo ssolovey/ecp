@@ -15,8 +15,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected $_delim = '|';
 	
 	// sync folder path
-	//protected $_folder = 'import/';
-	protected $_folder = 'ftpex/Download/';
+	protected $_folder = 'import/';
+	//protected $_folder = 'ftpex/Download/';
 	
 	// current file path
 	protected $_file;

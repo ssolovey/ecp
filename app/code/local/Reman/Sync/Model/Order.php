@@ -14,6 +14,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
+		/*
 		echo '<h1>Parsed ' . $item[0] . '</h1>';
 		
 		
@@ -89,7 +90,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		echo '<tr><td>Transaction Type</td><td>' . $item[68] . '</td></tr>';
 		echo '<tr><td>Commercial App</td><td>' . $item[69] . '</td></tr>';
 		echo '</table>';
-		
+		*/
 		$data = array(
 			'ete_order_id' => $item[0],
 			'date_invoice' => $item[1],
@@ -164,7 +165,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		);
 		
 		Mage::getModel('order/order')->createOrder(
-			3, // magento user id
+			13, // magento user id
 			$data
 		);
 	}

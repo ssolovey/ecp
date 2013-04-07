@@ -23,10 +23,18 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	public function createOrder( $customer_id, $data )
 	{
 		
-		echo var_dump( $data );
+		$order = $this->load( $data['order_id'] );
 		
-		return false;
+		// check: is order in web database?
+		if ( $order->getId() ) {
+			
+			$this->_updateOrder($order, $data);
+			
+			return;	
+		}
 		
+		
+		// init new order
 		$quote = Mage::getModel('sales/quote')
         	->setStoreId(Mage::app()->getStore('default')->getId());
 		
@@ -37,35 +45,36 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
         $quote->assignCustomer($customer);
         
 		// add product(s)
-		$product = Mage::getModel('catalog/product')->load($data->partnum);
-
+		$product_id = Mage::getModel('catalog/product')->loadByAttribute( 'sku', $data['partnum'] );
+		
+		$product = Mage::getModel('catalog/product')->load($product_id->getId());
+		
 		$buyInfo = array(
 		        'qty'	=> 1
 		);
 		
 		$quote->addProduct($product, new Varien_Object($buyInfo));
 		
-		
 		$billingData = array(
-			'firstname'		=> $data[1],
+			'firstname'		=> $data['bt_cust_name'],
 			'lastname'		=> '_',
-			'street' 		=> array($data[5],$data[6]),
-			'city' 			=> $data[7],
+			'street' 		=> array($data['bt_addr1'],$data['bt_addr2']),
+			'city' 			=> $data['bt_city'],
 			'country_id' 	=> 'US',
-			'region_id' 	=> $data[8],
-			'postcode' 		=> $data[9],
-			'telephone' 	=> '555-555'
+			'region_id' 	=> $data['bt_state'],
+			'postcode' 		=> $data['bt_zip'],
+			'telephone' 	=> $data['st_phone']
 		);
 		
 		$shippingData = array(
-			'firstname'		=> $data[1],
+			'firstname'		=> $data['st_cust_name'],
 			'lastname'		=> '_',
-			'street' 		=> array($data[5],$data[6]),
-			'city' 			=> $data[7],
+			'street' 		=> array($data['st_addr1'],$data['st_addr2']),
+			'city' 			=> $data['st_city'],
 			'country_id' 	=> 'US',
-			'region_id' 	=> $data[8],
-			'postcode' 		=> $data[9],
-			'telephone' 	=> '555-555'
+			'region_id' 	=> $data['st_state'],
+			'postcode' 		=> $data['st_zip'],
+			'telephone' 	=> $data['st_phone']
 		);
 		
 		
@@ -85,10 +94,22 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$order = $service->getOrder();
 		
 		
-		$data->order_id = $order->getIncrementId();
-				
+		$data['order_id'] = $order->getIncrementId();
+						
 		$this->setData( $data );
 		
 		$this->save();
+	}
+	
+	/**
+	 * Update existing order
+	 *
+	 * @param order data (Array)
+	 */
+	protected function _updateOrder( $order, $data )
+	{
+		$order->setData( $data );
+		
+		$order->save();
 	}
 }
