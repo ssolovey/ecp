@@ -175,4 +175,38 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	{	
 		$this->_loadFile( 'ORDERS.TXT' );
 	}
+	
+	public function test()
+	{		
+		$test_csv = new Varien_File_Csv();
+		
+		// Set delimiter to "\"
+		$test_csv->setDelimiter( $this->_delim );
+		
+		$test_directory = 'import/orders_tests/';
+		
+		$test_file = '';
+		
+		// Load data from CSV file
+		$data = $test_csv->getData( $test_directory . 'test_seq.csv' );
+				
+		foreach( $data as $item ) {
+			
+			if ( sizeof($item) > 1 ) {
+								
+				$test_file  = $test_directory . $item[0];
+				
+				if ( file_exists($test_file) ) {
+					
+					echo '<h3>Parse file: ' . $item[0] . '</h3>';
+					echo '<h4>'. $item[1] . '</h4>';
+					echo '<h4><a href=".">NEXT FILE</a></h4>';
+					
+					$this->_parseFile( $test_directory . $item[0] );
+				
+					return;
+				}								
+			}
+		}
+	}
 }
