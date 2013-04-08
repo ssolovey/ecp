@@ -99,6 +99,9 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$this->setData( $data );
 		
 		$this->save();
+		
+		// export new order
+		Mage::getModel('sync/export')->exportOrder($data);
 	}
 	
 	/**
@@ -111,5 +114,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$order->setData( $data );
 		
 		$order->save();
+		
+		// export order update
+		Mage::getModel('sync/export')->exportOrder($data);
 	}
 }
