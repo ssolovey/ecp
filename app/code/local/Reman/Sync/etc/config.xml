@@ -134,7 +134,7 @@
 			</sync_model>
 			<sync_applic>
 				<schedule>
-					<cron_expr>0 */12 * * *</cron_expr>
+					<cron_expr>0 * * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>sync/applic::syncData</model>
