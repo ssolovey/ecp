@@ -66,7 +66,8 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 			$stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
 			$stockItemId = $stockItem->getId();
 			
-			//$stockItem->setData('manage_stock', 1);
+			$stockItem->setData('manage_stock', 1);
+			$stockItem->setData('is_in_stock', $totalStock>0 ? 1 : 0);
 			$stockItem->setData('qty', $totalStock);
 			
 			
