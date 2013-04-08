@@ -85,16 +85,34 @@
     	<span>Orders list</span>
     </div>
     
-    <?php if(count(Mage::helper('order')->getCompanyOrdersIds()) == 0): ?>
-		<div style="color: #000; margin-left: 150px; font-size: 20px;"> You Dont Have Any Orders</div>
-	<?php endif; ?>
-    
-    <ul id="profile-order-list">
-		<?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
-        	<li value="<?php echo $value ?>">#<?php echo $value ?></li>
-        <?php endforeach; ?>
-    </ul>
-
+    <table class="reman_order_table">
+		
+        <tr>
+        	<td style="font-weight:bold;">User Name</td>
+            <td style="font-weight:bold;">Order #</td>
+        </tr>
+        
+        <?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
+        <tr>	
+	
+			 <td><?php echo $value['user_id']; ?></td>
+            
+             <?php if(count($value['orders']) == 0): ?>
+              		<td> No Records</td>
+             <?php endif; ?>
+             <?php  foreach($value['orders'] as $order): ?>
+				 <?php if ($order === reset($value['orders'])): ?>
+                 <td style="cursor:pointer"  class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>
+                 </tr>
+                  <?php else: ?>
+                	<tr>
+                    	<td></td>
+                        <td style="cursor:pointer" class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>	
+                    </tr>
+                 <?php endif; ?>                
+            <?php endforeach; ?>
+         <?php endforeach; ?>
+    </table>
 </div>
 
 <div id="reman_users_order_details" style="display:none;">
@@ -103,7 +121,7 @@
 <div class="reman_preloader_order" style="display:none;"></div>
 
 <script type="text/javascript">
-	$j('#profile-order-list li').bind('click' , function(e){ 
-		openOrder('<?php echo $action.'orderdetails';?>',this.value);  
+	$j('.orders_ids').bind('click' , function(e){ 
+		openOrder('<?php echo $action.'orderdetails';?>',$j(this).attr('value'));  
 	});
 </script>

@@ -121,6 +121,55 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		return $result;
 	}
 	
+	 /**
+     * Retrieve current logged Company Users customers Data
+     *
+     * @return Array
+     */
+	 function getAllCompanyCustomers() {
+		 
+		//customer ID
+		$customer_id =  Mage::getSingleton('customer/session')->getCustomer()->getId();	
+		  
+		/* Get customer model, run a query */
+		$collection = Mage::getModel('customer/customer')
+					  ->getCollection()
+					  ->addAttributeToSelect('*');
+		$result = array();
+		foreach ($collection as $customer) {
+			$customerArr = $customer->toArray();
+			if($customerArr['company'] == $this->getCompanyId()){
+				$result[] = $customer->toArray();
+			}
+		}
+		return $result;
+	}
+	
+	
+	/**
+     * Retrieve current logged Company Users customers ID
+     *
+     * @return Array
+     */
+	 function getAllCompanyCustomersId() {
+		 
+		//customer ID
+		$customer_id =  Mage::getSingleton('customer/session')->getCustomer()->getId();	
+		  
+		/* Get customer model, run a query */
+		$collection = Mage::getModel('customer/customer')
+					  ->getCollection()
+					  ->addAttributeToSelect('*');
+		$result = array();
+		foreach ($collection as $customer) {
+			$customerArr = $customer->toArray();
+			if($customerArr['company'] == $this->getCompanyId()){
+				$result[] = $customer->entity_id;
+			}
+		}
+		return $result;
+	}
+	
 	
 	 /**
      * Retrieve current logged Admin User Data
