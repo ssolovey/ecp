@@ -171,7 +171,15 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 	
 		$request = $this->getRequest()->getPost();
 		
-		var_dump($request);
+		//customer ID
+		$customer_id =  Mage::getSingleton('customer/session')->getCustomer()->getId();	
+		
+		Mage::getModel('order/order')->createOrder($customer_id, $request );
+		
+		
+		Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account', $arguments= array()));
+		
+		
 	}
 	
 }

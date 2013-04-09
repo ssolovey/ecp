@@ -3210,7 +3210,7 @@ text-decoration: none;
 	height:20px;
 }
 
-#vehicle_info .vin tr , #order_details .vin tr , #sold-to .vin tr , #ship-to .vin tr {
+#vehicle_info .vin tr , #order_details .vin tr , #sold-to tr , #ship-to tr {
 	height:25px;
 }
 
@@ -3265,7 +3265,7 @@ text-decoration: none;
 
 #sold-to .adress , #ship-to .adress {
 	margin-top:0px;
-	margin-left:5px;
+	margin-left:67px;
 }
 
 #sold-to .adress .input-1, #ship-to .adress .input-1 {

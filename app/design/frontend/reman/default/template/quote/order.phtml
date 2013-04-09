@@ -64,24 +64,43 @@
 
 <div id="reman_order">
     <form action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" method="post" id="form-order">
-        
-        <input type="hidden" name="data_order" value="<?php echo date("m.d.y");?>" />
+        <!-- Order Date -->
+        <input type="hidden" name="data_order" value="<?php echo date("m/d/y");?>" />
+        <!-- ETE Cust Rep -->
         <input type="hidden" name="ete_cust" value="<?php echo Mage::helper('company')->getCompanyAdminEmail();?>" />
+        
+        <!-- ----------------- Product Info --------------- -->
+        
+        <!-- Aspiration -->
         <input type="hidden" name="aspiration" value="<?php echo $_product->getData('parts_aspiration'); ?>" />
+        <!-- Fuel -->
         <input type="hidden" name="fuel" value="<?php echo $_product->getData('parts_fuel'); ?>" />
+        <!-- Cyl Type -->
         <input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
+        <!--Unit Type -->
         <input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
         
-        <!-- Fluid Price-->
-        <input type="hidden" id="fluid-amount" name="parts_amount" value="<?php echo $fliudPrice  ?>" />
         
-        <!--Shipping-->
-        <input type="hidden" name="ship_amount" id="shippingcost" value="" />
+        
+        <!-- ----------Shipping ---------------->
+        <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
+                 <input type="hidden" name="ship_amount" value="<?php	echo Mage::helper('company')->getCustomerShippingPrice();?>" />  
+        <?php else: ?>
+                 <input type="hidden" name="ship_amount" id="shippingcost" value="" />
+        <?php endif; ?>	
+       
         <input type="hidden" name="carrier" id="shippingcarrier" value="" />
         <input type="hidden" name="carrier_service" id="shippingdays" value="" />
         
-        <!--Total Amount-->
+        
+        <!------ Fluid Price------>
+        
+        <input type="hidden" id="fluid-amount" name="parts_amount" value="<?php echo $fliudPrice  ?>" />
+        
+        <!------Total Amount------>
+        
         <input type="hidden" id="total-price" name="total_amount" id="shippingdays" value="" />
+        
         
         <div class="title">Order</div>
             
@@ -183,10 +202,16 @@
                         </tr>
                         <tr>
                             <td class="label">Shipping:</td>
-                            <td></td>
+								<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
+                                        <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
+                                <?php else: ?>
+                                        <td id="order-shipping-cost"></td>
+                                <?php endif; ?>	
+                           
                         </tr>
                         <tr>
-                            <td class="label">Tax:</td>
+                        	<!-- TODO !!!-->
+                            <td class="label">Tax:</td> 
                             <td></td>
                         </tr>
                 </table>
@@ -230,28 +255,44 @@
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
-                        <td><input type="text" name="adress_st" /></td>
+                        <td><input type="text" name="bt_addr1" class="required-entry"  /><em>*</em></td>
                     </tr>
-                    <input type="hidden" name="so_phone_ext" value="" />
                 </table>
                 
+               
                 <table class="adress">
                     <tr>
-                        <td class="input-1"><input type="text" /></td>
-                        <td style="padding-right:5px;">
-                            <select id="sold-to-states" style="width:160px;">
+                    	<td class="label">City:</td>
+                        <td><input type="text" name="bt_city" class="required-entry"  /><em>*</em></td>
+                    </tr>
+                    <tr>
+                    	<td class="label">State:</td>    
+                        <td>
+                            <select id="sold-to-states" style="width:131px;" onchange="$j('#bt_state').attr('value',$j('#sold-to-states option:selected').html()); return false;">
                              <?php  foreach($states as $state): ?>
                                 <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
                              <?php endforeach; ?>   
                             </select>
+                            <input id="bt_state" type="hidden" name="bt_state" value=""  />
                         </td>
-                        <td class="input-zip"><input type="text" /></td>
+                     </tr>
+                    <tr> 
+                    	<td class="label">ZIP:</td>     
+                        <td><input type="text" style="width:45px;" name="bt_zip" class="required-entry"  /><em>*</em></td>
                     </tr>
                 </table>
             
             
             </div>
-        
+         		 
+                 <input type="hidden" name="so_phone_ext" value="" />
+                 	
+                 <!--Bill To The Same As Sold To-->
+                
+                 <input type="hidden" name="bt_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />	
+                 <input type="hidden" name="bt_phone" value="<?php echo $customer->phone; ?>" />
+                 <input type="hidden" name="bt_phone_ext" value="" />
+                
             
             <div id="ship-to" style="margin-top:25px;">
                 <div class="title">Ship To</div>
@@ -272,31 +313,40 @@
                     <tr>
                         <td class="label">Phone:</td>
                         <td><input type="text" name="st_phone" class="required-entry" /><em>*</em></td>
-                        <input type="hidden" name="st_phone_ext" value="" />
+                        
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
                         <td><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
-                        <input type="hidden" name="st_addr2" value="" />
                     </tr>
                 </table>
                 
-                <table class="adress">
+                <table style="margin-left:70px;" class="adress">
                     <tr>
-                        <td class="input-1"><input name="st_city" type="text" /></td>
-                        <td style="padding-right:5px;">
-                            <select id="ship-to-states" style="width:135px;" onchange="$j('#st_state').attr('value', this.value); return false;" >
+                    	<td class="label">City:</td>
+                        <td><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
+                     </tr>   
+                     <tr>
+                     	<td class="label">State:</td>
+                        <td>
+                            <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
                                <?php  foreach($states as $state): ?>
                                  <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
                                <?php endforeach; ?>   
                             </select>
                             <input id="st_state" type="hidden" name="st_state" value="" />
                         </td>
-                        <td class="input-zip"><input name="st_zip" style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
+                     </tr>
+                    <tr> 
+                    	<td class="label">ZIP:</td>   
+                        <td><input name="st_zip" style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
                     </tr>
                 </table>
             
             </div>
+            
+            <input type="hidden" name="st_phone_ext" value="" />
+            <input type="hidden" name="st_addr2" value="" />
             
             <?php if($partType[0] == 'T'): ?>	
                 <div id="fuid-info">
@@ -381,11 +431,21 @@
 		$j(document).ready(function(){
 			// Set selected warrenty value on Order Load
 			$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').html());
+			
+			// Set selected State SHIP TO
+			$j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
+			
+			// Set selected State SOLD TO
+			$j('#bt_state').attr('value', $j('#sold-to-states option:selected').html());
+			
+			
 		
 			// Set Shipping values
 			$j('#shippingcost').attr('value',  window.truecost );
 			$j('#shippingcarrier').attr('value', window.carrier );
 			$j('#shippingdays').attr('value', window.servicedays );
+			
+			$j('#order-shipping-cost').html('$'+window.truecost);
 			
 			
 			
@@ -418,6 +478,7 @@
 					$j('#ship-to input')[i].value = "";
 				}
 				$j($j('#ship-to-states option')[0]).attr('selected','selected');
+				
    	    	}
 		});
 		

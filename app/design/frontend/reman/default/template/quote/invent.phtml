@@ -36,8 +36,7 @@
         	<td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
                     <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
-            <?php endif; ?>
-            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>	
+            <?php else: ?>	
                     <td id="estimated-price"><?php echo "to be estimated based on Zip";?></td> 
             <?php endif; ?>		
         </tr>
