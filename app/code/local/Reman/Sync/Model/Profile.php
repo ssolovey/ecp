@@ -108,6 +108,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		// Update customers data
 		
 		$data = array(
+			'website_id'	=>	1,
 			'email'			=>	$item[13],
 			'created_in'	=>	'SYNC MODULE',
 			'firstname'		=>	$item[12],
