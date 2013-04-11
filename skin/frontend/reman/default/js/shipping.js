@@ -65,6 +65,9 @@ function estimateShipping (stocks,destzip){
 			complete: function(data){
 				var data = $j.parseJSON(data.responseText);
 				// Form Result Table
+				
+				console.log(data);
+				
 				buildTableResults(filterBestResult(data));	
 			}
 				
@@ -104,7 +107,7 @@ function filterBestResult(data){
 			}
 			
 			
-			if(data[key][s].TrueCost < MAXCOST){
+			//if(data[key][s].TrueCost < MAXCOST){
 			
 				store[data[key][s].CarrierName] = {
 						'servicedays' : servicedays,
@@ -112,7 +115,7 @@ function filterBestResult(data){
 				}
 				
 				MinServiceDays.push(store[data[key][s].CarrierName].servicedays);	
-			}
+			//}
 		}
 		
 		var bestCarrier =  MinServiceDays.min();
@@ -120,7 +123,7 @@ function filterBestResult(data){
 		
 		for(c in store){
 			
-			if(bestCarrier == store[c].servicedays){
+			//if(bestCarrier == store[c].servicedays){
 				id ++;
 				if(store[c].servicedays == 0){
 					
@@ -136,7 +139,7 @@ function filterBestResult(data){
 					'truecost' : store[c].truecost,
 					'id': id
 				}	
-			}	
+			//}	
 		}	
 		dataArray.push(carriers);
 	}
