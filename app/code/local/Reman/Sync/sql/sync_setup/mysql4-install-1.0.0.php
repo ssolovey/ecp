@@ -68,6 +68,12 @@ $installer->run("
 	`warranty_id` int(2) unsigned NOT NULL COMMENT 'Warranty ID',
 	PRIMARY KEY (`gsw_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	DROP TABLE IF EXISTS {$this->getTable('sync/taxes')}; 
+	CREATE TABLE {$this->getTable('sync/taxes')} (
+	`tax_id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Tax ID',
+	`value` decimal(2,1) DEFAULT NULL COMMENT 'Tax value',
+	PRIMARY KEY (`tax_id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
 
 $installer->endSetup();

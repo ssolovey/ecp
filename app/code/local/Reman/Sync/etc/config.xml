@@ -53,6 +53,9 @@
 					<gsw> 
 						<table>reman_gsw</table>
 					</gsw>
+					<taxes> 
+						<table>reman_taxes</table>
+					</taxes>
 				</entities>
 			</sync_mysql4>
 		</models>
