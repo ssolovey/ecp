@@ -41,4 +41,13 @@ class Reman_Sync_Model_Taxes extends Reman_Sync_Model_Abstract
 	{
 		$this->_loadFile( 'TAXES.TXT' );
 	}
+	
+	
+	/** 
+	 * SQL query for select TAX Value from reman_taxes table
+	*/
+	public function getTaxValue($id){
+		return $this->getResource()->getTaxValue($id);
+    }
+	
 }

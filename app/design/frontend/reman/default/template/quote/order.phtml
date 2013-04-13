@@ -15,7 +15,9 @@
 	
 	//Product Type
 	$partType = $_product->getName();
-	 
+	// Tax Value Calculated according to Shipping ZIP value
+	$tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
+	
 	// Current Logged Company
 	$company = Mage::helper('company')->getCustomerCompanyObject();
 	// Load Current Logged Customer Object
@@ -209,14 +211,21 @@
                                 <?php endif; ?>	
                            
                         </tr>
-                        <tr>
-                        	<!-- TODO !!!-->
-                            <td class="label">Tax:</td> 
-                            <td></td>
-                        </tr>
+                         <?php if(count($tax_value) != 0):?>	
+                            <tr>
+                                <td class="label">Tax:</td> 
+                                <td><?php echo $tax_value[0]['value'].'%' ?></td>
+                            </tr>
+                         <?php endif; ?>
+                            <tr style="color:#f6193a">
+                                <td class="label">Total Price:</td> 
+                                <td id="total-amount"></td>
+                            </tr>
+                        
+                        
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin">
+                <table class="vin" style="margin-top:7px;">
                     <tr>
                         <td class="label">PO #:</td>
                         <td><input type="text" name="po" class="required-entry" /><em>*</em></td>
@@ -339,7 +348,7 @@
                      </tr>
                     <tr> 
                     	<td class="label">ZIP:</td>   
-                        <td><input name="st_zip" style="width:45px;" type="text" class="required-entry" /><em>*</em></td>
+                        <td><input name="st_zip" style="width:45px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
                     </tr>
                 </table>
             
@@ -425,6 +434,7 @@
 							 ?>;
 		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 		var fluidAmount = <?php echo $fliud_amount; ?>;
+		var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
 		
     //]]>
 		
@@ -552,9 +562,19 @@
 			
 			var corePrice = Number($j('#core-price').attr('value'));
 		
+			
 			var total  = shippingPrice + fluidPrice + partPrice + corePrice;
 			
-			 $j('#total-price').attr('value', total);	
+			if(tax_value){
+				
+				var tax_amount = (total/100) * tax_value;
+				
+				var total  = total + tax_amount ;
+				 
+			} 
+			
+			 $j('#total-amount').html('$'+Number(total).toFixed(1));
+			 $j('#total-price').attr('value', Number(total).toFixed(1));	
 		}
 		
 		

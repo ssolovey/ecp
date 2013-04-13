@@ -478,6 +478,7 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 						//parse response to JSON Object		  
 						var response = $j.parseJSON(data.responseText);
+						
 						// If Session Expired
 						if(response.end_session) {
 							//show error popup
@@ -764,7 +765,7 @@ Reman_QuickQuote.prototype = {
 				
 		});
 	},
-	loadOrder : function(){
+	loadOrder : function(zip){
 		$j.ajax({
 
 				url: "index/order",
@@ -776,7 +777,8 @@ Reman_QuickQuote.prototype = {
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
-					case: Reman_QuickQuote.prototype.currentCatSelected
+					case: Reman_QuickQuote.prototype.currentCatSelected,
+					zip:zip
 				},
 				
 				beforeSend: function(){
@@ -855,7 +857,7 @@ function openOrder(action,id){
 				url: action,
 				type: 'POST',
 				data: {
-					id: id,	
+					id: id
 				},
 				
 				beforeSend: function(){
