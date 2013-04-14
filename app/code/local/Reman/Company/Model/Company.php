@@ -68,6 +68,31 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 		return $companies_option;
 	}
 	
+	
+	/**
+	 * Get company admin by ETE id
+	 */
+	public function getComplanyAdmin( $id )
+	{
+		$customers = Mage::getModel('customer/customer')->getCollection();
+		
+		$company_id = $this->load($id, 'ete')->getId();
+				
+		foreach ( $customers as $customer_data ) {
+		
+			$customer_model =  Mage::getModel('customer/customer')->load($customer_data->getId());			
+			
+			if ( $customer_model->getCompany() == $company_id ) {
+							
+				if ( $customer_model->getGroup_id() == 6 ) {
+					$admin = $customer_model;
+				}
+			}
+		}
+		
+		return $admin ? $admin->getId() : 0;
+	}
+	
 	/**
 	 * Export CSV file on Company information update
 	 */

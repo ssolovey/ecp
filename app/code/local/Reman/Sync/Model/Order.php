@@ -164,8 +164,10 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'commercial_app' => $item[70]
 		);
 		
+		$user_id = Mage::getModel('company/company')->getComplanyAdmin($item[6]);
+		
 		Mage::getModel('order/order')->createOrder(
-			13, // magento user id
+			$user_id, // magento user id
 			$data
 		);
 	}
