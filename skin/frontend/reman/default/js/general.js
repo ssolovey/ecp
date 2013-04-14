@@ -24,6 +24,11 @@ $j(document).ready(function(){
 		}
 	});
 	
+	
+	$j('#form-order').submit(function(){
+		submitOrder();
+	});
+	
 });
 
 /*Create NameSpace for Quick Quote module*/
@@ -854,24 +859,53 @@ function manageUserAccount(action,id,el){
 
 function openOrder(action,id){
 	$j.ajax({
-				url: action,
-				type: 'POST',
-				data: {
-					id: id
-				},
+		url: action,
+		type: 'POST',
+		data: {
+			id: id
+		},
+		
+		beforeSend: function(){
+			$j('#reman_users_orders').hide();
+			$j('.reman_preloader_order').show();
+		},
 				
-				beforeSend: function(){
-					$j('#reman_users_orders').hide();
-					$j('.reman_preloader_order').show();
-				},
-						
-				complete: function(data){
-					$j('#reman_users_order_details').html(data.responseText);
-					$j('.reman_preloader_order').hide();
-					$j('#reman_users_order_details').show();
-				}
-		});
+		complete: function(data){
+			$j('#reman_users_order_details').html(data.responseText);
+			$j('.reman_preloader_order').hide();
+			$j('#reman_users_order_details').show();
+		}
+	});
+}
 
+function submitOrder(){
+	
+	if(!dataForm.validator.validate()) {
+		return false;
+	}
+	
+	var formData = $j("#form-order").serialize();
+	$j.ajax({
+		url: "index/ordersubmit",
+		type: 'POST',
+		data: {
+			data: formData
+		},
+		
+		beforeSend: function(){
+			$j('#reman_order').hide();
+			$j('#preloader-order-page').show();
+		},
+		
+		complete: function(data){
+			
+			$j('#order-message').html(data.responseText);
+			$j('#preloader-order-page').hide();
+			$j('#order-message').show();
+		}
+	});
 
 }
+
+
 

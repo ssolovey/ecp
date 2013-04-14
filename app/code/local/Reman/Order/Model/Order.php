@@ -96,7 +96,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		}
 		catch (Exception $e)
 		{
-			return $e;
+			return $e->getMessage();
 		}
 		
 		$data['order_id'] = $order->getIncrementId();

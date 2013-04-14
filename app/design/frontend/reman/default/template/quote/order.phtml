@@ -63,9 +63,14 @@
 	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 
 ?>
-
+<?php /*?>action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" <?php method="post */?>
+<div id="order-message" style="display:none;"></div>
+<div id="preloader-order-page" class="reman_preloader_order" style="display:none;"></div>
 <div id="reman_order">
-    <form action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" method="post" id="form-order">
+
+	
+
+    <form id="form-order" method="post" action="#" onsubmit="submitOrder(); return false;">
         <!-- Order Date -->
         <input type="hidden" name="data_order" value="<?php echo date("m/d/y");?>" />
         <!-- ETE Cust Rep -->
@@ -412,30 +417,25 @@
             
             <div class="buttons">
                 <button type="reset" onclick="Reman_QuickQuote.prototype.resetOrder(); return false;">Cancel</button>
-                <button type="submit">Submit Order</button>
+                <button  type="submit">Submit Order</button>
             </div>
     </form>
     <script type="text/javascript">
     //<![CDATA[
         var dataForm = new VarienForm('form-order', true);
 		
+		
 		// Parts Commercial Warranty value
 		var comWarrantyId = <?php 
 								if(!is_null($parts_commercial_warranty_weightId)){
-									
 									echo $parts_commercial_warranty_weightId;
-								
 								}else{
-								
 									echo 0;
 								}
-									
-			
 							 ?>;
 		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 		var fluidAmount = <?php echo $fliud_amount; ?>;
 		var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
-		
     //]]>
 		
 		$j(document).ready(function(){
