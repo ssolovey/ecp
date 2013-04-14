@@ -124,6 +124,9 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 */
 	protected function syncLog( $synced, $count )
 	{	
+	
+		date_default_timezone_set('America/Detroit');
+		
 		$date = date('Y-m-d H:i:s');
 
 		if ( $this->_logid ) {
