@@ -1,38 +1,36 @@
 /**
- * Online Quick Quote frontend logic
- *  
+ * Reman Catalog  Frontend Logic 
+ * Quote page logic 
+ * Ajax requests 
+ * Order Profile
+ * Order Submit
  * @category    Reman
  * @package     frontend_reman_default_js
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
  */
  
-/*Resolve conflicts with prototype js default library*/
+/** Resolve conflicts with prototype js default library */
 var $j = jQuery.noConflict();
 
-/* Document ready event*/
+/** Document ready event */
 $j(document).ready(function(){
-
-	/*Initiate events on Quick Quote links */
+	/** Initiate events on Quick Quote links */
 	$j('#steps').bind('click',function(event){
 		Reman_QuickQuote.prototype.eventsHandler(event);
 	});
-
 	/** Remove validation error red borders from focused input*/
 	$j('input').click(function(e){
 		if($j(e.target).hasClass('validation-failed')){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
-	
-	
+	/** Order Submit Event */
 	$j('#form-order').submit(function(){
 		submitOrder();
 	});
-	
 });
 
-/*Create NameSpace for Quick Quote module*/
-
+/** Create NameSpace for Quick Quote module */
 function Reman_QuickQuote() {};
 
 Reman_QuickQuote.prototype = {
@@ -59,12 +57,10 @@ Reman_QuickQuote.prototype = {
 		if(elem.tagName == 'A'){ 
 			return;
 		}
-
 		//Hide error popup
 		$j('#product_error_popup').fadeOut();
 
 		while (elem) {
-
 			switch (elem.className){
 				/*Event for Category Select*/	
 				case 'cat_select':{
@@ -326,7 +322,9 @@ Reman_QuickQuote.prototype = {
 		$j('#reman-product_info').hide();
 		$j('#reman-product_info').html('');
 	},
-
+	/**
+	 * On Make Breadcrumb click event
+	*/
 	turnOnMakeBreadcrumb: function(){
 		if(this.isYearActive){
 			this.clearYear();
@@ -343,7 +341,9 @@ Reman_QuickQuote.prototype = {
 			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
-
+	/**
+	 * On Year Breadcrumb click event
+	*/
 	turnOnYearBreadcrumb: function(){
 		if(this.isModelActive){
 			this.clearModel();
@@ -359,6 +359,9 @@ Reman_QuickQuote.prototype = {
 			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
+	/**
+	 * On Model Breadcrumb click event
+	*/
 	turnOnModelBreadcrumb: function(){
 		if(this.isGroupActive){
 			this.clearGroup();
@@ -375,7 +378,9 @@ Reman_QuickQuote.prototype = {
 			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 		}
 	},
-
+	/**
+	 * On Category Breadcrumb click event
+	*/
 	turnOnCatBreadcrumb: function(){
 			this.clearMake();
 			this.clearYear();
@@ -394,13 +399,18 @@ Reman_QuickQuote.prototype = {
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
 			Reman_QuickQuote.prototype.currentSelectedEngine = '';
 	},
-
+	/**
+	 * On Group Breadcrumb click event
+	*/
 	turnOnGroupBreadcrumb: function(){
 		this.clearProductInfo();
 		$j('#parts_tbl').show();
 		$j('.sel_group_link').parent().remove();
 	},
-
+	
+	/**
+	 * Select Year DataBase Query 
+	*/
 	selectYear: function(makeid,year){
 		var self = this;
 		$j.ajax({
@@ -462,6 +472,9 @@ Reman_QuickQuote.prototype = {
 		
 		this.isModelActive = true;
 	},
+	/**
+	 * Select Model DataBase Query 
+	*/
 	selectModel: function(vehicle_id,name){
 			this.currentSelectedModel = name;
 			$j.ajax({
@@ -553,7 +566,9 @@ Reman_QuickQuote.prototype = {
 				}
 			});
 	},
-
+	/**
+	 * Form HTML Template for Parts Group Table 
+	*/
 	formSelectGroupBlock: function(obj,name){
 		for (key in obj){
 			// buffer string 
@@ -612,7 +627,9 @@ Reman_QuickQuote.prototype = {
 		});
 
 	},
-
+	/**
+	 * Select Part DataBase Query 
+	*/
 	selectPart: function(applic_id,subgroup,id,name){
 			if(subgroup == 0) {
 					$j.ajax({
@@ -668,7 +685,9 @@ Reman_QuickQuote.prototype = {
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
 			}
 	},
-
+	/**
+	 * Load Product Info 
+	*/
 	loadProductInfo: function(id,name,prevgroup){
 		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join(' > ');
 		var make = $j.trim(Reman_QuickQuote.prototype.currentSelectedMake);
@@ -740,7 +759,9 @@ Reman_QuickQuote.prototype = {
 				}
 		});
 	},
-
+	/**
+	 * Load Inventory Info
+	*/
 	loadInventoryInfo: function(id){
 		$j.ajax({
 
@@ -770,6 +791,10 @@ Reman_QuickQuote.prototype = {
 				
 		});
 	},
+	
+	/**
+	 * Load Order Table
+	*/
 	loadOrder : function(zip){
 		$j.ajax({
 
@@ -800,7 +825,9 @@ Reman_QuickQuote.prototype = {
 	
 	
 	},
-	
+	/**
+	 Reset Order
+	*/
 	resetOrder : function(){
 		$j('#order-wrapper').html('');
 		$j('#shipping-wrapper').show();
@@ -809,7 +836,7 @@ Reman_QuickQuote.prototype = {
 }
 
 
-/* Sort Helper */
+/** Sort Helper */
 
 jQuery.fn.sort = function() {  
    return this.pushStack( [].sort.apply( this, arguments ), []);  
@@ -819,8 +846,7 @@ function sortAlpha(a,b){
     return a.innerHTML > b.innerHTML ? 1 : -1;  
 };
 
-/*Profile Enable Account*/
-
+/* *Profile Enable Account*/
 function manageUserAccount(action,id,el){
 		$j.ajax({
 				url: action,
@@ -856,7 +882,9 @@ function manageUserAccount(action,id,el){
 		});
 }
 
-
+/**
+ * Open Order In Profile Page 
+*/
 function openOrder(action,id){
 	$j.ajax({
 		url: action,
@@ -878,13 +906,18 @@ function openOrder(action,id){
 	});
 }
 
+
+/**
+ * Quote On Order Submit Query 
+*/
 function submitOrder(){
-	
+	/* If For Validated False return false*/
 	if(!dataForm.validator.validate()) {
 		return false;
 	}
-	
+	/** Collect Form Data */
 	var formData = $j("#form-order").serialize();
+	
 	$j.ajax({
 		url: "index/ordersubmit",
 		type: 'POST',
@@ -898,13 +931,26 @@ function submitOrder(){
 		},
 		
 		complete: function(data){
-			
-			$j('#order-message').html(data.responseText);
+			if(data.responseText != 'Success'){
+				$j('#order-message-text').html(data.responseText);
+				$j('#order-error-back').show();
+			}else{
+				$j('#order-message-text').html(data.responseText);
+			}
+
 			$j('#preloader-order-page').hide();
 			$j('#order-message').show();
 		}
 	});
 
+}
+/**
+ * Back To Order page 
+*/
+function orderBack(){
+	$j('#order-message').hide();
+	$j('#order-error-back').hide();
+	$j('#reman_order').show();	
 }
 
 

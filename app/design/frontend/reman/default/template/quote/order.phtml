@@ -1,6 +1,7 @@
 <?php
 /**
  * Reman Quick Quote Order Template
+ * Visual representation for Quote page Order Table.
  *
  * @category    Reman
  * @package     Design
@@ -63,13 +64,17 @@
 	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 
 ?>
-<?php /*?>action="<?php echo $this->getUrl('quote/index/ordersubmit') ?>" <?php method="post */?>
-<div id="order-message" style="display:none;"></div>
+
+
+<!--- Order Result Message --->
+<div id="order-message" style="display:none; font-size:20px;">
+	<div id="order-message-text" style="font-size:20px;"></div>
+	<div id="order-error-back" onclick="orderBack(); return false;" style="display:none;">Back</div>
+</div>
+<!--- Order preloader -->
 <div id="preloader-order-page" class="reman_preloader_order" style="display:none;"></div>
+
 <div id="reman_order">
-
-	
-
     <form id="form-order" method="post" action="#" onsubmit="submitOrder(); return false;">
         <!-- Order Date -->
         <input type="hidden" name="data_order" value="<?php echo date("m/d/y");?>" />
@@ -225,9 +230,7 @@
                             <tr style="color:#f6193a">
                                 <td class="label">Total Price:</td> 
                                 <td id="total-amount"></td>
-                            </tr>
-                        
-                        
+                            </tr>                       
                 </table>
                 <div style="clear:both"></div>
                 <table class="vin" style="margin-top:7px;">
@@ -423,8 +426,6 @@
     <script type="text/javascript">
     //<![CDATA[
         var dataForm = new VarienForm('form-order', true);
-		
-		
 		// Parts Commercial Warranty value
 		var comWarrantyId = <?php 
 								if(!is_null($parts_commercial_warranty_weightId)){
@@ -448,50 +449,44 @@
 			// Set selected State SOLD TO
 			$j('#bt_state').attr('value', $j('#sold-to-states option:selected').html());
 			
-			
-		
 			// Set Shipping values
 			$j('#shippingcost').attr('value',  window.truecost );
 			$j('#shippingcarrier').attr('value', window.carrier );
 			$j('#shippingdays').attr('value', window.servicedays );
-			
+			// Set Shipping Value to Order Table
 			$j('#order-shipping-cost').html('$'+window.truecost);
-			
-			
-			
+			/** Calculate Total Parts Amount  (Need to be discussed !!!)*/ 
 			calculateTotalPrice();
-			
-			 
 		});
 		
+		/** Remove default magento validation failed lables */
 		$j('#reman_order input').click(function(e){
 			if($j(e.target).hasClass('validation-failed')){
 				$j(e.target).removeClass('validation-failed');
 			}
 		});
 		
+		/** Same as Sold Button Functionality
+		  * Copy fields from Sold TO to Ship TO
+		*/
 		$j('#same-as-sold').click(function() {
 			if($j(this).is(':checked')) {
-				
 				for( var i = 0; i<=$j('#sold-to input').length-1; i++){
 					$j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
 				}
-				
 				for (var s = 0; s<=$j('#ship-to-states option').length; s++){
 					if($j('#sold-to-states option:selected').val() == $j($j('#ship-to-states option')[s]).val() ){
 						$j($j('#ship-to-states option')[s]).attr('selected','selected');
 					}
 				}
-				
 			} else {
 				for( var i = 1; i<=$j('#ship-to input').length-1; i++){
 					$j('#ship-to input')[i].value = "";
 				}
 				$j($j('#ship-to-states option')[0]).attr('selected','selected');
-				
    	    	}
 		});
-		
+
 		$j('#commercial_app').click(function(){
 			if($j(this).is(':checked')){
 				$j('#commercial_app_value').attr('value',"Y");
@@ -526,20 +521,16 @@
 							}else if($j(this).attr('weight') <= baseWarrantyId){
 								$j(this).show();
 							}
-							
 							if($j(this).attr('weight') == comWarrantyId){
 								$j(this).hide();
 							}
-							
 							if($j(this).attr('weight') == baseWarrantyId){
 								$j(this).attr('selected','selected');
 							}
 					});
 				}
-				
 			}
 		});
-		
 		
 		function calculateFluid(checked){
 			if(checked){
@@ -549,35 +540,20 @@
 			   $j('#fluid-amount').attr('value', 0 ); 
 			}
 		}
-		
 		// Calculate Total Amount
-		
 		function calculateTotalPrice(){
-		
-			var shippingPrice = Number(window.truecost);
-			
+			var shippingPrice = Number(window.truecost);		
 			var fluidPrice = Number($j('#fluid-amount').attr('value'));
-				
 			var partPrice = Number($j('#part-price').attr('value'));
-			
 			var corePrice = Number($j('#core-price').attr('value'));
-		
-			
 			var total  = shippingPrice + fluidPrice + partPrice + corePrice;
-			
 			if(tax_value){
-				
 				var tax_amount = (total/100) * tax_value;
-				
 				var total  = total + tax_amount ;
-				 
 			} 
-			
 			 $j('#total-amount').html('$'+Number(total).toFixed(1));
 			 $j('#total-price').attr('value', Number(total).toFixed(1));	
 		}
-		
-		
     </script>
 </div>
 

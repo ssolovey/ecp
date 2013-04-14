@@ -3426,6 +3426,16 @@ text-decoration: none;
 	border-top:none !important;
 }
 
+/* Failed order back Button */
+
+#order-error-back{
+	font-size: 14px;
+	color: blue;
+	cursor: pointer;
+	margin-top: 15px;
+}
+
+
 
 /*Validation Failed*/
 .validation-failed { border:1px dashed #eb340a !important; background:#faebe7 !important; }
