@@ -16,7 +16,7 @@
 		//ATL Stock
 		$atl = $_product->getData('parts_inventory_se');
 		//DALLAS Stock
-		$dal = $_product->getData('parts_inventory_mc');
+		$dal = $_product->getData('parts_inventory_sc');
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
 ?>
@@ -99,7 +99,7 @@
             </td>
         </tr>
         <tr>
-            <td class="lable">Dulles, TX:</td>
+            <td class="lable">Dallas, TX:</td>
             <td id="dal">
 				<?php 
 					if($dal == 0 || $dal == null){
