@@ -52,7 +52,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		if($request['step'] == 3)
 		{
 			
-			// get years accprding to selected make
+			// get models accprding to selected make
 			$result_st3 = Mage::getModel('sync/applic')->loadProductId($request['id'],$request['category']);
 			
 			echo json_encode($result_st3);
@@ -127,8 +127,13 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// parse request data
 		$request = $this->getRequest()->getPost();
 		$array = array();
-		$client = new SoapClient("http://services.beta.afs.net/Rate/RateService_v2.asmx?WSDL"); 
-	
+		
+		/** BETA */
+		//$client = new SoapClient("http://services.beta.afs.net/Rate/RateService_v2.asmx?WSDL"); 
+		
+		/** Production */
+		$client = new SoapClient("http://services.afs.net/rate/rateservice_v2.asmx?WSDL"); 
+		
 		  foreach($request['stocks'] as $value){
 				$params = array(
 					   "clientId" => "1481",
