@@ -48,6 +48,7 @@ TRUNCATE `tag_summary`;
 TRUNCATE `wishlist`;
 TRUNCATE `log_quote`;
 TRUNCATE `report_event`;
+TRUNCATE `reman_order`;
 
 
 -- RESET AUTOINCREMENT TO 1
