@@ -122,6 +122,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 */
 	protected function syncLog($path, $message)
 	{
+		date_default_timezone_set('America/Chicago');
+		
 		$myFile = "cronlog.html";
 		$fh = fopen($myFile, 'a');
 		$stringData = $message . ': ' . $path . ' @ ' . date('Y.m.d h:i A') . '<br/>';
