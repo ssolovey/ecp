@@ -151,7 +151,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'original_invoice' => $item[56],
 			'return_auth' => $item[57],
 			'csi' => $item[58],
-			'order_id' => $item[59],
+			//'order_id' => $item[59],
 			'unit_amount' => $item[60],
 			'core_amount' => $item[61],
 			'parts_amount' => $item[62],

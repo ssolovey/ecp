@@ -22,15 +22,19 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	 */
 	public function createOrder( $customer_id, $data )
 	{
+		$orderCollection = $this->getCollection();
+		$orderCollection->addFieldToFilter('ete_order_id', $data['ete_order_id']);
 		
-		$order = $this->load( $data['order_id'] );
+		$order = $orderCollection->getFirstItem();
+
+		//$order = $this->load( $data['order_id'] );
 		
 		// check: is order in web database?
 		if ( $order->getId() ) {
 			
 			$this->_updateOrder($order, $data);
 			
-			return;	
+			return;
 		}
 		
 		try
@@ -93,22 +97,23 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			$service = Mage::getModel('sales/service_quote', $quote);
 			$service->submitAll();
 			$order = $service->getOrder();
+		
+			$data['order_id'] = $order->getIncrementId();
+							
+			$this->setData( $data );
+			
+			$this->save();
+			
+			return 'Success';
+			
+			// export new order
+			Mage::getModel('sync/export')->exportOrder($data);
+			
 		}
 		catch (Exception $e)
 		{
 			return $e->getMessage();
 		}
-		
-		$data['order_id'] = $order->getIncrementId();
-						
-		$this->setData( $data );
-		
-		$this->save();
-		
-		return 'Success';
-		
-		// export new order
-		Mage::getModel('sync/export')->exportOrder($data);
 	}
 	
 	/**
@@ -117,8 +122,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	 * @param order data (Array)
 	 */
 	protected function _updateOrder( $order, $data )
-	{
-		$order->setData( $data );
+	{		
+		$order->addData( $data );
 		
 		$order->save();
 		
