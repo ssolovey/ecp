@@ -42,6 +42,11 @@
         <?php echo $this->getChildHtml('header') ?>
         <div class="main-container col2-right-layout">
             <div class="main">
+            <div id="black-mask" class="ship-preloader" style="display:none;">
+            </div>
+            <div class="reman_preloader_shipping ship-preloader" style="display:none;">
+                <div class="shipping-estimation-text">Shipping estimation...</div>
+            </div>
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <div class="col-main">
                     <?php echo $this->getChildHtml('global_messages') ?>

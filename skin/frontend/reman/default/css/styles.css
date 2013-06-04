@@ -152,8 +152,21 @@ ul,ol         { list-style:none; }
 	background-color: #F2F2F2;
 	padding: 15px 10px 15px 10px;
 	border-radius: 15px; 
-	height: 340px;
+	height: 300px;
 	margin-bottom: 15px;
+}
+
+
+#black-mask{
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	position: absolute;
+	top: 0px;
+	left: 9px;
+	width: 901px;
+	z-index: 1;
+	opacity: 0.3;
 }
 
 /* 1 Column Layout */
@@ -2511,8 +2524,16 @@ background-position: 0px 20px;
 	height:100px;
 	width:100px;
 	margin-left: 327px;
-	margin-top: 52px;
+	margin-top: 270px;
 
+}
+
+.reman_preloader_shipping .shipping-estimation-text{
+	width: 200px;
+	top: 102px;
+	position: absolute;
+	left: -21px;
+	color: #000;
 }
 
 
@@ -2824,7 +2845,7 @@ background-position: 0px 20px;
 }
 
 #stock_avl table tr{
-	height:18px;
+	height:20px;
 }
 
 #stock_avl .title{
@@ -2835,9 +2856,9 @@ background-position: 0px 20px;
 }
 
 #stock_avl .pricing .lable{
-	padding-right: 5px;
+	padding-right: 10px;
 	font-size: 12px;
-	width: 60px;
+	width: 65px;
 	text-align: right;
 }
 
@@ -2862,6 +2883,27 @@ background-position: 0px 20px;
 	width: 125px;
 }
 
+
+#order-now-btn{
+	background: url(../images/order-now.png) no-repeat;
+	height: 28px;
+	margin-top: 10px;
+	margin-left: 7px;
+	cursor:pointer;
+}
+
+#sell-sheet-ico{
+	background: url(../images/sell-sheet-doc-ico.png) no-repeat;
+	width:35px;
+	height:35px;
+}
+
+#liquid-doc-ico{
+	background: url(../images/fuel-doc-ico.png) no-repeat;
+	width:35px;
+	height:35px;
+}
+
 #breadcrumb_info.disabled{
 	color:#999999;
 }
@@ -2874,6 +2916,7 @@ text-decoration: none;
 	width:100px;
 	font-size:12px;
 	float:left;
+	margin-top:-8px;
 }
 
 .reman_docs a {
@@ -3329,6 +3372,23 @@ text-decoration: none;
 
 
 /* Shipping Estimation*/
+
+#estimate-shipping-btn{
+	background:url(../images/shipping-go-search.png) no-repeat;
+	width: 50px;
+	height: 20px;
+	margin-left: 5px;
+	margin-top: 5px;
+	cursor:pointer; 
+}
+
+#zip_value{
+	width: 100px;
+	height: 25px;
+	border: 2px solid #000;
+	padding-left: 4px;
+}
+
 
 #estimate-shipping {
 	width:601px;

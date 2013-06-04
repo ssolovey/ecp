@@ -19,106 +19,124 @@
 		$dal = $_product->getData('parts_inventory_sc');
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
+		
+		
+		$array = array();
+		
+		if($bwi != 0 && $bwi != null){
+			array_push($array, "21113");
+		}
+		
+		array_push($array, "53223");
+		
+		if($ont != 0 && $ont != null){	
+			array_push($array, "91761");
+		}
+		if($atl != 0 && $atl != null){	
+			array_push($array, "30344");
+		}
+		
+		if($dal != 0 && $dal != null){	
+			array_push($array, "75261");
+		}
+		
 ?>
-<!-- Stock Availability-->
+<!-- Stock Availability--> 
 <div id="stock_avl">
-	<div class="title">Pricing</div>
+	<div class="title">Pricing & Availability </div>
+    
+    <table style="margin-bottom:25px;">
+    	<tr>
+            <td>
+            	<input id="zip_value" value="" type="text" placeholder="Destination Zip" />
+            </td>
+            <td>
+            	<div id="estimate-shipping-btn"></div>
+            </td>
+        </tr>
+    </table>
+    
+    
     <table class="pricing">
+    	
+    	<tr>
+        	<td class="lable">MSRP:</td>
+            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
+        </tr>
     	<tr>
         	<td class="lable">Your price:</td>
             <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
         </tr>
-        <tr>
-        	<td class="lable">Core:</td>
-            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
-        </tr>
+        
         <tr>
         	<td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
                     <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
             <?php else: ?>	
-                    <td id="estimated-price"><?php echo "to be estimated based on Zip";?></td> 
+                    <td id="estimated-price">$200</td> 
             <?php endif; ?>		
         </tr>
-        <tr style="height:30px;">
-        	<td class="lable">MSRP:</td>
-            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
-        </tr>
+        
+        
+        
         <tr>
-            <td class="lable">Warranty:</td>
+        	<td class="lable">Core Value:</td>
+            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+        </tr>
+        
+        <tr style="height:40px;">
+        	<td class="lable ship-from" style="display:none;">Your Total:</td>
+            <td id="total-price-product-page" class="ship-from" style="display:none;"></td>
+        </tr>
+        
+        
+        <tr>
+        	<td class="lable ship-from" style="display:none;">Ship From:</td>
+            <td id="ship-from-value" class="ship-from" style="display:none;"></td>
+        </tr>
+        
+        <tr>
+        	<td class="lable">Availability:</td>
             <td>
-            <?php 
-                $partType = $_product->getName();
-                echo Mage::helper('warranty')->getBaseWarrantyLabel($partType[0],$_product); 
-            ?>
-            </td>
-        </tr>
-    </table>
-    
-    
-    <div style="margin-top:20px;" class="title">Availability</div>
-    <table>
-        <tr>
-            <td class="lable">Milwaukee, WI:</td>
-            <td id="mke"><?php echo '<span style="color:#f6193a">YES</span>';?></td>
-        </tr>
-        <tr>
-            <td class="lable">Baltimore, MD:</td>
-            <td id="bwi">
-				<?php 
-					if($bwi == 0 || $bwi == null){
-						echo 'NO';
+            	<?php
+					if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
+						echo "<div> --/-- </div>";
 					}else{
-						echo '<span style="color:#f6193a">YES</span>';
+						echo "<div>Immediate</div>";
 					}
-				?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Ontario, CA:</td>
-            <td id="ont">
-				<?php 
-					if($ont == 0 || $ont == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-					}
-				?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Atlanta, GA:</td>
-            <td id="atl">
-				<?php 
-					if($atl == 0 || $atl == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-					}
-				?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Dallas, TX:</td>
-            <td id="dal">
-				<?php 
-					if($dal == 0 || $dal == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-					}
-				?>
-            </td>
-        </tr>
-    </table>
-    
-    <div class="bottom_message">
-    	<?php
-        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
-        	echo "<div>CAll FOR AVAILABILITY</div>";
-		}else{
-			echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
-		}
 		?>
-    </div>
+            </td>
+        </tr>
+        <tr>
+        	<td class="lable ship-time" style="display:none;">Ship Time:</td>
+            <td id="ship-time-value" class="ship-time" style="display:none;"></td>
+        </tr>
+    </table>
+    
+    <div style="display:none;" id="order-now-btn"></div>
+    
+   
 </div>
+
+<script type="text/javascript">
+	//Estimate Shipping Event
+	$j('#estimate-shipping-btn').click(function(){
+		if($j("#zip_value").attr("value") != ""){
+			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"));
+		}
+	});
+	// Load Order Page
+	$j('#order-now-btn').click(function(){
+		//Reman_QuickQuote.prototype.loadOrder($j('#zip_value').attr('value'));
+	});
+	
+	
+	var total = <?php echo $_product->getPrice();?> +  <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
+					<?php echo Mage::helper('company')->getCustomerShippingPrice();?>  
+					<?php else: ?>	
+                   			200
+            		<?php endif; ?>	+ <?php echo $_product->getData('parts_core_price');?>;
+	
+	$j('#total-price-product-page').html('$' + total+ '.00');
+</script>
+

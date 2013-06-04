@@ -15,30 +15,6 @@
 	21113: 'Baltimore, MD',
 	75261: 'Dulles, TX'
  }
-	
-function loadShippingPage(){
-	$j.ajax({
-
-		url: "index/shipping",
-		type: 'POST',
-		
-		data: {
-			id: Reman_QuickQuote.prototype.currentApplic_id
-		},
-		
-		beforeSend: function(){
-				$j('#steps').hide();
-				$j('.reman_preloader_big').show();
-		},
-				
-		complete: function(data){
-			$j('.reman_preloader_big').hide();
-			$j('#shipping-wrapper').html(data.responseText);
-		}
-			
-	});
-}
-
 
 function estimateShipping (stocks,destzip){
 	$j.ajax({
@@ -52,22 +28,20 @@ function estimateShipping (stocks,destzip){
 			},
 			
 			beforeSend: function(){
-				$j('.result-estimate').hide();
-				$j('#best-carriers').html('');
-				$j('.reman_preloader_shipping').show();
+				
+				$j('.ship-preloader').show();
+				
 			},
 			
 			error: function(error){
-				alert('Error !!!!');
+				alert('Shipping Service error. Try againe');
+				$j('.ship-preloader').hide();
 				return;
 			},
 						
 			complete: function(data){
+				
 				var data = $j.parseJSON(data.responseText);
-				// Form Result Table
-				
-				console.log(data);
-				
 				buildTableResults(filterBestResult(data));	
 			}
 				
@@ -107,15 +81,13 @@ function filterBestResult(data){
 			}
 			
 			
-			//if(data[key][s].TrueCost < MAXCOST){
+			store[data[key][s].CarrierName] = {
+					'servicedays' : servicedays,
+					'truecost' : data[key][s].TrueCost
+			}
 			
-				store[data[key][s].CarrierName] = {
-						'servicedays' : servicedays,
-						'truecost' : data[key][s].TrueCost
-				}
-				
-				MinServiceDays.push(store[data[key][s].CarrierName].servicedays);	
-			//}
+			MinServiceDays.push(store[data[key][s].CarrierName].servicedays);	
+			
 		}
 		
 		var bestCarrier =  MinServiceDays.min();
@@ -123,23 +95,22 @@ function filterBestResult(data){
 		
 		for(c in store){
 			
-			//if(bestCarrier == store[c].servicedays){
-				id ++;
-				if(store[c].servicedays == 0){
-					
-					var days = 1;
+			id ++;
+			if(store[c].servicedays == 0){
 				
-				}else{
-					
-					var days = store[c].servicedays;
-				}
+				var days = 1;
+			
+			}else{
 				
-				carriers[c] = {
-					'servicedays': days,
-					'truecost' : store[c].truecost,
-					'id': id
-				}	
-			//}	
+				var days = store[c].servicedays;
+			}
+			
+			carriers[c] = {
+				'servicedays': days,
+				'truecost' : store[c].truecost,
+				'id': id
+			}	
+			
 		}	
 		dataArray.push(carriers);
 	}
@@ -148,54 +119,18 @@ function filterBestResult(data){
 
 
 function buildTableResults(data){
-	
-	 var costFilter = [];
-	 
 	 var daysFilter = [];
-	 
 	 for (key in data){
-			
-			var storeName =  data[key].store;
-			
-			for (k in data[key]){
-				if(k != 'store'){
-					var carrier =  k;
-					var days = Number(data[key][k].servicedays); // Add One more day to estimated
-					var truecost = data[key][k].truecost;
-					var id =  data[key][k].id;
-			
-					if(carrier && days){
-						
-						//costFilter.push(Number(truecost));
-						
-						daysFilter.push(Number(days));
-						
-						var table = '<table id="'+id+'">'+
-								'<tr>'+
-									'<td class="noborder" style="font-weight:bold">Delivery from</td>'+
-									'<td class="noborder">'+storeName+'</td>'+
-								'</tr>'+
-								'<tr>'+
-									'<td style="font-weight:bold">Carrier</td>'+
-									'<td>'+carrier+'</td>'+
-								'</tr>'+
-								'<tr>'+
-									'<td style="font-weight:bold">Service Days</td>'+
-									'<td>'+days+'</td>'+
-								'</tr>'+
-								'<tr>'+
-									'<td style="font-weight:bold">True Cost</td>'+
-									'<td>'+truecost+'$</td>'+
-								'</tr>'+
-							'</table>';
-							
-						 $j('#best-carriers').append(table);
-					}
-
+		var storeName =  data[key].store;
+		for (k in data[key]){
+			if(k != 'store'){
+				var days = Number(data[key][k].servicedays); // Add One more day to estimated
+				if(days){
+					daysFilter.push(Number(days));
 				}
-			}			
+			}
+		}			
 	 }
-	 
 	 getMinDaysCarrirer(data,daysFilter.min());
 }
 
@@ -231,37 +166,36 @@ function bestPrice(data,minPrice){
 				'carrier'    : data[key].carrier,
 				'servicedays': data[key].servicedays,
 				'truecost' : data[key].truecost,
-				'id': data[key].id
+				'store': key
 			}
 		}
  	 }
-	 
-	 
-	 if(bestCarrier[store].servicedays > 1){
-		var result_text =  bestCarrier[store].servicedays+' Days or less';	
-	 }else{
-	 	var result_text =  bestCarrier[store].servicedays+' Day';
-	 }
-	 
+	 // global variables for Order Page
 	 window.servicedays = bestCarrier[store].servicedays;
 	 window.truecost = bestCarrier[store].truecost;
 	 window.carrier = bestCarrier[store].carrier;
+	 window.store = bestCarrier[store].store;
+	 // Form Days text
+	 if(window.servicedays > 1){
+	 	var textDays = 'Days';
+	 }else{
+	 	var textDays = 'Day';
+	 }
 	 
-	 $j('#shipping-result').html(result_text);
+	 // Fill in Values
+	 $j('#ship-price-value').html( '$'+window.truecost );
+	 $j('#ship-from-value').html( window.store.substring(window.store.lastIndexOf('_'),-1));
+	 $j('#ship-time-value').html( window.servicedays + ' '+ textDays);
+	 // Show Values
+	 $j('.ship-time').show();
+	 $j('.ship-from').show();
+	 //Show order button
 	 
-	 $j('.reman_preloader_shipping').hide();
+	 $j('#order-now-btn').show();
 	 
-	 $j('#'+ bestCarrier[store].id).addClass('best-sipping-price');
+	 $j('.ship-preloader').hide();
 	 
-	 $j('#estimated-price').html('$'+window.truecost);
 	 
-	 $j('.result-estimate').show();
-	 
-}
-
-function resetShipping(){
-	$j('#shipping-wrapper').html('');
-	$j('#steps').show();
 }
 
 Array.min = function( array ){
