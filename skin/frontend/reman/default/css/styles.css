@@ -3426,6 +3426,22 @@ text-decoration: none;
 	border-top:none !important;
 }
 
+/* Registration success message*/
+
+#messages_product_view .header-banner {
+	background:url(../images/give_five.png) no-repeat;
+	width:601px;
+	height:75px;
+	
+}
+
+#messages_product_view .text{
+	margin-top: 15px;
+	font-size: 12px;
+	margin-left: 10px;
+	color: #000;
+}
+
 /* Failed order back Button */
 
 #order-error-back{

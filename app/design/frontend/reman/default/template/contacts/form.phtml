@@ -24,7 +24,18 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div id="messages_product_view">
+    <div id="succes_reg_query_message" style="display:none">
+        <div class="header-banner"></div>
+        <div class="text">
+            <p style="line-height:40px;">Your registration is on its way to us now. Check your inbox for a confirmation message.</p>
+            <p>Need immediate help? Call us at 800-934-9479 or email catalog@etereman.com.</p>
+        </div>
+    </div>
+     <div id="succes_reg_query" style="visibility:hidden;">
+    	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    </div>
+</div>
 <form action="<?php echo $this->getUrl('contacts/index/post'); ?>" id="contactForm" method="post">
     <div class="fieldset_reman">
         <div class="heading"><span>Sign Up for an Account</span></div>
@@ -75,8 +86,9 @@
 </script>
 <!--Hide COntact form in case of success form submit-->
 <script type="text/javascript">
-	if($j('#messages_product_view').children().length > 0){
+	if($j('#succes_reg_query').children().length > 0){
 		$j('#reg_title').hide();
 		$j('#contactForm').hide();
+		$j('#succes_reg_query_message').show();
 	}
 </script>
