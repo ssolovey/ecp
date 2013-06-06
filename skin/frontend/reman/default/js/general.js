@@ -915,6 +915,9 @@ function submitOrder(){
 	/** Collect Form Data */
 	var formData = $j("#form-order").serialize();
 	
+	
+	console.log(formData);
+	
 	$j.ajax({
 		url: "index/ordersubmit",
 		type: 'POST',
@@ -932,7 +935,7 @@ function submitOrder(){
 				$j('#order-message-text').html(data.responseText);
 				$j('#order-error-back').show();
 			}else{
-				$j('#order-message-text').html(data.responseText);
+				$j('#order-message-text').html('Thank you for your order');
 			}
 
 			$j('#preloader-order-page').hide();

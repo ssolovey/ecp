@@ -67,8 +67,8 @@
 
 
 <!--- Order Result Message --->
-<div id="order-message" style="display:none; font-size:20px;">
-	<div id="order-message-text" style="font-size:20px;"></div>
+<div id="order-message" style="display:none;">
+	<div id="order-message-text" style="font-size:15px; color:#000;"></div>
 	<div id="order-error-back" onclick="orderBack(); return false;" style="display:none;">Back</div>
 </div>
 <!--- Order preloader -->
@@ -395,6 +395,12 @@
                 </table>
             
             </div>
+            
+            <!-- FOR TEST PURPOSE NEED TO CLARIFIED -->
+            <input type="hidden" name="bt_city" value="New York"  />
+            <input id="bt_state" type="hidden" name="bt_state" value="NY"  />
+            <input type="hidden"  name="bt_zip" value="15656"   />
+            <input type="hidden" name="bt_addr1" value="Segedskay"  />
             
             <input type="hidden" name="st_phone_ext" value="" />
             <input type="hidden" name="st_addr2" value="" />
@@ -790,7 +796,9 @@
 				$j('#submit-order-button').hide();
 			}
 		});
-				
+		
+		
+		
 		/** Order Submit Event */
 		$j('#submit-order-button').click(function(){
 			submitOrder();
