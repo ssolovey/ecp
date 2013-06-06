@@ -75,7 +75,7 @@
 <div id="preloader-order-page" class="reman_preloader_order" style="display:none;"></div>
 
 <div id="reman_order">
-    <form id="form-order" method="post" action="#" onsubmit="submitOrder(); return false;">
+    <form id="form-order" method="post" action="#">
         <!-- Order Date -->
         <input type="hidden" name="data_order" value="<?php echo date("m/d/y");?>" />
         <!-- ETE Cust Rep -->
@@ -114,11 +114,15 @@
         <input type="hidden" id="total-price" name="total_amount" id="shippingdays" value="" />
         
         
-        <div class="title">Order</div>
+        <div id="order-title" class="title"><span>Order</span></div>
+        
+        <div id="check-order-back" class="title" style="display:none; cursor:pointer;"><span>Order</span></div>
+        
+        	<div id="check-order-baloon" style="display:none;"></div>
             
-            <div id="vehicle_info">
-                <div class="title">Vehicle info</div>
-                <table>
+            <div id="vehicle_info" class="check-top-blocks">
+                <div class="title"><span>Vehicle info</span></div>
+                <table style="margin-left:60px;">
                         <tr>
                             <td class="label">Year:</td>
                             <td><?php echo $this->getRequest()->getPost('year') ?></td>
@@ -162,17 +166,25 @@
                         </tr>
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin">
-                    <tr>
+                <table class="vin" style="margin-left:35px;">
+                    <tr class="check-tr">
                         <td class="label">VIN:</td>
-                        <td><input type="text" name="vin" class="required-entry" /><em>*</em></td>
+                        <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
+                        <td id="check-vin"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Mileage:</td>
-                        <td><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
+                        <td id="input-mileage"><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
+                        <td id="check-mileage"></td>
                     </tr>
+                    
+                    <tr class="check-tr" id="check-application-block" style="display:none;">
+                        <td class="label">Application:</td>
+                        <td id="check-application">Non Commercial</td>
+                    </tr>
+                    
                 </table>
-                <table class="vin" style="margin-top:0px;">
+                <table id="com-app-block" class="vin" style="margin-top:0px;">
                      <tr>
                         <td class="label">Commercial Application:</td>
                         <td><input id="commercial_app" type="checkbox" /></td>
@@ -182,8 +194,8 @@
             </div>
             
             
-            <div id="order_details">
-                <div class="title">Order Details</div>
+            <div id="order_details" class="check-top-blocks">
+                <div class="title"><span>Order Details</span></div>
                             
                 <div id="family_order">
                     <div class="lable">Family:</div>
@@ -202,17 +214,23 @@
                             <input type="hidden" name="partnum" value="<?php echo $_product->getSku(); ?>" />
                             
                         </tr>
-                        <tr>
+                        
+                        <tr id="check-family" style="display:none;">
+                        	<td class="label">Family:</td>
+                            <td><?php echo $_product->getData('parts_family'); ?></td>
+                        </tr>
+                        
+                        <tr class="check-price-order">
                             <td class="label">Price:</td>
                             <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
                             <input type="hidden" id="part-price" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
                         </tr>
-                        <tr>
+                        <tr class="check-price-order">
                             <td class="label">Core:</td>
                             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
                             <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
                         </tr>
-                        <tr>
+                        <tr class="check-price-order">
                             <td class="label">Shipping:</td>
 								<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
                                         <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
@@ -227,57 +245,64 @@
                                 <td><?php echo $tax_value[0]['value'].'%' ?></td>
                             </tr>
                          <?php endif; ?>
-                            <tr style="color:#f6193a">
+                            <tr>
                                 <td class="label">Total Price:</td> 
                                 <td id="total-amount"></td>
                             </tr>                       
                 </table>
                 <div style="clear:both"></div>
                 <table class="vin" style="margin-top:7px;">
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">PO #:</td>
-                        <td><input type="text" name="po" class="required-entry" /><em>*</em></td>
+                        <td id="input-po"><input type="text" name="po" class="required-entry" /><em>*</em></td>
+                        <td id="check-po"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Claim #:</td>
-                        <td><input type="text" name="claim" /></td>
+                        <td id="input-claim"><input type="text" name="claim" /></td>
+                        <td id="check-claim"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">RO #:</td>
-                        <td><input type="text" name="ro" /></td>
+                        <td id="input-ro"><input type="text" name="ro" /></td>
+                        <td id="check-ro"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">End User Name:</td>
-                        <td><input type="text" name="end_username" /></td>
+                        <td id="input-end_username"><input type="text" name="end_username" /></td>
+                        <td id="check-end_username"></td>
                     </tr>
                 </table>
             </div>
             
             
-            <div id="sold-to" style="margin-top:25px;">
-                <div class="title">Sold To</div>
+            <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
+                <div class="title"><span>Sold To</span></div>
                 
-                <table class="vin">
-                    <tr>
+                <table class="vin" style="margin-left:10px;">
+                    <tr style="height:20px;">
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" /></td>
+                        <td><?php echo $this->helper('company')->getCompanyName(); ?></td>
+                        <input type="hidden" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" name="so_cont_name" value="<?php echo $customer->getFirstname(); ?>"/></td>
+                        <td><?php echo $customer->getFirstname(); ?></td>
+                        <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname(); ?>"/>
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">Phone:</td>
-                        <td><input type="text" name="so_phone" value="<?php echo $customer->phone; ?>" /></td>
+                        <td><?php echo $customer->phone; ?></td>
+                        <input type="hidden" name="so_phone" value="<?php echo $customer->phone; ?>" />
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td class="label">Adress:</td>
                         <td><input type="text" name="bt_addr1" class="required-entry"  /><em>*</em></td>
-                    </tr>
+                    </tr>-->
                 </table>
                 
                
-                <table class="adress">
+               <?php /*?> <table class="adress">
                     <tr>
                     	<td class="label">City:</td>
                         <td><input type="text" name="bt_city" class="required-entry"  /><em>*</em></td>
@@ -297,7 +322,7 @@
                     	<td class="label">ZIP:</td>     
                         <td><input type="text" style="width:45px;" name="bt_zip" class="required-entry"  /><em>*</em></td>
                     </tr>
-                </table>
+                </table><?php */?>
             
             
             </div>
@@ -311,41 +336,46 @@
                  <input type="hidden" name="bt_phone_ext" value="" />
                 
             
-            <div id="ship-to" style="margin-top:25px;">
-                <div class="title">Ship To</div>
+            <div id="ship-to" style="margin-top:25px;" class="check-bottom-blocks">
+                <div class="title"><span>Ship To</span></div>
                 
-                <table class="vin">
-                    <tr>
+                <table class="vin" style="margin-left:10px;">
+                    <tr id="check-same-as-sold-cont">
                         <td class="label">Same as Sold To:</td>
                         <td><input id="same-as-sold" type="checkbox" /></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Customer Name:</td>
-                        <td><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_cust_name"><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
+                        <td id="check-st_cust_name"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Contact Name:</td>
-                        <td><input type="text" name="st_cont_name" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_cont_name"><input type="text" name="st_cont_name" class="required-entry" /><em>*</em></td>
+                        <td id="check-st_cont_name"></td>
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Phone:</td>
-                        <td><input type="text" name="st_phone" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_phone"><input type="text" name="st_phone" class="required-entry" /><em>*</em></td>
+                        <td id="check-st_phone"></td>
                         
                     </tr>
-                    <tr>
+                    <tr class="check-tr">
                         <td class="label">Adress:</td>
-                        <td><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_addr1"><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
+                        <td id="check-st_addr1"></td>
                     </tr>
                 </table>
                 
-                <table style="margin-left:70px;" class="adress">
-                    <tr>
+                <table style="margin-left:75px;" class="adress">
+                    <tr class="check-tr">
                     	<td class="label">City:</td>
-                        <td><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_city"><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
+                        <td id="check-st_city"></td>
                      </tr>   
-                     <tr>
-                     	<td class="label">State:</td>
-                        <td>
+                     <tr class="check-tr">
+                     	<td class="label">State:</td> 
+                        <td id="input-st_state">
                             <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
                                <?php  foreach($states as $state): ?>
                                  <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
@@ -353,10 +383,14 @@
                             </select>
                             <input id="st_state" type="hidden" name="st_state" value="" />
                         </td>
+                        <td id="check-st_state"></td>
+                        
                      </tr>
-                    <tr> 
+                     
+                    <tr class="check-tr"> 
                     	<td class="label">ZIP:</td>   
-                        <td><input name="st_zip" style="width:45px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+                        <td id="input-st_zip"><input name="st_zip" style="width:45px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+                        <td id="check-st_zip"></td>
                     </tr>
                 </table>
             
@@ -366,8 +400,8 @@
             <input type="hidden" name="st_addr2" value="" />
             
             <?php if($partType[0] == 'T'): ?>	
-                <div id="fuid-info">
-                    <div class="title">Fluid</div>
+                <div id="fuid-info" class="check-price-order">
+                    <div class="title"><span>Fluid</span></div>
                     <?php if($fluid == 'O'): ?>	
                         <div class="optional">
                             <span>Optional: </span><input onchange="calculateFluid(this.checked);" type="checkbox"  />
@@ -388,8 +422,8 @@
                 </div>
              <?php endif; ?>
             
-            <div id="warranty-info">
-                <div class="title">Warranty</div>
+            <div id="warranty-info" class="check-price-order">
+                <div class="title"><span>Warranty</span></div>
                 <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').html()); return false;" >
                     <?php  foreach($warranties as $index): ?>
 						 	 <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"  
@@ -412,16 +446,56 @@
             </div>
             
             
-            <div id="order-notes" style="margin-bottom:20px;">
-                <div class="title">Order Notes</div>
+            <div id="order-notes" style="margin-bottom:20px;" class="check-price-order">
+                <div class="title"><span>Order Notes</span></div>
                 <textarea rows="3" cols="100" name="notes">
                 </textarea>
             </div>
             
-            <div class="buttons">
+            <div class="buttons check-price-order">
                 <button type="reset" onclick="Reman_QuickQuote.prototype.resetOrder(); return false;">Cancel</button>
-                <button  type="submit">Submit Order</button>
+                <button onclick="checkOrder(); return false;">Submit Order</button>
             </div>
+            
+            
+            <div id="check-notes" style="display:none;">
+             <table >
+             	 <?php if($partType[0] == 'T'): ?>	
+                    <tr>
+                        <td class="label">Fluid:</td>
+                        <td id="check-fluid" style="font-weight:bold;">
+                            <?php if($fluid == 'O'): ?>	
+                             		Not Included
+                            <?php endif; ?>
+							<?php if($fluid == 'R'): ?>	
+                                    Fluid Required
+                             <?php endif; ?>
+                             <?php if($fluid == 'N'): ?>	
+                                    No Fluid Required
+                             <?php endif; ?>
+                        
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                	<td class="label">Warranty:</td>
+                    <td id="check-warranty" style="font-weight:bold;"></td>
+                </tr>
+                <tr>
+                	<td class="label">Order Notes:</td>
+                    <td id="check-order-notes" style="font-weight:bold;"></td>
+                </tr>
+                
+                <tr>
+                	<td><input id="order-is-checked" style="float:right;" type="checkbox" /></td>
+                    <td style="padding-left:5px; font-weight:bold;">All the information looks good. Let’s do this!</td>
+                
+                </tr>
+             
+             </table>
+             <div id="submit-order-button" style="display:none;"></div> 
+             </div>
+            
     </form>
     <script type="text/javascript">
     //<![CDATA[
@@ -486,10 +560,11 @@
 				$j($j('#ship-to-states option')[0]).attr('selected','selected');
    	    	}
 		});
-
+		
 		$j('#commercial_app').click(function(){
 			if($j(this).is(':checked')){
 				$j('#commercial_app_value').attr('value',"Y");
+				$j('#check-application').html('Commercial');
 				
 				/*
 					iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
@@ -513,6 +588,9 @@
 				
 			}else{
 				$j('#commercial_app_value').attr('value',"N");
+				
+				$j('#check-application').html('Non Commercial');
+				
 				if(comWarrantyId == 0) return;
 				if(comWarrantyId < baseWarrantyId){
 					$j('#warrenty_select option').filter(function(index) {
@@ -535,14 +613,22 @@
 		function calculateFluid(checked){
 			if(checked){
 			   var total = fluidAmount * 5;
-			   $j('#fluid-amount').attr('value', total ); 
+			   $j('#fluid-amount').attr('value', total );
+			   
+			   $j('#check-fluid').html('Included');
+			   
+			   calculateTotalPrice(); 
 			}else{
-			   $j('#fluid-amount').attr('value', 0 ); 
+			   $j('#fluid-amount').attr('value', 0 );
+			   
+			    $j('#check-fluid').html('Not Included');
+			   
+			   calculateTotalPrice(); 
 			}
 		}
 		// Calculate Total Amount
 		function calculateTotalPrice(){
-			var shippingPrice = Number(window.truecost);		
+			var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>		
 			var fluidPrice = Number($j('#fluid-amount').attr('value'));
 			var partPrice = Number($j('#part-price').attr('value'));
 			var corePrice = Number($j('#core-price').attr('value'));
@@ -554,6 +640,163 @@
 			 $j('#total-amount').html('$'+Number(total).toFixed(1));
 			 $j('#total-price').attr('value', Number(total).toFixed(1));	
 		}
+		            
+		function checkOrder(){
+			/* Validate Form*/
+			dataForm.validator.validate();
+			
+			/* If For Validated False return false*/
+			if(!dataForm.validator.validate()) {
+				return false;
+			}
+			
+			
+			$j('#order-title').hide();
+			$j('#check-order-back').show();
+			
+			
+			$j('#check-order-baloon').show();
+			
+			/** Vehicle info */
+			$j('#check-vin').html($j('#input-vin > input').attr('value'));
+			$j('#input-vin').hide();
+			
+			$j('#check-mileage').html($j('#input-mileage > input').attr('value'));
+			$j('#input-mileage').hide();
+			
+			$j('#com-app-block').hide();
+			
+			$j('#check-application-block').show();
+			
+			/** Order Details */
+		
+			$j('#check-po').html($j('#input-po > input').attr('value'));
+			$j('#input-po').hide();
+			
+			$j('#check-claim').html($j('#input-claim > input').attr('value'));
+			$j('#input-claim').hide();
+			
+			$j('#check-ro').html($j('#input-ro > input').attr('value'));
+			$j('#input-ro').hide();
+			
+			$j('#check-end_username').html($j('#input-end_username > input').attr('value'));
+			$j('#input-end_username').hide();
+			
+			$j('.check-price-order').hide();
+			$j('#family_order').hide();
+			$j('#check-family').show();
+			$j('.check-tr').css('height','20px');
+			$j('.check-top-blocks').css('height','220px');
+
+			/** Ship To*/
+
+			$j('#check-same-as-sold-cont').hide();
+			$j('#check-st_cust_name').html($j('#input-st_cust_name > input').attr('value'));
+			$j('#input-st_cust_name').hide();
+			
+			$j('#check-st_cont_name').html($j('#input-st_cont_name > input').attr('value'));
+			$j('#input-st_cont_name').hide();
+			
+			$j('#check-st_phone').html($j('#input-st_phone > input').attr('value'));
+			$j('#input-st_phone').hide();
+			
+			$j('#check-st_addr1').html($j('#input-st_addr1 > input').attr('value'));
+			$j('#input-st_addr1').hide();
+			
+			$j('#check-st_city').html($j('#input-st_city > input').attr('value'));
+			$j('#input-st_city').hide();
+			
+			$j('#check-st_state').html($j('#ship-to-states option:selected').html());
+			$j('#input-st_state').hide();
+			
+			$j('#check-st_zip').html($j('#input-st_zip > input').attr('value'));
+			$j('#input-st_zip').hide();
+			
+			$j('.check-bottom-blocks').css('height','180px');
+			
+			
+			$j('#check-warranty').html($j('#warrenty_select option:selected').html());
+			
+			$j('#check-order-notes').html($j('#order-notes textarea').attr('value'));
+			
+			$j('#check-notes').show();
+
+		}
+		
+		/* Back to Order Page*/
+		
+		$j('#check-order-back').click(function(){
+			
+			$j('#order-is-checked').attr('checked',false)
+			$j('#check-order-back').hide();
+			$j('#order-title').show();
+			
+			
+			$j('#check-order-baloon').hide();
+
+			/** Vehicle info */
+			$j('#check-vin').html('');
+			$j('#input-vin').show();
+			$j('#check-mileage').html('');
+			$j('#input-mileage').show();
+			$j('#com-app-block').show();
+			$j('#check-application-block').hide();
+			
+			/** Order Details */
+			$j('#check-po').html('');
+			$j('#input-po').show();
+			$j('#check-claim').html('');
+			$j('#input-claim').show();
+			$j('#check-ro').html('');
+			$j('#input-ro').show();
+			$j('#check-end_username').html('');
+			$j('#input-end_username').show();
+			$j('.check-price-order').show();
+			$j('#family_order').show();
+			$j('#check-family').hide();
+			$j('.check-tr').css('height','');
+			$j('.check-top-blocks').css('height','');
+
+			/** Ship To*/
+			$j('#check-same-as-sold-cont').show();
+			$j('#check-st_cust_name').html('');
+			$j('#input-st_cust_name').show();
+			$j('#check-st_cont_name').html('');
+			$j('#input-st_cont_name').show();
+			$j('#check-st_phone').html('');
+			$j('#input-st_phone').show();
+			$j('#check-st_addr1').html('');
+			$j('#input-st_addr1').show();
+			$j('#check-st_city').html('');
+			$j('#input-st_city').show();
+			$j('#check-st_state').html('');
+			$j('#input-st_state').show();
+			$j('#check-st_zip').html('');
+			$j('#input-st_zip').show();
+			$j('.check-bottom-blocks').css('height','');
+			$j('#check-warranty').html('');
+			$j('#check-order-notes').html('');
+			$j('#check-notes').hide();
+			
+			$j('#submit-order-button').hide();
+		
+		});
+		
+		
+		$j('#order-is-checked').click(function(){
+			if($j(this).is(':checked')) {
+				$j('#submit-order-button').show();
+			}else{
+				$j('#submit-order-button').hide();
+			}
+		});
+				
+		/** Order Submit Event */
+		$j('#submit-order-button').click(function(){
+			submitOrder();
+		});
+		
     </script>
+
 </div>
 

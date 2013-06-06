@@ -24,10 +24,6 @@ $j(document).ready(function(){
 			$j(e.target).removeClass('validation-failed');
 		}
 	});
-	/** Order Submit Event */
-	$j('#form-order').submit(function(){
-		submitOrder();
-	});
 });
 
 /** Create NameSpace for Quick Quote module */
@@ -812,12 +808,15 @@ Reman_QuickQuote.prototype = {
 				},
 				
 				beforeSend: function(){
-							$j('#shipping-wrapper').hide();
+							$j('#steps').hide();
+							
 							$j('.reman_preloader_big').show();
 				},
 						
 				complete: function(data){
 					$j('.reman_preloader_big').hide();
+					$j('#order-now-btn').hide();		 
+					$j('#ship-go-table').hide();
 					$j('#order-wrapper').html(data.responseText);
 				}
 				
@@ -830,7 +829,9 @@ Reman_QuickQuote.prototype = {
 	*/
 	resetOrder : function(){
 		$j('#order-wrapper').html('');
-		$j('#shipping-wrapper').show();
+		$j('#steps').show();
+		$j('#order-now-btn').show();					 
+		$j('#ship-go-table').show();
 	
 	}
 }
@@ -911,10 +912,6 @@ function openOrder(action,id){
  * Quote On Order Submit Query 
 */
 function submitOrder(){
-	/* If For Validated False return false*/
-	if(!dataForm.validator.validate()) {
-		return false;
-	}
 	/** Collect Form Data */
 	var formData = $j("#form-order").serialize();
 	

@@ -3194,6 +3194,24 @@ text-decoration: none;
 	width: 601px;
 }
 
+#check-order-baloon{
+	background:url(../images/order-page-baloon.png) no-repeat;
+	width:601px;
+	height: 80px;
+	margin-bottom: 15px;
+}
+
+#submit-order-button{
+	background:url(../images/place-order-button.png) no-repeat;
+	width: 220px;
+	height: 40px;
+	position: relative;
+	float: left;
+	margin-left: 165px;
+	margin-top: 20px;
+	cursor:pointer;
+}
+
 #reman_order em{
 	color: #f6193a;
 	margin-left: 5px;
@@ -3204,6 +3222,8 @@ text-decoration: none;
 #reman_order .title{
 	margin-bottom: 20px;
 	color: #000;
+	font-size:12px;
+	font-weight:bold;
 }
 
 #reman_order .buttons{
@@ -3222,8 +3242,8 @@ text-decoration: none;
 #vehicle_info , #sold-to{
 	position: relative;
 	float: left;
-	width: 296px;
-	border: 1px solid #999;
+	width: 294px;
+	border: 2px solid #000;
 	height: 260px;
 	margin-right: 20px;
 }
@@ -3233,9 +3253,13 @@ text-decoration: none;
 	background: #F2F2F2;
 	top: -10px;
 	left: 5px;
+	width:80px;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left:5px;
 }
 
-#vehicle_info table , #order_details table , #sold-to table , #ship-to table{
+#vehicle_info table , #order_details table , #sold-to table , #ship-to table , #check-notes table{
 	position: relative;
 	float: left;
 	margin-top: 15px;
@@ -3244,7 +3268,7 @@ text-decoration: none;
 	color: #000;
 }
 
-#sold-to table , #ship-to table  {
+#sold-to table , #ship-to table, #check-notes table  {
 	margin-left: 5px;
 	margin-top: 30px;
 }
@@ -3257,7 +3281,7 @@ text-decoration: none;
 	height:25px;
 }
 
-#vehicle_info .label , #order_details .label , #sold-to .label ,  #ship-to .label {
+#vehicle_info .label , #order_details .label , #sold-to .label ,  #ship-to .label , #check-notes .label {
 	text-align:right;
 	padding-right:5px;
 	font-weight:bold;
@@ -3267,9 +3291,21 @@ text-decoration: none;
 #order_details , #ship-to{
 	position: relative;
 	float: left;
-	width: 280px;
-	border: 1px solid #999;
+	width: 278px;
+	border: 2px solid #000;
 	height: 260px;
+}
+
+#check-notes { 
+	position: relative;
+	float: left;
+	margin-left:30px;
+	
+}
+
+#check-notes  tr{
+	height:35px;
+	
 }
 
 #order_details .title , #ship-to .title{
@@ -3277,6 +3313,10 @@ text-decoration: none;
 	background: #F2F2F2;
 	top: -10px;
 	left: 5px;
+	width:80px;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left:5px;
 }
 
 #order_details .family{
@@ -3323,7 +3363,7 @@ text-decoration: none;
 	position: relative;
 	float: left;
 	width: 598px;
-	border: 1px solid #999;
+	border: 2px solid #000;
 	height: 70px;
 	margin-top: 25px;
 	z-index:1;
@@ -3334,6 +3374,10 @@ text-decoration: none;
 	background: #F2F2F2;
 	top: -10px;
 	left: 5px;
+	width:80px;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left:5px;
 	
 }
 #warranty-info select{

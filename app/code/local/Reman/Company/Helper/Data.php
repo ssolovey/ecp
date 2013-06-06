@@ -66,7 +66,7 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
   		$shippingPrice = $company->ship;
 		if(is_null($shippingPrice))
 		{
-			return "NULL";
+			return 200;
 		}else
 		{
 			return $shippingPrice;
