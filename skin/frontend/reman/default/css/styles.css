@@ -385,9 +385,8 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 
 
 .fieldset_reman .info{
-	margin-top: 15px;
 	margin-left: 40px;
-	width: 344px;
+	width: 360px;
 }
 
 .fieldset_reman em {
@@ -399,6 +398,7 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 .fieldset_reman .info span{
 	font-size: 12px;
 	color: #000;
+	line-height:35px;
 }
 
 
@@ -425,7 +425,7 @@ input.input-text:focus,select:focus,textarea:focus { background-color:#edf7fd; }
 	position: relative;
 	float: left;
 	margin-left: 50px;
-	margin-top: 34px;
+	margin-top: 30px;
 }
 
 .fieldset_reman .required-note span{
