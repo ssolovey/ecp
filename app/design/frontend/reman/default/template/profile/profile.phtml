@@ -88,29 +88,94 @@
     <table class="reman_order_table">
 		
         <tr>
-        	<td style="font-weight:bold;">User Name</td>
-            <td style="font-weight:bold;">Order #</td>
+       
+            <td>Order WID/PID</td>
+            <td>Order Date</td>
+            <td>User Name</td>
+            <td>PO#</td>
+            <td>Year, Make, Model</td>
+            <td>Part Number</td>
+            <td>Order Status</td>
+            <td></td>     
         </tr>
         
         <?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
         <tr>	
-	
-			 <td><?php echo $value['user_id']; ?></td>
-            
-             <?php if(count($value['orders']) == 0): ?>
-              		<td> No Records</td>
-             <?php endif; ?>
-             <?php  foreach($value['orders'] as $order): ?>
-				 <?php if ($order === reset($value['orders'])): ?>
-                 <td style="cursor:pointer"  class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>
-                 </tr>
-                  <?php else: ?>
-                	<tr>
-                    	<td></td>
-                        <td style="cursor:pointer" class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>	
-                    </tr>
-                 <?php endif; ?>                
-            <?php endforeach; ?>
+			 
+            <?php if(count($value['orders']) != 0): ?> 
+             	
+                <?php  foreach($value['orders'] as $order): ?>
+                
+                	<?php $item = Mage::getModel('order/order')->load($order)->_data; ?>
+                        <!--Order ID-->
+                        <td>
+							<?php
+                        		
+								if($item['order_id'] != NULL){
+									 echo $item['order_id']; 
+								}else{
+									echo '--/--';
+								}
+							?>	
+							
+                        </td>
+                        <!--Order Date-->
+                        <td><?php
+									if($item['date_order'] != NULL){ 
+										echo $item['date_order']; 
+									}else{
+										echo '--/--';
+									}
+							?>
+                        </td>
+                        <!--User Name-->
+                        <td>
+							<?php
+								if($value['user_id'] != NULL){ 
+									echo $value['user_id'];
+								}else{
+									echo '--/--';
+								}
+							?>
+                        </td>
+                        <!--#PO-->
+                        <td><?php echo $item['po']; ?></td>
+                        <!--YEAR/MAKE/MODEL-->
+                        <td>
+                            <?php echo $item['year']; ?>/
+                            <?php echo $item['make']; ?>/
+                            <?php echo $item['model']; ?>
+                        </td>
+                        <!-- Part Number-->
+                        <td><?php echo $item['partnum']; ?></td>
+                        <!-- Order Status-->
+                        <td>
+							<?php
+								if($item['order_status'] != NULL){
+									echo $item['order_status'];
+								}else{
+									echo 'New';
+								}
+							?>
+                        </td>
+                        
+                        <td style="cursor:pointer; color:blue;" class="orders_ids" value="<?php echo $order; ?>">View</td>	
+                        
+             	 <?php endforeach; ?>
+             
+             
+					 <?php /*?><?php  foreach($value['orders'] as $order): ?>
+                         <?php if ($order === reset($value['orders'])): ?>
+                         <td style="cursor:pointer"  class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>
+                         </tr>
+                          <?php else: ?>
+                            <tr>
+                                <td></td>
+                                <td style="cursor:pointer" class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>	
+                            </tr>
+                         <?php endif; ?>                
+                    <?php endforeach; ?> <?php */?>
+			<?php endif; ?>
          <?php endforeach; ?>
     </table>
 </div>

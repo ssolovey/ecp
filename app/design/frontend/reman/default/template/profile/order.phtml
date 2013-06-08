@@ -1,96 +1,201 @@
 
 <?php
-$request = $this->getRequest()->getPost();
-$item = Mage::getModel('order/order')->load($request['id'])->_data;
-
-	$labels = array(
-			'Order/Inv #',
-			'Order/ETE ID #',
-			'Invoice Date',
-			'Order Date',
-			'Order Status',
-			'Order Type',
-			'ETE Cust Rep',
-			'Sold To Customer Number',
-			'Sold To Customer Name',
-			'Sold To Contact Name',
-			'Sold To Phone',
-			'Sold To Phone Ext',
-			'PO#',
-			'Bill To Customer Number',
-			'Bill To Customer Name',
-			'Bill To Address 1',
-			'Bill To Address 2',
-			'Bill To City',
-			'Bill To State',
-			'Bill To Zip',
-			'Ship To Customer Number',
-			'Ship To Customer Name',
-			'Ship To Address 1',
-			'Ship To Address 2',
-			'Ship To City',
-			'Ship To State',
-			'Ship To Zip',
-			'Ship To Contact Name',
-			'Ship To Phone',
-			'Ship To Phone Ext',
-			'Vehicle VIN',
-			'Vehicle Make',
-			'Vehicle Year',
-			'Vehicle Model',
-			'Vehicle Engine',
-			'Vehicle Aspiration',
-			'Vehicle Cyl Type',
-			'Vehicle Fuel',
-			'Vehicle Drive',
-			'Unit Tag #',
-			'End User Name',
-			'RO #',
-			'Vehicle Mileage',
-			'Claim #',
-			'Part #',
-			'Serial #',
-			'Family',
-			'Alt Part #',
-			'Unit Type',
-			'Warranty Terms',
-			'Carrier',
-			'Carrier Service',
-			'Carrier Options',
-			'Ship By Date',
-			'Deliver By Date',
-			'Ship From',
-			'Tracking #',
-			'Original Invoice',
-			'Return Auth #',
-			'CSI #',
-			'Unit Amount',
-			'Core Amount',
-			'Parts Amount',
-			'Tax %',
-			'Tax Amount',
-			'Shipping Amount',
-			'Deposit Received',
-			'Total Amount',
-			'Transaction Type',
-			'Commercial App'
-		);
+	$request = $this->getRequest()->getPost();
+	$item = Mage::getModel('order/order')->load($request['id'])->_data;
 ?>
 
-<div class="heading">
-    <span>Order # <?php echo $item['order_id'];  ?></span>
+<div id="reman_order" style="top:-20px;">
+
+        	<div id="details-order-baloon">How would you like it done?</div>
+            
+            <div id="vehicle_info" class="check-top-blocks">
+                <div class="title"><span>Vehicle info</span></div>
+                <table style="margin-left:60px;">
+                        <tr>
+                            <td class="label">Year:</td>
+                            <td><?php echo $item['year']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Make:</td>
+                            <td><?php echo $item['make']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Model:</td>
+                            <td><?php echo $item['model']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Engine:</td>
+                            <td><?php echo $item['engine']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Drive:</td>
+                            <td><?php echo $item['drive']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Notes:</td>
+                            <td></td>
+                        </tr>
+                </table>
+                <div style="clear:both"></div>
+                <table class="vin" style="margin-left:35px;">
+                    <tr>
+                        <td class="label">VIN:</td>
+                        <td> <?php echo $item['vin']; ?> </td>
+                    </tr>
+                    <tr>
+                        <td class="label">Mileage:</td>
+                        <td> <?php echo $item['mileage']; ?> </td>
+                    </tr>
+                    <tr  id="check-application-block">
+                        <td class="label">Application:</td>
+                        <td> <?php echo $item['commercial_app']; ?> </td>
+                    </tr>
+                    
+                </table>
+            </div>
+            
+            <div id="order_details" class="check-top-blocks">
+                <div class="title"><span>Order Details</span></div>
+                           
+                <table>
+                     <tr>
+                        <td class="label"> Web Order ID:</td>
+                        <td><?php echo $request['id']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"> Paradox ID:</td>
+                        <td><?php echo $request['ete_order_id']; ?></td>
+                    </tr>
+                     <tr>
+                        <td class="label"> Status:</td>
+                        <td>
+							<?php
+								if($item['order_status'] != NULL){
+									echo $item['order_status'];
+								}else{
+									echo 'New';
+								}
+							?>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td class="label">Product Name:</td>
+                        <td><?php echo 'TRANSMISSION - '.$item['partnum']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Part Num:</td>
+                        <td><?php echo $item['partnum']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Family:</td>
+                        <td><?php echo $item['family']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Total Price:</td> 
+                        <td><?php echo $item['total_amount']; ?></td>
+                    </tr>                       
+                </table>
+                <div style="clear:both"></div>
+                <table class="vin" style="margin-top:7px;">
+                    <tr>
+                        <td class="label">PO #:</td>
+                        <td><?php echo $item['po']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Claim #:</td>
+                        <td><?php echo $item['claim']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">RO #:</td>
+                        <td><?php echo $item['ro']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">End User Name:</td>
+                        <td><?php echo $item['end_username']; ?></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
+                <div class="title"><span>Sold To</span></div>
+                <table class="vin" style="margin-left:10px;">
+                    <tr style="height:20px;">
+                        <td class="label">Customer Name:</td>
+                        <td><?php echo $item['so_cust_name']; ?></td>
+                    </tr>
+                    <tr style="height:20px;">
+                        <td class="label">Contact Name:</td>
+                        <td><?php echo $item['so_cont_name']; ?></td>
+                    </tr>
+                    <tr style="height:20px;">
+                        <td class="label">Phone:</td>
+                        <td><?php echo $item['so_phone']; ?></td>
+                    </tr>
+                </table>
+            </div>
+         		 
+                
+                
+            
+            <div id="ship-to" style="margin-top:25px;" class="check-bottom-blocks">
+                <div class="title"><span>Ship To</span></div>
+                
+                <table class="vin" style="margin-left:10px;">
+                    <tr>
+                        <td class="label">Customer Name:</td>
+                        <td><?php echo $item['st_cust_name']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Contact Name:</td>
+                        <td><?php echo $item['st_cont_name']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Phone:</td>
+                        <td><?php echo $item['st_phone']; ?></td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="label">Adress:</td>
+                        <td><?php echo $item['st_addr1']; ?></td>
+                    </tr>
+                </table>
+                
+                <table style="margin-left:75px;" class="adress">
+                    <tr>
+                    	<td class="label">City:</td>
+                        <td><?php echo $item['st_city']; ?></td>
+                     </tr>   
+                     <tr>
+                     	<td class="label">State:</td> 
+                        <td><?php echo $item['st_state']; ?></td>
+                     </tr>
+                    <tr> 
+                    	<td class="label">ZIP:</td>   
+                        <td id="check-st_zip"><?php echo $item['st_zip']; ?></td>
+                    </tr>
+                </table>
+            
+            </div>
+            
+           
+
+            <div id="check-notes">
+             <table>
+             	
+                    <tr>
+                        <td class="label">Fluid:</td>
+                        <td  style="font-weight:bold;"> --/-- </td>
+                    </tr>
+             
+                <tr>
+                	<td class="label">Warranty:</td>
+                    <td  style="font-weight:bold;"><?php echo $item['warrenty_terms']; ?></td>
+                </tr>
+                <tr>
+                	<td class="label">Order Notes:</td>
+                    <td  style="font-weight:bold;"></td>
+                </tr>
+                
+             </table>
+             
+           </div>
 </div>
-
-<table class="reman_order_table">
-	<?php
-		$index = 0; 
-	?>
-    <?php  foreach($item as $value): ?>
-    <tr>
-    	<td><?php echo $labels[$index]; ?></td>
-        <td><?php echo $value; ?></td>
-    </tr>
-     <?php $index++; ?>
-     <?php endforeach; ?>
-</table>
-

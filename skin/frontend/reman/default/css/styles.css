@@ -3113,17 +3113,30 @@ text-decoration: none;
 	border-width: 0 1px 1px 1px;
 	margin-top:20px;
 	background-color:#fff;
-	margin-left:40px;
 }
 
 .reman_order_table td {
 	border-color: black;
 	border-style: solid;
 	border-width: 1px 0 0 0px;
-	width: 160px;
 	font-size: 11px;
 	padding: 6px;
 	color:#000;
+	text-align:center;
+}
+
+#details-order-baloon{
+	background: url(../images/top_banner.png) no-repeat;
+	width: 601px;
+	height: 75px;
+	padding-top: 8px;
+	padding-left: 15px;
+	color: #fff;
+	font-size: 25px;
+	font-weight: bold;
+	position: relative;
+	float: left;
+	margin-bottom:15px;
 }
 
 
