@@ -804,6 +804,11 @@
 			submitOrder();
 		});
 		
+		/** Allow Only Numeric Input for mileage field*/
+		$j("#input-mileage").keypress(function() {
+			return (/\d/.test(String.fromCharCode(event.which) ))
+		});
+		
     </script>
 
 </div>
