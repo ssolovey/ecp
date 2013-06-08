@@ -2871,13 +2871,14 @@ text-decoration: none;
 }
 
 .reman_docs{
-	width:100px;
+	width:150px;
 	font-size:12px;
 	float:left;
 }
 
 .reman_docs a {
 	margin-bottom:5px;
+	width:150px;
 	float:left;
 	color:#000;
 	text-decoration:none;

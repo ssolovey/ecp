@@ -155,7 +155,7 @@ margin-left: 90px; cursor:pointer;" onclick="loadShippingPage(); return false;">
               <div class="desc_cont" style="font-size:12px; margin-left:10px; line-height:21px;">
         			<?php echo $_description; ?>
 			   </div>
-				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_synthetecatf'))== false ): ?>
+				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_synthetecatf'))== false  || is_null($_product->getData('document_radiator'))== false ): ?>
 					<div class="description_lable" style="font-size:15px; font-size: 15px; float: left; margin-right: 10px;">Documentation:</div>
 					<div class="reman_docs">
 					<?php if($_product->getData('document_sellsheet') != null): ?>	
@@ -163,6 +163,9 @@ margin-left: 90px; cursor:pointer;" onclick="loadShippingPage(); return false;">
 					<?php endif; ?>	
 					<?php if($_product->getData('document_synthetecatf') != null ): ?>	
 						<a style="margin-top:2px;" href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_synthetecatf') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_synthetecatf')->getStoreLabel();?></a>
+					<?php endif; ?>	
+                    <?php if($_product->getData('document_radiator') != null ): ?>	
+						<a style="margin-top:2px;" href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_radiator') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_radiator')->getStoreLabel();?></a>
 					<?php endif; ?>	
 					</div>
 				<?php endif; ?>	
