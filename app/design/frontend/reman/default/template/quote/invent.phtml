@@ -117,6 +117,10 @@
 </div>
 
 <script type="text/javascript">
+	
+	/* Enable jQuery Input PlaceHolders for IE*/
+	$j('input, textarea').placeholder();
+	
 	//Estimate Shipping Event
 	$j('#estimate-shipping-btn').click(function(){
 		if($j("#zip_value").attr("value") != ""){
