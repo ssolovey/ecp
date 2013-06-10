@@ -42,7 +42,9 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		
 		// login with username and password
 		$login_result = ftp_login($conn_id, 'buyeteftp', 'Bu38@Xtrn');
-				
+		
+		ftp_chdir($this->conn_id, 'orders/');
+			
 		// upload a file
 		if (ftp_put($conn_id, $file, $local_path, FTP_BINARY)) {
 			echo "successfully uploaded $file\n";
