@@ -168,7 +168,8 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		
 		Mage::getModel('order/order')->createOrder(
 			$user_id, // magento user id
-			$data
+			$data,
+			true
 		);
 	}
 	

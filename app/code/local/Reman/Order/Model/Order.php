@@ -20,7 +20,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 	 * @param customer id
 	 * @param order data (Array)
 	 */
-	public function createOrder( $customer_id, $data )
+	public function createOrder( $customer_id, $data, $sync )
 	{
 		$orderCollection = $this->getCollection();
 		$orderCollection->addFieldToFilter('ete_order_id', $data['ete_order_id']);
@@ -30,7 +30,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		//$order = $this->load( $data['order_id'] );
 		
 		// check: is order in web database?
-		if ( $order->getId() ) {
+		if ( $order->getId() && $sync ) {
 			
 			$this->_updateOrder($order, $data);
 			
@@ -103,11 +103,11 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			$this->setData( $data );
 			
 			$this->save();
-			
-			return 'Success';
-			
+						
 			// export new order
 			Mage::getModel('sync/export')->exportOrder($data);
+			
+			return 'Success';
 			
 		}
 		catch (Exception $e)
@@ -128,6 +128,6 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		$order->save();
 		
 		// export order update
-		Mage::getModel('sync/export')->exportOrder($data);
+		//Mage::getModel('sync/export')->exportOrder($data);
 	}
 }
