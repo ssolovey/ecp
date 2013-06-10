@@ -97,7 +97,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'date_order' => $item[2],
 			'order_status' => $item[3],
 			'order_type' => $item[4],
-			//'ete_cust' => $item[5],
+			'ete_cust' => $item[5],
 			'so_cust_num' => $item[6],
 			'so_cust_name' => $item[7],
 			'so_cont_name' => $item[8],

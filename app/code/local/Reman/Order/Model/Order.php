@@ -46,6 +46,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			$customer = Mage::getModel('customer/customer')
 	                ->setWebsiteId(1)
 	                ->load($customer_id);
+	                
+	        $data['so_cont_email'] = $customer->getEmail();
 	        
 	        $quote->assignCustomer($customer);
 	        
@@ -99,8 +101,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			$order = $service->getOrder();
 		
 			$data['order_id'] = $order->getIncrementId();
-			$data['ete_cust'] = $customer->getEmail();
-							
+										
 			$this->setData( $data );
 			
 			$this->save();

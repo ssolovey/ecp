@@ -23,6 +23,7 @@ $installer->run("
 	`so_cust_num` varchar(35) DEFAULT NULL COMMENT 'Sold To Customer Number',
 	`so_cust_name` varchar(35) DEFAULT NULL COMMENT 'Sold To Customer Number',
 	`so_cont_name` varchar(35) DEFAULT NULL COMMENT 'Sold To Contact Name',
+	`so_cont_email` varchar(35) DEFAULT NULL COMMENT 'Sold To Contact Email',
 	`so_phone` varchar(35) DEFAULT NULL COMMENT 'Sold To Phone',
 	`so_phone_ext` varchar(35) DEFAULT NULL COMMENT 'Sold To Phone Ext',
 	`po` varchar(35) DEFAULT NULL COMMENT 'PO#',

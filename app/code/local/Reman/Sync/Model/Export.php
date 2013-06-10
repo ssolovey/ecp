@@ -61,7 +61,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			'so_cust_num' => $orderData['so_cust_num'],
 			'so_cust_name' => $orderData['so_cust_name'],
 			'so_cont_name' => $orderData['so_cont_name'],
-			'ete_cust' => $orderData['ete_cust'],
+			'so_cont_email' => $orderData['so_cont_email'],
 			'so_phone' => $orderData['so_phone'],
 			'so_phone_ext' => $orderData['so_phone_ext'],
 			'partnum' => $orderData['partnum'],
