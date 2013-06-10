@@ -44,6 +44,8 @@
             <input type="hidden" name="company" value="<?php echo Mage::helper('company')->getCompanyId();?>" />
             <ul class="cp_list">
                 <li>
+                    <!-- HACK FOR IE8 Input placaholder bug with already filled input field on page load-->
+                    <input type="test" placeholder="none" style="display:none;" />
                     <div class="input-box">
                     	<input type="text" id="firstname" name="firstname" value="" title="firstname" maxlength="255" class="input-text required-entry" placeholder="First Name"/>
                 	</div>

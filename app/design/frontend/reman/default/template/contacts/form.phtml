@@ -43,6 +43,8 @@
         
         <ul class="reman-form-list">
             <li>
+            		 <!-- HACK FOR IE8 Input placaholder bug with already filled input field on page load-->
+                     <input type="test" placeholder="none" style="display:none;" />
                     <div class="input-box">
                         <input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('First Name') ?>" value="" class="input-text required-entry" type="text"  placeholder="First Name" /><em>*</em>
                     </div>

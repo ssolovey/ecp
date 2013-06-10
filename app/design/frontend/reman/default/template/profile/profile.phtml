@@ -100,12 +100,12 @@
         </tr>
         
         <?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
-        <tr>	
+        
 			 
             <?php if(count($value['orders']) != 0): ?> 
              	
                 <?php  foreach($value['orders'] as $order): ?>
-                
+                <tr>	
                 	<?php $item = Mage::getModel('order/order')->load($order)->_data; ?>
                         <!--Order ID-->
                         <td>
@@ -160,7 +160,7 @@
                         </td>
                         
                         <td style="cursor:pointer; color:blue;" class="orders_ids" value="<?php echo $order; ?>">View</td>	
-                        
+                     </tr>    
              	 <?php endforeach; ?>
              
              
@@ -176,6 +176,7 @@
                          <?php endif; ?>                
                     <?php endforeach; ?> <?php */?>
 			<?php endif; ?>
+           
          <?php endforeach; ?>
     </table>
 </div>
