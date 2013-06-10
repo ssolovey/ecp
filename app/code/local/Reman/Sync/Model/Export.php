@@ -46,11 +46,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		ftp_chdir($this->conn_id, 'orders/');
 			
 		// upload a file
-		if (ftp_put($conn_id, $file, $local_path, FTP_BINARY)) {
-			echo "successfully uploaded $file\n";
-		} else {
-			echo "There was a problem while uploading $file\n";
-		}
+		ftp_put($conn_id, $file, $local_path, FTP_BINARY);
 		
 		// close the connection
 		ftp_close($conn_id);		
@@ -59,6 +55,52 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 	public function exportOrder($orderData)
 	{
 		
+		// new simplified format
+		$exportData = array(
+			'order_id' => $orderData['order_id'],
+			'so_cust_num' => $orderData['so_cust_num'],
+			'so_cust_name' => $orderData['so_cust_name'],
+			'so_cont_name' => $orderData['so_cont_name'],
+			'ete_cust' => $orderData['ete_cust'],
+			'so_phone' => $orderData['so_phone'],
+			'so_phone_ext' => $orderData['so_phone_ext'],
+			'partnum' => $orderData['partnum'],
+			'vin' => $orderData['vin'],
+			'mileage' => $orderData['mileage'],
+			'commercial_app' => $orderData['commercial_app'],
+			'unit_amount' => $orderData['unit_amount'],
+			'core_amount' => $orderData['core_amount'],
+			'ship_amount' => $orderData['ship_amount'],
+			'parts_amount' => $orderData['parts_amount'],
+			'tax_percent' => $orderData['tax_percent'],
+			'tax_amount' => $orderData['tax_amount'],
+			'warrenty_terms' => $orderData['warrenty_terms'],
+			'po' => $orderData['po'],
+			'claim' => $orderData['claim'],
+			'ro' => $orderData['ro'],
+			'end_username' => $orderData['end_username'],
+			'st_cust_name' => $orderData['st_cust_name'],
+			'st_cont_name' => $orderData['st_cont_name'],
+			'st_addr1' => $orderData['st_addr1'],
+			'st_addr2' => $orderData['st_addr2'],
+			'st_city' => $orderData['st_city'],
+			'st_state' => $orderData['st_state'],
+			'st_zip' => $orderData['st_zip'],
+			'st_phone' => $orderData['st_phone'],
+			'st_phone_ext' => $orderData['st_phone_ext'],
+			'make' => $orderData['make'],
+			'year' => $orderData['year'],
+			'model' => $orderData['model'],
+			'engine' => $orderData['engine'],
+			'drive' => $orderData['drive'],
+			'aspiration' => $orderData['aspiration'],
+			'cyl_type' => $orderData['cyl_type'],
+			'fuel' => $orderData['fuel'],
+			'tag' => $orderData['tag']
+		);
+		
+		// old format
+		/*
 		$exportData = array(
 			'ete_order_id' => $orderData['ete_order_id'],
 			'date_invoice' => $orderData['date_invoice'],
@@ -131,6 +173,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			'transaction_type' => $orderData['transaction_type'],
 			'commercial_app' => $orderData['commercial_app']
 		);
+		*/
 		
 		$this->_exportData( 'orders/'.$orderData['order_id'].'.TXT', $exportData, true );
 		

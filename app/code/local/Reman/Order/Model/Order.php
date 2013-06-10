@@ -99,6 +99,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			$order = $service->getOrder();
 		
 			$data['order_id'] = $order->getIncrementId();
+			$data['ete_cust'] = $customer->getEmail();
 							
 			$this->setData( $data );
 			
