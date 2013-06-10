@@ -104,12 +104,12 @@ class Mage_Adminhtml_Block_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_
         ));
         
         $this->addColumn('so_cust_num', array(
-            'header' => Mage::helper('sales')->__('Sold To Customer Number'),
+            'header' => Mage::helper('sales')->__('Sold to Customer Number'),
             'index' => 'so_cust_num',
         ));
         
         $this->addColumn('so_cust_name', array(
-            'header' => Mage::helper('sales')->__('Sold To Customer Name'),
+            'header' => Mage::helper('sales')->__('Sold to Name'),
             'index' => 'so_cust_name',
         ));
         
@@ -120,12 +120,12 @@ class Mage_Adminhtml_Block_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_
 		
         $this->addColumn('billing_name', array(
             'header' => Mage::helper('sales')->__('Bill to Name'),
-            'index' => 'billing_name',
+            'index' => 'bt_cust_name',
         ));
 
         $this->addColumn('shipping_name', array(
             'header' => Mage::helper('sales')->__('Ship to Name'),
-            'index' => 'shipping_name',
+            'index' => 'st_cust_name',
         ));
 
         $this->addColumn('base_grand_total', array(
@@ -144,10 +144,15 @@ class Mage_Adminhtml_Block_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_
 
         $this->addColumn('status', array(
             'header' => Mage::helper('sales')->__('Status'),
-            'index' => 'status',
+            'index' => 'order_status',
             'type'  => 'options',
             'width' => '70px',
-            'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+            'options'   => array(
+				'ORDER' => 'ORDER',
+				'SHIPPED' => 'SHIPPED',
+				'VOID' => 'VOID'
+			)
+            //'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
         ));
 
         if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
