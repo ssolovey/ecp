@@ -85,20 +85,21 @@
     	<span>Orders list</span>
     </div>
     
-    <table class="reman_order_table">
-		
-        <tr>
-       
-            <td>Order WID/PID</td>
-            <td>Order Date</td>
-            <td>User Name</td>
-            <td>PO#</td>
-            <td>Year, Make, Model</td>
-            <td>Part Number</td>
-            <td>Order Status</td>
-            <td></td>     
-        </tr>
-        
+    <table id="grid" class="tablesorter">
+		<thead>
+            <tr>
+           
+                <th>Order WID/PID</th> 
+                <th>Order Date</th> 
+                <th>User Name</th>
+                <th>PO#</th>
+                <th>Year, Make, Model</th>
+                <th>Part Number</th>
+                <th>Order Status</th>
+                <th></th>     
+            </tr>
+        </thead>
+        <tbody>
         <?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
         
 			 
@@ -139,7 +140,7 @@
 							?>
                         </td>
                         <!--#PO-->
-                        <td><?php echo $item['po']; ?></td>
+                        <td class="po-value"><?php echo $item['po']; ?></td>
                         <!--YEAR/MAKE/MODEL-->
                         <td>
                             <?php echo $item['year']; ?>/
@@ -178,7 +179,16 @@
 			<?php endif; ?>
            
          <?php endforeach; ?>
+         </tbody>
     </table>
+    
+    
+    <?php
+				
+				echo Mage::getModel('order/order')->getCollection()->addFieldToFilter('user_id', 'Igor Zhavoronkin');
+	
+	 ?>
+    
 </div>
 
 <div id="reman_users_order_details" style="display:none;">
@@ -190,4 +200,26 @@
 	$j('.orders_ids').bind('click' , function(e){ 
 		openOrder('<?php echo $action.'orderdetails';?>',$j(this).attr('value'));  
 	});
+	
+	
+
+	$j('.po-value').each(function(key,value){
+		
+		$j(this).html(jQuery.trim($j(value).html()).substring(0, 8).trim(this) + "...");
+		
+	});
+
+	
+	$j("#grid").tablesorter( {
+			headers: {
+					3: {sorter: false},
+					4: { sorter: false}, 
+					5: {sorter: false},
+					6: { sorter: false},
+					7: { sorter: false}
+			}
+	});
+	
 </script>
+
+ 

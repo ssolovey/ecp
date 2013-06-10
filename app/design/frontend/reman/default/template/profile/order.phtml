@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <td class="label">Notes:</td>
-                            <td></td>
+                            <td>--/--</td>
                         </tr>
                 </table>
                 <div style="clear:both"></div>
@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                         <td class="label">Product Name:</td>
-                        <td><?php echo 'TRANSMISSION - '.$item['partnum']; ?></td>
+                        <td><?php echo $item['product_name']; ?></td>
                     </tr>
                     <tr>
                         <td class="label">Part Num:</td>
@@ -183,7 +183,7 @@
              	
                     <tr>
                         <td class="label">Fluid:</td>
-                        <td  style="font-weight:bold;"> --/-- </td>
+                        <td  style="font-weight:bold;"> <?php echo $item['fluid']; ?> </td>
                     </tr>
              
                 <tr>
@@ -192,7 +192,7 @@
                 </tr>
                 <tr>
                 	<td class="label">Order Notes:</td>
-                    <td  style="font-weight:bold;"></td>
+                    <td  style="font-weight:bold;"><?php echo $item['order_notes']; ?></td>
                 </tr>
                 
              </table>

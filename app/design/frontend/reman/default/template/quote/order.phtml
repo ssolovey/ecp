@@ -206,6 +206,7 @@
                         <tr>
                             <td class="label">Product Name:</td>
                             <td><?php echo $_product->getName();?></td>
+                            <input type="hidden" name="product_name" value="<?php echo $_product->getName();?>" />
                         </tr>
                         
                         <tr>
@@ -472,14 +473,20 @@
                         <td id="check-fluid" style="font-weight:bold;">
                             <?php if($fluid == 'O'): ?>	
                              		Not Included
+                                    
+                             <input type="hidden" name="fluid" value="Not Included"  />
                             <?php endif; ?>
 							<?php if($fluid == 'R'): ?>	
                                     Fluid Required
+                             <input type="hidden" name="fluid" value="Fluid Required"  />
                              <?php endif; ?>
-                             <?php if($fluid == 'N'): ?>	
+                             <?php if($fluid == 'N'): ?>
+                             <input type="hidden" name="fluid" value="No Fluid Required"  />	
                                     No Fluid Required
                              <?php endif; ?>
-                        
+                        	
+                            <input id="fluid-optional" type="hidden" name="fluid" value=""  />
+                            
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -490,6 +497,7 @@
                 <tr>
                 	<td class="label">Order Notes:</td>
                     <td id="check-order-notes" style="font-weight:bold;"></td>
+                    <input id="order-notes-input" type="hidden" name="order_notes" value=""  />
                 </tr>
                 
                 <tr>
@@ -622,12 +630,14 @@
 			   $j('#fluid-amount').attr('value', total );
 			   
 			   $j('#check-fluid').html('Included');
+			   $j('#fluid-optional').attr('value','Included');
 			   
 			   calculateTotalPrice(); 
 			}else{
 			   $j('#fluid-amount').attr('value', 0 );
 			   
 			    $j('#check-fluid').html('Not Included');
+				$j('#fluid-optional').attr('value','Not Included');
 			   
 			   calculateTotalPrice(); 
 			}
@@ -724,6 +734,8 @@
 			$j('#check-warranty').html($j('#warrenty_select option:selected').html());
 			
 			$j('#check-order-notes').html($j('#order-notes textarea').attr('value'));
+			
+			$j('#order-notes-input').attr('value',$j('#order-notes textarea').attr('value'));
 			
 			$j('#check-notes').show();
 
