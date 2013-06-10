@@ -18,18 +18,40 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 	protected $_folder = 'export/';
 	//protected $_folder = 'ftpex/Upload/';
 	
-	protected function _exportData($file, $data)
+	protected function _exportData($file, $data, $to_ftp)
 	{
 		$path = $this->_folder . $file;
-		
-		echo $path;
-		
+				
 		$fh = fopen($path, 'w');
 				
     	fputcsv($fh, $data, '|');
 		
 		//fwrite($fh, $stringData);
 		fclose($fh);
+		
+		if ( $to_ftp ) {
+			$this->_exportToFtp( $path, $file );
+		}
+	}
+	
+	protected function _exportToFtp($local_path, $file)
+	{	
+		
+		// set up basic connection
+		$conn_id = ftp_connect('ftp.enginetrans.com');
+		
+		// login with username and password
+		$login_result = ftp_login($conn_id, 'buyeteftp', 'Bu38@Xtrn');
+				
+		// upload a file
+		if (ftp_put($conn_id, $file, $local_path, FTP_BINARY)) {
+			echo "successfully uploaded $file\n";
+		} else {
+			echo "There was a problem while uploading $file\n";
+		}
+		
+		// close the connection
+		ftp_close($conn_id);		
 	}
 	
 	public function exportOrder($orderData)
@@ -108,7 +130,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			'commercial_app' => $orderData['commercial_app']
 		);
 		
-		$this->_exportData( 'orders/'.$orderData['order_id'].'.TXT', $exportData );
+		$this->_exportData( 'orders/'.$orderData['order_id'].'.TXT', $exportData, true );
 		
 	}
 }
