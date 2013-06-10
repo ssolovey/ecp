@@ -83,6 +83,9 @@ $installer->run("
 	`total_amount` decimal(10,2) DEFAULT NULL COMMENT 'Total Amount',
 	`transaction_type` varchar(35) DEFAULT NULL COMMENT 'Transaction Type',
 	`commercial_app` varchar(1) DEFAULT NULL COMMENT 'Commercial App',
+	`product_name` varchar(40) DEFAULT NULL COMMENT 'Product Name',
+	`order_notes` varchar(40) DEFAULT NULL COMMENT 'Order Notes',
+	`fluid` varchar(25) DEFAULT NULL COMMENT 'Fluid',
 	PRIMARY KEY (`order_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
