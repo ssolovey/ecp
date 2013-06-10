@@ -158,10 +158,10 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'tax_percent' => $item[63],
 			'tax_amount' => $item[64],
 			'ship_amount' => $item[65],
-			'deposit_received' => $item[67],
-			'total_amount' => $item[68],
-			'transaction_type' => $item[69],
-			'commercial_app' => $item[70]
+			'deposit_received' => $item[66],
+			'total_amount' => $item[67],
+			'transaction_type' => $item[68],
+			'commercial_app' => $item[69]
 		);
 		
 		$user_id = Mage::getModel('company/company')->getComplanyAdmin($item[6]);
