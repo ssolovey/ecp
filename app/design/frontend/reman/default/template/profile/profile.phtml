@@ -84,12 +84,22 @@
     
     	<span>Orders list</span>
     </div>
-    
+   
+   <input id="po-input-search" style="padding:3px; width:100px;" type="text" placeholder="Search #PO" /> <button onclick="serchPO($j('#po-input-search').attr('value')); return false;" style="padding:3px;">Search</button>
+    <button onclick="resetFilters(); return false;" style="padding:3px; position: relative; float: right;">Reset All</button>
+   <select id="order-status-select" style="position: relative;float: right;margin-bottom: 10px;margin-right: 22px;" onchange="filterStatus($j('#order-status-select option:selected').html()); return false;">
+   		<option>...</option>
+        <option>New</option>
+        <option>Pending</option>
+        <option>Shipped</option>
+   </select>
+   
+  
+   <div style="position: relative;float: right; font-size: 12px; line-height: 21px; margin-right: 5px; font-weight: bold; margin-bottom:10px;">Filter by Order Status:</div>
     <table id="grid" class="tablesorter">
 		<thead>
             <tr>
-           
-                <th>Order WID/PID</th> 
+                <th>Order ID</th> 
                 <th>Order Date</th> 
                 <th>User Name</th>
                 <th>PO#</th>
@@ -106,8 +116,15 @@
             <?php if(count($value['orders']) != 0): ?> 
              	
                 <?php  foreach($value['orders'] as $order): ?>
-                <tr>	
-                	<?php $item = Mage::getModel('order/order')->load($order)->_data; ?>
+                <?php $item = Mage::getModel('order/order')->load($order)->_data; ?>
+                <tr data-po="<?php echo $item['po']; ?>"  data-status="<?php
+								if($item['order_status'] != NULL){
+									echo $item['order_status'];
+								}else{
+									echo 'New';
+								}
+							?>">	
+                	
                         <!--Order ID-->
                         <td>
 							<?php
@@ -143,14 +160,14 @@
                         <td class="po-value"><?php echo $item['po']; ?></td>
                         <!--YEAR/MAKE/MODEL-->
                         <td>
-                            <?php echo $item['year']; ?>/
-                            <?php echo $item['make']; ?>/
+                            <?php echo $item['year']; ?></br>
+                            <?php echo $item['make']; ?></br>
                             <?php echo $item['model']; ?>
                         </td>
                         <!-- Part Number-->
                         <td><?php echo $item['partnum']; ?></td>
                         <!-- Order Status-->
-                        <td>
+                        <td class="order-status-field" >
 							<?php
 								if($item['order_status'] != NULL){
 									echo $item['order_status'];
@@ -164,31 +181,11 @@
                      </tr>    
              	 <?php endforeach; ?>
              
-             
-					 <?php /*?><?php  foreach($value['orders'] as $order): ?>
-                         <?php if ($order === reset($value['orders'])): ?>
-                         <td style="cursor:pointer"  class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>
-                         </tr>
-                          <?php else: ?>
-                            <tr>
-                                <td></td>
-                                <td style="cursor:pointer" class="orders_ids" value="<?php echo $order; ?>"><?php echo $order; ?></td>	
-                            </tr>
-                         <?php endif; ?>                
-                    <?php endforeach; ?> <?php */?>
 			<?php endif; ?>
            
          <?php endforeach; ?>
          </tbody>
     </table>
-    
-    
-    <?php
-				
-				echo Mage::getModel('order/order')->getCollection()->addFieldToFilter('user_id', 'Igor Zhavoronkin');
-	
-	 ?>
-    
 </div>
 
 <div id="reman_users_order_details" style="display:none;">
@@ -201,11 +198,10 @@
 		openOrder('<?php echo $action.'orderdetails';?>',$j(this).attr('value'));  
 	});
 	
-	
-
 	$j('.po-value').each(function(key,value){
-		
-		$j(this).html(jQuery.trim($j(value).html()).substring(0, 8).trim(this) + "...");
+		if($j(value).html().length >8){
+			$j(this).html(jQuery.trim($j(value).html()).substring(0, 10).trim(this) + "...");
+		}
 		
 	});
 
@@ -220,6 +216,47 @@
 			}
 	});
 	
+	
+	function filterStatus(value){
+		/* Reset PO Search field*/
+		$j('#po-input-search').attr('value','');
+		
+		$j('#grid tr').each(function(){
+			if($j(this).attr('data-status'))
+				if( $j(this).attr('data-status').match(value) === null )
+				{
+					$j(this).hide();
+				}else{
+					$j(this).show();
+				}
+		});
+	}
+	
+	function serchPO(value){
+		$j('#grid tr').each(function(){
+			if($j(this).attr('data-po'))
+				if( $j(this).attr('data-po').match(value) === null )
+				{
+					$j(this).hide();
+				}else{
+					$j(this).show();
+				}
+		});
+	
+	}
+	
+	function resetFilters(){
+		$j('#grid tr').each(function(){
+			 /* Reset PO Search field*/
+			 $j('#po-input-search').attr('value','');
+			 /* Reset Status FIlter*/
+			 $j($j('#order-status-select option')[0]).attr('selected','selected')
+			 $j(this).show();
+				
+		});
+	}
+	
+
 </script>
 
  
