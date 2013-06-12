@@ -91,27 +91,17 @@
         <input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
         <!--Unit Type -->
         <input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
-        
-        
-        
-        <!-- ----------Shipping ---------------->
-        <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
-                 <input type="hidden" name="ship_amount" value="<?php	echo Mage::helper('company')->getCustomerShippingPrice();?>" />  
-        <?php else: ?>
-                 <input type="hidden" name="ship_amount" id="shippingcost" value="" />
-        <?php endif; ?>	
-       
-        <input type="hidden" name="carrier" id="shippingcarrier" value="" />
-        <input type="hidden" name="carrier_service" id="shippingdays" value="" />
-        
-        
-        <!------ Fluid Price------>
-        
-        <input type="hidden" id="fluid-amount" name="parts_amount" value="<?php echo $fliudPrice  ?>" />
+        <!--Order Status-->
+        <input type="hidden" name="order_status" value="Order" />
+      
+        <!------ Fluid Price------>  
+        <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo $fliudPrice  ?>" />
         
         <!------Total Amount------>
+        <input type="hidden" id="total-price" name="total_amount"  value="" />
         
-        <input type="hidden" id="total-price" name="total_amount" id="shippingdays" value="" />
+        <!------- TAX AMOUNT --------->
+        <input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
         
         
         <div id="order-title" class="title"><span>Order</span></div>
@@ -188,7 +178,7 @@
                      <tr>
                         <td class="label">Commercial Application:</td>
                         <td><input id="commercial_app" type="checkbox" /></td>
-                        <input id="commercial_app_value" type="hidden" name="commercial_app" value="N" />  
+                        <input id="commercial_app_value" type="hidden" name="commercial_app" value="0" />  
                     </tr>
                 </table>
             </div>
@@ -244,8 +234,13 @@
                             <tr>
                                 <td class="label">Tax:</td> 
                                 <td><?php echo $tax_value[0]['value'].'%' ?></td>
+                                <input type="hidden"  name="tax_percent" value="<?php echo $tax_value[0]['value']; ?>" />
                             </tr>
                          <?php endif; ?>
+                            <tr>
+                                <td class="label">Fluid Price:</td> 
+                                <td id="fluid-price"></td>
+                            </tr> 
                             <tr>
                                 <td class="label">Total Price:</td> 
                                 <td id="total-amount"></td>
@@ -296,36 +291,7 @@
                         <td><?php echo $customer->phone; ?></td>
                         <input type="hidden" name="so_phone" value="<?php echo $customer->phone; ?>" />
                     </tr>
-                    <!--<tr>
-                        <td class="label">Adress:</td>
-                        <td><input type="text" name="bt_addr1" class="required-entry"  /><em>*</em></td>
-                    </tr>-->
                 </table>
-                
-               
-               <?php /*?> <table class="adress">
-                    <tr>
-                    	<td class="label">City:</td>
-                        <td><input type="text" name="bt_city" class="required-entry"  /><em>*</em></td>
-                    </tr>
-                    <tr>
-                    	<td class="label">State:</td>    
-                        <td>
-                            <select id="sold-to-states" style="width:131px;" onchange="$j('#bt_state').attr('value',$j('#sold-to-states option:selected').html()); return false;">
-                             <?php  foreach($states as $state): ?>
-                                <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
-                             <?php endforeach; ?>   
-                            </select>
-                            <input id="bt_state" type="hidden" name="bt_state" value=""  />
-                        </td>
-                     </tr>
-                    <tr> 
-                    	<td class="label">ZIP:</td>     
-                        <td><input type="text" style="width:45px;" name="bt_zip" class="required-entry"  /><em>*</em></td>
-                    </tr>
-                </table><?php */?>
-            
-            
             </div>
          		 
                  <input type="hidden" name="so_phone_ext" value="" />
@@ -431,7 +397,7 @@
             
             <div id="warranty-info" class="check-price-order">
                 <div class="title"><span>Warranty</span></div>
-                <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').html()); return false;" >
+                <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value')); return false;" >
                     <?php  foreach($warranties as $index): ?>
 						 	 <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"  
 							 <?php else: ?> 
@@ -449,7 +415,7 @@
 							 <?php endif; ?>value="<?php echo $index['value'] ?>" weight="<?php echo $index['weight'] ?>"><?php echo $index['label'] ?></option>
                     <?php endforeach; ?>
                 </select>
-            	<input id="order_warrenty" type="hidden" name="warrenty_terms" value="" />
+            	<input id="order_warrenty" type="hidden" name="warranty_id" value="" />
             </div>
             
             
@@ -472,8 +438,7 @@
                         <td class="label">Fluid:</td>
                         <td id="check-fluid" style="font-weight:bold;">
                             <?php if($fluid == 'O'): ?>	
-                             		Not Included
-                                    
+                             		Not Included    
                              <input type="hidden" name="fluid" value="Not Included"  />
                             <?php endif; ?>
 							<?php if($fluid == 'R'): ?>	
@@ -484,10 +449,8 @@
                              <input type="hidden" name="fluid" value="No Fluid Required"  />	
                                     No Fluid Required
                              <?php endif; ?>
-                        	
-                            <input id="fluid-optional" type="hidden" name="fluid" value=""  />
-                            
                         </td>
+                        <input id="fluid-optional" type="hidden" name="fluid" value=""  />
                     </tr>
                 <?php endif; ?>
                 <tr>
@@ -529,18 +492,11 @@
 		
 		$j(document).ready(function(){
 			// Set selected warrenty value on Order Load
-			$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').html());
+			$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value'));
 			
 			// Set selected State SHIP TO
 			$j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
 			
-			// Set selected State SOLD TO
-			$j('#bt_state').attr('value', $j('#sold-to-states option:selected').html());
-			
-			// Set Shipping values
-			$j('#shippingcost').attr('value',  window.truecost );
-			$j('#shippingcarrier').attr('value', window.carrier );
-			$j('#shippingdays').attr('value', window.servicedays );
 			// Set Shipping Value to Order Table
 			$j('#order-shipping-cost').html('$'+window.truecost);
 			/** Calculate Total Parts Amount  (Need to be discussed !!!)*/ 
@@ -577,7 +533,7 @@
 		
 		$j('#commercial_app').click(function(){
 			if($j(this).is(':checked')){
-				$j('#commercial_app_value').attr('value',"Y");
+				$j('#commercial_app_value').attr('value',"1");
 				$j('#check-application').html('Commercial');
 				
 				/*
@@ -601,7 +557,7 @@
 				}
 				
 			}else{
-				$j('#commercial_app_value').attr('value',"N");
+				$j('#commercial_app_value').attr('value',"0");
 				
 				$j('#check-application').html('Non Commercial');
 				
@@ -628,15 +584,19 @@
 			if(checked){
 			   var total = fluidAmount * 5;
 			   $j('#fluid-amount').attr('value', total );
+			   $j('#fluid-price').html('$'+total);
 			   
 			   $j('#check-fluid').html('Included');
+			   
 			   $j('#fluid-optional').attr('value','Included');
 			   
 			   calculateTotalPrice(); 
 			}else{
-			   $j('#fluid-amount').attr('value', 0 );
+			    $j('#fluid-amount').attr('value', 0 );
+			    $j('#fluid-price').html('');
 			   
 			    $j('#check-fluid').html('Not Included');
+				
 				$j('#fluid-optional').attr('value','Not Included');
 			   
 			   calculateTotalPrice(); 
@@ -649,156 +609,21 @@
 			var partPrice = Number($j('#part-price').attr('value'));
 			var corePrice = Number($j('#core-price').attr('value'));
 			var total  = shippingPrice + fluidPrice + partPrice + corePrice;
+			
+			
 			if(tax_value){
 				var tax_amount = (total/100) * tax_value;
+				<!--Set Tax amount field value-->
+				$j('#tax-total-amount').attr('value',tax_value);
 				var total  = total + tax_amount ;
 			} 
-			 $j('#total-amount').html('$'+Number(total).toFixed(1));
-			 $j('#total-price').attr('value', Number(total).toFixed(1));	
+			 
+			 $j('#total-price').attr('value', Number(total).toFixed(1));
+			 
+			 $j('#total-amount').html('$'+(Number(total).toFixed(1) - fluidPrice));	
 		}
 		            
-		function checkOrder(){
-			/* Validate Form*/
-			dataForm.validator.validate();
-			
-			/* If For Validated False return false*/
-			if(!dataForm.validator.validate()) {
-				return false;
-			}
-			
-			
-			$j('#order-title').hide();
-			$j('#check-order-back').show();
-			
-			
-			$j('#check-order-baloon').show();
-			
-			/** Vehicle info */
-			$j('#check-vin').html($j('#input-vin > input').attr('value'));
-			$j('#input-vin').hide();
-			
-			$j('#check-mileage').html($j('#input-mileage > input').attr('value'));
-			$j('#input-mileage').hide();
-			
-			$j('#com-app-block').hide();
-			
-			$j('#check-application-block').show();
-			
-			/** Order Details */
 		
-			$j('#check-po').html($j('#input-po > input').attr('value'));
-			$j('#input-po').hide();
-			
-			$j('#check-claim').html($j('#input-claim > input').attr('value'));
-			$j('#input-claim').hide();
-			
-			$j('#check-ro').html($j('#input-ro > input').attr('value'));
-			$j('#input-ro').hide();
-			
-			$j('#check-end_username').html($j('#input-end_username > input').attr('value'));
-			$j('#input-end_username').hide();
-			
-			$j('.check-price-order').hide();
-			$j('#family_order').hide();
-			$j('#check-family').show();
-			$j('.check-tr').css('height','20px');
-			$j('.check-top-blocks').css('height','220px');
-
-			/** Ship To*/
-
-			$j('#check-same-as-sold-cont').hide();
-			$j('#check-st_cust_name').html($j('#input-st_cust_name > input').attr('value'));
-			$j('#input-st_cust_name').hide();
-			
-			$j('#check-st_cont_name').html($j('#input-st_cont_name > input').attr('value'));
-			$j('#input-st_cont_name').hide();
-			
-			$j('#check-st_phone').html($j('#input-st_phone > input').attr('value'));
-			$j('#input-st_phone').hide();
-			
-			$j('#check-st_addr1').html($j('#input-st_addr1 > input').attr('value'));
-			$j('#input-st_addr1').hide();
-			
-			$j('#check-st_city').html($j('#input-st_city > input').attr('value'));
-			$j('#input-st_city').hide();
-			
-			$j('#check-st_state').html($j('#ship-to-states option:selected').html());
-			$j('#input-st_state').hide();
-			
-			$j('#check-st_zip').html($j('#input-st_zip > input').attr('value'));
-			$j('#input-st_zip').hide();
-			
-			$j('.check-bottom-blocks').css('height','180px');
-			
-			
-			$j('#check-warranty').html($j('#warrenty_select option:selected').html());
-			
-			$j('#check-order-notes').html($j('#order-notes textarea').attr('value'));
-			
-			$j('#order-notes-input').attr('value',$j('#order-notes textarea').attr('value'));
-			
-			$j('#check-notes').show();
-
-		}
-		
-		/* Back to Order Page*/
-		
-		$j('#check-order-back').click(function(){
-			
-			$j('#order-is-checked').attr('checked',false)
-			$j('#check-order-back').hide();
-			$j('#order-title').show();
-			
-			
-			$j('#check-order-baloon').hide();
-
-			/** Vehicle info */
-			$j('#check-vin').html('');
-			$j('#input-vin').show();
-			$j('#check-mileage').html('');
-			$j('#input-mileage').show();
-			$j('#com-app-block').show();
-			$j('#check-application-block').hide();
-			
-			/** Order Details */
-			$j('#check-po').html('');
-			$j('#input-po').show();
-			$j('#check-claim').html('');
-			$j('#input-claim').show();
-			$j('#check-ro').html('');
-			$j('#input-ro').show();
-			$j('#check-end_username').html('');
-			$j('#input-end_username').show();
-			$j('.check-price-order').show();
-			$j('#family_order').show();
-			$j('#check-family').hide();
-			$j('.check-tr').css('height','');
-			$j('.check-top-blocks').css('height','');
-
-			/** Ship To*/
-			$j('#check-same-as-sold-cont').show();
-			$j('#check-st_cust_name').html('');
-			$j('#input-st_cust_name').show();
-			$j('#check-st_cont_name').html('');
-			$j('#input-st_cont_name').show();
-			$j('#check-st_phone').html('');
-			$j('#input-st_phone').show();
-			$j('#check-st_addr1').html('');
-			$j('#input-st_addr1').show();
-			$j('#check-st_city').html('');
-			$j('#input-st_city').show();
-			$j('#check-st_state').html('');
-			$j('#input-st_state').show();
-			$j('#check-st_zip').html('');
-			$j('#input-st_zip').show();
-			$j('.check-bottom-blocks').css('height','');
-			$j('#check-warranty').html('');
-			$j('#check-order-notes').html('');
-			$j('#check-notes').hide();
-			
-			$j('#submit-order-button').hide();
-		
-		});
 		
 		
 		$j('#order-is-checked').click(function(){
@@ -809,6 +634,11 @@
 			}
 		});
 		
+		/* Back to Order Page*/
+		
+		$j('#check-order-back').click(function(){
+			 backToOrderEdit();
+		});
 		
 		
 		/** Order Submit Event */

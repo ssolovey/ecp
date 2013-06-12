@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <td class="label">Notes:</td>
-                            <td>--/--</td>
+                            <td></td>
                         </tr>
                 </table>
                 <div style="clear:both"></div>
@@ -48,7 +48,14 @@
                     </tr>
                     <tr  id="check-application-block">
                         <td class="label">Application:</td>
-                        <td> <?php echo $item['commercial_app']; ?> </td>
+                        <td> <?php 
+									if($item['commercial_app']){
+										echo 'Commercial';
+									}else{
+										echo 'Non Commercial';
+									}
+								?> 
+                        </td>
                     </tr>
                     
                 </table>
@@ -69,13 +76,7 @@
                      <tr>
                         <td class="label"> Status:</td>
                         <td>
-							<?php
-								if($item['order_status'] != NULL){
-									echo $item['order_status'];
-								}else{
-									echo 'New';
-								}
-							?>
+							<?php echo $item['order_status'];?>
                        </td>
                     </tr>
                     <tr>
@@ -187,8 +188,18 @@
                     </tr>
              
                 <tr>
+                <?php 
+					// Warranty Array
+					$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
+					foreach($warrantyArray as $index){
+						if( $index['value'] == $item['warranty_id']){
+							$warrantyLable = $index['label'];
+						}
+					}
+				?>
+                
                 	<td class="label">Warranty:</td>
-                    <td  style="font-weight:bold;"><?php echo $item['warrenty_terms']; ?></td>
+                    <td  style="font-weight:bold;"><?php echo $warrantyLable; ?></td>
                 </tr>
                 <tr>
                 	<td class="label">Order Notes:</td>

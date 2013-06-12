@@ -955,5 +955,201 @@ function orderBack(){
 	$j('#reman_order').show();	
 }
 
+/** User Profile Order List Filter */
 
+	function filterStatus(value){
+		/* Reset PO Search field*/
+		$j('#po-input-search').attr('value','');
+		$j('#no-match-results').hide();
+		var success = false;
+		
+		$j('#grid tr').each(function(){
+			if($j(this).attr('data-status'))
+				if( $j(this).attr('data-status') != value && value != '...'  )
+				{
+					$j(this).hide();
+				}else{
+					$j(this).show();
+					
+					success = true;
+					
+				}
+		});
+		
+		if(!success){
+			$j('#no-match-results').show();
+		}
+	}
+	
+	function serchPO(value){
+		
+		var success = false;
+		
+		$j('#grid tr').each(function(){
+			if($j(this).attr('data-po'))
+				if( $j(this).attr('data-po') != value )
+				{
+					$j(this).hide();
+				}else{
+					$j(this).show();
+					
+					success = true;
+				}
+		});
+		
+		if(!success){
+			$j('#no-match-results').show();
+		}
+	
+	}
+	
+	function resetFilters(){
+		$j('#no-match-results').hide();
+		$j('#grid tr').each(function(){
+			 /* Reset PO Search field*/
+			 $j('#po-input-search').attr('value','');
+			 /* Reset Status FIlter*/
+			 $j($j('#order-status-select option')[0]).attr('selected','selected')
+			 $j(this).show();
+				
+		});
+	}
+	
+/*** Check Order Page View Change ***/
 
+function checkOrder(){
+	/* Validate Form*/
+	dataForm.validator.validate();
+	
+	/* If For Validated False return false*/
+	if(!dataForm.validator.validate()) {
+		return false;
+	}
+	
+	
+	$j('#order-title').hide();
+	$j('#check-order-back').show();
+	
+	
+	$j('#check-order-baloon').show();
+	
+	/** Vehicle info */
+	$j('#check-vin').html($j('#input-vin > input').attr('value'));
+	$j('#input-vin').hide();
+	
+	$j('#check-mileage').html($j('#input-mileage > input').attr('value'));
+	$j('#input-mileage').hide();
+	
+	$j('#com-app-block').hide();
+	
+	$j('#check-application-block').show();
+	
+	/** Order Details */
+
+	$j('#check-po').html($j('#input-po > input').attr('value'));
+	$j('#input-po').hide();
+	
+	$j('#check-claim').html($j('#input-claim > input').attr('value'));
+	$j('#input-claim').hide();
+	
+	$j('#check-ro').html($j('#input-ro > input').attr('value'));
+	$j('#input-ro').hide();
+	
+	$j('#check-end_username').html($j('#input-end_username > input').attr('value'));
+	$j('#input-end_username').hide();
+	
+	$j('.check-price-order').hide();
+	$j('#family_order').hide();
+	$j('#check-family').show();
+	$j('.check-tr').css('height','20px');
+	$j('.check-top-blocks').css('height','220px');
+
+	/** Ship To*/
+
+	$j('#check-same-as-sold-cont').hide();
+	$j('#check-st_cust_name').html($j('#input-st_cust_name > input').attr('value'));
+	$j('#input-st_cust_name').hide();
+	
+	$j('#check-st_cont_name').html($j('#input-st_cont_name > input').attr('value'));
+	$j('#input-st_cont_name').hide();
+	
+	$j('#check-st_phone').html($j('#input-st_phone > input').attr('value'));
+	$j('#input-st_phone').hide();
+	
+	$j('#check-st_addr1').html($j('#input-st_addr1 > input').attr('value'));
+	$j('#input-st_addr1').hide();
+	
+	$j('#check-st_city').html($j('#input-st_city > input').attr('value'));
+	$j('#input-st_city').hide();
+	
+	$j('#check-st_state').html($j('#ship-to-states option:selected').html());
+	$j('#input-st_state').hide();
+	
+	$j('#check-st_zip').html($j('#input-st_zip > input').attr('value'));
+	$j('#input-st_zip').hide();
+	
+	$j('.check-bottom-blocks').css('height','180px');
+	
+	
+	$j('#check-warranty').html($j('#warrenty_select option:selected').html());
+	
+	$j('#check-order-notes').html($j('#order-notes textarea').attr('value'));
+	
+	$j('#order-notes-input').attr('value',$j('#order-notes textarea').attr('value'));
+	
+	$j('#check-notes').show();
+
+}
+	
+	
+function backToOrderEdit(){
+	$j('#order-is-checked').attr('checked',false)
+	$j('#check-order-back').hide();
+	$j('#order-title').show();
+	$j('#check-order-baloon').hide();
+	/** Vehicle info */
+	$j('#check-vin').html('');
+	$j('#input-vin').show();
+	$j('#check-mileage').html('');
+	$j('#input-mileage').show();
+	$j('#com-app-block').show();
+	$j('#check-application-block').hide();
+	
+	/** Order Details */
+	$j('#check-po').html('');
+	$j('#input-po').show();
+	$j('#check-claim').html('');
+	$j('#input-claim').show();
+	$j('#check-ro').html('');
+	$j('#input-ro').show();
+	$j('#check-end_username').html('');
+	$j('#input-end_username').show();
+	$j('.check-price-order').show();
+	$j('#family_order').show();
+	$j('#check-family').hide();
+	$j('.check-tr').css('height','');
+	$j('.check-top-blocks').css('height','');
+
+	/** Ship To*/
+	$j('#check-same-as-sold-cont').show();
+	$j('#check-st_cust_name').html('');
+	$j('#input-st_cust_name').show();
+	$j('#check-st_cont_name').html('');
+	$j('#input-st_cont_name').show();
+	$j('#check-st_phone').html('');
+	$j('#input-st_phone').show();
+	$j('#check-st_addr1').html('');
+	$j('#input-st_addr1').show();
+	$j('#check-st_city').html('');
+	$j('#input-st_city').show();
+	$j('#check-st_state').html('');
+	$j('#input-st_state').show();
+	$j('#check-st_zip').html('');
+	$j('#input-st_zip').show();
+	$j('.check-bottom-blocks').css('height','');
+	$j('#check-warranty').html('');
+	$j('#check-order-notes').html('');
+	$j('#check-notes').hide();
+	$j('#submit-order-button').hide();
+}
+		

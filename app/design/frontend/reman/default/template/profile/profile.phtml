@@ -11,7 +11,6 @@
 <?php 
 	/* Get Companies Customers*/
 	$result = Mage::helper('company')->getCompanyCustomers();
-
 	/* Define action URL */
 	$action = Mage::getUrl('profile/index');
 	
@@ -89,9 +88,9 @@
     <button onclick="resetFilters(); return false;" style="padding:3px; position: relative; float: right;">Reset All</button>
    <select id="order-status-select" style="position: relative;float: right;margin-bottom: 10px;margin-right: 22px;" onchange="filterStatus($j('#order-status-select option:selected').html()); return false;">
    		<option>...</option>
-        <option>New</option>
-        <option>Pending</option>
+        <option>Order</option>
         <option>Shipped</option>
+        <option>Void</option>
    </select>
    
   
@@ -176,16 +175,14 @@
 								}
 							?>
                         </td>
-                        
                         <td style="cursor:pointer; color:blue;" class="orders_ids" value="<?php echo $order; ?>">View</td>	
-                     </tr>    
+                     </tr>   
              	 <?php endforeach; ?>
-             
-			<?php endif; ?>
-           
+			 <?php endif; ?>
          <?php endforeach; ?>
          </tbody>
     </table>
+    <div id="no-match-results" style="display:none;">No Matchting Results</div>
 </div>
 
 <div id="reman_users_order_details" style="display:none;">
@@ -198,14 +195,13 @@
 		openOrder('<?php echo $action.'orderdetails';?>',$j(this).attr('value'));  
 	});
 	
+	/* Trancate Long string for PO field*/
 	$j('.po-value').each(function(key,value){
 		if($j(value).html().length >8){
 			$j(this).html(jQuery.trim($j(value).html()).substring(0, 10).trim(this) + "...");
 		}
-		
 	});
-
-	
+	/* Init Sortable Table*/
 	$j("#grid").tablesorter( {
 			headers: {
 					3: {sorter: false},
@@ -215,48 +211,6 @@
 					7: { sorter: false}
 			}
 	});
-	
-	
-	function filterStatus(value){
-		/* Reset PO Search field*/
-		$j('#po-input-search').attr('value','');
-		
-		$j('#grid tr').each(function(){
-			if($j(this).attr('data-status'))
-				if( $j(this).attr('data-status').match(value) === null )
-				{
-					$j(this).hide();
-				}else{
-					$j(this).show();
-				}
-		});
-	}
-	
-	function serchPO(value){
-		$j('#grid tr').each(function(){
-			if($j(this).attr('data-po'))
-				if( $j(this).attr('data-po').match(value) === null )
-				{
-					$j(this).hide();
-				}else{
-					$j(this).show();
-				}
-		});
-	
-	}
-	
-	function resetFilters(){
-		$j('#grid tr').each(function(){
-			 /* Reset PO Search field*/
-			 $j('#po-input-search').attr('value','');
-			 /* Reset Status FIlter*/
-			 $j($j('#order-status-select option')[0]).attr('selected','selected')
-			 $j(this).show();
-				
-		});
-	}
-	
-
 </script>
 
  
