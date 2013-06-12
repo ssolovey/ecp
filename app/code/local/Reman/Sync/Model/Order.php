@@ -154,7 +154,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			//'order_id' => $item[59],
 			'unit_amount' => $item[60],
 			'core_amount' => $item[61],
-			'parts_amount' => $item[62],
+			'fluid_amount' => $item[62],
 			'tax_percent' => $item[63],
 			'tax_amount' => $item[64],
 			'ship_amount' => $item[65],

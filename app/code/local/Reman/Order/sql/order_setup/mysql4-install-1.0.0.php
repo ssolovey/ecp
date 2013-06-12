@@ -76,7 +76,7 @@ $installer->run("
 	`csi` varchar(35) DEFAULT NULL COMMENT 'CSI #',
 	`unit_amount` decimal(10,2) DEFAULT NULL COMMENT 'Unit Amount',
 	`core_amount` decimal(10,2) DEFAULT NULL COMMENT 'Core Amount',
-	`parts_amount` decimal(10,2) DEFAULT NULL COMMENT 'Parts Amount',
+	`fluid_amount` decimal(10,2) DEFAULT NULL COMMENT 'Parts Amount',
 	`tax_percent` int(3) DEFAULT NULL COMMENT 'Tax %',
 	`tax_amount` decimal(10,2) DEFAULT NULL COMMENT 'Tax Amount',
 	`ship_amount` decimal(10,2) DEFAULT NULL COMMENT 'Shipping Amount',

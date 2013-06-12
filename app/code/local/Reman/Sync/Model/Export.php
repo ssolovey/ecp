@@ -71,7 +71,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			'unit_amount' => $orderData['unit_amount'],
 			'core_amount' => $orderData['core_amount'],
 			'ship_amount' => $orderData['ship_amount'],
-			'parts_amount' => $orderData['parts_amount'],
+			'fluid_amount' => $orderData['fluid_amount'],
 			'tax_percent' => $orderData['tax_percent'],
 			'tax_amount' => $orderData['tax_amount'],
 			'warrenty_terms' => $orderData['warrenty_terms'],
