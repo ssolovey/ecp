@@ -56,4 +56,18 @@ class Reman_Warranty_Model_Warranties extends Mage_Core_Model_Abstract
 			}
 		}
 	}
+	
+	/**
+	 * Get warranty id by text name
+	 *
+	 * @param Warranty text value
+	 * @return int
+	 */
+	public function getIdByName( $param )
+	{
+		return $this->getCollection()
+			->addFieldToFilter('warranty', $param)
+			->getFirstItem()
+			->getId();
+	}
 }

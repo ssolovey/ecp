@@ -91,6 +91,9 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		echo '<tr><td>Commercial App</td><td>' . $item[69] . '</td></tr>';
 		echo '</table>';
 		*/
+		
+		$warranty_id = Mage::getModel('warranty/warranties')->getIdByName($item[48]);
+		
 		$data = array(
 			'ete_order_id' => $item[0],
 			'date_invoice' => $item[1],
@@ -140,7 +143,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'family' => $item[45],
 			'alt_partnum' => $item[46],
 			'unit_type' => $item[47],
-			'warranty_id' => $item[48],
+			'warranty_id' => $warranty_id,
 			'carrier' => $item[49],
 			'carrier_service' => $item[50],
 			'carrier_options' => $item[51],
