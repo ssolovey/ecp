@@ -67,7 +67,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			'partnum' => $orderData['partnum'],
 			'vin' => $orderData['vin'],
 			'mileage' => $orderData['mileage'],
-			'commercial_app' => $orderData['commercial_app'],
+			'commercial_app' => $orderData['commercial_app'] ? 'Y' : 'N',
 			'unit_amount' => $orderData['unit_amount'],
 			'core_amount' => $orderData['core_amount'],
 			'ship_amount' => $orderData['ship_amount'],
