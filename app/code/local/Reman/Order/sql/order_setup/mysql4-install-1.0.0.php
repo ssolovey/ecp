@@ -63,7 +63,7 @@ $installer->run("
 	`family` varchar(35) DEFAULT NULL COMMENT 'Family',
 	`alt_partnum` varchar(35) DEFAULT NULL COMMENT 'Alt Part #',
 	`unit_type` varchar(35) DEFAULT NULL COMMENT 'Unit Type',
-	`warrenty_terms` varchar(35) DEFAULT NULL COMMENT 'Warranty Terms',
+	`warranty_id` int(2) DEFAULT NULL COMMENT 'Warranty Terms',
 	`carrier` varchar(35) DEFAULT NULL COMMENT 'Carrier',
 	`carrier_service` varchar(35) DEFAULT NULL COMMENT 'Carrier Service',
 	`carrier_options` varchar(35) DEFAULT NULL COMMENT 'Carrier Options',

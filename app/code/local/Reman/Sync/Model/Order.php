@@ -140,7 +140,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'family' => $item[45],
 			'alt_partnum' => $item[46],
 			'unit_type' => $item[47],
-			'warrenty_terms' => $item[48],
+			'warranty_id' => $item[48],
 			'carrier' => $item[49],
 			'carrier_service' => $item[50],
 			'carrier_options' => $item[51],
