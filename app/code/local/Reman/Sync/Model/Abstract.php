@@ -107,9 +107,9 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		foreach( $data as $item ) {
 			
 			if ( sizeof($item) > 1 ) {
-				$this->_parseItem( $item );
-				
-				$count++;
+				if ( $this->_parseItem( $item ) !== 0 ) {
+					$count++;
+				}
 			}
 		}
 					
@@ -119,7 +119,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	}
 	
 	/**
-	 * Log message in cronlog
+	 * Log message in cronlog table
 	 * after sync complete
 	 */
 	protected function syncLog( $synced, $count )
@@ -144,6 +144,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 					'cron_date' => $date
 				)
 			);
+			$this->logMessage('Synced ' . $count . ' items');
 		} else {
 			$syncModel->setData(
 				array(
@@ -151,8 +152,24 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 					'cron_date' => $date
 				)
 			);
+			//$this->logMessage('No updates');
 		}
 		
 		$syncModel->save();
+   	}
+   	
+   	/**
+	 * Log message in cronlog.html
+	 * after sync success or error catched
+	 */
+	protected function logMessage($message)
+	{
+		date_default_timezone_set('America/Chicago');
+		
+		$myFile = "cronlog.html";
+		$fh = fopen($myFile, 'a');
+		$stringData = strtoupper( $this->_logid ) . ': ' . $message . ' @ ' . date('Y.m.d h:i A') . '<br/>';
+		fwrite($fh, $stringData);
+		fclose($fh);
    	}
 }

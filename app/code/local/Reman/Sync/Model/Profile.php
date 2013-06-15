@@ -32,6 +32,13 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 	protected function _parseItem( $item )
 	{
 		
+		if ( !$item[18] || !$item[21] || !$item[24] ) {
+			
+			$this->logMessage('Error during import ' . $item[0] . ': check warranty fields');
+			
+			return 0;
+		}
+		
 		$this->_companies		=	Mage::getModel('company/company');
 		
 		$this->_customers		=	Mage::getModel('customer/customer');
