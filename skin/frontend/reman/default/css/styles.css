@@ -3285,7 +3285,7 @@ text-decoration: none;
 
 #sold-to table , #ship-to table, #check-notes table  {
 	margin-left: 5px;
-	margin-top: 30px;
+	margin-top: 15px;
 }
 
 #vehicle_info table tr , #order_details table tr{
