@@ -2518,23 +2518,39 @@ background-position: 0px 20px;
 	margin-top: 105px;
 }
 
+
+#loader-wrapper{
+	width: 220px;
+	height: 200px;
+	position: absolute;
+	margin-left: 255px;
+	margin-top: 270px;
+	background: #000;
+	z-index: 1;
+	opacity: 0.8;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	border-radius: 10px;
+	behavior: url(../css/border-radius.htc);
+	display:none;
+}
+
 .reman_preloader_shipping{
-	background-image:url(../images/preloader.gif);
+	background-image:url(../images/white-loader.gif);
 	background-repeat:no-repeat;
 	position:absolute;
 	height:100px;
 	width:100px;
-	margin-left: 327px;
-	margin-top: 270px;
+	margin-left: 57px;
+	margin-top: 20px;
 
 }
 
 .reman_preloader_shipping .shipping-estimation-text{
 	width: 200px;
-	top: 102px;
+	top: 110px;
 	position: absolute;
 	left: -21px;
-	color: #000;
+	color: #fff;
 }
 
 
