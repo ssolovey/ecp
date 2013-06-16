@@ -131,6 +131,14 @@
 	$j('#order-now-btn').click(function(){
 		Reman_QuickQuote.prototype.loadOrder($j('#zip_value').attr('value'));
 	});
+	// Trigger Shipping estimation on Enter Button Event
+	$j('#zip_value').keydown(function(event) {
+	  if (event.which == 13) {
+		 if($j("#zip_value").attr("value") != ""){
+			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"));
+		}
+	   }
+	});
 	
 	
 	var total = <?php echo $_product->getPrice();?> + <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+<?php echo $_product->getData('parts_core_price');?>;
