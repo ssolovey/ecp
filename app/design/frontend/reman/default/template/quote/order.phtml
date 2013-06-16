@@ -106,6 +106,14 @@
         
         <!------- TAX AMOUNT --------->
         <input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
+                
+        <!------- Ship AMOUNT --------->
+        <input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo Mage::helper('company')->getCustomerShippingPrice();?>" />
+        
+        <!-- TAG NAUMBER-->
+        <input type="hidden" id="tax-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
+        
+        
         
         
         <div id="order-title" class="title"><span>Order</span></div>
@@ -234,13 +242,20 @@
                                 <?php endif; ?>	
                            
                         </tr>
-                         <?php if(count($tax_value) != 0):?>	
+                        
                             <tr>
                                 <td class="label">Tax:</td> 
+                                <?php if(count($tax_value) != 0):?>	
                                 <td><?php echo $tax_value[0]['value'].'%' ?></td>
                                 <input type="hidden"  name="tax_percent" value="<?php echo $tax_value[0]['value']; ?>" />
+                             	<?php else: ?>
+                                <td></td>
+                                <input type="hidden"  name="tax_percent" value="0" />
+                          		<?php endif; ?>	
                             </tr>
-                         <?php endif; ?>
+                       
+                         		
+                         
                             <tr>
                                 <td class="label">Fluid Price:</td> 
                                 <td id="fluid-price"></td>
@@ -298,6 +313,13 @@
                 </table>
             </div>
          		 
+                
+                 <!-- Company ID -->
+                 <input type="hidden" name="so_cust_num" value="<?php echo $this->helper('company')->getCustomerCompanyObject()->ete; ?>" />
+                 
+                  <!-- Logged user Email -->
+                 <input type="hidden" name="so_cont_email" value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>" />
+                 
                  <input type="hidden" name="so_phone_ext" value="" />
                  	
                  <!--Bill To The Same As Sold To-->

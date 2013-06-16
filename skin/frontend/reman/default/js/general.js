@@ -46,6 +46,7 @@ Reman_QuickQuote.prototype = {
 	currentPartNumber:'',
 	currentSelectedEngine:'',
 	currentSelectedDrive:'',
+	tagNumber:'',
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -629,6 +630,7 @@ Reman_QuickQuote.prototype = {
 	 * Select Part DataBase Query 
 	*/
 	selectPart: function(applic_id,subgroup,id,name){
+			var self = this;
 			if(subgroup == 0) {
 					$j.ajax({
 						url: "index/ajax",
@@ -660,7 +662,7 @@ Reman_QuickQuote.prototype = {
 							}
 							//Set current Parts Family 
 							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
-							//Set current Group Name 
+							
 							Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
 							// Set Current Part Number Name
 							Reman_QuickQuote.prototype.currentPartNumber = response.sku;
@@ -668,19 +670,31 @@ Reman_QuickQuote.prototype = {
 							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name,id);		
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
+							
+							// Set Tag Number
+							if(self.isTag){
+								Reman_QuickQuote.prototype.tagNumber = name;
+							}
 
 						}
 				});
 			}else{
 				$j('#'+id).hide() // hide current group
 				$j('#'+subgroup).show(); // show next group according to subgroup ID
-				
 				//Update Banner text
 				$j('#welcome_bunner').html('What is the '+$j('#'+subgroup).attr('type')+'?');
 				
-				Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+				this.currentPartRootSelected.push(name);
 
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
+			
+				// Set Tag Number
+				if($j('#'+subgroup).attr('type') == 'tag number'){
+					this.isTag = true;
+				}else{
+					this.isTag = false;
+				}
+				
 			}
 	},
 	/**
@@ -805,13 +819,12 @@ Reman_QuickQuote.prototype = {
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
-					//case: Reman_QuickQuote.prototype.currentCatSelected,
+					tagNumber:Reman_QuickQuote.prototype.tagNumber,
 					zip:zip
 				},
 				
 				beforeSend: function(){
 							$j('#steps').hide();
-							
 							$j('.reman_preloader_big').show();
 				},
 						
