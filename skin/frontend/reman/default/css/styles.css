@@ -2537,19 +2537,18 @@ background-position: 0px 20px;
 .reman_preloader_shipping{
 	background-image:url(../images/white-loader.gif);
 	background-repeat:no-repeat;
-	position:absolute;
+	position:relative;
 	height:100px;
 	width:100px;
-	margin-left: 57px;
-	margin-top: 20px;
+	margin: 20px auto;
 
 }
 
-.reman_preloader_shipping .shipping-estimation-text{
-	width: 200px;
-	top: 110px;
-	position: absolute;
-	left: -21px;
+#loader-wrapper .shipping-estimation-text{
+	width: 220px;
+	position: relative;
+	text-align:center;
+	margin-top:35px;
 	color: #fff;
 }
 

@@ -170,6 +170,14 @@ function bestPrice(data,minPrice){
 			}
 		}
  	 }
+	 
+	 /* Catch service Error for Empty data*/
+	 if(!bestCarrier[store]){
+		alert('Shipping Service error. Try againe');
+		$j('.ship-preloader').hide();
+		return;
+	 }
+	 
 	 // global variables for Order Page
 	 window.servicedays = bestCarrier[store].servicedays;
 	 window.truecost = bestCarrier[store].truecost;
