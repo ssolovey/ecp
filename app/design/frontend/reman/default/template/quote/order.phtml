@@ -31,8 +31,12 @@
 	$FlUIDE_PRICE = 5;
 	
 	//Fluid Amount
-	$fliud_amount = $_product->parts_fluid_quantity;
 	
+	if($_product->parts_fluid_quantity == NULL){
+		$fluid_amount = 0;
+	}else{
+		$fluid_amount = $_product->parts_fluid_quantity;
+	}
 	//Flued Options
 	/*
 	 * Parts Value: 7 = Required , 6 = Optional , 5 = None
@@ -95,7 +99,7 @@
         <input type="hidden" name="order_status" value="Order" />
       
         <!------ Fluid Price------>  
-        <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo $fliudPrice  ?>" />
+        <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo $fluidPrice  ?>" />
         
         <!------Total Amount------>
         <input type="hidden" id="total-price" name="total_amount"  value="" />
@@ -485,7 +489,7 @@
 								}
 							 ?>;
 		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
-		var fluidAmount = <?php echo $fliud_amount; ?>;
+		var fluidAmount = <?php echo $fluid_amount; ?>;
 		var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
     //]]>
 		
