@@ -25,7 +25,8 @@ $j(document).ready(function(){
 		}
 	});
 	/* Enable jQuery Input PlaceHolders for IE*/
-	$j('input, textarea').placeholder();
+	initIEPlaceholders();
+	
 });
 
 /** Create NameSpace for Quick Quote module */

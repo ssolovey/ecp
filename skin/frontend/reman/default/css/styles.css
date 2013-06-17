@@ -3634,3 +3634,16 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 background-color: #8dbdd8;
 }
 
+
+/* IE PlaceHolder*/
+
+.ie-placeholder{
+	position:absolute;
+	padding:8px;
+	color:#999;
+}
+
+#reman_users_orders .ie-placeholder{
+	padding:3px !important;
+	font-size:12px;
+}
