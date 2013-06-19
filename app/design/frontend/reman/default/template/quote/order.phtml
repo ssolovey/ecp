@@ -574,6 +574,7 @@
 							if($j(this).attr('weight') == comWarrantyId){
 								$j(this).attr('selected','selected');
 								$j(this).show();
+								$j('#order_warrenty').attr('value', $j(this).attr('value') );
 							}
 							if($j(this).attr('weight') > comWarrantyId){
 								$j(this).hide();
@@ -599,6 +600,7 @@
 							}
 							if($j(this).attr('weight') == baseWarrantyId){
 								$j(this).attr('selected','selected');
+								$j('#order_warrenty').attr('value', $j(this).attr('value') );
 							}
 					});
 				}
