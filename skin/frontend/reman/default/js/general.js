@@ -1048,6 +1048,8 @@ function checkOrder(){
 	$j('#check-order-baloon').show();
 	
 	/** Vehicle info */
+	
+	$j('#vin-mileage-table').css('margin-left','35px');
 	$j('#check-vin').html($j('#input-vin > input').attr('value'));
 	$j('#input-vin').hide();
 	
@@ -1122,6 +1124,7 @@ function backToOrderEdit(){
 	$j('#order-title').show();
 	$j('#check-order-baloon').hide();
 	/** Vehicle info */
+	$j('#vin-mileage-table').css('margin-left','55px');
 	$j('#check-vin').html('');
 	$j('#input-vin').show();
 	$j('#check-mileage').html('');

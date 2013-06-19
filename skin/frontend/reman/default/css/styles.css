@@ -3307,7 +3307,7 @@ text-decoration: none;
 	height:20px;
 }
 
-#vehicle_info .vin tr , #order_details .vin tr , #sold-to tr , #ship-to tr {
+#vehicle_info .vin tr , #order_details .vin tr , #ship-to tr {
 	height:25px;
 }
 

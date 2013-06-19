@@ -168,7 +168,7 @@
                         </tr>
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin" style="margin-left:35px;">
+                <table id="vin-mileage-table" class="vin" style="margin-left:55px;">
                     <tr class="check-tr">
                         <td class="label">VIN:</td>
                         <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
@@ -186,7 +186,7 @@
                     </tr>
                     
                 </table>
-                <table id="com-app-block" class="vin" style="margin-top:0px;">
+                <table id="com-app-block" class="vin" style="margin-top:5px;">
                      <tr>
                         <td class="label">Commercial Application:</td>
                         <td><input id="commercial_app" type="checkbox" /></td>
@@ -294,18 +294,18 @@
             <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
                 <div class="title"><span>Sold To</span></div>
                 
-                <table class="vin" style="margin-left:10px;">
-                    <tr style="height:20px;">
-                        <td class="label">Customer Name:</td>
+                <table class="vin" style="margin-left:-5px; border-spacing:5px;">
+                    <tr>
+                        <td width="100" class="label">Customer Name:</td>
                         <td><?php echo $this->helper('company')->getCompanyName(); ?></td>
                         <input type="hidden" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
                     </tr>
-                    <tr style="height:20px;">
+                    <tr>
                         <td class="label">Contact Name:</td>
                         <td><?php echo $customer->getFirstname().' '.$customer->getLastname(); ?></td>
                         <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname().' '.$customer->getLastname(); ?>"/>
                     </tr>
-                    <tr style="height:20px;">
+                    <tr>
                         <td class="label">Phone:</td>
                         <td><?php echo $customer->phone; ?></td>
                         <input type="hidden" name="so_phone" value="<?php echo $customer->phone; ?>" />
@@ -338,7 +338,7 @@
                         <td><input id="same-as-sold" type="checkbox" /></td>
                     </tr>
                     <tr class="check-tr">
-                        <td class="label">Customer Name:</td>
+                        <td width="100" class="label">Customer Name:</td>
                         <td id="input-st_cust_name"><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
                         <td id="check-st_cust_name"></td>
                     </tr>
