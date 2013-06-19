@@ -144,7 +144,7 @@
                     </tr>
                 </table>
             </div>
-            <div id="sold-to" style="margin-top:25px; height: 455px;" class="check-bottom-blocks">
+            <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
                 <div class="title"><span>Sold To</span></div>
                 <table class="vin" style="margin-left:10px;">
                     <tr style="height:20px;">
@@ -170,6 +170,10 @@
                 
                 <table class="vin" style="margin-left:10px;">
                     <tr>
+                    	<td class="label">Customer Number:</td>
+                        <td><?php echo $item['st_cust_num']; ?></td>
+                    </tr>
+                    <tr>
                         <td class="label">Customer Name:</td>
                         <td><?php echo $item['st_cust_name']; ?></td>
                     </tr>
@@ -179,12 +183,15 @@
                     </tr>
                     <tr>
                         <td class="label">Phone:</td>
-                        <td><?php echo $item['st_phone']; ?></td>
+                        <td><?php echo $item['st_phone']; ?>  <?php  if($item['st_phone_ext'] != NULL){ echo "Ext.".$item['st_phone_ext']; } ?></td>
                         
                     </tr>
                     <tr>
                         <td class="label">Adress:</td>
-                        <td><?php echo $item['st_addr1']; ?></td>
+                        <td>
+							<?php echo $item['st_addr1']; ?> <br /> 
+							<?php echo $item['st_addr2']; ?>
+                        </td>
                     </tr>
                 
                     <tr>
@@ -200,18 +207,6 @@
                         <td id="check-st_zip"><?php echo $item['st_zip']; ?></td>
                     </tr>
                     
-	                <tr>
-                    	<td class="label">Ship To Customer Number:</td>
-                        <td><?php echo $item['st_cust_num']; ?></td>
-                    </tr>
-                    <tr>
-                    	<td class="label">Ship To Address 2:</td>
-                        <td><?php echo $item['st_addr2']; ?></td>
-                    </tr>
-                    <tr>
-                    	<td class="label">Ship To Phone Ext:</td>
-                        <td><?php echo $item['st_phone_ext']; ?></td>
-                    </tr>
                     <tr>
                     	<td class="label">Carrier:</td>
                         <td><?php echo $item['carrier']; ?></td>
@@ -245,7 +240,7 @@
     </div>
             
            
-
+			 <div class="clearer"></div>
             <div id="check-notes">
              <table>
              	
