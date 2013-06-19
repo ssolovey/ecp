@@ -48,7 +48,8 @@
 	<div class="title">Pricing & Availability </div>
     
     <table id="ship-go-table" style="margin-bottom:25px;">
-    	<tr>
+    	 <?php if(($atl != 0 || $atl != null) && ($ont != 0 || $ont != null) && ($bwi != 0 || $bwi != null) && ($mke != 0 || $mke != null) && ($ip != 0 || $ip != null) && ($dal != 0 || $dal != null)):?>
+        <tr>
             <td>
             	<input id="zip_value" value="" type="text" placeholder="Destination Zip" />
             </td>
@@ -56,6 +57,7 @@
             	<div id="estimate-shipping-btn"></div>
             </td>
         </tr>
+        <?php endif; ?>
     </table>
     
     
