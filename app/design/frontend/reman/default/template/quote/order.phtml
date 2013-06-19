@@ -108,7 +108,7 @@
         <input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
                 
         <!------- Ship AMOUNT --------->
-        <input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo Mage::helper('company')->getCustomerShippingPrice();?>" />
+        <input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
         
         <!-- TAG NAUMBER-->
         <input type="hidden" id="tax-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
@@ -236,7 +236,7 @@
                         <tr class="check-price-order">
                             <td class="label">Shipping:</td>
 								<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
-                                        <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
+                                        <td><?php	echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>  
                                 <?php else: ?>
                                         <td id="order-shipping-cost"></td>
                                 <?php endif; ?>	
@@ -247,10 +247,10 @@
                                 <td class="label">Tax:</td> 
                                 <?php if(count($tax_value) != 0):?>	
                                 <td><?php echo $tax_value[0]['value'].'%' ?></td>
-                                <input type="hidden"  name="tax_percent" value="<?php echo $tax_value[0]['value']; ?>" />
+                                <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
                              	<?php else: ?>
                                 <td></td>
-                                <input type="hidden"  name="tax_percent" value="0" />
+                                <input type="hidden"  name="tax_percent" value="0.00" />
                           		<?php endif; ?>	
                             </tr>
                        
@@ -302,8 +302,8 @@
                     </tr>
                     <tr style="height:20px;">
                         <td class="label">Contact Name:</td>
-                        <td><?php echo $customer->getFirstname(); ?></td>
-                        <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname(); ?>"/>
+                        <td><?php echo $customer->getFirstname().' '.$customer->getLastname(); ?></td>
+                        <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname().' '.$customer->getLastname(); ?>"/>
                     </tr>
                     <tr style="height:20px;">
                         <td class="label">Phone:</td>
@@ -610,8 +610,8 @@
 		function calculateFluid(checked){
 			if(checked){
 			   var total = fluidAmount * 5;
-			   $j('#fluid-amount').attr('value', total );
-			   $j('#fluid-price').html('$'+total);
+			   $j('#fluid-amount').attr('value', Number(total).toFixed(2));
+			   $j('#fluid-price').html('$'+Number(total).toFixed(2));
 			   
 			   $j('#check-fluid').html('Included');
 			   
@@ -619,7 +619,7 @@
 			   
 			   calculateTotalPrice(); 
 			}else{
-			    $j('#fluid-amount').attr('value', 0 );
+			    $j('#fluid-amount').attr('value', '0.00' );
 			    $j('#fluid-price').html('');
 			   
 			    $j('#check-fluid').html('Not Included');
@@ -645,9 +645,9 @@
 				var total  = total + tax_amount ;
 			} 
 			 
-			 $j('#total-price').attr('value', Number(total).toFixed(1));
+			 $j('#total-price').attr('value', Number(total).toFixed(2));
 			 
-			 $j('#total-amount').html('$'+Number(total).toFixed(1));	
+			 $j('#total-amount').html('$'+Number(total).toFixed(2));	
 		}
 		            
 		
