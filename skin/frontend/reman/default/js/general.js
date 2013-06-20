@@ -129,6 +129,10 @@ Reman_QuickQuote.prototype = {
 					//selectPart(applic_id,subgroup,id,name)
 					this.selectPart($j(elem).attr('value'),$j(elem).attr('type'),elem.parentElement.parentElement.id, elem.innerHTML);
 					
+					if($j(elem.parentElement.parentElement).attr('type') == 'tag number'){
+						Reman_QuickQuote.prototype.tagNumber = elem.innerHTML;
+					}
+					
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
 					return;
@@ -672,10 +676,6 @@ Reman_QuickQuote.prototype = {
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
 							
-							// Set Tag Number
-							if(self.isTag){
-								Reman_QuickQuote.prototype.tagNumber = name;
-							}
 
 						}
 				});
@@ -688,13 +688,6 @@ Reman_QuickQuote.prototype = {
 				this.currentPartRootSelected.push(name);
 
 				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
-			
-				// Set Tag Number
-				if($j('#'+subgroup).attr('type') == 'tag number'){
-					this.isTag = true;
-				}else{
-					this.isTag = false;
-				}
 				
 			}
 	},
