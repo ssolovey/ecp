@@ -46,15 +46,15 @@
                 </table>
                 <div style="clear:both"></div>
                 <table class="vin" style="margin-left:49px;">
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">VIN:</td>
                         <td> <?php echo $item['vin']; ?> </td>
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">Mileage:</td>
                         <td> <?php echo $item['mileage']; ?> </td>
                     </tr>
-                    <tr  id="check-application-block">
+                    <tr  id="check-application-block" style="height:20px;">
                         <td class="label">Application:</td>
                         <td> <?php 
 									if($item['commercial_app']){
@@ -69,7 +69,7 @@
                 </table>
             </div>
             
-            <div id="order_details" class="check-top-blocks" style="height:100%;">
+            <div id="order_details" class="check-top-blocks" style="height:360px;">
                 <div class="title"><span>Order Details</span></div>
                            
                 <table style="margin-left:18px;">
@@ -125,20 +125,20 @@
                     </tr>                          
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin" style="margin-top:7px; margin-left:29px;">
-                    <tr>
+                <table class="vin" style="margin-top:0px; margin-left:29px;">
+                    <tr style="height:20px;">
                         <td class="label">PO #:</td>
                         <td><?php echo $item['po']; ?></td>
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">Claim #:</td>
                         <td><?php echo $item['claim']; ?></td>
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">RO #:</td>
                         <td><?php echo $item['ro']; ?></td>
                     </tr>
-                    <tr>
+                    <tr style="height:20px;">
                         <td class="label">End User Name:</td>
                         <td><?php echo $item['end_username']; ?></td>
                     </tr>
@@ -232,7 +232,7 @@
                         <td<?php echo $item['ship_from']; ?>></td>
                     </tr>
                     <tr>
-                    	<td class="label">Tracking #</td>
+                    	<td class="label">Tracking #:</td>
                         <td><?php echo $item['tracknum']; ?></td>
                     </tr>
                 </table> 
@@ -242,7 +242,7 @@
            
 			 <div class="clearer"></div>
             <div id="check-notes">
-             <table>
+             <table style="margin-left:15px;">
              	
                     <tr>
                         <td class="label">Fluid:</td>
