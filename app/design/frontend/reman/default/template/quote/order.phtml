@@ -164,7 +164,7 @@
                         </tr>
                         <tr>
                             <td class="label">Notes:</td>
-                            <td></td>
+                            <td><?php echo $_product->getData('parts_aspiration'); ?> <?php echo ', '.$_product->getData('parts_fuel'); ?> <?php echo ', '.$_product->getData('parts_cylinder_type'); ?> <?php	echo ', '.$this->getRequest()->getPost('tagNumber');?>  </td>
                         </tr>
                 </table>
                 <div style="clear:both"></div>
