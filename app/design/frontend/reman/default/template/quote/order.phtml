@@ -165,6 +165,8 @@
                         <tr>
                             <td class="label">Notes:</td>
                             <td><?php echo $_product->getData('parts_aspiration'); ?> <?php echo ', '.$_product->getData('parts_fuel'); ?> <?php echo ', '.$_product->getData('parts_cylinder_type'); ?> <?php	echo ', '.$this->getRequest()->getPost('tagNumber');?>  </td>
+                            
+                            <input type="hidden" name="vehicle_notes" value="<?php echo $_product->getData('parts_aspiration'); ?> <?php echo ', '.$_product->getData('parts_fuel'); ?> <?php echo ', '.$_product->getData('parts_cylinder_type'); ?> <?php	echo ', '.$this->getRequest()->getPost('tagNumber');?>" />    
                         </tr>
                 </table>
                 <div style="clear:both"></div>
