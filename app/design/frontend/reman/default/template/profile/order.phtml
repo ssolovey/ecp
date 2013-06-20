@@ -45,7 +45,7 @@
                         </tr>
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin" style="margin-left:35px;">
+                <table class="vin" style="margin-left:49px;">
                     <tr>
                         <td class="label">VIN:</td>
                         <td> <?php echo $item['vin']; ?> </td>
@@ -72,7 +72,7 @@
             <div id="order_details" class="check-top-blocks" style="height:100%;">
                 <div class="title"><span>Order Details</span></div>
                            
-                <table>
+                <table style="margin-left:18px;">
                      <tr>
                         <td class="label">Order Type:</td>
                         <td><?php echo $request['order_type']; ?></td>
@@ -125,7 +125,7 @@
                     </tr>                          
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin" style="margin-top:7px;">
+                <table class="vin" style="margin-top:7px; margin-left:29px;">
                     <tr>
                         <td class="label">PO #:</td>
                         <td><?php echo $item['po']; ?></td>
@@ -146,16 +146,16 @@
             </div>
             <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
                 <div class="title"><span>Sold To</span></div>
-                <table class="vin" style="margin-left:10px;">
-                    <tr style="height:20px;">
-                        <td class="label">Customer Name:</td>
+                <table class="vin" style="margin-left:10px; border-spacing:4px;">
+                    <tr>
+                        <td width="100" class="label">Customer Name:</td>
                         <td><?php echo $item['so_cust_name']; ?></td>
                     </tr>
-                    <tr style="height:20px;">
+                    <tr>
                         <td class="label">Contact Name:</td>
                         <td><?php echo $item['so_cont_name']; ?></td>
                     </tr>
-                    <tr style="height:20px;">
+                    <tr>
                         <td class="label">Phone:</td>
                         <td><?php echo $item['so_phone']; ?></td>
                     </tr>
@@ -170,11 +170,11 @@
                 
                 <table class="vin" style="margin-left:10px;">
                     <tr>
-                    	<td class="label">Customer Number:</td>
+                    	<td width="110" class="label">Customer Number:</td>
                         <td><?php echo $item['st_cust_num']; ?></td>
                     </tr>
                     <tr>
-                        <td class="label">Customer Name:</td>
+                        <td width="100" class="label">Customer Name:</td>
                         <td><?php echo $item['st_cust_name']; ?></td>
                     </tr>
                     <tr>
@@ -212,23 +212,23 @@
                         <td><?php echo $item['carrier']; ?></td>
                     </tr>
                     <tr>
-                    	<td class="label">Carrier Service</td>
+                    	<td class="label">Carrier Service:</td>
                         <td><?php echo $item['carrier_service']; ?></td>
                     </tr>
                     <tr>
-                    	<td class="label">Carrier Options</td>
+                    	<td class="label">Carrier Options:</td>
                         <td><?php echo $item['carrier_options']; ?></td>
                     </tr>
                     <tr>
-                    	<td class="label">Ship By Date</td>
+                    	<td class="label">Ship By Date:</td>
                         <td><?php echo $item['date_ship']; ?></td>
                     </tr>
                     <tr>
-                    	<td class="label">Deliver By Date</td>
+                    	<td class="label">Deliver By Date:</td>
                         <td<?php echo $item['date_deliver']; ?>></td>
                     </tr>
                     <tr>
-                    	<td class="label">Ship From</td>
+                    	<td class="label">Ship From:</td>
                         <td<?php echo $item['ship_from']; ?>></td>
                     </tr>
                     <tr>
