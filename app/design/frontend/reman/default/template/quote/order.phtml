@@ -640,7 +640,6 @@
 			
 			if(tax_value){
 				var tax_amount = (total/100) * tax_value;
-				<!--Set Tax amount field value-->
 				$j('#tax-total-amount').attr('value',tax_value);
 				var total  = total + tax_amount ;
 			} 
@@ -673,11 +672,20 @@
 			submitOrder();
 		});
 		
-		/** Allow Only Numeric Input for mileage field*/
-		$j("#input-mileage").keypress(function() {
-			return (/\d/.test(String.fromCharCode(event.which) ))
-		});
 		
+		if ($j.browser.msie){
+			/** Allow Only Numeric Input for mileage field*/
+			$j("#input-mileage").keypress(function(event) {
+				return (/\d/.test(String.fromCharCode(event.which) ))
+			});
+		}else{
+			$j("#input-mileage").on("input", function(event){
+				var isNumbers = ( /^\d+$/.test(event.target.value));
+				if(!isNumbers){
+					event.target.value = '';
+				}
+			});
+		}
     </script>
 
 </div>
