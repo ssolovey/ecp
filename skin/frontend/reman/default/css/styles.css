@@ -3308,7 +3308,7 @@ text-decoration: none;
 }
 
 #vehicle_info .vin tr , #order_details .vin tr , #ship-to tr {
-	height:25px;
+	height:22px;
 }
 
 #vehicle_info .label , #order_details .label , #sold-to .label ,  #ship-to .label , #check-notes .label {
@@ -3389,7 +3389,7 @@ text-decoration: none;
 	width:55px;
 }
 
-#warranty-info , #order-notes , #fuid-info{
+#warranty-info , #order-notes , #fuid-info , #pricing-info{
 	position: relative;
 	float: left;
 	width: 598px;
@@ -3399,7 +3399,7 @@ text-decoration: none;
 	z-index:1;
 }
 
-#warranty-info .title , #order-notes .title , #fuid-info .title{
+#warranty-info .title , #order-notes .title , #fuid-info .title , #pricing-info .title{
 	position: absolute;
 	background: #F2F2F2;
 	top: -10px;
@@ -3417,6 +3417,40 @@ text-decoration: none;
 	margin-left: 30px;
 	width:230px;
 }
+
+
+/* Pricing Info*/
+
+#pricing-info .left-table{
+	position: relative;
+	float: left;
+	margin-top: 25px;
+	margin-left: 41px;
+	border-spacing: 4px;
+}
+
+
+#pricing-info .right-table{
+	position: relative;
+	float: right;
+	margin-top: 25px;
+	margin-right: 100px;
+	border-spacing: 4px;
+}
+
+
+#pricing-info table tr td{
+	font-size:12px;
+	font-weight:bold;
+}
+
+#pricing-info table tr td.label{
+	text-align:right;
+	padding-right:5px;
+}
+
+
+
 
 #fuid-info .optional, #fuid-info .text {
 	margin-top: 22px;

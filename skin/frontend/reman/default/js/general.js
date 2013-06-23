@@ -823,6 +823,7 @@ Reman_QuickQuote.prototype = {
 				},
 						
 				complete: function(data){
+					$j('#reman-invent_info').hide();
 					$j('.reman_preloader_big').hide();
 					$j('#order-now-btn').hide();		 
 					$j('#ship-go-table').hide();
@@ -839,6 +840,7 @@ Reman_QuickQuote.prototype = {
 	resetOrder : function(){
 		$j('#order-wrapper').html('');
 		$j('#steps').show();
+		$j('#reman-invent_info').show();
 		$j('#order-now-btn').show();					 
 		$j('#ship-go-table').show();
 	
@@ -946,7 +948,6 @@ function submitOrder(){
 			}else{
 				$j('#order-message-text').html('Thank you for your order');
 			}
-
 			$j('#preloader-order-page').hide();
 			$j('#order-message').show();
 		}

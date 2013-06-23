@@ -170,7 +170,7 @@
                         </tr>
                 </table>
                 <div style="clear:both"></div>
-                <table id="vin-mileage-table" class="vin" style="margin-left:55px;">
+                <table id="vin-mileage-table" class="vin" style="margin-left:55px; margin-top:25px;">
                     <tr class="check-tr">
                         <td class="label">VIN:</td>
                         <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
@@ -188,10 +188,10 @@
                     </tr>
                     
                 </table>
-                <table id="com-app-block" class="vin" style="margin-top:5px; margin-left: 33px;">
+                <table id="com-app-block" class="vin" style="margin-top:25px; margin-left: 88px;">
                      <tr>
-                        <td width="60" class="label">Commercial Application:</td>
-                        <td><input id="commercial_app" type="checkbox" /></td>
+                        <td class="label"><input id="commercial_app" type="checkbox" /></td>
+                        <td style="font-weight: bold; line-height: 18px;">Commercial Application</td>
                         <input id="commercial_app_value" type="hidden" name="commercial_app" value="0" />  
                     </tr>
                 </table>
@@ -201,74 +201,43 @@
             <div id="order_details" class="check-top-blocks">
                 <div class="title"><span>Order Details</span></div>
                             
-                <div id="family_order">
-                    <div class="lable">Family:</div>
-                    <div class="value"><?php echo $_product->getData('parts_family'); ?></div>
-                    <input type="hidden" name="family" value="<?php echo $_product->getData('parts_family'); ?>" />
-                </div>
-                <table style="margin-left:26px;">
+                <table style="margin-left:47px;">
                         <tr>
-                            <td class="label">Product Name:</td>
+                            <td class="label">Product:</td>
                             <td><?php echo $_product->getName();?></td>
                             <input type="hidden" name="product_name" value="<?php echo $_product->getName();?>" />
                         </tr>
                         
                         <tr>
-                            <td class="label">Part Num:</td>
+                            <td class="label">Part #:</td>
                             <td><?php echo $_product->getSku();?></td>
                             <input type="hidden" name="partnum" value="<?php echo $_product->getSku(); ?>" />
                             
                         </tr>
                         
-                        <tr id="check-family" style="display:none;">
+                        <tr style="height:45px;">
                         	<td class="label">Family:</td>
                             <td><?php echo $_product->getData('parts_family'); ?></td>
+                            <input type="hidden" name="family" value="<?php echo $_product->getData('parts_family'); ?>" />
                         </tr>
                         
-                        <tr class="check-price-order">
-                            <td class="label">Price:</td>
-                            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
-                            <input type="hidden" id="part-price" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
-                        </tr>
-                        <tr class="check-price-order">
-                            <td class="label">Core:</td>
-                            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
-                            <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
-                        </tr>
-                        <tr class="check-price-order">
-                            <td class="label">Shipping:</td>
-								<?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
-                                        <td><?php	echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>  
-                                <?php else: ?>
-                                        <td id="order-shipping-cost"></td>
-                                <?php endif; ?>	
-                           
+                        <tr>
+                        	<td class="label">Ship From:</td>
+                            <td id="order-ship-from"></td>
                         </tr>
                         
-                            <tr>
-                                <td class="label">Tax:</td> 
-                                <?php if(count($tax_value) != 0):?>	
-                                <td><?php echo $tax_value[0]['value'].'%' ?></td>
-                                <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
-                             	<?php else: ?>
-                                <td></td>
-                                <input type="hidden"  name="tax_percent" value="0.00" />
-                          		<?php endif; ?>	
-                            </tr>
-                       
-                         		
-                         
-                            <tr>
-                                <td class="label">Fluid Price:</td> 
-                                <td id="fluid-price"></td>
-                            </tr> 
-                            <tr>
-                                <td class="label">Total Price:</td> 
-                                <td id="total-amount"></td>
-                            </tr>                       
+                        <tr>
+                        	<td class="label">Availability:</td>
+                            <td>Immediate</td>
+                        </tr>
+                        
+                        <tr>
+                        	<td class="label">Ship Time:</td>
+                            <td id="order-ship-time"></td>
+                        </tr>                 
                 </table>
                 <div style="clear:both"></div>
-                <table class="vin" style="margin-top:7px; margin-left:20px;">
+                <table class="vin" style="margin-top:25px; margin-left:20px;">
                     <tr class="check-tr">
                         <td class="label">PO #:</td>
                         <td id="input-po"><input type="text" name="po" class="required-entry" /><em>*</em></td>
@@ -293,12 +262,12 @@
             </div>
             
             
-            <div id="sold-to" style="margin-top:25px;" class="check-bottom-blocks">
+            <div id="sold-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
                 <div class="title"><span>Sold To</span></div>
                 
                 <table class="vin" style="margin-left:-4px; border-spacing:4px;">
                     <tr>
-                        <td width="100" class="label">Customer Name:</td>
+                        <td width="100" class="label">Customer:</td>
                         <td><?php echo $this->helper('company')->getCompanyName(); ?></td>
                         <input type="hidden" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
                     </tr>
@@ -331,13 +300,13 @@
                  <input type="hidden" name="bt_phone_ext" value="" />
                 
             
-            <div id="ship-to" style="margin-top:25px;" class="check-bottom-blocks">
+            <div id="ship-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
                 <div class="title"><span>Ship To</span></div>
                 
                 <table class="vin" style="margin-left:10px;">
-                    <tr id="check-same-as-sold-cont">
-                        <td class="label">Same as Sold To:</td>
-                        <td><input id="same-as-sold" type="checkbox" /></td>
+                    <tr id="check-same-as-sold-cont" style="height:45px;">
+                        <td class="label"><input id="same-as-sold" type="checkbox" /></td>
+                        <td style="font-weight:bold; line-height:18px;">Same as Sold To</td>
                     </tr>
                     <tr class="check-tr">
                         <td width="100" class="label">Customer Name:</td>
@@ -370,7 +339,7 @@
                      </tr>   
                      <tr class="check-tr">
                      	<td class="label">State:</td> 
-                        <td id="input-st_state">
+                        <td id="input-st_state" style="height:24px;">
                             <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
                                <?php  foreach($states as $state): ?>
                                  <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
@@ -384,7 +353,7 @@
                      
                     <tr class="check-tr"> 
                     	<td class="label">ZIP:</td>   
-                        <td id="input-st_zip"><input name="st_zip" style="width:45px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+                        <td id="input-st_zip"><input name="st_zip" style="width:127px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
                         <td id="check-st_zip"></td>
                     </tr>
                 </table>
@@ -400,28 +369,78 @@
             <input type="hidden" name="st_phone_ext" value="" />
             <input type="hidden" name="st_addr2" value="" />
             
-            <?php if($partType[0] == 'T'): ?>	
-                <div id="fuid-info" class="check-price-order">
-                    <div class="title"><span>Fluid</span></div>
-                    <?php if($fluid == 'O'): ?>	
-                        <div class="optional">
-                            <span>Optional: </span><input onchange="calculateFluid(this.checked);" type="checkbox"  />
-                        </div>
-                    <?php endif; ?> 
+            
+            <div id="pricing-info" style="height:160px;">
+            		<div class="title" style="width:90px;"><span>Pricing Details</span></div>
+                    <table class="left-table">
+                    	<tr>
+                        	<td class="label">Unit Cost:</td>
+                            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
+                            <input type="hidden" id="part-price" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
+                        </tr>
+                        <tr>
+                        	<td class="label">Shipping:</td>
+                            <td><?php echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>  
+                        </tr>
+                        <tr>
+                        	<td class="label">Tax:</td>
+                            <?php if(count($tax_value) != 0):?>	
+                            <td><?php echo $tax_value[0]['value'].'%' ?></td>
+                                <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
+                                <?php else: ?>
+                                <td>N/A</td>
+                                <input type="hidden"  name="tax_percent" value="0.00" />
+                            <?php endif; ?>	
+                        </tr>
+                        <tr>
+                        	<td class="label">Fluid:</td>
+                            <td id="fluid-price"></td>
+                        </tr>
+                        <tr>
+                        	<td class="label">Total:</td>
+                            <td id="total-amount"></td>
+                        </tr>
+                    </table>
                     
-                     <?php if($fluid == 'R'): ?>	
-                        <div class="text">
-                            <span>Fluid Required</span>
-                        </div>
-                     <?php endif; ?>
-                     
-                     <?php if($fluid == 'N'): ?>	
-                        <div class="text">
-                            <span>No Fluid Required</span>
-                        </div>
-                     <?php endif; ?>
-                </div>
-             <?php endif; ?>
+                    
+                    <table class="right-table">
+                    	<tr>
+                        	<td class="label">MSRP:</td>
+                            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
+                        </tr>
+                        <tr>
+                        	<td class="label">Core Value:</td>
+                            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+                            <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
+                        </tr>
+                        <tr>
+                        	 <?php if($partType[0] == 'T'): ?>	
+                                    <?php if($fluid == 'O'): ?>	
+                                        <td class="label"><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
+                                        <td>Add Fluid?</td>
+                                    <?php endif; ?> 
+                                    <?php if($fluid == 'R'): ?>	
+                                         <td>Fluid Required</td>
+                                    <?php endif; ?>
+                                    <?php if($fluid == 'N'): ?>	
+                                         <td>No Fluid Required</td>    
+                                    <?php endif; ?>    
+            			 	<?php endif; ?>
+                        </tr>
+                        <tr style="height:40px;">
+                        	<td class="label">Fluid Amount:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        	<td class="label">Other Charges:</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    
+                
+            
+            </div>
+         
             
             <div id="warranty-info" class="check-price-order">
                 <div class="title"><span>Warranty</span></div>
@@ -526,7 +545,21 @@
 			
 			// Set Shipping Value to Order Table
 			$j('#order-shipping-cost').html('$'+window.truecost);
-			/** Calculate Total Parts Amount  (Need to be discussed !!!)*/ 
+			
+			// Set Shp from warehouse
+			$j('#order-ship-from').html( window.store.substring(window.store.lastIndexOf('_'),-1));
+		    
+			// Form Days text
+			 if(window.servicedays > 1){
+				var textDays = 'Days';
+			 }else{
+				var textDays = 'Day';
+			 }
+			 // Set Shipping Days
+			$j('#order-ship-time').html( window.servicedays + ' '+ textDays);
+			
+			
+			/** Calculate Total Parts Amount*/ 
 			calculateTotalPrice();
 		});
 		
