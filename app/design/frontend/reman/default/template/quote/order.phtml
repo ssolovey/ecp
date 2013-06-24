@@ -12,26 +12,27 @@
 <?php 
 	// Load Product Object	
 	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
-	// Load Warranty Object
-	
+
 	//Product Type
 	$partType = $_product->getName();
+	
 	// Tax Value Calculated according to Shipping ZIP value
 	$tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
 	
 	// Current Logged Company
 	$company = Mage::helper('company')->getCustomerCompanyObject();
-	// Load Current Logged Customer Object
+	
+	//Load Current Logged Customer Object
 	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
 	$customer = Mage::getModel('customer/customer')->load($customer_id);
-  	//state names
+  	
+	//state names
     $states = Mage::getModel('directory/country')->load('US')->getRegions();
 	
 	//Fluid Price
 	$FlUIDE_PRICE = 5;
 	
 	//Fluid Amount
-	
 	if($_product->parts_fluid_quantity == NULL){
 		$fluid_amount = 0;
 	}else{
@@ -55,7 +56,6 @@
 			$fliudPrice = 0;
 		}
 	}
-	
 	// Calculated Base Warranty Id
 	$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
 	//Get BaseWarrantyWeightID
@@ -66,7 +66,6 @@
 	$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
 	
 	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
-
 ?>
 
 
@@ -164,9 +163,9 @@
                         </tr>
                         <tr>
                             <td class="label">Notes:</td>
-                            <td><?php echo $_product->getData('parts_aspiration'); ?> <?php  if($_product->getData('parts_fuel')!= NULL){echo ', '.$_product->getData('parts_fuel');} ?> <?php if($_product->getData('parts_cylinder_type') != NULL) echo ', '.$_product->getData('parts_cylinder_type'); ?> <?php	if($this->getRequest()->getPost('tagNumber')!= "")echo ', '.$this->getRequest()->getPost('tagNumber');?>  </td>
+                            <td><?php echo $this->getRequest()->getPost('tagNumber');?>  </td>
                             
-                            <input type="hidden" name="vehicle_notes" value="<?php echo $_product->getData('parts_aspiration'); ?> <?php  if($_product->getData('parts_fuel')!= NULL){echo ', '.$_product->getData('parts_fuel');} ?> <?php if($_product->getData('parts_cylinder_type') != NULL) echo ', '.$_product->getData('parts_cylinder_type'); ?> <?php	if($this->getRequest()->getPost('tagNumber')!= "")echo ', '.$this->getRequest()->getPost('tagNumber');?>" />    
+                            <input type="hidden" name="vehicle_notes" value="<?php echo $this->getRequest()->getPost('tagNumber');?>" />    
                         </tr>
                 </table>
                 <div style="clear:both"></div>
@@ -181,18 +180,18 @@
                         <td id="input-mileage"><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
                         <td id="check-mileage"></td>
                     </tr>
-                    
-                    <tr class="check-tr" id="check-application-block" style="display:none;">
-                        <td class="label">Application:</td>
-                        <td id="check-application">Non Commercial</td>
-                    </tr>
-                    
                 </table>
-                <table id="com-app-block" class="vin" style="margin-top:25px; margin-left: 88px;">
-                     <tr>
+                
+                
+                <table id="com-app-block" class="vin" style="margin-top:25px; margin-left: 88px;"> 
+                     <tr id="com-app-input">
                         <td class="label"><input id="commercial_app" type="checkbox" /></td>
                         <td style="font-weight: bold; line-height: 18px;">Commercial Application</td>
                         <input id="commercial_app_value" type="hidden" name="commercial_app" value="0" />  
+                    </tr>
+                    <tr class="check-tr" id="check-application-block" style="display:none;">
+                        <td class="label">Application:</td>
+                        <td id="check-application">Non Commercial</td>
                     </tr>
                 </table>
             </div>
@@ -413,7 +412,7 @@
                             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
                             <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
                         </tr>
-                        <tr>
+                        <tr id="input-fluid">
                         	 <?php if($partType[0] == 'T'): ?>	
                                     <?php if($fluid == 'O'): ?>	
                                         <td class="label"><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
@@ -427,6 +426,28 @@
                                     <?php endif; ?>    
             			 	<?php endif; ?>
                         </tr>
+                        
+                        <?php if($partType[0] == 'T'): ?>	
+                        <tr id="check-order-fluid" style="display:none;">
+                            <td class="label">Fluid:</td>
+                            <td id="check-fluid" style="font-weight:bold;">
+                                <?php if($fluid == 'O'): ?>	
+                                        Not Included    
+                                 <input type="hidden" name="fluid" value="Not Included"  />
+                                <?php endif; ?>
+                                <?php if($fluid == 'R'): ?>	
+                                        Fluid Required
+                                 <input type="hidden" name="fluid" value="Fluid Required"  />
+                                 <?php endif; ?>
+                                 <?php if($fluid == 'N'): ?>
+                                 <input type="hidden" name="fluid" value="No Fluid Required"  />	
+                                        No Fluid Required
+                                 <?php endif; ?>
+                            </td>
+                            <input id="fluid-optional" type="hidden" name="fluid" value=""  />
+                        </tr>
+                        <?php endif; ?>
+                        
                         <tr style="height:40px;">
                         	<td class="label">Fluid Amount:</td>
                             <td></td>
@@ -479,26 +500,6 @@
             
             <div id="check-notes" style="display:none;">
              <table >
-             	 <?php if($partType[0] == 'T'): ?>	
-                    <tr>
-                        <td class="label">Fluid:</td>
-                        <td id="check-fluid" style="font-weight:bold;">
-                            <?php if($fluid == 'O'): ?>	
-                             		Not Included    
-                             <input type="hidden" name="fluid" value="Not Included"  />
-                            <?php endif; ?>
-							<?php if($fluid == 'R'): ?>	
-                                    Fluid Required
-                             <input type="hidden" name="fluid" value="Fluid Required"  />
-                             <?php endif; ?>
-                             <?php if($fluid == 'N'): ?>
-                             <input type="hidden" name="fluid" value="No Fluid Required"  />	
-                                    No Fluid Required
-                             <?php endif; ?>
-                        </td>
-                        <input id="fluid-optional" type="hidden" name="fluid" value=""  />
-                    </tr>
-                <?php endif; ?>
                 <tr>
                 	<td class="label">Warranty:</td>
                     <td id="check-warranty" style="font-weight:bold;"></td>

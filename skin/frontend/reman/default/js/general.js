@@ -1042,16 +1042,15 @@ function checkOrder(){
 	$j('#check-order-baloon').show();
 	
 	/** Vehicle info */
-	
-	$j('#vin-mileage-table').css('margin-left','35px');
+	$j('#com-app-block').css('margin-left','35px');
 	$j('#check-vin').html($j('#input-vin > input').attr('value'));
 	$j('#input-vin').hide();
 	
 	$j('#check-mileage').html($j('#input-mileage > input').attr('value'));
 	$j('#input-mileage').hide();
 	
-	$j('#com-app-block').hide();
 	
+	$j('#com-app-input').hide();
 	$j('#check-application-block').show();
 	
 	/** Order Details */
@@ -1072,7 +1071,6 @@ function checkOrder(){
 	$j('#family_order').hide();
 	$j('#check-family').show();
 	$j('.check-tr').css('height','20px');
-	$j('.check-top-blocks').css('height','220px');
 
 	/** Ship To*/
 
@@ -1101,6 +1099,10 @@ function checkOrder(){
 	$j('.check-bottom-blocks').css('height','180px');
 	
 	
+	$j('#input-fluid').hide();
+	$j('#check-order-fluid').show();
+	
+	
 	$j('#check-warranty').html($j('#warrenty_select option:selected').html());
 	
 	$j('#check-order-notes').html($j('#order-notes textarea').attr('value'));
@@ -1118,12 +1120,12 @@ function backToOrderEdit(){
 	$j('#order-title').show();
 	$j('#check-order-baloon').hide();
 	/** Vehicle info */
-	$j('#vin-mileage-table').css('margin-left','55px');
+	$j('#com-app-block').css('margin-left','88px');
 	$j('#check-vin').html('');
 	$j('#input-vin').show();
 	$j('#check-mileage').html('');
 	$j('#input-mileage').show();
-	$j('#com-app-block').show();
+	$j('#com-app-input').show();
 	$j('#check-application-block').hide();
 	
 	/** Order Details */
@@ -1162,5 +1164,9 @@ function backToOrderEdit(){
 	$j('#check-order-notes').html('');
 	$j('#check-notes').hide();
 	$j('#submit-order-button').hide();
+	
+	
+	$j('#check-order-fluid').hide();
+	$j('#input-fluid').show();
 }
 		

@@ -3397,6 +3397,7 @@ text-decoration: none;
 	height: 70px;
 	margin-top: 25px;
 	z-index:1;
+	color:#000;
 }
 
 #warranty-info .title , #order-notes .title , #fuid-info .title , #pricing-info .title{
