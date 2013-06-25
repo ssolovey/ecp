@@ -66,6 +66,11 @@
 	$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
 	
 	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
+	
+	
+	// Part Additional Info 
+	$partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
+	
 ?>
 
 
@@ -160,12 +165,10 @@
                              
                              <input type="hidden" name="drive" value="<?php echo $drive; ?>" />     
                             </td>
-                        </tr>
-                        <tr>
+                        </tr>                        <tr>
                             <td class="label">Notes:</td>
-                            <td><?php echo $this->getRequest()->getPost('tagNumber');?>  </td>
-                            
-                            <input type="hidden" name="vehicle_notes" value="<?php echo $this->getRequest()->getPost('tagNumber');?>" />    
+                            <td><?php echo $partNotes;?></td>
+                            <input type="hidden" name="vehicle_notes" value="<?php echo $partNotes;?>" />    
                         </tr>
                 </table>
                 <div style="clear:both"></div>

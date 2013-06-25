@@ -47,7 +47,7 @@ Reman_QuickQuote.prototype = {
 	currentPartNumber:'',
 	currentSelectedEngine:'',
 	currentSelectedDrive:'',
-	tagNumber:'',
+	partsAdditionlInfo:[],
 
 	/*General Event Handler*/
 	eventsHandler: function(event){
@@ -89,6 +89,7 @@ Reman_QuickQuote.prototype = {
 					this.resetSearchErrorResults();
 					//Update Banner text
 					$j('#welcome_bunner').html('What is the model year?');
+					
 					return;
 
 					break;
@@ -100,7 +101,8 @@ Reman_QuickQuote.prototype = {
 					// selectYear(makeid,year)
 					this.selectYear($j(elem).attr('value'), $j(elem).attr('year'));
 					// Need to reset All errors if necessary
-					this.resetSearchErrorResults();		
+					this.resetSearchErrorResults();
+					
 					return;
 
 					break;
@@ -111,17 +113,18 @@ Reman_QuickQuote.prototype = {
 					this.selectModel($j(elem).attr('value'), elem.innerHTML);
 					// Need to reset All errors if necessary
 					this.resetSearchErrorResults();
+					
 					return;
 
 					break;
 				}
 
 				case 'parts_select':{
-					
+					// get Engine
 					if($j(elem).parent().parent().attr('type') == 'engine'){
 						this.currentSelectedEngine = $j(elem).html();
 					}
-					
+					// get Drive
 					if($j(elem).parent().parent().attr('type') == 'drive'){
 						this.currentSelectedDrive = $j(elem).html();
 					}
@@ -129,8 +132,12 @@ Reman_QuickQuote.prototype = {
 					//selectPart(applic_id,subgroup,id,name)
 					this.selectPart($j(elem).attr('value'),$j(elem).attr('type'),elem.parentElement.parentElement.id, elem.innerHTML);
 					
-					if($j(elem.parentElement.parentElement).attr('type') == 'tag number'){
-						Reman_QuickQuote.prototype.tagNumber = elem.innerHTML;
+					// define parent element type
+					var parentElementType = $j(elem.parentElement.parentElement).attr('type');
+					
+					//get Parts Additional Info
+					if( parentElementType == 'tag number' || parentElementType == 'cyl type' || parentElementType == 'unit type' || parentElementType == 'aspiration' ){
+						this.partsAdditionlInfo.push(elem.innerHTML);
 					}
 					
 					// Need to reset All errors if necessary
@@ -161,17 +168,18 @@ Reman_QuickQuote.prototype = {
 
 					for(var y=0;y<=$j(elem).parent().next().length+1;y++){
 						this.currentPartRootSelected.pop();
+						this.partsAdditionlInfo.pop();
 					}
 
 				}else{
 					this.currentPartRootSelected = [];
+					this.partsAdditionlInfo = jQuery.grep(this.partsAdditionlInfo, function (a) { return a != $j(elem).html(); });
 				}
 
 				//delete this link
 				$j(elem).parent().remove();
+				
 				this.resetSearchErrorResults();
-
-
 
 				return;
 			}
@@ -181,6 +189,8 @@ Reman_QuickQuote.prototype = {
 				this.turnOnMakeBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
+				// reset Parts Additional Array data
+				this.partsAdditionlInfo = [];
 				return;
 			}
 
@@ -190,6 +200,8 @@ Reman_QuickQuote.prototype = {
 				this.turnOnYearBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
+				// reset Parts Additional Array data
+				this.partsAdditionlInfo = [];
 				return;
 			}
 
@@ -198,6 +210,8 @@ Reman_QuickQuote.prototype = {
 				this.turnOnModelBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
+				// reset Parts Additional Array data
+				this.partsAdditionlInfo = [];
 				return;
 			}
 
@@ -206,6 +220,8 @@ Reman_QuickQuote.prototype = {
 				this.turnOnCatBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected = [];
+				// reset Parts Additional Array data
+				this.partsAdditionlInfo = [];
 				return;
 			}
 
@@ -214,6 +230,7 @@ Reman_QuickQuote.prototype = {
 				this.turnOnGroupBreadcrumb();
 				this.resetSearchErrorResults();
 				this.currentPartRootSelected.pop();
+				this.partsAdditionlInfo.pop();
 				if($j('#'+$j(elem).attr('prevgroup')).attr('type') == "group"){
 					$j('#welcome_bunner').html('Please select');
 				}else{	
@@ -687,7 +704,7 @@ Reman_QuickQuote.prototype = {
 				
 				this.currentPartRootSelected.push(name);
 
-				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'">'+name+'</span></span>');
+				$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb group_link" prevgroup="'+id+'" currentgroup="'+subgroup+'" type="'+$j('#'+id).attr('type')+'">'+name+'</span></span>');
 				
 			}
 	},
@@ -736,7 +753,7 @@ Reman_QuickQuote.prototype = {
 							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+Reman_QuickQuote.prototype.currentSelectedModel+'</span></span>');
 							Reman_QuickQuote.prototype.isGroupActive = true;
 						}else{
-							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'">'+name+'</span></span>');
+							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'" type="'+$j('#'+prevgroup).attr('type')+'">'+name+'</span></span>');
 						
 						}
 
@@ -813,7 +830,7 @@ Reman_QuickQuote.prototype = {
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
-					tagNumber:Reman_QuickQuote.prototype.tagNumber,
+					partsAdditionlInfo:Reman_QuickQuote.prototype.partsAdditionlInfo,
 					zip:zip
 				},
 				
