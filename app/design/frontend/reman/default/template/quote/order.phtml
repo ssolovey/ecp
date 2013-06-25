@@ -322,7 +322,7 @@
                     </tr>
                     <tr class="check-tr">
                         <td class="label">Phone:</td>
-                        <td id="input-st_phone"><input type="text" name="st_phone" class="required-entry" /><em>*</em></td>
+                        <td id="input-st_phone"><input id="phone-input" type="text" name="st_phone" class="required-entry" /><em>*</em></td>
                         <td id="check-st_phone"></td>
                         
                     </tr>
@@ -561,6 +561,11 @@
 			 }
 			 // Set Shipping Days
 			$j('#order-ship-time').html( window.servicedays + ' '+ textDays);
+			
+			
+			jQuery(function($){
+			   $j("#phone-input").mask("999-999-9999");
+			});
 			
 			
 			/** Calculate Total Parts Amount*/ 
