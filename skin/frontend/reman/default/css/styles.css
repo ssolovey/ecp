@@ -124,7 +124,7 @@ ul,ol         { list-style:none; }
 }
 
 /* Base Columns */
-.col-left { float:left; width:195px; padding:0 0 1px; }
+.col-left { float:left; width:155px; padding:0 0 1px; }
 .col-main { float:left; /*width:685px;*/ padding:0 0 1px; 
 	background-repeat: no-repeat;
 	background-color: #F2F2F2;
@@ -3000,7 +3000,7 @@ text-decoration: none;
 .reman_profile_side_menu{
 	background-color: #F2F2F2;
 	border-radius: 15px;
-	width:201px;
+	width:155px;
 	height:160px;
 	position: relative;
 	float:left;
@@ -3008,10 +3008,15 @@ text-decoration: none;
 
 .reman_profile_side_menu .heading{
 	background:url(../images/myprofile-header.png) no-repeat;
-	width:201px;
+	width:155px;
 	height:49px;
 	position: relative;
 	float:left;
+	text-align: center;
+	font-size: 24px;
+	color: #fff;
+	font-weight: bold;
+	line-height: 45px;
 }
 
 #reman_nav_list{
@@ -3142,18 +3147,11 @@ text-decoration: none;
 	text-align:center;
 }
 
-#details-order-baloon{
-	background: url(../images/top_banner.png) no-repeat;
-	width: 601px;
-	height: 75px;
-	padding-top: 8px;
-	padding-left: 15px;
-	color: #fff;
-	font-size: 25px;
+.order-details-heading{
+	font-size: 14px;
 	font-weight: bold;
-	position: relative;
-	float: left;
-	margin-bottom:15px;
+	color: #000;
+	margin-bottom: 25px;
 }
 
 
@@ -3682,3 +3680,12 @@ background-color: #8dbdd8;
 	padding:3px !important;
 	font-size:12px;
 }
+
+
+/* Col Left layout main contetnt width */
+
+.col2-left-layout .col-main{
+	width:650px !important;
+}
+
+

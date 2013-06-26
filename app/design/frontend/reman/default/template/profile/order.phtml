@@ -4,9 +4,9 @@
 	$item = Mage::getModel('order/order')->load($request['id'])->_data;
 ?>
 
-<div id="reman_order" style="top:-20px;">
+<div id="reman_order" style="top:-20px; left:20px;">
 
-        	<div id="details-order-baloon">How would you like it done?</div>
+        	<div class="order-details-heading"><?php echo $request['id'].': ETE Order - '.$request['ete_order_id'];?></div>
             
             <div id="vehicle_info" class="check-top-blocks" style="height: 362px;">
                 <div class="title"><span>Vehicle info</span></div>
@@ -109,11 +109,11 @@
                     </tr>
                     <tr>
                         <td class="label">Total Price:</td> 
-                        <td><?php echo $item['total_amount']; ?></td>
+                        <td><?php echo '$'.$item['total_amount']; ?></td>
                     </tr>
                     <tr>
                         <td class="label">Deposit Received:</td> 
-                        <td><?php echo $item['deposit_received']; ?></td>
+                        <td><?php if($item['deposit_received'] != NULL){ echo '$'.$item['deposit_received'];} ?></td>
                     </tr>
                     <tr>
                         <td class="label">Original Invoice:</td> 
