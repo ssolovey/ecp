@@ -86,6 +86,7 @@ $installer->run("
 	`commercial_app` tinyint(1) DEFAULT '0' COMMENT 'Commercial App',
 	`product_name` varchar(40) DEFAULT NULL COMMENT 'Product Name',
 	`order_notes` varchar(40) DEFAULT NULL COMMENT 'Order Notes',
+	`vehicle_notes` varchar(160) DEFAULT NULL COMMENT 'Vehicle Notes',
 	`fluid` varchar(25) DEFAULT NULL COMMENT 'Fluid',
 	PRIMARY KEY (`order_id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
