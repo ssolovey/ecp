@@ -3268,15 +3268,25 @@ text-decoration: none;
 
 #reman_order .buttons{
 	position: relative;
-	width: 205px;
+	width: 275px;
 	float: left;
-	margin-left: 200px;
+	margin-left: 165px;
 }
 
-#reman_order .buttons button{
-	height: 30px;
-	width: 100px;
+#reman_order .buttons div{
+	height: 35px;
+	width: 128px;
 	cursor:pointer;
+	float:left;
+}
+
+.cancel-order{
+	background:url(../images/cancel-order.png) no-repeat;
+	margin-right:15px;
+}
+
+.submit-order{
+ 	background:url(../images/submit-order.png) no-repeat;	
 }
 
 #vehicle_info , #sold-to{

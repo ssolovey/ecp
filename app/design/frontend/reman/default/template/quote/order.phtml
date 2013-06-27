@@ -494,8 +494,8 @@
             </div>
             
             <div class="buttons check-price-order">
-                <button type="reset" onclick="Reman_QuickQuote.prototype.resetOrder(); return false;">Cancel</button>
-                <button onclick="checkOrder(); return false;">Submit Order</button>
+                <div class="cancel-order"></div>
+                <div class="submit-order"></div>
             </div>
             
             
@@ -692,9 +692,16 @@
 			 $j('#total-amount').html('$'+Number(total).toFixed(2));	
 		}
 		            
+		/*Reset Order Page*/
+		$j('.cancel-order').click(function(){
+			Reman_QuickQuote.prototype.resetOrder();
+		});
+		/* Submit order for confirmation page*/
+		$j('.submit-order').click(function(){
+			checkOrder();
+		});
 		
-		
-		
+		/* Show submiy order button*/
 		$j('#order-is-checked').click(function(){
 			if($j(this).is(':checked')) {
 				$j('#submit-order-button').show();
@@ -704,7 +711,6 @@
 		});
 		
 		/* Back to Order Page*/
-		
 		$j('#cancel-order-button').click(function(){
 			 backToOrderEdit();
 		});
