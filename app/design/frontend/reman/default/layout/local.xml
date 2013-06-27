@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	/**
-	 * Reman General Layout
-	 *
+	 * Reman General Layout Rules
+	 * Determins Right Sidebar , Main , Left SideBar Layout structure
 	 * @category    Reman
 	 * @package     Layout
 	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)

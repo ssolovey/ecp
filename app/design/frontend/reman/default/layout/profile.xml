@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	/**
-	 * Reman Profile Page Layout
-	 *
+	 * Reman Profile Page General Layout
+	 * AJAX call for Order Details Page
 	 * @category    Reman
 	 * @package     Layout
 	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
@@ -23,7 +23,7 @@
 		</reference>
 	</profile_index_index>
 	
-
+	<!--AJAX CALL FOR ORDER DETAILS PAGE-->
 	<profile_index_orderdetails>
 		<block type="profile/profile" name="profile"  output="toHtml" template="profile/order.phtml" />
 	</profile_index_orderdetails>

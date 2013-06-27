@@ -1,6 +1,7 @@
 /**
- * Shipping Estimate frontend logic
- *  
+ * Shipping time Estimation frontend logic
+ * Get shipping estimation data fro shipping service and filter the best result according 
+ * to ZIP code and warehouse availability  
  * @category    Reman
  * @package     frontend_reman_default_js
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)

@@ -1,9 +1,9 @@
 /**
  * Reman Catalog  Frontend Logic 
  * Quote page logic 
- * Ajax requests 
- * Order Profile
- * Order Submit
+ * Ajax requests for such Data as Make Year , Model , Parts Groups search , Product page,  
+ * Order Profile logic
+ * Order Submit logic
  * @category    Reman
  * @package     frontend_reman_default_js
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)

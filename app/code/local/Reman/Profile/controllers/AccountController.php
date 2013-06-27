@@ -1,7 +1,7 @@
 <?php
 /**
  * Customer account controller
- *
+ * Custom Account controller. Copied to Reman project from Core. 
  * @category   Mage
  * @package    Mage_Customer
  * @author      Magento Core Team <core@magentocommerce.com>

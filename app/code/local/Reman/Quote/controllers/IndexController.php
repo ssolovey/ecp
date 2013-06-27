@@ -1,7 +1,9 @@
 <?php
 /**
  * Quote IndexController
- *
+ * Main Controller for Quick Quote Page BAckEnd Logic
+ * DB reauest for Parts Models, Groups
+ * Shipping Estimation Service Call
  * @category    Reman
  * @package     Reman_Quote
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
@@ -182,10 +184,6 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		parse_str($request['data'],$array);
 		
 		echo Mage::getModel('order/order')->createOrder($customer_id, $array );
-		
-		
-		//Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account', $arguments= array()));
-		
 		
 	}
 	

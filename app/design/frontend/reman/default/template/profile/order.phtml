@@ -1,4 +1,12 @@
-
+<?php 
+	/**
+	 * Reman Order Details Page visual representaion.
+	 * not editable Submitted Order Table	
+	 * @category    Reman
+	 * @package     Design
+	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
+	 */
+?>
 <?php
 	$request = $this->getRequest()->getPost();
 	$item = Mage::getModel('order/order')->load($request['id'])->_data;

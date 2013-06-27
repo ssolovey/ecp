@@ -2,6 +2,7 @@
 /**
  * @category    Reman
  * @package     Reman_Warranty
+ * Helper Class for Warranty Model
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
  */
 class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
@@ -95,12 +96,7 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		return $AdditionalWarrantyWeights;
 	
 	}
-	
-	
-	
-	
-	
-	
+
 	/* 
 	 * Get Calculated Warrantry List according to Reman documentation
 	 * Return BaseWarranty + Additional warranties if their weight less than Base Warranty	

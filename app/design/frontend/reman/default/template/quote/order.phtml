@@ -1,8 +1,9 @@
 <?php
 /**
  * Reman Quick Quote Order Template
- * Visual representation for Quote page Order Table.
- *
+ * Visual representation for Quick Quote  Order Page.
+ * Order Edit Page and Order Confirmation Page are presented here.
+ * All necessary Order data represented in Order Edit Form
  * @category    Reman
  * @package     Design
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
@@ -453,9 +454,6 @@
                             <td></td>
                         </tr>
                     </table>
-                    
-                
-            
             </div>
          
             
@@ -671,8 +669,6 @@
 		function calculateTotalPrice(){
 			var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>		
 			var fluidPrice =  Number($j('#fluid-amount').attr('value'));
-			
-			console.log($j('#fluid-amount').attr('value'));
 			
 			var partPrice = Number($j('#part-price').attr('value'));
 			var corePrice = Number($j('#core-price').attr('value'));

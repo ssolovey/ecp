@@ -1,7 +1,7 @@
 <?php
 /**
  * Profile IndexController 
- *
+ * Manage customers Logic (Enable , Disable Customers for current logged user (only companies admin))
  * @category    Reman
  * @package     Reman_Profile
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)

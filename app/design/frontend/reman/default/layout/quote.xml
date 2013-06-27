@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	/**
-	 * Reman Quick Quote Page Layout
-	 *
+	 * Reman Quick Quote Page General Layout
+	 * Determins layout structure and ajax calls for such block as Product View , Inventory View , Order Page
 	 * @category    Reman
 	 * @package     Layout
 	 * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
@@ -34,12 +34,6 @@
 	<quote_index_invent>
 		<block type="quote/quote" name="quote" output="toHtml"  template="quote/invent.phtml" />
 	</quote_index_invent>
-	
-	<!--Quick Quote Ajax action for estimate shipping page load-->
-	<!--<quote_index_shipping>
-		<block type="quote/quote" name="quote" output="toHtml"  template="quote/shipping.phtml" />
-	</quote_index_shipping>-->
-	
 	
 	<!--Quick Quote Ajax action for Order page load-->
 	<quote_index_order>
