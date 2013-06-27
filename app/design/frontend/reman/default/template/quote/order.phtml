@@ -101,9 +101,6 @@
         <input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
         <!--Order Status-->
         <input type="hidden" name="order_status" value="Order" />
-      
-        <!------ Fluid Price------>  
-        <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo $fluidPrice  ?>" />
         
         <!------Total Amount------>
         <input type="hidden" id="total-price" name="total_amount"  value="" />
@@ -394,14 +391,21 @@
                         </tr>
                         <tr>
                         	<td class="label">Fluid:</td>
-                            <td id="fluid-price"></td>
+                            <td id="fluid-price">
+                            	 <?php 
+								 	if($fluid == 'R'){
+								 		echo '$'.number_format($fliudPrice,2,'.','');
+									}
+								 ?>
+                            </td>
                         </tr>
                         <tr>
                         	<td class="label">Total:</td>
                             <td id="total-amount"></td>
                         </tr>
                     </table>
-                    
+                     <!------ Fluid Price------>  
+        			 <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format($fliudPrice,2,'.','');  ?>" />
                     
                     <table class="right-table">
                     	<tr>
@@ -414,45 +418,36 @@
                             <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
                         </tr>
                         <tr id="input-fluid">
-                        	 <?php if($partType[0] == 'T'): ?>	
-                                    <?php if($fluid == 'O'): ?>	
-                                        <td class="label"><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
-                                        <td>Add Fluid?</td>
+                        	 <?php if($partType[0] == 'T' && $fluid != 'N') : ?>	
+                                    <td class="label">Add Fluid?</td>
+									<?php if($fluid == 'O'): ?>	
+                                        <td><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
                                     <?php endif; ?> 
                                     <?php if($fluid == 'R'): ?>	
-                                         <td>Fluid Required</td>
+                                         <td><input checked="checked" type="checkbox"  disabled="disabled" /></td>
                                     <?php endif; ?>
-                                    <?php if($fluid == 'N'): ?>	
-                                         <td>No Fluid Required</td>    
-                                    <?php endif; ?>    
             			 	<?php endif; ?>
                         </tr>
                         
                         <?php if($partType[0] == 'T'): ?>	
-                        <tr id="check-order-fluid" style="display:none;">
-                            <td class="label">Fluid:</td>
-                            <td id="check-fluid" style="font-weight:bold;">
-                                <?php if($fluid == 'O'): ?>	
-                                        Not Included    
-                                 <input type="hidden" name="fluid" value="Not Included"  />
-                                <?php endif; ?>
-                                <?php if($fluid == 'R'): ?>	
-                                        Fluid Required
-                                 <input type="hidden" name="fluid" value="Fluid Required"  />
-                                 <?php endif; ?>
-                                 <?php if($fluid == 'N'): ?>
-                                 <input type="hidden" name="fluid" value="No Fluid Required"  />	
-                                        No Fluid Required
-                                 <?php endif; ?>
-                            </td>
-                            <input id="fluid-optional" type="hidden" name="fluid" value=""  />
-                        </tr>
+							<?php if($fluid == 'O'): ?>	      
+                            	<input id="fluid-optional" type="hidden" name="fluid" value=" Not Included"  />
+                            <?php endif; ?>
+                            
+                            <?php if($fluid == 'R'): ?>	   
+                            		<input type="hidden" name="fluid" value="Fluid Required"  />
+                            <?php endif; ?>
+							<?php if($fluid == 'N'): ?>
+                                  <input type="hidden" name="fluid" value="No Fluid Required"  />	      
+                            <?php endif; ?>
                         <?php endif; ?>
                         
+                        <?php if($fluid != 'N') : ?>	
                         <tr style="height:40px;">
                         	<td class="label">Fluid Amount:</td>
-                            <td></td>
+                            <td><?php echo $_product->parts_fluid_quantity.' quarts' ?></td>
                         </tr>
+                         <?php endif; ?>
                         <tr>
                         	<td class="label">Other Charges:</td>
                             <td></td>
@@ -675,7 +670,10 @@
 		// Calculate Total Amount
 		function calculateTotalPrice(){
 			var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>		
-			var fluidPrice = Number($j('#fluid-amount').attr('value'));
+			var fluidPrice =  Number($j('#fluid-amount').attr('value'));
+			
+			console.log($j('#fluid-amount').attr('value'));
+			
 			var partPrice = Number($j('#part-price').attr('value'));
 			var corePrice = Number($j('#core-price').attr('value'));
 			var total  = shippingPrice + fluidPrice + partPrice + corePrice;
