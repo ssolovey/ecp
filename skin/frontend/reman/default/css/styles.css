@@ -3231,14 +3231,26 @@ text-decoration: none;
 
 #submit-order-button{
 	background:url(../images/place-order-button.png) no-repeat;
-	width: 220px;
-	height: 40px;
+	width: 215px;
+	height: 35px;
 	position: relative;
 	float: left;
-	margin-left: 165px;
+	margin-left: 25px;
 	margin-top: 20px;
 	cursor:pointer;
 }
+
+#cancel-order-button{
+	background:url(../images/change-order-button.png) no-repeat;
+	width: 215px;
+	height: 35px;
+	position: relative;
+	float: left;
+	margin-left: 50px;
+	margin-top: 20px;
+	cursor:pointer;
+}
+
 
 #reman_order em{
 	color: #f6193a;

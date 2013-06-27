@@ -122,8 +122,6 @@
         
         <div id="order-title" class="title"><span>Order</span></div>
         
-        <div id="check-order-back" class="title" style="display:none; cursor:pointer;"><span>Order</span></div>
-        
         	<div id="check-order-baloon" style="display:none;"></div>
             
             <div id="vehicle_info" class="check-top-blocks">
@@ -520,6 +518,7 @@
                 </tr>
              
              </table>
+             <div id="cancel-order-button"></div> 
              <div id="submit-order-button" style="display:none;"></div> 
              </div>
             
@@ -706,7 +705,7 @@
 		
 		/* Back to Order Page*/
 		
-		$j('#check-order-back').click(function(){
+		$j('#cancel-order-button').click(function(){
 			 backToOrderEdit();
 		});
 		
