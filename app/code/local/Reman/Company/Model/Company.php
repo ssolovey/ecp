@@ -15,19 +15,6 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 	}
 	
 	/**
-	 * Return company admin ID
-	 *
-	 * @return Number
-	 */
-	public function getCompanyAdmin()
-	{
-		
-		
-		
-		return;
-	}
-	
-	/**
 	 * Get companies list as array
 	 *
 	 * @return Array
@@ -70,9 +57,12 @@ class Reman_Company_Model_Company extends Mage_Core_Model_Abstract
 	
 	
 	/**
-	 * Get company admin by ETE id
+	 * Get company admin id
+	 *
+	 * @param {Integer} $id - company ETE id
+	 * @return {Integer}
 	 */
-	public function getComplanyAdmin( $id )
+	public function getCompanyAdmin( $id )
 	{
 		$customers = Mage::getModel('customer/customer')->getCollection();
 		

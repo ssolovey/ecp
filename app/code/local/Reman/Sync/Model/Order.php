@@ -167,12 +167,12 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 			'commercial_app' => ($item[69] == 'Y') ? 1 : 0
 		);
 		
-		$user_id = Mage::getModel('company/company')->getComplanyAdmin($item[6]);
+		$user_id = Mage::getModel('company/company')->getCompanyAdmin($item[6]);
 		
 		Mage::getModel('order/order')->createOrder(
 			$user_id, // magento user id
 			$data,
-			true
+			true // true for sync
 		);
 	}
 	
@@ -182,6 +182,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		$this->_loadFile( 'ORDERS.TXT' );
 	}
 	
+	// run import test
 	public function test()
 	{		
 		$test_csv = new Varien_File_Csv();
