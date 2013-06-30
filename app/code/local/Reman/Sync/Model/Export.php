@@ -43,10 +43,13 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		// login with username and password
 		$login_result = ftp_login($conn_id, 'buyeteftp', 'Bu38@Xtrn');
 		
-		ftp_chdir($this->conn_id, 'orders/');
+		// convert filename to DOS format
+		$dos_file = substr($file, -12, 12);
+				
+		//ftp_chdir($this->conn_id, 'orders/');
 			
 		// upload a file
-		ftp_put($conn_id, $file, $local_path, FTP_BINARY);
+		ftp_put($conn_id, $dos_file, $local_path, FTP_BINARY);
 		
 		// close the connection
 		ftp_close($conn_id);		
