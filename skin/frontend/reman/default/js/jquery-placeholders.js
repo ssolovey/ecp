@@ -7,11 +7,11 @@
  */
  
 function initIEPlaceholders(){
-	
+	// get all input DOM elements
 	var input = document.createElement("input");
-	
+	// Check for browser Placeholder support
     if(('placeholder' in input)==false) { 
-	
+	    // create fake placeholder labels for all inputs with placeholder attribute
 		$j('[placeholder]').each(function(){
 			$j(this).before('<span class="ie-placeholder">'+$j(this).attr('placeholder')+'</span>');
 		});
@@ -22,7 +22,7 @@ function initIEPlaceholders(){
 				$j(e.target).next().removeClass('validation-failed');
 			}
 		});
-		
+		// Events Input Focus and Input Blur
 		$j('[placeholder]').focus(function(e) {
 			
 			$j(e.target).keydown(function(e) {

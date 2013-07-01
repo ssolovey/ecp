@@ -7,8 +7,10 @@
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
  */
  
+ /** CONST - Shipping MAX PRICE. Fixed to $200*/
  var MAXCOST = 200;
- 	
+ 
+ /** Map Parts stores ZIP values*/	
  var storeZIP = {
 	53223: 'Milwaukee, WI',
 	91761: 'Ontario, CA',
@@ -17,40 +19,50 @@
 	75261: 'Dulles, TX'
  }
 
+/** 
+  *	Estimate Shipping Ajax request
+  * @param {number} - Destination ZIP.
+  * @param {array}  - Available Warehouses for selected Part.
+  * @return JSON DATA (Shipping Service result)
+*/
 function estimateShipping (stocks,destzip){
 	$j.ajax({
 
-			url: "index/estimateshipping",
-			type: 'POST',
+		url: "index/estimateshipping",
+		type: 'POST',
+		
+		data: {
+			stocks: stocks,
+			destzip: destzip
+		},
+		
+		beforeSend: function(){
 			
-			data: {
-				stocks: stocks,
-				destzip: destzip
-			},
+			$j('.ship-preloader').show();
 			
-			beforeSend: function(){
-				
-				$j('.ship-preloader').show();
-				
-			},
+		},
+		
+		error: function(error){
+			alert('Shipping Service error. Try againe');
+			$j('.ship-preloader').hide();
+			return;
+		},
+					
+		complete: function(data){
 			
-			error: function(error){
-				alert('Shipping Service error. Try againe');
-				$j('.ship-preloader').hide();
-				return;
-			},
-						
-			complete: function(data){
-				
-				var data = $j.parseJSON(data.responseText);
-				buildTableResults(filterBestResult(data));	
-			}
-				
-		});
+			var data = $j.parseJSON(data.responseText);
+			buildTableResults(filterBestResult(data));	
+		}
+			
+	});
 }
 
 
-
+/** 
+  *	Filter Shipping Service result data
+  * @param {object} - Service response object.
+  * @return Array - Best Shipping Carriers
+*/
 function filterBestResult(data){
 	
 	var dataArray = [];
@@ -118,7 +130,11 @@ function filterBestResult(data){
 	return dataArray;
 }
 
-
+/** 
+  *	Form new filtered data with best results according to Shipping price
+  * @param {object} - Filtered response object.
+  * @return Array - Minimum days best carriers
+*/
 function buildTableResults(data){
 	 var daysFilter = [];
 	 for (key in data){
@@ -135,7 +151,12 @@ function buildTableResults(data){
 	 getMinDaysCarrirer(data,daysFilter.min());
 }
 
-
+/** 
+  *	Form new filtered data with best results according to minimum Shipping days
+  * and shipping price
+  * @param {object} - Filtered response object.
+  * @return Array - Minimum days best carriers
+*/
 function getMinDaysCarrirer(data,mindays){
   var minDaysDelivery = {};
   var minPrice = []; 
@@ -157,6 +178,12 @@ function getMinDaysCarrirer(data,mindays){
    bestPrice(minDaysDelivery,minPrice);
 }
 
+/** 
+  *	Form best Price result according filtered best days result
+  * @param {object} - Filtered response object.
+  * @param {number} - Filtered minimum price.
+  * @return object - Best Carrier price, store ,service days
+*/
 function bestPrice(data,minPrice){
 	var bestCarrier = {};
 	var price = minPrice.min();
@@ -198,10 +225,10 @@ function bestPrice(data,minPrice){
 	 // Show Values
 	 $j('.ship-time').show();
 	 $j('.ship-from').show();
+	 
 	 //Show order button
-	 
 	 $j('#order-now-btn').show();
-	 
+	 // hide shipping preloader
 	 $j('.ship-preloader').hide();
 	 
 	 

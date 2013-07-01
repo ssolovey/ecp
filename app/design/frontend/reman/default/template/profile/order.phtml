@@ -9,6 +9,7 @@
 ?>
 <?php
 	$request = $this->getRequest()->getPost();
+	// Get Order Item according to selected Order WEB ID
 	$item = Mage::getModel('order/order')->load($request['id'])->_data;
 ?>
 

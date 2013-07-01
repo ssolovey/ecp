@@ -63,11 +63,15 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getCustomerShippingPrice()
 	{
 		
+		$SHIPPING_DEFAULT_PRICE = 200;
+		
 		$company = $this->getCustomerCompanyObject();
-  		$shippingPrice = $company->ship;
+  		
+		$shippingPrice = $company->ship;
+		
 		if(is_null($shippingPrice))
 		{
-			return 200;
+			return $SHIPPING_DEFAULT_PRICE;
 		}else
 		{
 			return $shippingPrice;

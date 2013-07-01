@@ -591,17 +591,18 @@
 				$j($j('#ship-to-states option')[0]).attr('selected','selected');
    	    	}
 		});
-		
+		/**
+		 * Commercial Application logic 
+			iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
+				 AND the retrieved Commwar value is less than the BWV, then the values retrieved form
+				 the Warranty File become the BW and the BWV
+		*/
 		$j('#commercial_app').click(function(){
 			if($j(this).is(':checked')){
 				$j('#commercial_app_value').attr('value',"1");
 				$j('#check-application').html('Commercial');
 				
-				/*
-					iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
-						 AND the retrieved Commwar value is less than the BWV, then the values retrieved form
-						 the Warranty File become the BW and the BWV
-				*/
+				
 				
 				if(comWarrantyId == 0) return;
 				
@@ -642,7 +643,7 @@
 				}
 			}
 		});
-		
+		/** Calculate FLUID PRICE*/
 		function calculateFluid(checked){
 			if(checked){
 			   var total = fluidAmount * 5;
@@ -715,9 +716,9 @@
 			submitOrder();
 		});
 		
-		
+		/** Allow Only Numeric Input for mileage field  (IE ONLY)*/
 		if ($j.browser.msie){
-			/** Allow Only Numeric Input for mileage field*/
+			
 			$j("#input-mileage").keypress(function(event) {
 				return (/\d/.test(String.fromCharCode(event.which) ))
 			});

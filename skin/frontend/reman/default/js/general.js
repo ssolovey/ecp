@@ -943,9 +943,6 @@ function submitOrder(){
 	/** Collect Form Data */
 	var formData = $j("#form-order").serialize();
 	
-	
-	console.log(formData);
-	
 	$j.ajax({
 		url: "index/ordersubmit",
 		type: 'POST',
@@ -1005,7 +1002,7 @@ function orderBack(){
 			$j('#no-match-results').show();
 		}
 	}
-	
+	/** Filter PO # Value in Profile page */
 	function serchPO(value){
 		
 		var success = false;
@@ -1027,7 +1024,7 @@ function orderBack(){
 		}
 	
 	}
-	
+	/** Reset order list filters*/
 	function resetFilters(){
 		$j('#no-match-results').hide();
 		$j('#grid tr').each(function(){
@@ -1130,7 +1127,7 @@ function checkOrder(){
 
 }
 	
-	
+/** Back to Order Edit Page */	
 function backToOrderEdit(){
 	$j('#order-is-checked').attr('checked',false)
 	$j('#check-order-back').hide();

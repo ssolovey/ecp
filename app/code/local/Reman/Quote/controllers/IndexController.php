@@ -40,27 +40,27 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			die;	
 				
 		}
-		
+		/** Quote Step 2 - GET Models */
 		if($request['step'] == 2)
 		{
-			// get years accprding to selected make
+			
 			$result_st2 = Mage::getModel('sync/model')->loadModel($request['id'],$request['year']);
 			
 			//return php array in json 	
 			echo json_encode($result_st2);
 			
 		}
-		
+		/** Quote Step 3 - Search for Product (Product Groups) */
 		if($request['step'] == 3)
 		{
 			
-			// get models accprding to selected make
+			
 			$result_st3 = Mage::getModel('sync/applic')->loadProductId($request['id'],$request['category']);
 			
 			echo json_encode($result_st3);
 		
 		}
-		
+		/** Quote Step 4 - Load Product Page */
 		if($request['step'] == 4)
 		{
 			// get product object from catalog according to product ID
@@ -69,9 +69,6 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			if($result_st4){
 				$productObj->sku = $result_st4->getSku();
 				$productObj->family = $result_st4->getData('parts_family');
-				/*if($productObj->sku[0] != $request['category'] ){
-					$productObj->sku = "";
-				}*/
 			}else{
 				$productObj->sku = "";
 			}
@@ -104,34 +101,34 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		$this->renderLayout(); 
 	
 	}
-	
+	/** 
+	  * Load Inventory info block page for Quick Quote Block
+	*/
 	public function inventAction(){
-		/** 
-			Load Inventory info block page for Quick Quote Block
-		*/
+		
 		$this->loadLayout('invent'); 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	
 	}
-	
+	/** 
+	  * Load Inventory info block page for Quick Quote Block
+	*/
 	public function shippingAction(){
-		/** 
-			Load Inventory info block page for Quick Quote Block
-		*/
+		
 		$this->loadLayout('shipping'); 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	
 	}
-	
+	/**
+	  * Call For ThirdPart Shipping Service
+	*/
 	public function estimateshippingAction(){
 		// parse request data
 		$request = $this->getRequest()->getPost();
 		$array = array();
 		
-		/** BETA */
-		//$client = new SoapClient("http://services.beta.afs.net/Rate/RateService_v2.asmx?WSDL"); 
 		
 		/** Production */
 		$client = new SoapClient("http://services.afs.net/rate/rateservice_v2.asmx?WSDL"); 
@@ -163,28 +160,30 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 	
 	}
 	
-	
+	/** 
+		Load Order page 
+	*/
 	public function orderAction(){
-		/** 
-			Load Order page 
-		*/
+		
 		$this->loadLayout('order');   
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
 	
 	}
-	
+	/**
+	  * Submit Order Action
+	  *
+	*/
 	public function ordersubmitAction(){
-	
+		// get request POST data
 		$request = $this->getRequest()->getPost();
 		
 		//customer ID
 		$customer_id =  Mage::getSingleton('customer/session')->getCustomer()->getId();	
-		
+		// Parse submited form DATA
 		parse_str($request['data'],$array);
 		
-		echo Mage::getModel('order/order')->createOrder($customer_id, $array );
-		
+		echo Mage::getModel('order/order')->createOrder($customer_id, $array );	
 	}
 	
 }

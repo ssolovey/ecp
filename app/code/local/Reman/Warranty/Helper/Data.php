@@ -70,7 +70,11 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 			}	
 		}
     }
-	
+	/* 
+	 * Get base warranty label text
+	 * @return String
+	 *
+	*/
 	public function getBaseWarrantyLabel($case,$product){
 		// Warranty Array
 		$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
@@ -82,7 +86,13 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 	}
 	
-	
+	/* 
+	 * Get Additional Warranty Weights value
+	 * @param(string) - Link to GSW table
+	 * @param(string) - Product type (Auto , Transfer Case)
+	 * @return String
+	 *
+	*/
 	public function getAdditionalWarranty($gsw_link, $type){
 		
 		$AdditionalWarrantyIds = Mage::getModel('sync/gsw')->loadWarranryID($gsw_link, $type); 
@@ -140,23 +150,23 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		/* Form Calculated Warranty list*/
 	
 		foreach ($warrantyArray as $item) {
-			
-			if($item['weight'] == $warrantyWeightID){ //Base Warranty
+			//Base Warranty
+			if($item['weight'] == $warrantyWeightID){ 
 					
 				array_push($warranties , $item);		
 			}
-			
-			if($parts_commercial_warranty_weightId < $warrantyWeightID ){ // If Commercial Warranty weight less than BaseWarranty 
-					
-				if($item['weight'] == $parts_commercial_warranty_weightId){ //Commercial Warranty
+			// If Commercial Warranty weight less than BaseWarranty 
+			if($parts_commercial_warranty_weightId < $warrantyWeightID ){ 
+				//Commercial Warranty	
+				if($item['weight'] == $parts_commercial_warranty_weightId){ 
 						
 						$added_comm_war_weight = $parts_commercial_warranty_weightId;
 						
 						array_push($warranties , $item);		
 				}
 			}
-		
-			foreach($this->getAdditionalWarranty($GSW_link,$type) as $additemWeight){ // Add all Additional warranties if they les than base warranty
+			// Add all Additional warranties if they les than base warranty
+			foreach($this->getAdditionalWarranty($GSW_link,$type) as $additemWeight){ 
 					
 				if(($additemWeight < $warrantyWeightID) && ($additemWeight != $added_comm_war_weight)){
 				
