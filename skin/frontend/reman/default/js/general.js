@@ -1072,13 +1072,29 @@ function checkOrder(){
 	$j('#check-po').html($j('#input-po > input').attr('value'));
 	$j('#input-po').hide();
 	
-	$j('#check-claim').html($j('#input-claim > input').attr('value'));
+	if($j('#input-claim > input').attr('value') != ''){
+		$j('#check-claim').html($j('#input-claim > input').attr('value'));
+	}else{
+		$j('#check-claim').html('N/A');
+	}
+	
 	$j('#input-claim').hide();
 	
-	$j('#check-ro').html($j('#input-ro > input').attr('value'));
+	if($j('#input-ro > input').attr('value') != ''){
+		$j('#check-ro').html($j('#input-ro > input').attr('value'));
+	}else{
+		$j('#check-ro').html('N/A');
+	}
+	
+	
 	$j('#input-ro').hide();
 	
-	$j('#check-end_username').html($j('#input-end_username > input').attr('value'));
+	if($j('#input-end_username > input').attr('value') != ''){
+		$j('#check-end_username').html($j('#input-end_username > input').attr('value'));
+	}else{
+		$j('#check-end_username').html('N/A');
+	}
+	
 	$j('#input-end_username').hide();
 	
 	$j('.check-price-order').hide();

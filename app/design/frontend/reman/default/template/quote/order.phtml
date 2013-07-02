@@ -69,7 +69,7 @@
 	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 	
 	
-	// Part Additional Info 
+	// Part Additional Info
 	$partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
 	
 ?>
@@ -144,7 +144,15 @@
                         </tr>
                         <tr>
                             <td class="label">Engine:</td>
-                            <td><?php echo $this->getRequest()->getPost('engine'); ?>
+                            <td>
+								<?php 
+									if($this->getRequest()->getPost('engine') != NULL){
+										echo $this->getRequest()->getPost('engine'); 
+									}else{
+										echo 'N/A';
+									}
+							
+								?>
                             <input type="hidden" name="engine" value="<?php  echo $this->getRequest()->getPost('engine'); ?>" />    
                             </td>
                         </tr>
@@ -156,14 +164,28 @@
 									}else{
 										$drive = $this->getRequest()->getPost('drive');
 									}
-									echo $drive;
+									
+									if($drive == NULL){
+										echo 'N/A';
+									}else{
+										echo $drive;
+									}
+									
+									
 								?>
                              
                              <input type="hidden" name="drive" value="<?php echo $drive; ?>" />     
                             </td>
                         </tr>                        <tr>
                             <td class="label">Notes:</td>
-                            <td><?php echo $partNotes;?></td>
+                            <td><?php 
+									if($partNotes != NULL){ 
+										echo $partNotes;
+									}else{
+										echo 'N/A';
+									}
+								?>
+                            </td>
                             <input type="hidden" name="vehicle_notes" value="<?php echo $partNotes;?>" />    
                         </tr>
                 </table>
@@ -396,6 +418,8 @@
                             	 <?php 
 								 	if($fluid == 'R'){
 								 		echo '$'.number_format($fliudPrice,2,'.','');
+									}else{
+										echo 'N/A';
 									}
 								 ?>
                             </td>
@@ -446,12 +470,19 @@
                         <?php if($fluid != 'N') : ?>	
                         <tr style="height:40px;">
                         	<td class="label">Fluid Amount:</td>
-                            <td><?php echo $_product->parts_fluid_quantity.' quarts' ?></td>
+                            <td><?php 
+									if($_product->parts_fluid_quantity != NULL){
+										echo $_product->parts_fluid_quantity.' quarts';
+									}else{
+										echo 'N/A';
+									}	
+								?>
+                           </td>
                         </tr>
                          <?php endif; ?>
                         <tr>
                         	<td class="label">Other Charges:</td>
-                            <td></td>
+                            <td>N/A</td>
                         </tr>
                     </table>
             </div>
@@ -657,7 +688,7 @@
 			   calculateTotalPrice(); 
 			}else{
 			    $j('#fluid-amount').attr('value', '0.00' );
-			    $j('#fluid-price').html('');
+			    $j('#fluid-price').html('N/A');
 			   
 			    $j('#check-fluid').html('Not Included');
 				
