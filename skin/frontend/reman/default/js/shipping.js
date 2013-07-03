@@ -25,7 +25,7 @@
   * @param {array}  - Available Warehouses for selected Part.
   * @return JSON DATA (Shipping Service result)
 */
-function estimateShipping (stocks,destzip){
+function estimateShipping (stocks,destzip,inProgress){
 	$j.ajax({
 
 		url: "index/estimateshipping",
@@ -51,7 +51,7 @@ function estimateShipping (stocks,destzip){
 		complete: function(data){
 			
 			var data = $j.parseJSON(data.responseText);
-			buildTableResults(filterBestResult(data));	
+			buildTableResults(filterBestResult(data,inProgress));	
 		}
 			
 	});
@@ -63,7 +63,7 @@ function estimateShipping (stocks,destzip){
   * @param {object} - Service response object.
   * @return Array - Best Shipping Carriers
 */
-function filterBestResult(data){
+function filterBestResult(data,inProgress){
 	
 	var dataArray = [];
 	
@@ -86,9 +86,9 @@ function filterBestResult(data){
 		for ( s in data[key]){ // SHIPPING results object 
 			
 			iterationIndex ++;
-			
-			if( carriers.store == "Milwaukee, WI"){
-				var servicedays = Number(data[key][s].ServiceDays) +2;
+			console.log(inProgress)
+			if( carriers.store == "Milwaukee, WI" && inProgress ){
+				var servicedays = Number(data[key][s].ServiceDays) + 2;
 			}else{
 				var servicedays = Number(data[key][s].ServiceDays);
 			}

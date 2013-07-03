@@ -42,6 +42,13 @@
 		
 		$SHIPPING_PRICE = 200;
 		
+		//check for In Progress Items
+		if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
+			$inProgress = 1;
+		}else{
+			$inProgress = 0;
+		}
+		
 ?>
 <!-- Stock Availability--> 
 <div id="stock_avl">
@@ -125,8 +132,9 @@
 	
 	//Estimate Shipping Event
 	$j('#estimate-shipping-btn').click(function(){
+		
 		if($j("#zip_value").attr("value") != ""){
-			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"));
+			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value") ,  <?php echo $inProgress; ?>);
 		}
 	});
 	// Load Order Page
