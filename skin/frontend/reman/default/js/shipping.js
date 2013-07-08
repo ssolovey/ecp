@@ -86,7 +86,7 @@ function filterBestResult(data,inProgress){
 		for ( s in data[key]){ // SHIPPING results object 
 			
 			iterationIndex ++;
-			console.log(inProgress)
+			
 			if( carriers.store == "Milwaukee, WI" && inProgress ){
 				var servicedays = Number(data[key][s].ServiceDays) + 2;
 			}else{

@@ -373,7 +373,7 @@
                      
                     <tr class="check-tr"> 
                     	<td class="label">ZIP:</td>   
-                        <td id="input-st_zip"><input name="st_zip" style="width:127px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+                        <td id="input-st_zip"><input id="zip-re-estimation" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
                         <td id="check-st_zip"></td>
                     </tr>
                 </table>
@@ -545,8 +545,15 @@
              <div id="cancel-order-button"></div> 
              <div id="submit-order-button" style="display:none;"></div> 
              </div>
-            
+             
+              <div id="popup-shipping-re-estimation" style="display:none;">
+                <span>You will be forwarded to previous step for shippng re-estimation</span>
+                <button onclick="$j('#zip_value').attr('value', $j('#zip-re-estimation').attr('value')); Reman_QuickQuote.prototype.resetOrder(true); return false;" style="width: 70px; height: 25px; margin-top: 25px;">OK</button>
+              </div>       
     </form>
+    
+   
+    
     <script type="text/javascript">
     //<![CDATA[
         var dataForm = new VarienForm('form-order', true);
@@ -617,7 +624,9 @@
 				}
 			} else {
 				for( var i = 1; i<=$j('#ship-to input').length-1; i++){
-					$j('#ship-to input')[i].value = "";
+					if(!$j($j('#ship-to input')[i]).hasClass('isZip')){
+						$j('#ship-to input')[i].value = "";
+					}
 				}
 				$j($j('#ship-to-states option')[0]).attr('selected','selected');
    	    	}
@@ -761,6 +770,15 @@
 				}
 			});
 		}
+		
+		
+		// Shipping re-estimation
+		$j("#zip-re-estimation").keypress(function(event) {
+			if(this.value.length == 4) {
+				$j('#black-mask').show();
+				$j('#popup-shipping-re-estimation').show();
+			}
+		});
     </script>
 
 </div>

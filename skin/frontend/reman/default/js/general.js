@@ -854,12 +854,26 @@ Reman_QuickQuote.prototype = {
 	/**
 	 Reset Order
 	*/
-	resetOrder : function(){
+	resetOrder : function(isShippingEstimation){
 		$j('#order-wrapper').html('');
 		$j('#steps').show();
 		$j('#reman-invent_info').show();
 		$j('#order-now-btn').show();					 
 		$j('#ship-go-table').show();
+		
+		if(isShippingEstimation){
+			
+			// Show Values
+		 $j('.ship-time').hide();
+		 $j('.ship-from').hide();
+		 
+		 //Show order button
+		 $j('#order-now-btn').hide();
+			
+		 $j('#black-mask').hide();
+		 $j('#popup-shipping-re-estimation').hide();
+			
+		}
 	
 	}
 }
@@ -1044,11 +1058,14 @@ function checkOrder(){
 	dataForm.validator.validate();
 	
 	/* If For Validated False return false*/
-	if(!dataForm.validator.validate()) {
+	if(!dataForm.validator.validate() || $j("#zip-re-estimation")[0].value.length < 5) {
+		/* Validate ZIP CODE input length*/
+		if($j("#zip-re-estimation")[0].value.length < 5){
+			$j("#zip-re-estimation").addClass('validation-failed');
+		}
 		return false;
 	}
-	
-	
+			
 	$j('#order-title').hide();
 	$j('#check-order-back').show();
 	

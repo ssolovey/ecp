@@ -165,7 +165,7 @@ ul,ol         { list-style:none; }
 	top: 0px;
 	left: 9px;
 	width: 901px;
-	z-index: 1;
+	z-index: 2;
 	opacity: 0.3;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
 }
@@ -2822,7 +2822,7 @@ background-position: 0px 20px;
 	display:none;
 }
 
-#product_error_popup button , #session_error_popup button{
+#product_error_popup button , #session_error_popup button , #popup-shipping-re-estimation button{
 	width: 80px;
 	height: 25px;
 	margin-top: 10px;
@@ -2850,6 +2850,22 @@ background-position: 0px 20px;
 	margin-top: 10px;
 	cursor:pointer;
 }
+
+#popup-shipping-re-estimation {
+	width: 275px;
+	height: 103px;
+	border: 1px solid #E06060;
+	text-align: center;
+	padding-top: 30px;
+	font-weight: bold;
+	z-index: 5;
+	position: absolute;
+	background: white;
+	left: 169px;
+	top: 287px;
+	display:none;
+}
+
 
 /*Inventory Info BLock*/
 
@@ -3709,5 +3725,3 @@ background-color: #8dbdd8;
 .col2-left-layout .col-main{
 	width:650px !important;
 }
-
-
