@@ -42,12 +42,14 @@
                 <connection>
                     <host><![CDATA[localhost]]></host>
                     <!-- Producation settings -->
-                  
-                  
+                    <username><![CDATA[deploy]]></username>
+                    <password><![CDATA[0dessa123]]></password>
+                    <dbname><![CDATA[prod_db]]></dbname>
+                    <!-- Development settings
                     <username><![CDATA[dev]]></username>
                     <password><![CDATA[DANger0]]></password>
                     <dbname><![CDATA[magento]]></dbname>
-                 
+                    -->
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>
