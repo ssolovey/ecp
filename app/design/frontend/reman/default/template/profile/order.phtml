@@ -11,11 +11,18 @@
 	$request = $this->getRequest()->getPost();
 	// Get Order Item according to selected Order WEB ID
 	$item = Mage::getModel('order/order')->load($request['id'])->_data;
+	
+	if($request['ete_order_id'] == NULL){
+		$ete_order_id = 'N/A';
+	}else{
+		$ete_order_id = $request['ete_order_id'];
+	}
+	
 ?>
 
 <div id="reman_order" style="top:-20px; left:20px;">
 
-        	<div class="order-details-heading"><?php echo $request['id'].': ETE Order - '.$request['ete_order_id'];?></div>
+        	<div class="order-details-heading"><?php echo $request['id'].': ETE Order - '.$ete_order_id;?></div>
             
             <div id="vehicle_info" class="check-top-blocks" style="height: 362px;">
                 <div class="title"><span>Vehicle info</span></div>
