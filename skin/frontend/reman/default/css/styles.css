@@ -3294,15 +3294,20 @@ text-decoration: none;
 	width: 128px;
 	cursor:pointer;
 	float:left;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 35px;
 }
 
 .cancel-order{
-	background:url(../images/cancel-order.png) no-repeat;
+	background:url(../images/btn-bg.png) no-repeat;
 	margin-right:15px;
 }
 
 .submit-order{
- 	background:url(../images/submit-order.png) no-repeat;	
+ 	background:url(../images/btn-bg.png) no-repeat;	
 }
 
 #vehicle_info , #sold-to{
