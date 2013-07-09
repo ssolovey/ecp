@@ -13,6 +13,7 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 	 * Initialization
 	 */
 	protected function _initAction() {
+		// load page layout
 		$this->loadLayout()
 			->_setActiveMenu('customer/items')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Company Manager'), Mage::helper('adminhtml')->__('Company Manager'));
@@ -24,8 +25,13 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 	 * used in adminhtml grid
 	 */
 	public function indexAction() {
+		// initialize actions
 		$this->_initAction();
+		
+		// add grid layout
 		$this->_addContent($this->getLayout()->createBlock('company/adminhtml_company'));
+		
+		// render layout
 		$this->renderLayout();
 	}
 	
@@ -33,9 +39,11 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 	 * Action for edit company
 	 */
 	public function editAction() {
+		// get company params
 		$id     = $this->getRequest()->getParam('id');
 		$model  = Mage::getModel('company/company')->load($id);
-
+		
+		// try to load company edit form
 		if ($model->getId() || $id == 0) {
 			$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 			if (!empty($data)) {
@@ -79,6 +87,7 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
 			
+			// try to save company data
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
@@ -89,11 +98,13 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 				
 				$model->save();
 				
+				// export update to CSV file
 				Mage::getModel('company/company')->exportCompanyUpdate($model);
 				
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('company')->__('Company was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 				
+				// redirect to grid page if necessary 
 				if ($this->getRequest()->getParam('back')) {
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
@@ -102,6 +113,7 @@ class Reman_Company_Adminhtml_CompanyController extends Mage_Adminhtml_Controlle
 				
 				return;
             } catch (Exception $e) {
+            	// display error/warrings and go back to form
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
