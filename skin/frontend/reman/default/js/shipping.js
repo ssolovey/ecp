@@ -51,6 +51,7 @@ function estimateShipping (stocks,destzip,inProgress){
 		complete: function(data){
 			
 			var data = $j.parseJSON(data.responseText);
+			
 			buildTableResults(filterBestResult(data,inProgress));	
 		}
 			
@@ -162,7 +163,7 @@ function getMinDaysCarrirer(data,mindays){
   var minPrice = []; 
   for (key in data){
 	for (k in data[key]){
-		var hash = Math.floor((Math.random()*10)+1);
+		var hash = Math.floor((Math.random()*1000)+1);
 		if( mindays == data[key][k].servicedays){
 			minDaysDelivery[data[key].store+'_'+hash] = {
 				'carrier'    : k,
@@ -198,14 +199,6 @@ function bestPrice(data,minPrice){
 			}
 		}
  	 }
-	 
-	 /* Catch service Error for Empty data*/
-	 if(!bestCarrier[store]){
-		alert('Shipping Service error. Try againe');
-		$j('.ship-preloader').hide();
-		return;
-	 }
-	 
 	 // global variables for Order Page
 	 window.servicedays = bestCarrier[store].servicedays;
 	 window.truecost = bestCarrier[store].truecost;
