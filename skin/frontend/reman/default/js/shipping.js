@@ -43,7 +43,7 @@ function estimateShipping (stocks,destzip,inProgress){
 		},
 		
 		error: function(error){
-			alert('Shipping Service error. Try againe');
+			alert('Shipping Service error. Try again');
 			$j('.ship-preloader').hide();
 			return;
 		},
