@@ -776,11 +776,13 @@
 		
 		// Shipping re-estimation
 		$j("#zip-re-estimation").keypress(function(event) {
+			if(this.value.length == 5) return false;
 			if(this.value.length == 4) {
 				$j('#black-mask').show();
 				$j('#popup-shipping-re-estimation').show();
 			}
 		});
+		
     </script>
 
 </div>
