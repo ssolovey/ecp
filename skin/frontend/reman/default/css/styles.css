@@ -2526,7 +2526,7 @@ background-position: 0px 20px;
 	margin-left: 255px;
 	margin-top: 270px;
 	background: #000;
-	z-index: 1;
+	z-index: 2;
 	opacity: 0.8;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
 	border-radius: 10px;
