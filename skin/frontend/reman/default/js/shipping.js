@@ -221,6 +221,8 @@ function bestPrice(data,minPrice){
 	 
 	 //Show order button
 	 $j('#order-now-btn').show();
+	 //Show prepay message
+	 $j('#prepay').show();
 	 // hide shipping preloader
 	 $j('.ship-preloader').hide();
 	 

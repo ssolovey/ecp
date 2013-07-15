@@ -842,7 +842,8 @@ Reman_QuickQuote.prototype = {
 				complete: function(data){
 					$j('#reman-invent_info').hide();
 					$j('.reman_preloader_big').hide();
-					$j('#order-now-btn').hide();		 
+					$j('#order-now-btn').hide();
+					$j('#prepay').hide();		 
 					$j('#ship-go-table').hide();
 					$j('#order-wrapper').html(data.responseText);
 				}
@@ -860,6 +861,7 @@ Reman_QuickQuote.prototype = {
 		$j('#reman-invent_info').show();
 		$j('#order-now-btn').show();					 
 		$j('#ship-go-table').show();
+		$j('#prepay').show();
 		
 		if(isShippingEstimation){
 			
@@ -869,6 +871,7 @@ Reman_QuickQuote.prototype = {
 		 
 		 //Show order button
 		 $j('#order-now-btn').hide();
+		 $j('#prepay').hide();
 			
 		 $j('#black-mask').hide();
 		 $j('#popup-shipping-re-estimation').hide();

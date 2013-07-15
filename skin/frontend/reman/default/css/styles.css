@@ -3730,3 +3730,13 @@ background-color: #8dbdd8;
 .col2-left-layout .col-main{
 	width:650px !important;
 }
+
+#prepay {
+	font-size: 11px;
+	text-align: center;
+	font-weight: bold;
+	color: #000;
+	width: 150px;
+	margin-top:10px;
+}
+

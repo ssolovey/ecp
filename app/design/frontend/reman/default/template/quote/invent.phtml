@@ -21,6 +21,9 @@
 		$ip = $_product->getData('parts_inventory_ip');
 		
 		
+		// Current Logged Company
+		$company = Mage::helper('company')->getCustomerCompanyObject();
+		
 		$array = array();
 		
 		if($bwi != 0 && $bwi != null){
@@ -120,9 +123,16 @@
         </tr>
     </table>
     <?php if(($atl != 0 || $atl != null) && ($ont != 0 || $ont != null) && ($bwi != 0 || $bwi != null) && ($mke != 0 || $mke != null) && ($ip != 0 || $ip != null) && ($dal != 0 || $dal != null)):?>
-    <div style="display:none;" id="order-now-btn"></div>
+        <!--Allow Order only for Company "On Account" -->
+    	<?php if($company->payment == 'ACCT') :?>
+    		<div style="display:none;" id="order-now-btn"></div>
+		<?php endif; ?>
+       
+        
      <?php endif; ?>
-   
+    <?php if($company->payment == 'PREPAY') :?>
+        <div id="prepay" style="display:none;">PLEASE CALL US WITH YOUR ORDER</div>
+    <?php endif; ?>    
 </div>
 
 <script type="text/javascript">
