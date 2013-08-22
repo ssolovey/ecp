@@ -82,6 +82,9 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 	 */
 	public function exportOrder($orderData)
 	{	
+		// convert state name to symbolic code
+		$state = Mage::getModel('directory/region')->getCollection()->addFieldToFilter('default_name', $orderData['st_state'] );
+		
 		// generate CSV string
 		$stringData = $orderData['order_id'] . $this->_delimiter
 			. $orderData['so_cust_num'] . $this->_delimiter
@@ -110,7 +113,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			. $this->_enclosure . $orderData['st_addr1'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_addr2'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_city'] . $this->_enclosure . $this->_delimiter
-			. $this->_enclosure . $orderData['st_state'] . $this->_enclosure . $this->_delimiter
+			. $this->_enclosure . $state->getFirstItem()->getCode() . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_zip'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_phone'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_phone_ext'] . $this->_enclosure . $this->_delimiter
