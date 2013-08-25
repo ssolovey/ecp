@@ -98,11 +98,11 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			. $orderData['mileage'] . $this->_delimiter
 			. $this->_enclosure . ($orderData['commercial_app'] ? 'Y' : 'N') . $this->_enclosure . $this->_delimiter
 			. $orderData['unit_amount'] . $this->_delimiter
-			. $orderData['core_amount'] . $this->_delimiter
-			. $orderData['ship_amount'] . $this->_delimiter
-			. $orderData['fluid_amount'] . $this->_delimiter
-			. $orderData['tax_percent'] . $this->_delimiter
-			. $orderData['tax_amount'] . $this->_delimiter
+			. ( $orderData['core_amount'] ? $orderData['core_amount'] : 0 ) . $this->_delimiter
+			. ( $orderData['ship_amount'] ? $orderData['ship_amount'] : 0 ) . $this->_delimiter
+			. ( $orderData['fluid_amount'] ? $orderData['fluid_amount'] : 0 ) . $this->_delimiter
+			. ( $orderData['tax_percent'] ? $orderData['tax_percent'] : 0 ) . $this->_delimiter
+			. ( $orderData['tax_amount'] ? $orderData['tax_amount'] : 0 )  . $this->_delimiter
 			. $orderData['warranty_id'] . $this->_delimiter
 			. $this->_enclosure . $orderData['po'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['claim'] . $this->_enclosure . $this->_delimiter
