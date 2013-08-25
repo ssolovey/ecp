@@ -95,9 +95,9 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			. $this->_enclosure . $orderData['so_phone_ext'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['partnum'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['vin'] . $this->_enclosure . $this->_delimiter
-			. $orderData['mileage'] . $this->_delimiter
+			. ( $orderData['mileage'] ? $orderData['mileage'] : 0 ) . $this->_delimiter
 			. $this->_enclosure . ($orderData['commercial_app'] ? 'Y' : 'N') . $this->_enclosure . $this->_delimiter
-			. $orderData['unit_amount'] . $this->_delimiter
+			. ( $orderData['unit_amount'] ? $orderData['unit_amount'] : 0 ) . $this->_delimiter
 			. ( $orderData['core_amount'] ? $orderData['core_amount'] : 0 ) . $this->_delimiter
 			. ( $orderData['ship_amount'] ? $orderData['ship_amount'] : 0 ) . $this->_delimiter
 			. ( $orderData['fluid_amount'] ? $orderData['fluid_amount'] : 0 ) . $this->_delimiter
