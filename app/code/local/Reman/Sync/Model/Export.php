@@ -91,7 +91,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			. $this->_enclosure . $orderData['so_cust_name'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['so_cont_name'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['so_cont_email'] . $this->_enclosure . $this->_delimiter
-			. $this->_enclosure . $orderData['so_phone'] . $this->_enclosure . $this->_delimiter
+			. $this->_enclosure . $this->_formatPhoneNumber( $orderData['so_phone'] ) . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['so_phone_ext'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['partnum'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['vin'] . $this->_enclosure . $this->_delimiter
@@ -115,7 +115,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 			. $this->_enclosure . $orderData['st_city'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $state->getFirstItem()->getCode() . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_zip'] . $this->_enclosure . $this->_delimiter
-			. $this->_enclosure . $orderData['st_phone'] . $this->_enclosure . $this->_delimiter
+			. $this->_enclosure . $this->_formatPhoneNumber( $orderData['st_phone'] ) . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['st_phone_ext'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['make'] . $this->_enclosure . $this->_delimiter
 			. $this->_enclosure . $orderData['year'] . $this->_enclosure . $this->_delimiter
@@ -176,5 +176,17 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		
 		$this->_exportData( 'orders/'.$orderData['order_id'].'.TXT', $stringData, true );
 		
+	}
+	
+	/**
+	 * Convert phone numbers to XXX-XXX-XXXX
+	 * 
+	 * @param {String} $number: input phone number
+	 *
+	 * @return {String}
+	 */
+	protected function _formatPhoneNumber( $number )
+	{
+		return preg_replace('/(\d{3})(\d{3})(\d{4})$/i', '$1-$2-$3', $number);
 	}
 }
