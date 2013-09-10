@@ -70,21 +70,27 @@
         </routers>
     </admin>
 	<cache>
-		<backend>memcached</backend>
-		<!-- apc / memcached / empty=file -->
-		<memcached><!-- memcached cache backend related config -->
-			<servers><!-- any number of server nodes can be included -->
+		<slow_backend></slow_backend>
+		<fast_backend>memcached</fast_backend>
+		<fast_backend_options>
+			<servers>
 				<server>
-					<host><![CDATA[127.0.0.1]]></host>
-					<port><![CDATA[11211]]></port>
-					<persistent><![CDATA[1]]></persistent>
+					<host>127.0.0.1</host>
+					<port>11211</port>
+					<persistent>1</persistent>
 				</server>
 			</servers>
-			<compression><![CDATA[0]]></compression>
-			<cache_dir><![CDATA[]]></cache_dir>
-			<hashed_directory_level><![CDATA[]]></hashed_directory_level>
-			<hashed_directory_umask><![CDATA[]]></hashed_directory_umask>
-			<file_name_prefix><![CDATA[]]></file_name_prefix>
+		</fast_backend_options>
+
+		<backend>memcached</backend>
+		<memcached>
+			<servers>
+				<server>
+					<host>127.0.0.1</host>
+					<port>11211</port>
+					<persistent>1</persistent>
+				</server>
+			</servers>
 		</memcached>
 	</cache>
 </config>
