@@ -59,6 +59,30 @@
             </default_setup>
         </resources>
         <session_save><![CDATA[files]]></session_save>
+		<cache>
+			<backend>memcached</backend><!-- apc / memcached / xcache / empty=file -->
+			<slow_backend></slow_backend> <!-- database / file (default) - used for 2 levels cache setup, necessary for all shared memory storages -->
+			<slow_backend_store_data></slow_backend_store_data> <!-- 1 / 0 (default) - used for 2 levels cache setup, sets whether store data in db slow cache backend -->
+			<auto_refresh_fast_cache></auto_refresh_fast_cache> <!-- 1 / 0 (default) - used for 2 levels cache setup, sets whether refresh data in fast cache backend -->
+			<memcached><!-- memcached cache backend related config -->
+				<servers><!-- any number of server nodes can be included -->
+					<server>
+						<host><![CDATA[127.0.0.1]]></host>
+						<port><![CDATA[11211]]></port>
+						<persistent><![CDATA[1]]></persistent>
+						<weight><![CDATA[]]></weight>
+						<timeout><![CDATA[]]></timeout>
+						<retry_interval><![CDATA[]]></retry_interval>
+						<status><![CDATA[]]></status>
+					</server>
+				</servers>
+				<compression><![CDATA[0]]></compression>
+				<cache_dir><![CDATA[]]></cache_dir>
+				<hashed_directory_level><![CDATA[]]></hashed_directory_level>
+				<hashed_directory_umask><![CDATA[]]></hashed_directory_umask>
+				<file_name_prefix><![CDATA[]]></file_name_prefix>
+			</memcached>
+		</cache>
     </global>
     <admin>
         <routers>
@@ -69,28 +93,4 @@
             </adminhtml>
         </routers>
     </admin>
-	<cache>
-		<slow_backend></slow_backend>
-		<fast_backend>memcached</fast_backend>
-		<fast_backend_options>
-			<servers>
-				<server>
-					<host>127.0.0.1</host>
-					<port>11211</port>
-					<persistent>1</persistent>
-				</server>
-			</servers>
-		</fast_backend_options>
-
-		<backend>memcached</backend>
-		<memcached>
-			<servers>
-				<server>
-					<host>127.0.0.1</host>
-					<port>11211</port>
-					<persistent>1</persistent>
-				</server>
-			</servers>
-		</memcached>
-	</cache>
 </config>
