@@ -61,7 +61,15 @@
     <table>
         <tr>
             <td class="lable">Milwaukee, WI:</td>
-            <td id="mke"><?php echo '<span style="color:#f6193a">YES</span>';?></td>
+            <td id="mke">
+				<?php 
+					if($mke == 0 || $mke == null){
+						echo 'PLEASE CALL';
+					}else{
+						echo '<span style="color:#f6193a">YES</span>';
+					}
+				?>
+			</td>
         </tr>
         <tr>
             <td class="lable">Baltimore, MD:</td>
