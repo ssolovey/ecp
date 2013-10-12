@@ -17,6 +17,8 @@
 		$atl = $_product->getData('parts_inventory_se');
 		//DALLAS Stock
 		$dal = $_product->getData('parts_inventory_sc');
+		//PORTLAND Stock
+		$port = $_product->getData('parts_inventory_nw');
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
 ?>
@@ -119,11 +121,23 @@
 				?>
             </td>
         </tr>
+		<tr>
+            <td class="lable">Portland, OR:</td>
+            <td id="port">
+				<?php 
+					if($port == 0 || $port == null){
+						echo 'NO';
+					}else{
+						echo '<span style="color:#f6193a">YES</span>';
+					}
+				?>
+            </td>
+        </tr>
     </table>
     
     <div class="bottom_message">
     	<?php
-        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
+        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null) && ($port == 0 || $port == null)){
         	echo "<div>CAll FOR AVAILABILITY</div>";
 		}else{
 			echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
