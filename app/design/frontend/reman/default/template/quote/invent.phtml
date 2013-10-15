@@ -140,7 +140,11 @@
         if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null) && ($port == 0 || $port == null)){
         	echo "<div>CAll FOR AVAILABILITY</div>";
 		}else{
-			echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
+			if ($mke == 0 || $mke == null) {
+		        	echo "<div>CAll FOR AVAILABILITY</div>";
+			}else{
+				echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
+			}
 		}
 		?>
     </div>
