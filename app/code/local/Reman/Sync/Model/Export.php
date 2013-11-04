@@ -27,13 +27,19 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 	/**
 	 * Save data to file
 	 *
+	 * @param {String} $subfolder
 	 * @param {String} $file
 	 * @param {String} $data
 	 * @param {Boolean} $to_ftp
 	 */
-	protected function _exportData($file, $data, $to_ftp)
+	protected function _exportData($subfolder, $file, $data, $to_ftp)
 	{
-		$path = $this->_folder . $file;
+		
+		if (!file_exists( $this->_folder . $subfolder )) {
+		    mkdir( $this->_folder . $subfolder, 0775, true );
+		}
+		
+		$path = $this->_folder . $subfolder . $file;
 				
 		$fh = fopen($path, 'w');
 				
@@ -174,7 +180,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		);
 		*/
 		
-		$this->_exportData( 'orders/'.$orderData['order_id'].'.TXT', $stringData, true );
+		$this->_exportData( 'orders/', $orderData['order_id'].'.TXT', $stringData, true );
 		
 	}
 	
