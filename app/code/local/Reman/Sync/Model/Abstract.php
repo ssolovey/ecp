@@ -113,9 +113,21 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			}
 		}
 					
-		unlink($path);
+		//unlink($path);
 		
-		$this->syncLog(true, $count);
+
+	// Develop (head) 
+	$this->syncLog(true, $count);
+	
+	
+	/* Prod 1.0
+		if ( copy( $path , '_imported/'.$path ) ) {
+		  unlink($path);
+		}
+				
+		$this->syncLog($path, "Synced");
+	*/
+	
 	}
 	
 	/**

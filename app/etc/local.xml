@@ -59,6 +59,38 @@
             </default_setup>
         </resources>
         <session_save><![CDATA[files]]></session_save>
+		<cache>
+			<backend>memcached</backend>
+			<!-- apc / memcached / xcache / empty=file -->
+			<slow_backend>Memcached</slow_backend>
+			<slow_backend_options>
+				<servers>
+					<server>
+						<host><![CDATA[127.0.0.1]]></host>
+						<port><![CDATA[11211]]></port>
+						<persistent><![CDATA[0]]></persistent>
+					</server>
+				</servers>
+			</slow_backend_options>
+			<memcached><!-- memcached cache backend related config -->
+				<servers><!-- any number of server nodes can be included -->
+					<server>
+						<host><![CDATA[127.0.0.1]]></host>
+						<port><![CDATA[11211]]></port>
+						<persistent><![CDATA[1]]></persistent>
+						<weight><![CDATA[]]></weight>
+						<timeout><![CDATA[]]></timeout>
+						<retry_interval><![CDATA[]]></retry_interval>
+						<status><![CDATA[]]></status>
+					</server>
+				</servers>
+				<compression><![CDATA[0]]></compression>
+				<cache_dir><![CDATA[]]></cache_dir>
+				<hashed_directory_level><![CDATA[]]></hashed_directory_level>
+				<hashed_directory_umask><![CDATA[]]></hashed_directory_umask>
+				<file_name_prefix><![CDATA[]]></file_name_prefix>
+			</memcached>
+		</cache>
     </global>
     <admin>
         <routers>

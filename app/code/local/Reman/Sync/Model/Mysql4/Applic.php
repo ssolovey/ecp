@@ -116,7 +116,11 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			$inverseDiscValue =(100 - $customer_discount) / 100;
 			
 			// calculated msrp value
-			$msrp =  round($prod->getData('parts_msrp') * $inverseDiscValue);
+			
+			$price_with_discount = $prod->getData('parts_msrp') * $inverseDiscValue;
+			
+			$msrp =  ceil($price_with_discount);
+			
 			// assing calculated msrp value
 			$values["msrp"] = $msrp; 
 			// return int

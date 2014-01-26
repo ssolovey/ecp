@@ -42,7 +42,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		$this->_companies		=	Mage::getModel('company/company');
 		
 		$this->_customers		=	Mage::getModel('customer/customer');
-		$this->_customers->setWebsiteId(Mage::app()->getWebsite()->getId());
+		$this->_customers->setWebsiteId(1);
 		
 		echo '<table width="600px" border="1" cellspacing="0" cellpadding="5">';
 		echo '<tr><td>Customer Num</td><td>' . $item[0] . '</td></tr>';
@@ -117,6 +117,7 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 		// Update customers data
 		
 		$data = array(
+			'website_id'	=>	1,
 			'email'			=>	$item[13],
 			'created_in'	=>	'SYNC MODULE',
 			'firstname'		=>	$item[12],

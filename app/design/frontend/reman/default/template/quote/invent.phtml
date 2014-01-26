@@ -17,6 +17,10 @@
 		$atl = $_product->getData('parts_inventory_se');
 		//DALLAS Stock
 		$dal = $_product->getData('parts_inventory_sc');
+
+		//PORTLAND Stock
+		$port = $_product->getData('parts_inventory_nw');
+
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
 		
@@ -83,8 +87,21 @@
         </tr>
         
         <tr>
+<?php /*?><<<<<<< HEAD<?php */?>
         	<td class="lable">Shipping:</td>
             <td><?php echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>  
+<?php /*?>=======
+            <td class="lable">Milwaukee, WI:</td>
+            <td id="mke">
+				<?php 
+					if($mke == 0 || $mke == null){
+						echo 'PLEASE CALL';
+					}else{
+						echo '<span style="color:#f6193a">YES</span>';
+					}
+				?>
+			</td>
+>>>>>>> prod/1.0<?php */?>
         </tr>
         
         
@@ -121,7 +138,20 @@
         	<td class="lable ship-time" style="display:none;">Ship Time:</td>
             <td id="ship-time-value" class="ship-time" style="display:none;"></td>
         </tr>
+		<tr>
+            <?php /*?><td class="lable">Portland, OR:</td>
+            <td id="port">
+				<?php 
+					if($port == 0 || $port == null){
+						echo 'NO';
+					}else{
+						echo '<span style="color:#f6193a">YES</span>';
+					}
+				?>
+            </td><?php */?>
+        </tr>
     </table>
+<?php /*?><<<<<<< HEAD<?php */?>
     <?php if(($atl != 0 || $atl != null) && ($ont != 0 || $ont != null) && ($bwi != 0 || $bwi != null) && ($mke != 0 || $mke != null) && ($ip != 0 || $ip != null) && ($dal != 0 || $dal != null)):?>
         <!--Allow Order only for Company "On Account" -->
     	<?php if($company->payment == 'ACCT') :?>
@@ -133,6 +163,22 @@
     <?php if($company->payment == 'PREPAY') :?>
         <div id="prepay" style="display:none;">PLEASE CALL US WITH YOUR ORDER</div>
     <?php endif; ?>    
+<?php /*?>=======
+    
+    <div class="bottom_message">
+    	<?php
+        if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null) && ($port == 0 || $port == null)){
+        	echo "<div>CAll FOR AVAILABILITY</div>";
+		}else{
+			if ($mke == 0 || $mke == null) {
+		        	echo "<div>CAll FOR AVAILABILITY</div>";
+			}else{
+				echo "<div>AVAILABLE TO SHIP WITHIN 24 HOURS</div>";
+			}
+		}
+		?>
+    </div>
+>>>>>>> prod/1.0<?php */?>
 </div>
 
 <script type="text/javascript">

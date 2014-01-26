@@ -414,7 +414,7 @@ Reman_QuickQuote.prototype = {
 			this.currentCatSelected = '';
 			
 			//Update Banner text
-			$j('#welcome_bunner').html('Welcome! How we can help you today?');
+			$j('#welcome_bunner').html('Welcome! How can we help you today?');
 			
 			// Reset Drive and variables
 			Reman_QuickQuote.prototype.currentSelectedDrive = '';
@@ -829,9 +829,13 @@ Reman_QuickQuote.prototype = {
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
+					type: Reman_QuickQuote.prototype.currentCatSelected,
 					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
 					partsAdditionlInfo:Reman_QuickQuote.prototype.partsAdditionlInfo,
 					zip:zip
+
+					
+
 				},
 				
 				beforeSend: function(){
@@ -898,7 +902,7 @@ function manageUserAccount(action,id,el){
 				url: action,
 				type: 'POST',
 				data: {
-					id: id,	
+					id: id	
 				},
 				
 				beforeSend: function(){
