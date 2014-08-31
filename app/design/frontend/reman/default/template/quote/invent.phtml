@@ -22,6 +22,40 @@
 		//IP
 		$ip = $_product->getData('parts_inventory_ip');
 ?>
+
+<?php
+
+    $isFluidShown = FALSE;
+
+    // Current Logged Company
+    $_company = Mage::helper('company')->getCustomerCompanyObject();
+
+    //Flued Options
+    /*
+     * Parts Value: 7 = Required , 6 = Optional , 5 = None
+     * Company VAlue: R = Required , O = Optional , N = None
+     *
+    */
+    /* Requirement:
+     *
+     *  a. We do not need to show fluid capacity for Transfer casesß
+     * 
+     *  b. If the part number is hard keyed to show Required always show the capacity and “included” for the price (i.e. cft30s)
+     *
+     *  c.  Otherwise, use the customer’s file to determine if fluid shows.  
+     *      Required and optional should always show capacity and cost.  None should not.
+     */
+    if ($_product->parts_fluid_option == 7) {       
+        $isFluidShown = TRUE;           
+    } else {
+        $fluid = $_company->fluid;
+
+        if (($fluid == "R") || ($fluid == "O")) {
+            $isFluidShown = TRUE;
+        }        
+    }
+?>
+
 <!-- Stock Availability-->
 <div id="stock_avl">
 	<div class="title">Pricing</div>
@@ -34,10 +68,14 @@
         	<td class="lable">Core:</td>
             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
         </tr>
+        
+        <?php if ($isFluidShown): ?>
         <tr>
         	<td class="lable">Fluid price:</td>
             <td>$<?php echo number_format($_product->getData('parts_fluid_quantity')*5,2,'.','');?></td>
         </tr>
+        <?php endif; ?>	
+
         <tr>
         	<td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
