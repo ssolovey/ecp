@@ -35,6 +35,10 @@
             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
         </tr>
         <tr>
+        	<td class="lable">Fluid price:</td>
+            <td>$<?php echo number_format($_product->getData('parts_fluid_quantity')*5,2,'.','');?></td>
+        </tr>
+        <tr>
         	<td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>	
                     <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>  
@@ -43,7 +47,7 @@
                     <td><?php echo "to be estimated based on Zip";?></td> 
             <?php endif; ?>		
         </tr>
-        <tr style="height:30px;">
+        <tr style="height:20px;">
         	<td class="lable">MSRP:</td>
             <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
         </tr>
@@ -59,7 +63,7 @@
     </table>
     
     
-    <div style="margin-top:20px;" class="title">Availability</div>
+    <div style="margin-top:5px;" class="title">Availability</div>
     <table>
         <tr>
             <td class="lable">Milwaukee, WI:</td>

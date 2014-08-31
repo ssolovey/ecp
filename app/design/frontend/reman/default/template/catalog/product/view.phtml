@@ -83,6 +83,10 @@
                             <td class="label">Cylinder Type:</td>
                             <td><?php echo $_product->getData('parts_cylinder_type'); ?></td>
                    		</tr>
+                        <tr>
+                            <td class="label">Fluid Amount:</td>
+                            <td><?php echo $_product->getData('parts_fluid_quantity'); ?></td>
+                   		</tr>
                 </table>
                 <div style="clear:both"></div>
                 
@@ -155,7 +159,7 @@ margin-left: 90px; cursor:pointer;" onclick="loadShippingPage(); return false;">
               <div class="desc_cont" style="font-size:12px; margin-left:10px; line-height:21px;">
         			<?php echo $_description; ?>
 			   </div>
-				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_synthetecatf'))== false  || is_null($_product->getData('document_radiator'))== false ): ?>
+				<?php if(is_null($_product->getData('document_sellsheet')) == false || is_null($_product->getData('document_installguide')) == false || is_null($_product->getData('document_videolink')) == false || is_null($_product->getData('document_synthetecatf'))== false  || is_null($_product->getData('document_radiator'))== false ): ?>
 					<div class="description_lable" style="font-size:15px; font-size: 15px; float: left; margin-right: 10px;">Documentation:</div>
 					<div class="reman_docs">
 					<?php if($_product->getData('document_sellsheet') != null): ?>	
@@ -166,6 +170,12 @@ margin-left: 90px; cursor:pointer;" onclick="loadShippingPage(); return false;">
 					<?php endif; ?>	
                     <?php if($_product->getData('document_radiator') != null ): ?>	
 						<a style="margin-top:2px;" href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_radiator') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_radiator')->getStoreLabel();?></a>
+					<?php endif; ?>	
+                    <?php if($_product->getData('document_installguide') != null ): ?>	
+						<a style="margin-top:2px;" href="<?php echo Mage::getBaseUrl('media').'docs/'.$_product->getData('document_installguide') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_installguide')->getStoreLabel();?></a>
+					<?php endif; ?>	
+                    <?php if($_product->getData('document_videolink') != null ): ?>	
+						<a style="margin-top:2px;" href="<?php echo $_product->getData('document_videolink') ?>" target="_blank"><?php echo $_product->getResource()->getAttribute('document_videolink')->getStoreLabel();?></a>
 					<?php endif; ?>	
 					</div>
 				<?php endif; ?>	
