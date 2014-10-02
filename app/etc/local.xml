@@ -48,7 +48,8 @@
                     -->
                     <!-- Development settings -->
                     <username><![CDATA[dev]]></username>
-                    <password><![CDATA[DANger0]]></password>
+                    <password><![CDATA[devBuyete123]]></password>
+                    <host><![CDATA[buyetedbmaster.c3vn3ty3u8se.us-east-1.rds.amazonaws.com]]></host>
                     <dbname><![CDATA[magento]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
