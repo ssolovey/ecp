@@ -67,7 +67,7 @@
 			<slow_backend_options>
 				<servers>
 					<server>
-						<host><![CDATA[127.0.0.1]]></host>
+						<host><![CDATA[buyetecache.afzvkl.cfg.use1.cache.amazonaws.com]]></host>
 						<port><![CDATA[11211]]></port>
 						<persistent><![CDATA[0]]></persistent>
 					</server>
@@ -76,7 +76,7 @@
 			<memcached><!-- memcached cache backend related config -->
 				<servers><!-- any number of server nodes can be included -->
 					<server>
-						<host><![CDATA[127.0.0.1]]></host>
+						<host><![CDATA[buyetecache.afzvkl.cfg.use1.cache.amazonaws.com]]></host>
 						<port><![CDATA[11211]]></port>
 						<persistent><![CDATA[1]]></persistent>
 						<weight><![CDATA[]]></weight>
