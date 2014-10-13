@@ -95,3 +95,4 @@ skin/frontend/default/modern/
 skin/install/
 tmp/
 var/
+.idea
