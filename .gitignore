@@ -1,3 +1,7 @@
+
+media/catalog/
+media/css/
+media/js/
 app/code/community/Find/
 app/code/community/Phoenix/
 app/code/core/
@@ -69,6 +73,7 @@ LICENSE.txt
 error_log
 mage
 media/customer/
+
 media/downloadable/
 media/.htaccess
 media/import/

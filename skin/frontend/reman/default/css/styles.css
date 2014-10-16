@@ -152,8 +152,8 @@ ul,ol         { list-style:none; }
 	background-color: #F2F2F2;
 	padding: 15px 10px 15px 10px;
 	border-radius: 15px; 
-	height: 300px;
-	margin-bottom: 15px;
+	/*height: 500px;
+	margin-bottom: 15px;*/
 }
 
 
@@ -3518,6 +3518,7 @@ text-decoration: none;
 	float: left;
 	margin-top: 10px;
 	margin-left: 35px;
+    width: 525px;
 }
 
 

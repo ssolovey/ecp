@@ -839,12 +839,13 @@ Reman_QuickQuote.prototype = {
 				},
 				
 				beforeSend: function(){
+                            $j('#reman-invent_info').hide();
 							$j('#steps').hide();
 							$j('.reman_preloader_big').show();
 				},
 						
 				complete: function(data){
-					$j('#reman-invent_info').hide();
+
 					$j('.reman_preloader_big').hide();
 					$j('#order-now-btn').hide();
 					$j('#prepay').hide();		 
