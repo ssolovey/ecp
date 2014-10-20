@@ -11,10 +11,15 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// model log name
 	protected $_logid = 'order';
 	
+	//path to directory to scan
+	protected $_directory = 'import/orders/';
+
+	// current file path
+	protected $_file;
+
 	// override
 	protected function _parseItem( $item )
 	{
-		/*
 		echo '<h1>Parsed ' . $item[0] . '</h1>';
 		
 		
@@ -90,8 +95,7 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 		echo '<tr><td>Transaction Type</td><td>' . $item[68] . '</td></tr>';
 		echo '<tr><td>Commercial App</td><td>' . $item[69] . '</td></tr>';
 		echo '</table>';
-		*/
-		
+
 		$warranty_id = Mage::getModel('warranty/warranties')->getIdByName($item[48]);
 		
 		$data = array(

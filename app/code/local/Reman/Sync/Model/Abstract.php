@@ -15,8 +15,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected $_delim = '|';
 	
 	// sync folder path
-	protected $_folder = 'import/';
-	//protected $_folder = 'ftpex/Download/';
+	//protected $_folder = 'import/';
+	protected $_folder = 'ftpex/Download/';
 	
 	// current file path
 	protected $_file;
@@ -49,15 +49,16 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	{
 		
 		$files = glob( $this->_folder . $folder . '*.TXT' );
-		
+
 		if ( sizeof($files) ) {
-			foreach($files as $file)
-			{
-				$this->_parseFile( $file );
-			}
+		foreach($files as $file)
+		{
+			$this->_parseFile( $file );
+		}
 		} else {
-			$this->syncLog(false);
-		}	
+
+		    $this->syncLog($folder, "Scaned");
+	    }
 	}
 	
 	/**
@@ -117,16 +118,16 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		
 
 	// Develop (head) 
-	$this->syncLog(true, $count);
+	/*$this->syncLog(true, $count);*/
 	
 	
-	/* Prod 1.0
+	/* Prod 1.0*/
 		if ( copy( $path , '_imported/'.$path ) ) {
 		  unlink($path);
 		}
 				
 		$this->syncLog($path, "Synced");
-	*/
+
 	
 	}
 	
