@@ -29,8 +29,10 @@ class Reman_Sync_Model_Log extends Mage_Core_Model_Abstract
 		
 		$home_url = Mage::helper('core/url')->getHomeUrl();
 		
-		// add link to full cronlog
-		$table = $table . '<h3><a href="' . str_replace('index.php/', '', $home_url) . 'cronlog.html' . '">Full log</a>';
+		if (file_exists('cronlog.html')) {
+            // add link to full cronlog
+            $table = $table . '<h3><a href="' . str_replace('index.php/', '', $home_url) . 'cronlog.html' . '">Full log</a>';
+        }
 				
 		return $table;
 	}
