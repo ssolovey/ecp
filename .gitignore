@@ -2,6 +2,8 @@
 media/catalog/
 media/css/
 media/js/
+export/orders
+export/customers
 app/code/community/Find/
 app/code/community/Phoenix/
 app/code/core/
@@ -38,6 +40,7 @@ cron.php
 cron.sh
 downloader/
 errors/
+cronlog.html
 favicon.ico
 get.php
 includes/
@@ -101,4 +104,3 @@ skin/install/
 tmp/
 var/
 .idea
-cronlog.html
