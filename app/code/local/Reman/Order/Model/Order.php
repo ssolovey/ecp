@@ -108,7 +108,60 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 						
 			// export new order
 			Mage::getModel('sync/export')->exportOrder($data);
-			
+
+
+
+          /**
+            * When New Order is exported
+            * Send E-mail to  WebOrders@etereman.com
+            */
+
+            $user = Mage::getSingleton('customer/session')->getCustomer();
+
+            $company = Mage::getModel('company/company')->load( $user->company );
+
+            $params = array(
+                'order_id' => $data['order_id'],
+                'company'  => $company->name,
+                'client' => $user->firstname .' '.$user->lastname,
+                'price' => $data['unit_amount']
+            );
+
+            Mage::getModel('order/email')->sendEmail(
+
+               '3',
+
+                array(
+                    'name' => 'ETEREMAN',
+                    'email' => 'WebOrders@etereman.com'
+                ),
+
+                $user->email,
+                $user->firstname .' '.$user->lastname,
+                'Order Confirmation',
+                $params
+            );
+
+            /* Send Email to WebOrders*/
+
+            Mage::getModel('order/email')->sendEmail(
+
+                           '3',
+
+                            array(
+                                'name' => 'ETEREMAN',
+                                'email' => 'WebCatAccess@etereman.com'
+                            ),
+
+                            'hybridtestmail@gmail.com',
+                            $user->firstname .' '.$user->lastname,
+                            'Order Confirmation',
+                            $params
+                        );
+
+
+
+
 			return 'Success';
 			
 		}
