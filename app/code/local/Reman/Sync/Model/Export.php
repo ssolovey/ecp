@@ -21,8 +21,8 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 	protected $_enclosure = '"';
 	
 	// export folder path
-	protected $_folder = 'export/';
-	//protected $_folder = 'ftpex/Upload/';
+	//protected $_folder = 'export/';
+	protected $_folder = 'ftpex/Upload/';
 	
 	/**
 	 * Save data to file
@@ -40,7 +40,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		}
 		
 		$path = $this->_folder . $subfolder . $file;
-				
+
 		$fh = fopen($path, 'w');
 				
     	//fputcsv($fh, $data, '|');
@@ -180,7 +180,7 @@ class Reman_Sync_Model_Export extends Mage_Core_Model_Abstract
 		);
 		*/
 		
-		$this->_exportData( 'orders/', $orderData['order_id'].'.TXT', $stringData, true );
+		$this->_exportData( 'Orders/', $orderData['order_id'].'.TXT', $stringData, false );
 		
 	}
 	

@@ -47,18 +47,17 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 */
 	protected function _scanFolder( $folder ) 
 	{
-		
+
 		$files = glob( $this->_folder . $folder . '*.TXT' );
 
 		if ( sizeof($files) ) {
-		foreach($files as $file)
-		{
-			$this->_parseFile( $file );
-		}
+			foreach($files as $file)
+			{
+				$this->_parseFile( $file );
+			}
 		} else {
-
-		    $this->syncLog($folder, "Scaned");
-	    }
+			$this->syncLog(false);
+		}	
 	}
 	
 	/**
@@ -68,9 +67,10 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected function _loadFile( $filename )
 	{	
 		$path = $this->_folder . $filename;
-				
+
+
 		if ( file_exists($path) ) {
-			
+
 			$this->_beforeParseFile();
 			
 			$this->_parseFile( $path );
@@ -102,7 +102,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		
 		// Load data from CSV file
 		$data = $csv->getData( $path );
-		
+
 		$count = 0;
 			
 		foreach( $data as $item ) {
@@ -113,21 +113,21 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				}
 			}
 		}
-					
+
 		//unlink($path);
 		
 
 	// Develop (head) 
-	/*$this->syncLog(true, $count);*/
+	$this->syncLog(true, $count);
 	
 	
-	/* Prod 1.0*/
+	/* Prod 1.0
 		if ( copy( $path , '_imported/'.$path ) ) {
 		  unlink($path);
 		}
 				
 		$this->syncLog($path, "Synced");
-
+	*/
 	
 	}
 	
