@@ -109,58 +109,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 			// export new order
 			Mage::getModel('sync/export')->exportOrder($data);
 
-
-
-          /**
-            * When New Order is exported
-            * Send E-mail to  WebOrders@etereman.com
-            */
-
-            $user = Mage::getSingleton('customer/session')->getCustomer();
-
-            $company = Mage::getModel('company/company')->load( $user->company );
-
-            $params = array(
-                'order_id' => $data['order_id'],
-                'company'  => $company->name,
-                'client' => $user->firstname .' '.$user->lastname,
-                'price' => $data['unit_amount']
-            );
-
-            Mage::getModel('order/email')->sendEmail(
-
-               '3',
-
-                array(
-                    'name' => 'ETEREMAN',
-                    'email' => 'WebOrders@etereman.com'
-                ),
-
-                $user->email,
-                $user->firstname .' '.$user->lastname,
-                'Order Confirmation',
-                $params
-            );
-
-            /* Send Email to WebOrders*/
-
-            Mage::getModel('order/email')->sendEmail(
-
-                           '3',
-
-                            array(
-                                'name' => 'ETEREMAN',
-                                'email' => 'WebCatAccess@etereman.com'
-                            ),
-
-                            'hybridtestmail@gmail.com',
-                            $user->firstname .' '.$user->lastname,
-                            'Order Confirmation',
-                            $params
-                        );
-
-
-
+            // Send Email Notification
+            $this->sendEmailNotification($data);
 
 			return 'Success';
 			
@@ -184,5 +134,115 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 		
 		// export order update
 		//Mage::getModel('sync/export')->exportOrder($data);
+	},
+
+
+  /**
+    * When New Order is exported
+    * Send E-mail to  WebOrders@etereman.com
+    */
+
+	public function sendEmailNotification($data){
+
+	    if($data['commercial_app'] == 0){
+            $com_label = 'Non Commercial';
+        }else{
+            $com_label = 'Commercial';
+        }
+
+        $params = array(
+            'order_id' => $data['order_id'],
+            'company'  => $company->name,
+            'client' => $user->firstname .' '.$user->lastname,
+
+            /**** Vehicle info *****/
+
+            'year' => $data['year'],
+            'make' => $data['make'],
+            'model' => $data['model'],
+            'engine' => $data['engine'],
+            'drive' => $data['drive'],
+            'vehicle_notes' => $data['vehicle_notes'],
+            'vin' => $data['vin'],
+            'mileage' => $data['mileage'],
+            'commercial_app' => $com_label,
+
+            /**** Order Details ****/
+            'product_name' => $data['product_name'],
+            'partnum' => $data['partnum'],
+            'family' => $data['family'],
+            'po' => $data['po'],
+            'claim' => $data['claim'],
+            'ro' => $data['ro'],
+            'end_username'=> $data['end_username'],
+            'ship_from' => $data['ship_from'],
+            'ship_time' => $data['ship_time'],
+
+            /*** Sold To  ***/
+            'so_cust_name' => $data['so_cust_name'],
+            'so_cont_name' => $data['so_cont_name'],
+            'so_phone' => $data['so_phone'],
+
+
+            /***** Ship To ****/
+
+            'st_cust_name' => $data['st_cust_name'],
+            'st_cont_name' => $data['st_cont_name'],
+            'st_phone' => $data['st_phone'],
+            'st_addr1' => $data['st_addr1'],
+            'st_city' => $data['st_city'],
+            'st_state' => $data['st_state'],
+            'st_zip' => $data['st_zip'],
+
+            /***** Price ****/
+            'unit_amount' => $data['unit_amount'],
+            'tax_percent' => $data['tax_percent'],
+            'core_amount' => $data['core_amount'],
+            'shipping_amount' => $data['shipping_amount'],
+            'msrp_amount' => $data['msrp_amount'],
+            'fluid_total' => $data['fluid_total'],
+            'tax_total' => $data['tax_total'],
+            'total_amount' => $data['total_amount'],
+
+             /***** Warranty ****/
+             'warranty_text'=> $data['warranty_text']
+
+
+
+        );
+
+        Mage::getModel('order/email')->sendEmail(
+
+           '3',
+
+            array(
+                'name' => 'ETEREMAN',
+                'email' => 'WebOrders@etereman.com'
+            ),
+
+            $user->email,
+            $user->firstname .' '.$user->lastname,
+            'Order Confirmation',
+            $params
+        );
+
+        /* Send Email to WebOrders*/
+
+        Mage::getModel('order/email')->sendEmail(
+
+               '3',
+
+                array(
+                    'name' => 'ETEREMAN',
+                    'email' => 'WebCatAccess@etereman.com'
+                ),
+
+                'hybridtestmail@gmail.com',
+                $user->firstname .' '.$user->lastname,
+                'Order Confirmation',
+                $params
+        );
+
+
 	}
 }
