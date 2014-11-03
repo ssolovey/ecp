@@ -3,9 +3,9 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 {
 	public function indexAction()
 	{			
-		echo Mage::getModel('sync/log')->printStat();
-		
+		//Mage::getModel('sync/parts')->syncData();
 		//Mage::getModel('sync/inventory')->syncData();
+		//Mage::getModel('sync/applic')->syncData();
 		//Mage::getModel('sync/parts')->loadInventoryData();
 		//Mage::getModel('sync/parts')->loadProductsData();
 		//Mage::getModel('sync/gsw')->loadGswData();
@@ -22,5 +22,8 @@ class Reman_Sync_IndexController extends Mage_Core_Controller_Front_Action
 		//$order = Mage::getModel('sales/order')->loadByIncrementId('100000051');//->getItemsCollection();
 		
 		//print_r( $order );
+
+		echo Mage::getModel('sync/log')->printStat();
+
 	}
 }

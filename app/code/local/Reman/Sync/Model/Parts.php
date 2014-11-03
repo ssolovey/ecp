@@ -15,12 +15,11 @@ class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
 	protected function _parseItem( $item )
 	{
 		$product = $this->_getProductBySku( $item[0] );
-	
 		if ( $product ) {
 			$this->_updateProductAttributes($product, $item);
 		} else {
 			$this->_addProduct($this->_products, $item);			
-		}		
+		}
 	}
 	
 		
@@ -97,30 +96,84 @@ class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
 	 */
 	protected function _updateProductAttributes($product, $data)
 	{
-		$product->setParts_commercial_warranty(		$data[17] );
-		$product->setParts_original_warranty(		$data[15] );
+		$needsUpdate = false;
+		if ($product->getParts_commercial_warranty() != $data[17]) {
+			$product->setParts_commercial_warranty($data[17]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_original_warranty() != $data[15]) {
+			$product->setParts_original_warranty($data[15]);
+			$needsUpdate = true;
+		}
 		//$product->setParts_commercial_warranty2(	$this->getOptionId( $product->getResource()->getAttribute('parts_commercial_warranty2'), $data[17] ) );
 		//$product->setParts_original_warranty2(		$this->getOptionId( $product->getResource()->getAttribute('parts_original_warranty2'), $data[15] ) );
 
-		$product->setPrice(							$data[12] );
-		$product->setParts_msrp(					$data[12] );
-		$product->setParts_core_price(				$data[13] );
+		if ($product->getPrice() != $data[12]) {
+			$product->setPrice($data[12]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_msrp() != $data[12]) {
+			$product->setParts_msrp($data[12]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_core_price() != $data[13]) {
+			$product->setParts_core_price($data[13]);
+			$needsUpdate = true;
+		}
 
-		$product->setParts_fluid_option(			$this->getOptionId( $product->getResource()->getAttribute('parts_fluid_option'), $data[4] ) );
-		$product->setParts_fluid_quantity(			$data[5] );
+		$fluidOptionId = $this->getOptionId( $product->getResource()->getAttribute('parts_fluid_option'), $data[4] );
 
-		$product->setParts_start_year(				$data[1] );
-		$product->setParts_end_year(				$data[2] );
+		if ($product->getParts_fluid_option() != $fluidOptionId) {
+			$product->setParts_fluid_option($fluidOptionId);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_fluid_quantity() != $data[5]) {
+			$product->setParts_fluid_quantity($data[5]);
+			$needsUpdate = true;
+		}
 
-		$product->setParts_type(					$this->getOptionId( $product->getResource()->getAttribute('parts_type'), $data[3] ) );
-		$product->setParts_family(					$data[11] );
-		$product->setParts_fuel(					$data[6] );
-		$product->setParts_engine(					$data[7] );
-		$product->setParts_drive(					$data[8] );
-		$product->setParts_cylinder_type(			$data[10] );
-		$product->setParts_aspiration(				$data[9] );
-		
-		$product->save();
+		if ($product->getParts_start_year() != $data[1]) {
+			$product->setParts_start_year($data[1]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_end_year() != $data[2]) {
+			$product->setParts_end_year($data[2]);
+			$needsUpdate = true;
+		}
+
+		$partsType = $this->getOptionId( $product->getResource()->getAttribute('parts_type'), $data[3] );
+		if ($product->getParts_type() != $partsType) {
+			$product->setParts_type($partsType);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_family() != $data[11]) {
+			$product->setParts_family($data[11]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_fuel() != $data[6]) {
+			$product->setParts_fuel($data[6]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_engine() != $data[7]) {
+			$product->setParts_engine($data[7]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_drive() != $data[8]) {
+			$product->setParts_drive($data[8]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_cylinder_type() != $data[10]) {
+			$product->setParts_cylinder_type($data[10]);
+			$needsUpdate = true;
+		}
+		if ($product->getParts_aspiration() != $data[9]) {
+			$product->setParts_aspiration($data[9]);
+			$needsUpdate = true;
+		}
+
+		if ($needsUpdate) {
+			$product->save();
+		}
 	}
 
 	/**
