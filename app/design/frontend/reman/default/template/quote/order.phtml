@@ -729,7 +729,7 @@ function calculateFluid(checked){
 }
 // Calculate Total Amount
 function calculateTotalPrice(){
-    var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>
+    var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>;
     var fluidPrice =  Number($j('#fluid-amount').attr('value'));
 
     var partPrice = Number($j('#part-price').attr('value'));
