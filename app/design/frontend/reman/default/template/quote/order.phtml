@@ -14,776 +14,795 @@
 	// Load Product Object	
 	$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
 
-	//Product Type
-	$partType = $_product->getName();
-	
-	// Tax Value Calculated according to Shipping ZIP value
-	$tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
-	
-	// Current Logged Company
-	$company = Mage::helper('company')->getCustomerCompanyObject();
-	
-	//Load Current Logged Customer Object
-	$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
-	$customer = Mage::getModel('customer/customer')->load($customer_id);
-  	
-	//state names
-    $states = Mage::getModel('directory/country')->load('US')->getRegions();
-	
-	//Fluid Price
-	$FlUIDE_PRICE = 5;
-	
-	//Fluid Amount
-	if($_product->parts_fluid_quantity == NULL){
-		$fluid_amount = 0;
-	}else{
-		$fluid_amount = $_product->parts_fluid_quantity;
-	}
-	//Flued Options
-	/*
-	 * Parts Value: 7 = Required , 6 = Optional , 5 = None
-	 * Company VAlue: R = Required , O = Optional , N = None
-	 *
-	*/
-	if($_product->parts_fluid_option == 5){
-		$fluid = 'N';
-		$fliudPrice = 0;
-	}else{
-		$fluid = $company->fluid;
-		
-		if($fluid == "R"){
-			$fliudPrice = $_product->parts_fluid_quantity * $FlUIDE_PRICE;
-		}else if( $fluid == "O"){
-			$fliudPrice = 0;
-		}
-	}
-	// Calculated Base Warranty Id
-	$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
-	//Get BaseWarrantyWeightID
-	$warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
-	// Parts Commercial Warranty ID
-	$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
-	// Parts Commercial Warranty Weight ID
-	$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
-	
-	$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
-	
-	
-	// Part Additional Info
-	$partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
-	
+//Product Type
+$partType = $_product->getName();
+
+// Tax Value Calculated according to Shipping ZIP value
+$tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
+
+// Current Logged Company
+$company = Mage::helper('company')->getCustomerCompanyObject();
+
+//Load Current Logged Customer Object
+$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$customer = Mage::getModel('customer/customer')->load($customer_id);
+
+//state names
+$states = Mage::getModel('directory/country')->load('US')->getRegions();
+
+//Fluid Price
+$FlUIDE_PRICE = 5;
+
+//Fluid Amount
+if($_product->parts_fluid_quantity == NULL){
+$fluid_amount = 0;
+}else{
+$fluid_amount = $_product->parts_fluid_quantity;
+}
+//Flued Options
+/*
+* Parts Value: 7 = Required , 6 = Optional , 5 = None
+* Company VAlue: R = Required , O = Optional , N = None
+*
+*/
+if($_product->parts_fluid_option == 5){
+$fluid = 'N';
+$fliudPrice = 0;
+}else{
+$fluid = $company->fluid;
+
+if($fluid == "R"){
+$fliudPrice = $_product->parts_fluid_quantity * $FlUIDE_PRICE;
+}else if( $fluid == "O"){
+$fliudPrice = 0;
+}
+}
+// Calculated Base Warranty Id
+$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
+//Get BaseWarrantyWeightID
+$warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
+// Parts Commercial Warranty ID
+$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
+// Parts Commercial Warranty Weight ID
+$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
+
+$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
+
+
+// Part Additional Info
+$partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
+
 ?>
 
 
 <!--- Order Result Message --->
 <div id="order-message" style="display:none;">
-	<div id="order-message-text" style="font-size:15px; color:#000;"></div>
-	<div id="order-error-back" onclick="orderBack(); return false;" style="display:none;">Back</div>
+    <div id="order-message-text" style="font-size:15px; color:#000;"></div>
+    <div id="order-error-back" onclick="orderBack(); return false;" style="display:none;">Back</div>
 </div>
 <!--- Order preloader -->
 <div id="preloader-order-page" class="reman_preloader_order" style="display:none;"></div>
 
 <div id="reman_order">
-    <form id="form-order" method="post" action="#">
-        <!-- Order Date -->
-        <input type="hidden" name="date_order" value="<?php echo date("m/d/y");?>" />
-        <!-- ETE Cust Rep -->
-        <input type="hidden" name="ete_cust" value="<?php echo Mage::helper('company')->getCompanyAdminEmail();?>" />
-        
-        <!-- ----------------- Product Info --------------- -->
-        
-        <!-- Aspiration -->
-        <input type="hidden" name="aspiration" value="<?php echo $_product->getData('parts_aspiration'); ?>" />
-        <!-- Fuel -->
-        <input type="hidden" name="fuel" value="<?php echo $_product->getData('parts_fuel'); ?>" />
-        <!-- Cyl Type -->
-        <input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
-        <!--Unit Type -->
-        <input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
-        <!--Order Status-->
-        <input type="hidden" name="order_status" value="Order" />
-        
-        <!------Total Amount------>
-        <input type="hidden" id="total-price" name="total_amount"  value="" />
-        
-        <!------- TAX AMOUNT --------->
-        <input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
-                
-        <!------- Ship AMOUNT --------->
-        <input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
-        
-        <!-- TAG NAUMBER-->
-        <input type="hidden" id="tax-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
-        
-        
-        
-        
-        <div id="order-title" class="title"><span>Order</span></div>
-        
-        	<div id="check-order-baloon" style="display:none;"></div>
-            
-            <div id="vehicle_info" class="check-top-blocks">
-                <div class="title"><span>Vehicle info</span></div>
-                <table style="margin-left:60px;">
-                        <tr>
-                            <td class="label">Year:</td>
-                            <td><?php echo $this->getRequest()->getPost('year') ?></td>
-                            <input type="hidden" name="year" value="<?php echo $this->getRequest()->getPost('year') ?>" />
-                        </tr>
-                        
-                        <tr>
-                            <td class="label">Make:</td>
-                            <td><?php echo $this->getRequest()->getPost('make') ?></td>
-                            <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
-                            
-                        </tr>
-                        <tr>
-                            <td class="label">Model:</td>
-                            <td><?php echo $this->getRequest()->getPost('model'); ?></td>
-                            <input type="hidden" name="model" value="<?php echo $this->getRequest()->getPost('model'); ?>" />
-                        </tr>
-                        <tr>
-                            <td class="label">Engine:</td>
-                            <td>
-								<?php 
+<form id="form-order" method="post" action="#">
+<!-- Order Date -->
+<input type="hidden" name="date_order" value="<?php echo date("m/d/y");?>" />
+<!-- ETE Cust Rep -->
+<input type="hidden" name="ete_cust" value="<?php echo Mage::helper('company')->getCompanyAdminEmail();?>" />
+
+<!-- ----------------- Product Info --------------- -->
+
+<!-- Aspiration -->
+<input type="hidden" name="aspiration" value="<?php echo $_product->getData('parts_aspiration'); ?>" />
+<!-- Fuel -->
+<input type="hidden" name="fuel" value="<?php echo $_product->getData('parts_fuel'); ?>" />
+<!-- Cyl Type -->
+<input type="hidden" name="cyl_type" value="<?php echo $_product->getData('parts_cylinder_type'); ?>" />
+<!--Unit Type -->
+<input type="hidden" name="unit_type" value="<?php echo $partType[0]; ?>" />
+<!--Order Status-->
+<input type="hidden" name="order_status" value="Order" />
+
+<!------Total Amount------>
+<input type="hidden" id="total-price" name="total_amount"  value="" />
+
+<!------- TAX AMOUNT --------->
+<input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
+
+<!------- Ship AMOUNT --------->
+<input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
+
+<!-- TAG NAUMBER-->
+<input type="hidden" id="tax-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
+
+
+
+
+<div id="order-title" class="title"><span>Order</span></div>
+
+<div id="check-order-baloon" style="display:none;"></div>
+
+<div id="vehicle_info" class="check-top-blocks">
+    <div class="title"><span>Vehicle info</span></div>
+    <table style="margin-left:60px;">
+        <tr>
+            <td class="label">Year:</td>
+            <td><?php echo $this->getRequest()->getPost('year') ?></td>
+            <input type="hidden" name="year" value="<?php echo $this->getRequest()->getPost('year') ?>" />
+        </tr>
+
+        <tr>
+            <td class="label">Make:</td>
+            <td><?php echo $this->getRequest()->getPost('make') ?></td>
+            <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
+
+        </tr>
+        <tr>
+            <td class="label">Model:</td>
+            <td><?php echo $this->getRequest()->getPost('model'); ?></td>
+            <input type="hidden" name="model" value="<?php echo $this->getRequest()->getPost('model'); ?>" />
+        </tr>
+        <tr>
+            <td class="label">Engine:</td>
+            <td>
+                <?php
 									if($this->getRequest()->getPost('engine') != NULL){
-										echo $this->getRequest()->getPost('engine'); 
-									}else{
-										echo 'N/A';
-									}
-							
-								?>
-                            <input type="hidden" name="engine" value="<?php  echo $this->getRequest()->getPost('engine'); ?>" />    
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label">Drive:</td>
-                            <td><?php 
+                echo $this->getRequest()->getPost('engine');
+                }else{
+                echo 'N/A';
+                }
+
+                ?>
+                <input type="hidden" name="engine" value="<?php  echo $this->getRequest()->getPost('engine'); ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Drive:</td>
+            <td><?php
 									if($this->getRequest()->getPost('drive') == ""){
-										$drive = $_product->getData('parts_drive');
-									}else{
-										$drive = $this->getRequest()->getPost('drive');
-									}
-									
-									if($drive == NULL){
-										echo 'N/A';
-									}else{
-										echo $drive;
-									}
-									
-									
-								?>
-                             
-                             <input type="hidden" name="drive" value="<?php echo $drive; ?>" />     
-                            </td>
-                        </tr>                        <tr>
-                            <td class="label">Notes:</td>
-                            <td><?php 
+                $drive = $_product->getData('parts_drive');
+                }else{
+                $drive = $this->getRequest()->getPost('drive');
+                }
+
+                if($drive == NULL){
+                echo 'N/A';
+                }else{
+                echo $drive;
+                }
+
+
+                ?>
+
+                <input type="hidden" name="drive" value="<?php echo $drive; ?>" />
+            </td>
+        </tr>                        <tr>
+        <td class="label">Notes:</td>
+        <td><?php
 									if($partNotes != NULL){ 
 										echo $partNotes;
 									}else{
 										echo 'N/A';
 									}
 								?>
-                            </td>
-                            <input type="hidden" name="vehicle_notes" value="<?php echo $partNotes;?>" />    
-                        </tr>
-                </table>
-                <div style="clear:both"></div>
-                <table id="vin-mileage-table" class="vin" style="margin-left:55px; margin-top:25px;">
-                    <tr class="check-tr">
-                        <td class="label">VIN:</td>
-                        <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
-                        <td id="check-vin"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">Mileage:</td>
-                        <td id="input-mileage"><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
-                        <td id="check-mileage"></td>
-                    </tr>
-                </table>
-                
-                
-                <table id="com-app-block" class="vin" style="margin-top:25px; margin-left: 88px;"> 
-                     <tr id="com-app-input">
-                        <td class="label"><input id="commercial_app" type="checkbox" /></td>
-                        <td style="font-weight: bold; line-height: 18px;">Commercial Application</td>
-                        <input id="commercial_app_value" type="hidden" name="commercial_app" value="0" />  
-                    </tr>
-                    <tr class="check-tr" id="check-application-block" style="display:none;">
-                        <td class="label">Application:</td>
-                        <td id="check-application">Non Commercial</td>
-                    </tr>
-                </table>
-            </div>
-            
-            
-            <div id="order_details" class="check-top-blocks">
-                <div class="title"><span>Order Details</span></div>
-                            
-                <table style="margin-left:47px;">
-                        <tr>
-                            <td class="label">Product:</td>
-                            <td><?php echo $_product->getName();?></td>
-                            <input type="hidden" name="product_name" value="<?php echo $_product->getName();?>" />
-                        </tr>
-                        
-                        <tr>
-                            <td class="label">Part #:</td>
-                            <td><?php echo $_product->getSku();?></td>
-                            <input type="hidden" name="partnum" value="<?php echo $_product->getSku(); ?>" />
-                            
-                        </tr>
-                        
-                        <tr style="height:45px;">
-                        	<td class="label">Family:</td>
-                            <td><?php echo $_product->getData('parts_family'); ?></td>
-                            <input type="hidden" name="family" value="<?php echo $_product->getData('parts_family'); ?>" />
-                        </tr>
-                        
-                        <tr>
-                        	<td class="label">Ship From:</td>
-                            <td id="order-ship-from"></td>
-                        </tr>
-                        
-                        <tr>
-                        	<td class="label">Availability:</td>
-                            <td>Immediate</td>
-                        </tr>
-                        
-                        <tr>
-                        	<td class="label">Ship Time:</td>
-                            <td id="order-ship-time"></td>
-                        </tr>                 
-                </table>
-                <div style="clear:both"></div>
-                <table class="vin" style="margin-top:25px; margin-left:20px;">
-                    <tr class="check-tr">
-                        <td class="label">PO #:</td>
-                        <td id="input-po"><input type="text" name="po" class="required-entry" /><em>*</em></td>
-                        <td id="check-po"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">Claim #:</td>
-                        <td id="input-claim"><input type="text" name="claim" /></td>
-                        <td id="check-claim"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">RO #:</td>
-                        <td id="input-ro"><input type="text" name="ro" /></td>
-                        <td id="check-ro"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">End User Name:</td>
-                        <td id="input-end_username"><input type="text" name="end_username" /></td>
-                        <td id="check-end_username"></td>
-                    </tr>
-                </table>
-            </div>
-            
-            
-            <div id="sold-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
-                <div class="title"><span>Sold To</span></div>
-                
-                <table class="vin" style="margin-left:-4px; border-spacing:4px;">
-                    <tr>
-                        <td width="100" class="label">Customer:</td>
-                        <td><?php echo $this->helper('company')->getCompanyName(); ?></td>
-                        <input type="hidden" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
-                    </tr>
-                    <tr>
-                        <td class="label">Contact Name:</td>
-                        <td><?php echo $customer->getFirstname().' '.$customer->getLastname(); ?></td>
-                        <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname().' '.$customer->getLastname(); ?>"/>
-                    </tr>
-                    <tr>
-                        <td class="label">Phone:</td>
-                        <td><?php echo $customer->phone; ?></td>
-                        <input type="hidden" name="so_phone" value="<?php echo $customer->phone; ?>" />
-                    </tr>
-                </table>
-            </div>
-         		 
-                
-                 <!-- Company ID -->
-                 <input type="hidden" name="so_cust_num" value="<?php echo $this->helper('company')->getCustomerCompanyObject()->ete; ?>" />
-                 
-                  <!-- Logged user Email -->
-                 <input type="hidden" name="so_cont_email" value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>" />
-                 
-                 <input type="hidden" name="so_phone_ext" value="" />
-                 	
-                 <!--Bill To The Same As Sold To-->
-                
-                 <input type="hidden" name="bt_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />	
-                 <input type="hidden" name="bt_phone" value="<?php echo $customer->phone; ?>" />
-                 <input type="hidden" name="bt_phone_ext" value="" />
-                
-            
-            <div id="ship-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
-                <div class="title"><span>Ship To</span></div>
-                
-                <table class="vin" style="margin-left:10px;">
-                    <tr id="check-same-as-sold-cont" style="height:45px;">
-                        <td class="label"><input id="same-as-sold" type="checkbox" /></td>
-                        <td style="font-weight:bold; line-height:18px;">Same as Sold To</td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td width="100" class="label">Customer Name:</td>
-                        <td id="input-st_cust_name"><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
-                        <td id="check-st_cust_name"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">Contact Name:</td>
-                        <td id="input-st_cont_name"><input type="text" name="st_cont_name" class="required-entry" /><em>*</em></td>
-                        <td id="check-st_cont_name"></td>
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">Phone:</td>
-                        <td id="input-st_phone"><input id="phone-input" type="text" name="st_phone" class="required-entry" /><em>*</em></td>
-                        <td id="check-st_phone"></td>
-                        
-                    </tr>
-                    <tr class="check-tr">
-                        <td class="label">Adress:</td>
-                        <td id="input-st_addr1"><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
-                        <td id="check-st_addr1"></td>
-                    </tr>
-                </table>
-                
-                <table style="margin-left:77px;" class="adress">
-                    <tr class="check-tr">
-                    	<td class="label">City:</td>
-                        <td id="input-st_city"><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
-                        <td id="check-st_city"></td>
-                     </tr>   
-                     <tr class="check-tr">
-                     	<td class="label">State:</td> 
-                        <td id="input-st_state" style="height:24px;">
-                            <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
-                               <?php  foreach($states as $state): ?>
-                                 <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
-                               <?php endforeach; ?>   
-                            </select>
-                            <input id="st_state" type="hidden" name="st_state" value="" />
-                        </td>
-                        <td id="check-st_state"></td>
-                        
-                     </tr>
-                     
-                    <tr class="check-tr"> 
-                    	<td class="label">ZIP:</td>   
-                        <td id="input-st_zip"><input id="zip-re-estimation" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
-                        <td id="check-st_zip"></td>
-                    </tr>
-                </table>
-            
-            </div>
-            
-            <!-- FOR TEST PURPOSE NEED TO CLARIFIED -->
-            <input type="hidden" name="bt_city" value="New York"  />
-            <input id="bt_state" type="hidden" name="bt_state" value="NY"  />
-            <input type="hidden"  name="bt_zip" value="15656"   />
-            <input type="hidden" name="bt_addr1" value="Segedskay"  />
-            
-            <input type="hidden" name="st_phone_ext" value="" />
-            <input type="hidden" name="st_addr2" value="" />
-            
-            
-            <div id="pricing-info" style="height:160px;">
-            		<div class="title" style="width:90px;"><span>Pricing Details</span></div>
-                    <table class="left-table">
-                    	<tr>
-                        	<td class="label">Unit Cost:</td>
-                            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
-                            <input type="hidden" id="part-price" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
-                        </tr>
-                        <tr>
-                        	<td class="label">Shipping:</td>
-                            <td><?php echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>  
-                        </tr>
-                        <tr>
-                        	<td class="label">Tax:</td>
-                            <?php if(count($tax_value) != 0):?>	
-                            <td><?php echo $tax_value[0]['value'].'%' ?></td>
-                                <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
-                                <?php else: ?>
-                                <td>N/A</td>
-                                <input type="hidden"  name="tax_percent" value="0.00" />
-                            <?php endif; ?>	
-                        </tr>
-                        <tr>
-                        	<td class="label">Fluid:</td>
-                            <td id="fluid-price">
-                            	 <?php 
+        </td>
+        <input type="hidden" name="vehicle_notes" value="<?php echo $partNotes;?>" />
+    </tr>
+    </table>
+    <div style="clear:both"></div>
+    <table id="vin-mileage-table" class="vin" style="margin-left:55px; margin-top:25px;">
+        <tr class="check-tr">
+            <td class="label">VIN:</td>
+            <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
+            <td id="check-vin"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">Mileage:</td>
+            <td id="input-mileage"><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
+            <td id="check-mileage"></td>
+        </tr>
+    </table>
+
+
+    <table id="com-app-block" class="vin" style="margin-top:25px; margin-left: 88px;">
+        <tr id="com-app-input">
+            <td class="label"><input id="commercial_app" type="checkbox" /></td>
+            <td style="font-weight: bold; line-height: 18px;">Commercial Application</td>
+            <input id="commercial_app_value" type="hidden" name="commercial_app" value="0" />
+        </tr>
+        <tr class="check-tr" id="check-application-block" style="display:none;">
+            <td class="label">Application:</td>
+            <td id="check-application">Non Commercial</td>
+        </tr>
+    </table>
+</div>
+
+
+<div id="order_details" class="check-top-blocks">
+    <div class="title"><span>Order Details</span></div>
+
+    <table style="margin-left:47px;">
+        <tr>
+            <td class="label">Product:</td>
+            <td><?php echo $_product->getName();?></td>
+            <input type="hidden" name="product_name" value="<?php echo $_product->getName();?>" />
+        </tr>
+
+        <tr>
+            <td class="label">Part #:</td>
+            <td><?php echo $_product->getSku();?></td>
+            <input type="hidden" name="partnum" value="<?php echo $_product->getSku(); ?>" />
+
+        </tr>
+
+        <tr style="height:45px;">
+            <td class="label">Family:</td>
+            <td><?php echo $_product->getData('parts_family'); ?></td>
+            <input type="hidden" name="family" value="<?php echo $_product->getData('parts_family'); ?>" />
+        </tr>
+
+        <tr>
+            <td class="label">Ship From:</td>
+            <td id="order-ship-from"></td>
+            <input id="order-ship-from-input" type="hidden" name="ship_from" value="" />
+        </tr>
+
+        <tr>
+            <td class="label">Availability:</td>
+            <td>Immediate</td>
+        </tr>
+
+        <tr>
+            <td class="label">Ship Time:</td>
+            <td id="order-ship-time"></td>
+            <input id="order-ship-time-input" type="hidden" name="ship_time" value="" />
+        </tr>
+    </table>
+    <div style="clear:both"></div>
+    <table class="vin" style="margin-top:25px; margin-left:20px;">
+        <tr class="check-tr">
+            <td class="label">PO #:</td>
+            <td id="input-po"><input type="text" name="po" class="required-entry" /><em>*</em></td>
+            <td id="check-po"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">Claim #:</td>
+            <td id="input-claim"><input type="text" name="claim" /></td>
+            <td id="check-claim"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">RO #:</td>
+            <td id="input-ro"><input type="text" name="ro" /></td>
+            <td id="check-ro"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">End User Name:</td>
+            <td id="input-end_username"><input type="text" name="end_username" /></td>
+            <td id="check-end_username"></td>
+        </tr>
+    </table>
+</div>
+
+
+<div id="sold-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
+    <div class="title"><span>Sold To</span></div>
+
+    <table class="vin" style="margin-left:-4px; border-spacing:4px;">
+        <tr>
+            <td width="100" class="label">Customer:</td>
+            <td><?php echo $this->helper('company')->getCompanyName(); ?></td>
+            <input type="hidden" name="so_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
+        </tr>
+        <tr>
+            <td class="label">Contact Name:</td>
+            <td><?php echo $customer->getFirstname().' '.$customer->getLastname(); ?></td>
+            <input type="hidden" name="so_cont_name" value="<?php echo $customer->getFirstname().' '.$customer->getLastname(); ?>"/>
+        </tr>
+        <tr>
+            <td class="label">Phone:</td>
+            <td><?php echo $customer->phone; ?></td>
+            <input type="hidden" name="so_phone" value="<?php echo $customer->phone; ?>" />
+        </tr>
+    </table>
+</div>
+
+
+<!-- Company ID -->
+<input type="hidden" name="so_cust_num" value="<?php echo $this->helper('company')->getCustomerCompanyObject()->ete; ?>" />
+
+<!-- Logged user Email -->
+<input type="hidden" name="so_cont_email" value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>" />
+
+<input type="hidden" name="so_phone_ext" value="" />
+
+<!--Bill To The Same As Sold To-->
+
+<input type="hidden" name="bt_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
+<input type="hidden" name="bt_phone" value="<?php echo $customer->phone; ?>" />
+<input type="hidden" name="bt_phone_ext" value="" />
+
+
+<div id="ship-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
+    <div class="title"><span>Ship To</span></div>
+
+    <table class="vin" style="margin-left:10px;">
+        <tr id="check-same-as-sold-cont" style="height:45px;">
+            <td class="label"><input id="same-as-sold" type="checkbox" /></td>
+            <td style="font-weight:bold; line-height:18px;">Same as Sold To</td>
+        </tr>
+        <tr class="check-tr">
+            <td width="100" class="label">Customer Name:</td>
+            <td id="input-st_cust_name"><input type="text" name="st_cust_name" class="required-entry" /><em>*</em></td>
+            <td id="check-st_cust_name"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">Contact Name:</td>
+            <td id="input-st_cont_name"><input type="text" name="st_cont_name" class="required-entry" /><em>*</em></td>
+            <td id="check-st_cont_name"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">Phone:</td>
+            <td id="input-st_phone"><input id="phone-input" type="text" name="st_phone" class="required-entry" /><em>*</em></td>
+            <td id="check-st_phone"></td>
+
+        </tr>
+        <tr class="check-tr">
+            <td class="label">Adress:</td>
+            <td id="input-st_addr1"><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
+            <td id="check-st_addr1"></td>
+        </tr>
+    </table>
+
+    <table style="margin-left:77px;" class="adress">
+        <tr class="check-tr">
+            <td class="label">City:</td>
+            <td id="input-st_city"><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
+            <td id="check-st_city"></td>
+        </tr>
+        <tr class="check-tr">
+            <td class="label">State:</td>
+            <td id="input-st_state" style="height:24px;">
+                <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
+                    <?php  foreach($states as $state): ?>
+                    <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <input id="st_state" type="hidden" name="st_state" value="" />
+            </td>
+            <td id="check-st_state"></td>
+
+        </tr>
+
+        <tr class="check-tr">
+            <td class="label">ZIP:</td>
+            <td id="input-st_zip"><input id="zip-re-estimation" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+            <td id="check-st_zip"></td>
+        </tr>
+    </table>
+
+</div>
+
+<!-- FOR TEST PURPOSE NEED TO CLARIFIED -->
+<input type="hidden" name="bt_city" value="New York"  />
+<input id="bt_state" type="hidden" name="bt_state" value="NY"  />
+<input type="hidden"  name="bt_zip" value="15656"   />
+<input type="hidden" name="bt_addr1" value="Segedskay"  />
+
+<input type="hidden" name="st_phone_ext" value="" />
+<input type="hidden" name="st_addr2" value="" />
+
+
+<div id="pricing-info" style="height:160px;">
+    <div class="title" style="width:90px;"><span>Pricing Details</span></div>
+    <table class="left-table">
+        <tr>
+            <td class="label">Unit Cost:</td>
+            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
+            <input type="hidden" id="part-price" name="unit_amount" value="<?php echo number_format($_product->getPrice(),2,'.','');?>" />
+        </tr>
+        <tr>
+            <td class="label">Shipping:</td>
+            <td><?php echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>
+            <input type="hidden" name="shipping_amount" value="<?php echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
+        </tr>
+        <tr>
+            <td class="label">Tax:</td>
+            <?php if(count($tax_value) != 0):?>
+            <td><?php echo $tax_value[0]['value'].'%' ?></td>
+            <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
+            <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
+            <?php else: ?>
+            <td>N/A</td>
+            <input type="hidden"  name="tax_percent" value="0.00" />
+            <input type="hidden"  name="tax_total" value="N/A" />
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td class="label">Fluid:</td>
+            <td id="fluid-price">
+                <?php
 								 	if($fluid == 'R'){
 								 		echo '$'.number_format($fliudPrice,2,'.','');
 									}else{
 										echo 'N/A';
 									}
 								 ?>
-                            </td>
-                        </tr>
-                        <tr>
-                        	<td class="label">Total:</td>
-                            <td id="total-amount"></td>
-                        </tr>
-                    </table>
-                     <!------ Fluid Price------>  
-        			 <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format($fliudPrice,2,'.','');  ?>" />
-                    
-                    <table class="right-table">
-                    	<tr>
-                        	<td class="label">MSRP:</td>
-                            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
-                        </tr>
-                        <tr>
-                        	<td class="label">Core Value:</td>
-                            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
-                            <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
-                        </tr>
-                        <tr id="input-fluid">
-                        	 <?php if($partType[0] == 'T' && $fluid != 'N') : ?>	
-                                    <td class="label">Add Fluid?</td>
-									<?php if($fluid == 'O'): ?>	
-                                        <td><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
-                                    <?php endif; ?> 
-                                    <?php if($fluid == 'R'): ?>	
-                                         <td><input checked="checked" type="checkbox"  disabled="disabled" /></td>
-                                    <?php endif; ?>
-            			 	<?php endif; ?>
-                        </tr>
-                        
-                        <?php if($partType[0] == 'T'): ?>	
-							<?php if($fluid == 'O'): ?>	      
-                            	<input id="fluid-optional" type="hidden" name="fluid" value=" Not Included"  />
-                            <?php endif; ?>
-                            
-                            <?php if($fluid == 'R'): ?>	   
-                            		<input type="hidden" name="fluid" value="Fluid Required"  />
-                            <?php endif; ?>
-							<?php if($fluid == 'N'): ?>
-                                  <input type="hidden" name="fluid" value="No Fluid Required"  />	      
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        
-                        <?php if($fluid != 'N') : ?>	
-                        <tr style="height:40px;">
-                        	<td class="label">Fluid Amount:</td>
-                            <td><?php 
-									if($_product->parts_fluid_quantity != NULL){
-										echo $_product->parts_fluid_quantity.' quarts';
-									}else{
-										echo 'N/A';
-									}	
-								?>
-                           </td>
-                        </tr>
-                         <?php endif; ?>
-                        <tr>
-                        	<td class="label">Other Charges:</td>
-                            <td>N/A</td>
-                        </tr>
-                    </table>
-            </div>
-         
-            
-            <div id="warranty-info" class="check-price-order">
-                <div class="title"><span>Warranty</span></div>
-                <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value')); return false;" >
-                    <?php  foreach($warranties as $index): ?>
-						 	 <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"  
-							 <?php else: ?> 
-                             <?php /*?>
-								Display all warranties Names whose value 
-								retrieved from the Warranty File is less than or equal to the BWV
-								(calculated in (a))
-							 <?php */
-							 ?>
-                             
-                             <?php if ($index['weight'] > $warrantyWeightID || $index['weight'] == $parts_commercial_warranty_weightId  ):?>
-                             	style="display:none;"
-                             <?php endif; ?>   
+            </td>
+            <?php if($fluid == 'R'):?>
+            <input type="hidden"  name="fluid_total" value="<?php echo number_format($fliudPrice,2,'.','') ?>" />
+            <?php else: ?>
+            <input type="hidden"  name="fluid_total" value="N/A" />
+            <?php endif; ?>
+        </tr>
 
-							 <?php endif; ?>value="<?php echo $index['value'] ?>" weight="<?php echo $index['weight'] ?>"><?php echo $index['label'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            	<input id="order_warrenty" type="hidden" name="warranty_id" value="" />
-            </div>
-            
-            
-            <div id="order-notes" style="margin-bottom:20px;" class="check-price-order">
-                <div class="title"><span>Order Notes</span></div>
-                <textarea rows="3" cols="100" name="notes"></textarea>
-            </div>
-            
-            <div class="buttons check-price-order">
-                <div class="cancel-order">Cancel</div>
-                <div class="submit-order">Submit Order</div>
-            </div>
-            
-            
-            <div id="check-notes" style="display:none;">
-             <table >
-                <tr>
-                	<td class="label">Warranty:</td>
-                    <td id="check-warranty" style="font-weight:bold;"></td>
-                </tr>
-                <tr>
-                	<td class="label">Order Notes:</td>
-                    <td id="check-order-notes" style="font-weight:bold;"></td>
-                    <input id="order-notes-input" type="hidden" name="order_notes" value=""  />
-                </tr>
-                
-                <tr>
-                	<td><input id="order-is-checked" style="float:right;" type="checkbox" /></td>
-                    <td style="padding-left:5px; font-weight:bold;">All the information looks good. Let’s do this!</td>
-                
-                </tr>
-             
-             </table>
-             <div id="cancel-order-button"></div> 
-             <div id="submit-order-button" style="display:none;"></div> 
-             </div>
-             
-              <div id="popup-shipping-re-estimation" style="display:none;">
-                <span>You will be forwarded to previous step for shippng re-estimation</span>
-                <button onclick="$j('#zip_value').attr('value', $j('#zip-re-estimation').attr('value')); Reman_QuickQuote.prototype.resetOrder(true); return false;" style="width: 70px; height: 25px; margin-top: 25px;">OK</button>
-              </div>       
-    </form>
-    
-   
-    
-    <script type="text/javascript">
-    //<![CDATA[
-        var dataForm = new VarienForm('form-order', true);
-		// Parts Commercial Warranty value
-		var comWarrantyId = <?php 
-								if(!is_null($parts_commercial_warranty_weightId)){
-									echo $parts_commercial_warranty_weightId;
-								}else{
-									echo 0;
-								}
-							 ?>;
-		var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
-		var fluidAmount = <?php echo $fluid_amount; ?>;
-		var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
-    //]]>
-		
-		$j(document).ready(function(){
-			// Set selected warrenty value on Order Load
-			$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value'));
-			
-			// Set selected State SHIP TO
-			$j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
-			
-			// Set Shipping Value to Order Table
-			$j('#order-shipping-cost').html('$'+window.truecost);
-			
-			// Set Shp from warehouse
-			$j('#order-ship-from').html( window.store.substring(window.store.lastIndexOf('_'),-1));
-		    
-			// Form Days text
-			 if(window.servicedays > 1){
-				var textDays = 'Days';
-			 }else{
-				var textDays = 'Day';
-			 }
-			 // Set Shipping Days
-			$j('#order-ship-time').html( window.servicedays + ' '+ textDays);
-			
-			
-			jQuery(function($){
-			   $j("#phone-input").mask("999-999-9999");
-			});
-			
-			
-			/** Calculate Total Parts Amount*/ 
-			calculateTotalPrice();
-		});
-		
-		/** Remove default magento validation failed lables */
-		$j('#reman_order input').click(function(e){
-			if($j(e.target).hasClass('validation-failed')){
-				$j(e.target).removeClass('validation-failed');
-			}
-		});
-		
-		/** Same as Sold Button Functionality
-		  * Copy fields from Sold TO to Ship TO
-		*/
-		$j('#same-as-sold').click(function() {
-			if($j(this).is(':checked')) {
-				for( var i = 0; i<=$j('#sold-to input').length-1; i++){
-					$j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
-				}
-				for (var s = 0; s<=$j('#ship-to-states option').length; s++){
-					if($j('#sold-to-states option:selected').val() == $j($j('#ship-to-states option')[s]).val() ){
-						$j($j('#ship-to-states option')[s]).attr('selected','selected');
-					}
-				}
-			} else {
-				for( var i = 1; i<=$j('#ship-to input').length-1; i++){
-					if(!$j($j('#ship-to input')[i]).hasClass('isZip')){
-						$j('#ship-to input')[i].value = "";
-					}
-				}
-				$j($j('#ship-to-states option')[0]).attr('selected','selected');
-   	    	}
-			
-			$j("#phone-input").mask("999-999-9999");
-		});
-		/**
-		 * Commercial Application logic 
-			iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
-				 AND the retrieved Commwar value is less than the BWV, then the values retrieved form
-				 the Warranty File become the BW and the BWV
-		*/
-		$j('#commercial_app').click(function(){
-			if($j(this).is(':checked')){
-				$j('#commercial_app_value').attr('value',"1");
-				$j('#check-application').html('Commercial');
-				
-				
-				
-				if(comWarrantyId == 0) return;
-				
-				if(comWarrantyId < baseWarrantyId){
-					$j('#warrenty_select option').filter(function(index) {
-							if($j(this).attr('weight') == comWarrantyId){
-								$j(this).attr('selected','selected');
-								$j(this).show();
-								$j('#order_warrenty').attr('value', $j(this).attr('value') );
-							}
-							if($j(this).attr('weight') > comWarrantyId){
-								$j(this).hide();
-							}
-					});
-				}
-				
-			}else{
-				$j('#commercial_app_value').attr('value',"0");
-				
-				$j('#check-application').html('Non Commercial');
-				
-				if(comWarrantyId == 0) return;
-				if(comWarrantyId < baseWarrantyId){
-					$j('#warrenty_select option').filter(function(index) {
-							if($j(this).attr('weight') > baseWarrantyId){
-								$j(this).hide();
-							}else if($j(this).attr('weight') <= baseWarrantyId){
-								$j(this).show();
-							}
-							if($j(this).attr('weight') == comWarrantyId){
-								$j(this).hide();
-							}
-							if($j(this).attr('weight') == baseWarrantyId){
-								$j(this).attr('selected','selected');
-								$j('#order_warrenty').attr('value', $j(this).attr('value') );
-							}
-					});
-				}
-			}
-		});
-		/** Calculate FLUID PRICE*/
-		function calculateFluid(checked){
-			if(checked){
-			   var total = fluidAmount * 5;
-			   $j('#fluid-amount').attr('value', Number(total).toFixed(2));
-			   $j('#fluid-price').html('$'+Number(total).toFixed(2));
-			   
-			   $j('#check-fluid').html('Included');
-			   
-			   $j('#fluid-optional').attr('value','Included');
-			   
-			   calculateTotalPrice(); 
-			}else{
-			    $j('#fluid-amount').attr('value', '0.00' );
-			    $j('#fluid-price').html('N/A');
-			   
-			    $j('#check-fluid').html('Not Included');
-				
-				$j('#fluid-optional').attr('value','Not Included');
-			   
-			   calculateTotalPrice(); 
-			}
-		}
-		// Calculate Total Amount
-		function calculateTotalPrice(){
-			var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>		
-			var fluidPrice =  Number($j('#fluid-amount').attr('value'));
-			
-			var partPrice = Number($j('#part-price').attr('value'));
-			var corePrice = Number($j('#core-price').attr('value'));
-			var total  = shippingPrice + fluidPrice + partPrice + corePrice;
-			
-			
-			if(tax_value){
-				var tax_amount = (total/100) * tax_value;
-				$j('#tax-total-amount').attr('value',tax_value);
-				var total  = total + tax_amount ;
-			} 
-			 
-			 $j('#total-price').attr('value', Number(total).toFixed(2));
-			 
-			 $j('#total-amount').html('$'+Number(total).toFixed(2));	
-		}
-		            
-		/*Reset Order Page*/
-		$j('.cancel-order').click(function(){
-			Reman_QuickQuote.prototype.resetOrder();
-		});
-		/* Submit order for confirmation page*/
-		$j('.submit-order').click(function(){
-			checkOrder();
-		});
-		
-		/* Show submiy order button*/
-		$j('#order-is-checked').click(function(){
-			if($j(this).is(':checked')) {
-				$j('#submit-order-button').show();
-			}else{
-				$j('#submit-order-button').hide();
-			}
-		});
-		
-		/* Back to Order Page*/
-		$j('#cancel-order-button').click(function(){
-			 backToOrderEdit();
-		});
-		
-		
-		/** Order Submit Event */
-		$j('#submit-order-button').click(function(){
-			submitOrder();
-		});
-		
-		/** Allow Only Numeric Input for mileage field  (IE ONLY)*/
-		if ($j.browser.msie){
-			
-			$j("#input-mileage").keypress(function(event) {
-				return (/\d/.test(String.fromCharCode(event.which) ))
-			});
-		}else{
-			$j("#input-mileage").on("input", function(event){
-				var isNumbers = ( /^\d+$/.test(event.target.value));
-				if(!isNumbers){
-					event.target.value = '';
-				}
-			});
-		}
-		
-		
-		// Shipping re-estimation
-		$j("#zip-re-estimation").keypress(function(event) {
-			if(this.value.length == 5) return false;
-			if(this.value.length == 4) {
-				$j('#black-mask').show();
-				$j('#popup-shipping-re-estimation').show();
-			}
-		});
-		
-    </script>
+        <tr>
+            <td class="label">Total:</td>
+            <td id="total-amount"></td>
+        </tr>
+    </table>
+    <!------ Fluid Price------>
+    <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format($fliudPrice,2,'.','');  ?>" />
+
+    <table class="right-table">
+        <tr>
+            <td class="label">MSRP:</td>
+            <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
+            <input type="hidden" name="msrp_amount" value="<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?>" />
+        </tr>
+        <tr>
+            <td class="label">Core Value:</td>
+            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+            <input type="hidden" id="core-price" name="core_amount" value="<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?>" />
+        </tr>
+        <tr id="input-fluid">
+            <?php if($partType[0] == 'T' && $fluid != 'N') : ?>
+            <td class="label">Add Fluid?</td>
+            <?php if($fluid == 'O'): ?>
+            <td><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
+            <?php endif; ?>
+            <?php if($fluid == 'R'): ?>
+            <td><input checked="checked" type="checkbox"  disabled="disabled" /></td>
+            <?php endif; ?>
+            <?php endif; ?>
+        </tr>
+
+        <?php if($partType[0] == 'T'): ?>
+        <?php if($fluid == 'O'): ?>
+        <input id="fluid-optional" type="hidden" name="fluid" value=" Not Included"  />
+        <?php endif; ?>
+
+        <?php if($fluid == 'R'): ?>
+        <input type="hidden" name="fluid" value="Fluid Required"  />
+        <?php endif; ?>
+        <?php if($fluid == 'N'): ?>
+        <input type="hidden" name="fluid" value="No Fluid Required"  />
+        <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if($fluid != 'N') : ?>
+        <tr style="height:40px;">
+            <td class="label">Fluid Amount:</td>
+            <td><?php
+									if($_product->parts_fluid_quantity != NULL){
+                echo $_product->parts_fluid_quantity.' quarts';
+                }else{
+                echo 'N/A';
+                }
+                ?>
+            </td>
+        </tr>
+        <?php endif; ?>
+        <tr>
+            <td class="label">Other Charges:</td>
+            <td>N/A</td>
+        </tr>
+    </table>
+</div>
+
+
+<div id="warranty-info" class="check-price-order">
+    <div class="title"><span>Warranty</span></div>
+    <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value')); return false;" >
+        <?php  foreach($warranties as $index): ?>
+        <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"
+        <?php else: ?>
+        <?php /*?>
+        Display all warranties Names whose value
+        retrieved from the Warranty File is less than or equal to the BWV
+        (calculated in (a))
+        <?php */
+							 ?>
+
+        <?php if ($index['weight'] > $warrantyWeightID || $index['weight'] == $parts_commercial_warranty_weightId  ):?>
+        style="display:none;"
+        <?php endif; ?>
+
+        <?php endif; ?>value="<?php echo $index['value'] ?>" weight="<?php echo $index['weight'] ?>"><?php echo $index['label'] ?></option>
+        <?php endforeach; ?>
+    </select>
+    <input id="order_warrenty" type="hidden" name="warranty_id" value="" />
+    <input id="order_warrenty_text" type="hidden" name="warranty_text" value="" />
+</div>
+
+
+<div id="order-notes" style="margin-bottom:20px;" class="check-price-order">
+    <div class="title"><span>Order Notes</span></div>
+    <textarea rows="3" cols="100" name="notes"></textarea>
+</div>
+
+<div class="buttons check-price-order">
+    <div class="cancel-order">Cancel</div>
+    <div class="submit-order">Submit Order</div>
+</div>
+
+
+<div id="check-notes" style="display:none;">
+    <table >
+        <tr>
+            <td class="label">Warranty:</td>
+            <td id="check-warranty" style="font-weight:bold;"></td>
+        </tr>
+        <tr>
+            <td class="label">Order Notes:</td>
+            <td id="check-order-notes" style="font-weight:bold;"></td>
+            <input id="order-notes-input" type="hidden" name="order_notes" value=""  />
+        </tr>
+
+        <tr>
+            <td><input id="order-is-checked" style="float:right;" type="checkbox" /></td>
+            <td style="padding-left:5px; font-weight:bold;">All the information looks good. Let’s do this!</td>
+
+        </tr>
+
+    </table>
+    <div id="cancel-order-button"></div>
+    <div id="submit-order-button" style="display:none;"></div>
+</div>
+
+<div id="popup-shipping-re-estimation" style="display:none;">
+    <span>You will be forwarded to previous step for shippng re-estimation</span>
+    <button onclick="$j('#zip_value').attr('value', $j('#zip-re-estimation').attr('value')); Reman_QuickQuote.prototype.resetOrder(true); return false;" style="width: 70px; height: 25px; margin-top: 25px;">OK</button>
+</div>
+</form>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+var dataForm = new VarienForm('form-order', true);
+// Parts Commercial Warranty value
+var comWarrantyId = <?php
+if(!is_null($parts_commercial_warranty_weightId)){
+    echo $parts_commercial_warranty_weightId;
+}else{
+    echo 0;
+}
+?>;
+var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
+var fluidAmount = <?php echo $fluid_amount; ?>;
+var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
+//]]>
+
+$j(document).ready(function(){
+    // Set selected warrenty value on Order Load
+    $j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value'));
+
+    $j('#order_warrenty_text').attr('value', $j('#warrenty_select option:selected').html());
+
+    // Set selected State SHIP TO
+    $j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
+
+    // Set Shipping Value to Order Table
+    $j('#order-shipping-cost').html('$'+window.truecost);
+
+    // Set Shp from warehouse
+    $j('#order-ship-from').html( window.store.substring(window.store.lastIndexOf('_'),-1));
+
+    $j('#order-ship-from-input').attr('value', window.store.substring(window.store.lastIndexOf('_'),-1) );
+
+    // Form Days text
+    if(window.servicedays > 1){
+        var textDays = 'Days';
+    }else{
+        var textDays = 'Day';
+    }
+    // Set Shipping Days
+    $j('#order-ship-time').html( window.servicedays + ' '+ textDays);
+
+    $j('#order-ship-time-input').attr('value', window.servicedays + ' '+ textDays);
+
+
+    jQuery(function($){
+        $j("#phone-input").mask("999-999-9999");
+    });
+
+
+    /** Calculate Total Parts Amount*/
+    calculateTotalPrice();
+});
+
+/** Remove default magento validation failed lables */
+$j('#reman_order input').click(function(e){
+    if($j(e.target).hasClass('validation-failed')){
+        $j(e.target).removeClass('validation-failed');
+    }
+});
+
+/** Same as Sold Button Functionality
+ * Copy fields from Sold TO to Ship TO
+ */
+$j('#same-as-sold').click(function() {
+    if($j(this).is(':checked')) {
+        for( var i = 0; i<=$j('#sold-to input').length-1; i++){
+            $j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
+        }
+        for (var s = 0; s<=$j('#ship-to-states option').length; s++){
+            if($j('#sold-to-states option:selected').val() == $j($j('#ship-to-states option')[s]).val() ){
+                $j($j('#ship-to-states option')[s]).attr('selected','selected');
+            }
+        }
+    } else {
+        for( var i = 1; i<=$j('#ship-to input').length-1; i++){
+            if(!$j($j('#ship-to input')[i]).hasClass('isZip')){
+                $j('#ship-to input')[i].value = "";
+            }
+        }
+        $j($j('#ship-to-states option')[0]).attr('selected','selected');
+    }
+
+    $j("#phone-input").mask("999-999-9999");
+});
+/**
+ * Commercial Application logic
+ iii. If the “Commercial Application” is checked AND the [Commwar] field is populated,
+ AND the retrieved Commwar value is less than the BWV, then the values retrieved form
+ the Warranty File become the BW and the BWV
+ */
+$j('#commercial_app').click(function(){
+    if($j(this).is(':checked')){
+        $j('#commercial_app_value').attr('value',"1");
+        $j('#check-application').html('Commercial');
+
+
+
+        if(comWarrantyId == 0) return;
+
+        if(comWarrantyId < baseWarrantyId){
+            $j('#warrenty_select option').filter(function(index) {
+                if($j(this).attr('weight') == comWarrantyId){
+                    $j(this).attr('selected','selected');
+                    $j(this).show();
+                    $j('#order_warrenty').attr('value', $j(this).attr('value') );
+                }
+                if($j(this).attr('weight') > comWarrantyId){
+                    $j(this).hide();
+                }
+            });
+        }
+
+    }else{
+        $j('#commercial_app_value').attr('value',"0");
+
+        $j('#check-application').html('Non Commercial');
+
+        if(comWarrantyId == 0) return;
+        if(comWarrantyId < baseWarrantyId){
+            $j('#warrenty_select option').filter(function(index) {
+                if($j(this).attr('weight') > baseWarrantyId){
+                    $j(this).hide();
+                }else if($j(this).attr('weight') <= baseWarrantyId){
+                    $j(this).show();
+                }
+                if($j(this).attr('weight') == comWarrantyId){
+                    $j(this).hide();
+                }
+                if($j(this).attr('weight') == baseWarrantyId){
+                    $j(this).attr('selected','selected');
+                    $j('#order_warrenty').attr('value', $j(this).attr('value') );
+                }
+            });
+        }
+    }
+});
+/** Calculate FLUID PRICE*/
+function calculateFluid(checked){
+    if(checked){
+        var total = fluidAmount * 5;
+        $j('#fluid-amount').attr('value', Number(total).toFixed(2));
+        $j('#fluid-price').html('$'+Number(total).toFixed(2));
+
+        $j('#check-fluid').html('Included');
+
+        $j('#fluid-optional').attr('value','Included');
+
+        calculateTotalPrice();
+    }else{
+        $j('#fluid-amount').attr('value', '0.00' );
+        $j('#fluid-price').html('N/A');
+
+        $j('#check-fluid').html('Not Included');
+
+        $j('#fluid-optional').attr('value','Not Included');
+
+        calculateTotalPrice();
+    }
+}
+// Calculate Total Amount
+function calculateTotalPrice(){
+    var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>
+    var fluidPrice =  Number($j('#fluid-amount').attr('value'));
+
+    var partPrice = Number($j('#part-price').attr('value'));
+    var corePrice = Number($j('#core-price').attr('value'));
+    var total  = shippingPrice + fluidPrice + partPrice + corePrice;
+
+
+    if(tax_value){
+        var tax_amount = (total/100) * tax_value;
+        $j('#tax-total-amount').attr('value',tax_value);
+        var total  = total + tax_amount ;
+    }
+
+    $j('#total-price').attr('value', Number(total).toFixed(2));
+
+    $j('#total-amount').html('$'+Number(total).toFixed(2));
+}
+
+/*Reset Order Page*/
+$j('.cancel-order').click(function(){
+    Reman_QuickQuote.prototype.resetOrder();
+});
+/* Submit order for confirmation page*/
+$j('.submit-order').click(function(){
+    checkOrder();
+});
+
+/* Show submiy order button*/
+$j('#order-is-checked').click(function(){
+    if($j(this).is(':checked')) {
+        $j('#submit-order-button').show();
+    }else{
+        $j('#submit-order-button').hide();
+    }
+});
+
+/* Back to Order Page*/
+$j('#cancel-order-button').click(function(){
+    backToOrderEdit();
+});
+
+
+/** Order Submit Event */
+$j('#submit-order-button').click(function(){
+    submitOrder();
+});
+
+/** Allow Only Numeric Input for mileage field  (IE ONLY)*/
+if ($j.browser.msie){
+
+    $j("#input-mileage").keypress(function(event) {
+        return (/\d/.test(String.fromCharCode(event.which) ))
+    });
+}else{
+    $j("#input-mileage").on("input", function(event){
+        var isNumbers = ( /^\d+$/.test(event.target.value));
+        if(!isNumbers){
+            event.target.value = '';
+        }
+    });
+}
+
+
+// Shipping re-estimation
+$j("#zip-re-estimation").keypress(function(event) {
+    if(this.value.length == 5) return false;
+    if(this.value.length == 4) {
+        $j('#black-mask').show();
+        $j('#popup-shipping-re-estimation').show();
+    }
+});
+
+</script>
 
 </div>
 
