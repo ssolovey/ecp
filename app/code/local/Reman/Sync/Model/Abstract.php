@@ -70,10 +70,18 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 
 
 		if ( file_exists($path) ) {
+			$collection = Mage::getSingleton('index/indexer')->getProcessesCollection();
+			foreach ($collection as $process) {
+				$process->setMode(Mage_Index_Model_Process::MODE_MANUAL)->save();
+				// $process->setMode(Mage_Index_Model_Process::MODE_REAL_TIME)->save();
+			}
 
 			$this->_beforeParseFile();
 			
 			$this->_parseFile( $path );
+			foreach ($collection as $process) {
+				$process->setMode(Mage_Index_Model_Process::MODE_REAL_TIME)->save();
+			}
 			
 		} else {
 			$this->syncLog(false);
