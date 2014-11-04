@@ -16,10 +16,17 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	
 	// sync folder path
 	//protected $_folder = 'import/';
-	protected $_folder = 'ftpex/Download/';
+	protected $_folder;
 	
 	// current file path
 	protected $_file;
+
+	protected function _construct()
+	{
+		parent::_construct();
+
+		$this->_folder = Mage::getBaseDir('base') .  '/ftpex/Download/';
+	}
 	
 	/**
 	 * Sync resource data
