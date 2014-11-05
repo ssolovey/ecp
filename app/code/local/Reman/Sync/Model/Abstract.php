@@ -174,35 +174,37 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			);
 			$this->logMessage('Synced ' . $count . ' items');
 		} else {
-			/*$syncModel->setData(
+			$syncModel->setData(
 				array(
 					'model_id'	=> $this->_logid,
 					'cron_date' => $date
 				)
 			);
-			$this->logMessage('No updates');*/
+			//$this->logMessage('No updates');
 
-            $params = array(
-                'model' => $this->_logid,
-                'cron_date' => $date
-            );
+			try {
+				$params = array(
+					'model' => $this->_logid,
+					'cron_date' => $date
+				);
 
-            /* Send Export Fail Email */
+				/* Send Export Fail Email */
 
-            Mage::getModel('order/email')->sendEmail(
-                '4',
-                array(
-                    'name' => 'ETEREMAN',
-                    'email' => 'exportError@etereman.com'
-                ),
+				Mage::getModel('order/email')->sendEmail(
+					'4',
+					array(
+						'name' => 'ETEREMAN',
+						'email' => 'exportError@etereman.com'
+					),
 
-                'hybridtestmail@gmail.com',
-                'Support Team',
-                'Export Error Report',
-                $params
-            );
-
-
+					'hybridtestmail@gmail.com',
+					'Support Team',
+					'Export Error Report',
+					$params
+				);
+			} catch (Exception $e) {
+				//failed to process email sending. Skipping it
+			}
 		}
 		
 		$syncModel->save();
