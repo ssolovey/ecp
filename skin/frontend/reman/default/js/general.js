@@ -470,15 +470,73 @@ Reman_QuickQuote.prototype = {
 						});	
 						return;
 					}
-				var buffer = '<ul class="list list_first">'; // buffer string 
-					for(var i = 0; i<=response.length-1; i++){ // nest select with options 
-						buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
-						if(i%10 == 0 && i!=0){
-							buffer += '</ul><ul class="list">';
-						}
-					}
-					$j('#model_tbl').append(buffer);
-					$j('#preloader_cont').fadeOut(500,function(){
+
+
+                    /**
+                     *
+                     * Calculate equal items on rows according to overall model list length
+                     * If number of items <= 40, keep current implementation
+                     * If number of items > 40, number of items in the columns should = number of items / 4.
+                     *
+                     * For example if number of items = 41, then column 1 = 11, column 2 = 11, column 3 = 11, column 4 = 8.
+                     *
+                     * */
+
+                    var rowCount = 0;
+
+                    var itemCount = 0;
+
+                    var rowItemLength = Number(((response.length) / 4).toFixed(0));
+
+                    var restOfItems = ((((response.length) / 4) - rowItemLength) * 4)+rowItemLength;
+
+                    var buffer = '<ul class="list list_first">'; // buffer string
+
+                    if(response.length <= 40){
+
+                        for(var i = 0; i<=response.length-1; i++){ // nest select with options
+                            buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
+                            if(i%10 == 0 && i!=0){
+                                buffer += '</ul><ul class="list">';
+                            }
+                        }
+
+                    }else{
+
+                        //console.log('length: '+response.length+' rowItemLength: '+ rowItemLength+'('+ rowItemLength*3 +')  '+'restOfItems: '+restOfItems + '('+ (rowItemLength*3+restOfItems)+')');
+
+                        for(var i = 0; i<=response.length-1; i++){ // nest select with options
+
+                            itemCount+=1;
+
+                            if(rowCount == 3){
+
+                                rowItemLength = restOfItems;
+                            }
+
+                            if(itemCount <= rowItemLength){
+
+                                buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
+
+
+                            }else{
+
+                                rowCount+=1;
+
+                                itemCount = 1;
+
+                                buffer += '</ul><ul class="list"><li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
+                            }
+
+                        }
+
+                    }
+
+
+
+                    $j('#model_tbl').append(buffer);
+
+                    $j('#preloader_cont').fadeOut(500,function(){
 						$j('#breadcrumb_info').removeClass('disabled');
 						$j('#model_tbl').show();
 					});
