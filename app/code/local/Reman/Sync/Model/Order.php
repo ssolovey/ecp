@@ -183,7 +183,8 @@ class Reman_Sync_Model_Order extends Reman_Sync_Model_Abstract
 	// override
 	public function syncData()
 	{	
-		$this->_loadFile( 'ORDERS.TXT' );
+		//$this->_loadFile( 'ORDERS.TXT' );
+        $this->_scanFolder('Orders/');
 	}
 	
 	// run import test

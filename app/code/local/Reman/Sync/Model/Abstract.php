@@ -63,7 +63,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				$this->_parseFile( $file );
 			}
 		} else {
-			$this->syncLog(false);
+			$this->syncLog(false,0,'-/-','Folder is Empty!!!');
 		}	
 	}
 	
@@ -91,8 +91,10 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			}
 			
 		} else {
-			$this->syncLog(false);
-		}		
+
+            $this->syncLog(false,0,$filename, 'File is absent!!!');
+
+        }
 	}
 	
 	/**
@@ -150,7 +152,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 * Log message in cronlog table
 	 * after sync complete
 	 */
-	protected function syncLog( $synced, $count )
+	protected function syncLog( $synced, $count, $file, $reason  )
 	{	
 	
 		date_default_timezone_set('America/Chicago');
@@ -183,15 +185,18 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			//$this->logMessage('No updates');
 
 			try {
+
 				$params = array(
 					'model' => $this->_logid,
-					'cron_date' => $date
+					'cron_date' => $date,
+                    'file' => $file,
+                    'reason' => $reason
 				);
 
 				/* Send Export Fail Email */
 
 				Mage::getModel('order/email')->sendEmail(
-					'4',
+					'5',
 					array(
 						'name' => 'ETEREMAN',
 						'email' => 'exportError@etereman.com'
