@@ -17,7 +17,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	// sync folder path
 	//protected $_folder = 'import/';
 	protected $_folder;
-	
+	protected $_importedFolder;
+
 	// current file path
 	protected $_file;
 
@@ -26,6 +27,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		parent::_construct();
 
 		$this->_folder = Mage::getBaseDir('base') .  '/ftpex/Download/';
+		$this->_importedFolder = Mage::getBaseDir('base') .  '/ftpex/Imported/';
 	}
 	
 	/**
@@ -134,15 +136,15 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 
 	// Develop (head) 
 	$this->syncLog(true, $count);
+
+	$fileName = pathinfo($path, PATHINFO_FILENAME);
 	
-	
-	/* Prod 1.0
-		if ( copy( $path , '_imported/'.$path ) ) {
-		  unlink($path);
-		}
+	if ( copy( $path , $this->_importedFolder . $fileName ) ) {
+	  unlink($path);
+	}
 				
-		$this->syncLog($path, "Synced");
-	*/
+	$this->syncLog($path, "Synced");
+
 	
 	}
 	
