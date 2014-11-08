@@ -139,8 +139,8 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	// Develop (head) 
 	$this->syncLog(true, $count);
 
-	$fileName = pathinfo($path, PATHINFO_FILENAME);
-	
+	$fileName = pathinfo($path, PATHINFO_FILENAME) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+
 	if ( copy( $path , $this->_importedFolder . $fileName ) ) {
 	  unlink($path);
 	}
