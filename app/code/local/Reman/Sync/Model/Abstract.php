@@ -137,7 +137,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		
 
 	// Develop (head) 
-	$this->syncLog(true, $count);
+	$this->syncLog(true, $count,'','');
 
 	$fileName = pathinfo($path, PATHINFO_FILENAME) . '.' . pathinfo($path, PATHINFO_EXTENSION);
 
@@ -145,7 +145,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	  unlink($path);
 	}
 				
-	$this->syncLog($path, "Synced");
+	//$this->syncLog($path, "Synced");
 
 	
 	}
