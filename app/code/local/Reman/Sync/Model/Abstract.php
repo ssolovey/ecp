@@ -62,7 +62,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		if ( sizeof($files) ) {
 			foreach($files as $file)
 			{
-				$this->_parseFile( $file );
+				$this->_parseFile( $file , $folder );
 			}
 		} else {
 			$this->syncLog(false,0,'-/-','Folder is Empty!!!');
@@ -112,7 +112,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 * Parse file
 	 *
 	 */
-	protected function _parseFile( $path )
+	protected function _parseFile( $path , $folder )
 	{
 		$csv = new Varien_File_Csv();
 			
@@ -136,18 +136,26 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		//unlink($path);
 		
 
-	// Develop (head) 
-	$this->syncLog(true, $count,'','');
 
-	$fileName = pathinfo($path, PATHINFO_FILENAME) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $this->syncLog(true, $count,'','');
 
-	if ( copy( $path , $this->_importedFolder . $fileName ) ) {
-	  unlink($path);
-	}
-				
-	//$this->syncLog($path, "Synced");
+        $fileName = pathinfo($path, PATHINFO_FILENAME) . '.' . pathinfo($path, PATHINFO_EXTENSION);
 
-	
+        /* If folder is provided import files to folder*/
+        if($folder){
+
+            $pathToImportFolder = $this->_importedFolder.$folder;
+
+        } else{
+
+            $pathToImportFolder = $this->_importedFolder;
+
+        }
+
+        if ( copy( $path , $pathToImportFolder . $fileName ) ) {
+          unlink($path);
+        }
+
 	}
 	
 	/**
