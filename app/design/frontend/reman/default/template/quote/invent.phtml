@@ -8,22 +8,23 @@
  */ 
 		$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
 		//MKE Stock
-		$mke = $_product->getData('parts_inventory_nc');
+		$mke = (int)$_product->getData('parts_inventory_nc');
 		//BWI Stock
-		$bwi = $_product->getData('parts_inventory_ne');
+		$bwi = (int)$_product->getData('parts_inventory_ne');
 		//ONT Stock
-		$ont = $_product->getData('parts_inventory_sw');
+		$ont = (int)$_product->getData('parts_inventory_sw');
 		//ATL Stock
-		$atl = $_product->getData('parts_inventory_se');
+		$atl = (int)$_product->getData('parts_inventory_se');
 		//DALLAS Stock
-		$dal = $_product->getData('parts_inventory_sc');
+		$dal = (int)$_product->getData('parts_inventory_sc');
 
 		//PORTLAND Stock
-		$port = $_product->getData('parts_inventory_nw');
+		$port = (int)$_product->getData('parts_inventory_nw');
 
 		//IP
-		$ip = $_product->getData('parts_inventory_ip');
-		
+		$ip = (int)$_product->getData('parts_inventory_ip');
+
+
 		
 		// Current Logged Company
 		$company = Mage::helper('company')->getCustomerCompanyObject();
@@ -55,7 +56,7 @@
 		}else{
 			$inProgress = 0;
 		}
-		
+
 ?>
 
 <?php
@@ -94,7 +95,7 @@
 <div id="stock_avl">
     <div class="title">Pricing & Availability </div>
     <table id="ship-go-table" style="margin-bottom:25px;">
-        <?php if(($atl != 0 || $atl != null) && ($ont != 0 || $ont != null) && ($bwi != 0 || $bwi != null) && ($mke != 0 || $mke != null) && ($ip != 0 || $ip != null) && ($dal != 0 || $dal != null)):?>
+        <?php if(($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <tr>
             <td>
                 <input id="zip_value" value="" type="text" placeholder="Destination Zip" />
@@ -250,7 +251,7 @@
     </table>
 
 <?php /*?><<<<<<< HEAD<?php */?>
-    <?php if(($atl != 0 || $atl != null) && ($ont != 0 || $ont != null) && ($bwi != 0 || $bwi != null) && ($mke != 0 || $mke != null) && ($ip != 0 || $ip != null) && ($dal != 0 || $dal != null)):?>
+    <?php if(($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <!--Allow Order only for Company "On Account" -->
     	<?php if($company->payment == 'ACCT') :?>
     		<div style="display:none;" id="order-now-btn"></div>

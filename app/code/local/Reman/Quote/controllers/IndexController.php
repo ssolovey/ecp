@@ -10,6 +10,7 @@
  */
 class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 {
+
     public function indexAction()
     {
         
@@ -18,7 +19,8 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
 		$this->loadLayout();  //This function read all layout files and loads them in memory
         $this->renderLayout(); //This function processes and displays all layout phtml and php files.
-        
+
+
         // Quote Logger
         // Mage::getModel('quote/log')->send( $year, $make, $model, $applic );
     }
@@ -121,42 +123,70 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		$this->renderLayout(); 
 	
 	}
+
+    /* Init Shipping Service*/
+
+    protected $_shippingClient;
+
+    protected function _construct()
+    {
+        parent::_construct();
+
+        $this->_shippingClient = new SoapClient("http://services.afs.net/rate/rateservice_v2.asmx?WSDL");
+    }
+
 	/**
 	  * Call For ThirdPart Shipping Service
 	*/
 	public function estimateshippingAction(){
 		// parse request data
 		$request = $this->getRequest()->getPost();
-		$array = array();
+
+        $array = array();
+
+        /**
+         * PHP Session Locks – Prevent Blocking Requests
+         *
+         */
+        // start the session
+        session_start();
+        // close the session
+        session_write_close();
+
+        $params = array(
+               "clientId" => "1481",
+               "carrierId" => "0",
+               "shipmentDate" => date("m.d.y"),
+               "transportationMode" => "T",
+               "originPostalCode" => $request['stock'],
+               "destinationPostalCode" => $request['destzip'],
+               "rateItems" => "50|175",
+               "rateAccessorials" => "",
+               "rateIncrease" => "0",
+               "userName"      => "eteweb",
+               "password"  => "afsrates"
+            );
+
+        $data =  $this->_shippingClient->GetLTLRateQuoteAdvanced($params);
+
+        $response = simplexml_load_string($data->GetLTLRateQuoteAdvancedResult);
+
+        //$array[$request['stock']] =  $response;
+        echo json_encode($response);
+
+        //$result = (object) array();
+
+        /*foreach($response as $store)
+        {
+
+
+             $store->TrueCost
+
+        }*/
+
+
 		
-		
-		/** Production */
-		$client = new SoapClient("http://services.afs.net/rate/rateservice_v2.asmx?WSDL"); 
-		
-		  foreach($request['stocks'] as $value){
-				$params = array(
-					   "clientId" => "1481",
-					   "carrierId" => "0",
-					   "shipmentDate" => date("m.d.y"),
-					   "transportationMode" => "T",
-					   "originPostalCode" => $value,
-					   "destinationPostalCode" => $request['destzip'],
-					   "rateItems" => "50|175",
-					   "rateAccessorials" => "",
-					   "rateIncrease" => "0",
-					   "userName"      => "eteweb", 
-					   "password"  => "afsrates"
-					);
-			
-				$data = $client->GetLTLRateQuoteAdvanced($params);
-			
-				$response = simplexml_load_string($data->GetLTLRateQuoteAdvancedResult);
-				
-				$array[$value] =  $response;
-		  }
-	
-		
-		echo json_encode($array);	
+		//echo json_encode($array);
 	
 	}
 	

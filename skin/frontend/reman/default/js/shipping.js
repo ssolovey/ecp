@@ -19,6 +19,8 @@
 	75261: 'Dulles, TX'
  }
 
+/** Shipping estimation filter result object*/
+var filterResults={};
 /** 
   *	Estimate Shipping Ajax request
   * @param {number} - Destination ZIP.
@@ -26,210 +28,186 @@
   * @return JSON DATA (Shipping Service result)
 */
 function estimateShipping (stocks,destzip,inProgress){
-	$j.ajax({
 
-		url: "index/estimateshipping",
-		type: 'POST',
-		
-		data: {
-			stocks: stocks,
-			destzip: destzip
-		},
-		
-		beforeSend: function(){
-			
-			$j('.ship-preloader').show();
-			
-		},
-		
-		error: function(error){
-			alert('Shipping Service error. Try again');
-			$j('.ship-preloader').hide();
-			return;
-		},
-					
-		complete: function(data){
-			
-			var data = $j.parseJSON(data.responseText);
-			
-			buildTableResults(filterBestResult(data,inProgress));	
-		}
-			
-	});
+    var stock_length = stocks.length;
+
+    var result_index = 0;
+
+    for(var i=0; i<=stock_length-1; i++){
+
+        $j.ajax({
+
+            url: "index/estimateshipping",
+            type: 'POST',
+
+            data: {
+                stock: stocks[i],
+                destzip: destzip
+            },
+
+            beforeSend: function(){
+
+                $j('.ship-preloader').show();
+
+            },
+
+            error: function(error){
+                alert('Shipping Service error. Try again');
+                $j('.ship-preloader').hide();
+                return;
+            },
+
+            complete: function(data){
+
+                var data = $j.parseJSON(data.responseText);
+
+                /* Filter Best result on Service Day value */
+                getBestServiceDays(data,inProgress);
+
+                result_index+=1;
+
+                if(stock_length == result_index ) {
+
+                    var filteredData = filterResults;
+                    // reset filter Results
+                    filterResults = {};
+
+                    getBestServiceDays(filteredData, inProgress);
+
+                    // FIll In result values
+                    var bestDeliveryStock = Object.keys(filterResults)[0];
+                    // global variables for Order Page
+                    window.servicedays = filterResults[bestDeliveryStock].ServiceDays;
+                    window.truecost = filterResults[bestDeliveryStock].TrueCost;
+                    window.carrier = filterResults[bestDeliveryStock].CarrierName;
+                    window.store = storeZIP[bestDeliveryStock];
+
+                    // Form Days text
+                    if (window.servicedays > 1) {
+                        var textDays = 'Days';
+                    } else {
+                        var textDays = 'Day';
+                    }
+
+                    // Fill in Values
+                    $j('#ship-price-value').html('$' + window.truecost);
+                    $j('#ship-from-value').html(window.store);
+                    $j('#ship-time-value').html(window.servicedays + ' ' + textDays);
+                    // Show Values
+                    $j('.ship-time').show();
+                    $j('.ship-from').show();
+
+                    //Show order button
+                    $j('#order-now-btn').show();
+                    //Show prepay message
+                    $j('#prepay').show();
+                    // hide shipping preloader
+                    $j('.ship-preloader').hide();
+
+
+                }
+
+            }
+
+        });
+
+    }
+}
+
+/**
+ *
+ *Filter Best carrier according to Service Day rate
+ * @param data
+ * @param inProgress
+ */
+
+function getBestServiceDays(data,inProgress){
+
+    var bufferResult = {
+
+        OriginPostalCode:'',
+        CarrierName: '',
+        ServiceDays:'empty',
+        TrueCost:''
+    };
+
+    for(key in data ){
+
+        for(store in data[key] ) {
+
+            if (store == 'ServiceDays') {
+
+                /* If service Days == 0 add 1 day if not take value fro response*/
+                var days = (Number(data[key][store]) == 0)? 1: Number(data[key][store]);
+
+
+                /* If part is not available on any store and is in production progress = add 2 days for delivery  estimation */
+
+                if( key === '53223' && inProgress ){
+
+                     days = days + 2;
+
+                }
+
+
+                var price = Number(data[key]['TrueCost']);
+                var carrier = data[key]['CarrierName'];
+                var carrierId = data[key]['OriginPostalCode'];
+
+                console.log('ALLResultDays: ' + days );
+                console.log('ALLResultPrice: ' + price );
+
+                if (bufferResult.ServiceDays == 'empty') {
+
+                    bufferResult.ServiceDays = days;
+
+                    bufferResult.TrueCost = price;
+
+                    bufferResult.CarrierName = carrier;
+
+                    bufferResult.OriginPostalCode = carrierId;
+
+                } else {
+
+                    if (days < bufferResult.ServiceDays) {
+
+                        bufferResult.ServiceDays = days;
+
+                        bufferResult.TrueCost = price;
+
+                        bufferResult.CarrierName = carrier;
+
+                        bufferResult.OriginPostalCode = carrierId;
+
+                    }else if(days == bufferResult.ServiceDays){
+
+                        if(price < bufferResult.TrueCost){
+
+                            bufferResult.ServiceDays = days;
+
+                            bufferResult.TrueCost = price;
+
+                            bufferResult.CarrierName = carrier;
+
+                            bufferResult.OriginPostalCode = carrierId;
+
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    filterResults[bufferResult.OriginPostalCode] = bufferResult;
+
+    console.log(' !!!!!!!!!!!!!!!!!bufferResultCarrierID: '+bufferResult.OriginPostalCode);
+    console.log(' !!!!!!!!!!!!!!!!!bufferResultDATA: '+bufferResult.ServiceDays);
+    console.log('!!!!!!!!!!!!!!!!!!bufferResultPRICE: '+bufferResult.TrueCost);
+
 }
 
 
-/** 
-  *	Filter Shipping Service result data
-  * @param {object} - Service response object.
-  * @return Array - Best Shipping Carriers
-*/
-function filterBestResult(data,inProgress){
-	
-	var dataArray = [];
-	
-	var id = 0;
-					
-	for(key in data){ // Store Key (ZIP)
-		
-		var store = {};
-
-		var MinServiceDays = [];
-		
-		var responseLength = Object.keys(data[key]).length;
-		
-		var iterationIndex = 0;
-		
-		var carriers = {
-			store: storeZIP[key]
-		}
-		
-		for ( s in data[key]){ // SHIPPING results object 
-			
-			iterationIndex ++;
-			
-			if( carriers.store == "Milwaukee, WI" && inProgress ){
-				var servicedays = Number(data[key][s].ServiceDays) + 2;
-			}else{
-				var servicedays = Number(data[key][s].ServiceDays);
-			}
-			
-			
-			store[data[key][s].CarrierName] = {
-					'servicedays' : servicedays,
-					'truecost' : data[key][s].TrueCost
-			}
-			
-			MinServiceDays.push(store[data[key][s].CarrierName].servicedays);	
-			
-		}
-		
-		var bestCarrier =  MinServiceDays.min();
-		
-		
-		for(c in store){
-			
-			id ++;
-			if(store[c].servicedays == 0){
-				
-				var days = 1;
-			
-			}else{
-				
-				var days = store[c].servicedays;
-			}
-			
-			carriers[c] = {
-				'servicedays': days,
-				'truecost' : store[c].truecost,
-				'id': id
-			}	
-			
-		}	
-		dataArray.push(carriers);
-	}
-	return dataArray;
-}
-
-/** 
-  *	Form new filtered data with best results according to Shipping price
-  * @param {object} - Filtered response object.
-  * @return Array - Minimum days best carriers
-*/
-function buildTableResults(data){
-	 var daysFilter = [];
-	 for (key in data){
-		var storeName =  data[key].store;
-		for (k in data[key]){
-			if(k != 'store'){
-				var days = Number(data[key][k].servicedays); // Add One more day to estimated
-				if(days){
-					daysFilter.push(Number(days));
-				}
-			}
-		}			
-	 }
-	 getMinDaysCarrirer(data,daysFilter.min());
-}
-
-/** 
-  *	Form new filtered data with best results according to minimum Shipping days
-  * and shipping price
-  * @param {object} - Filtered response object.
-  * @return Array - Minimum days best carriers
-*/
-function getMinDaysCarrirer(data,mindays){
-  var minDaysDelivery = {};
-  var minPrice = []; 
-  for (key in data){
-	for (k in data[key]){
-		var hash = Math.floor((Math.random()*1000)+1);
-		if( mindays == data[key][k].servicedays){
-			minDaysDelivery[data[key].store+'_'+hash] = {
-				'carrier'    : k,
-				'servicedays': data[key][k].servicedays,
-				'truecost' : data[key][k].truecost,
-				'id': data[key][k].id
-			}
-			
-			minPrice.push(Number(minDaysDelivery[data[key].store+'_'+hash].truecost)); 
-		}
-	}
-  }
-   bestPrice(minDaysDelivery,minPrice);
-}
-
-/** 
-  *	Form best Price result according filtered best days result
-  * @param {object} - Filtered response object.
-  * @param {number} - Filtered minimum price.
-  * @return object - Best Carrier price, store ,service days
-*/
-function bestPrice(data,minPrice){
-	var bestCarrier = {};
-	var price = minPrice.min();
-	for (key in data){
-		if(price == Number(data[key].truecost)){
-			var store = key;
-			bestCarrier[key] = {
-				'carrier'    : data[key].carrier,
-				'servicedays': data[key].servicedays,
-				'truecost' : data[key].truecost,
-				'store': key
-			}
-		}
- 	 }
-	 // global variables for Order Page
-	 window.servicedays = bestCarrier[store].servicedays;
-	 window.truecost = bestCarrier[store].truecost;
-	 window.carrier = bestCarrier[store].carrier;
-	 window.store = bestCarrier[store].store;
-	 // Form Days text
-	 if(window.servicedays > 1){
-	 	var textDays = 'Days';
-	 }else{
-	 	var textDays = 'Day';
-	 }
-	 
-	 // Fill in Values
-	 $j('#ship-price-value').html( '$'+window.truecost );
-	 $j('#ship-from-value').html( window.store.substring(window.store.lastIndexOf('_'),-1));
-	 $j('#ship-time-value').html( window.servicedays + ' '+ textDays);
-	 // Show Values
-	 $j('.ship-time').show();
-	 $j('.ship-from').show();
-	 
-	 //Show order button
-	 $j('#order-now-btn').show();
-	 //Show prepay message
-	 $j('#prepay').show();
-	 // hide shipping preloader
-	 $j('.ship-preloader').hide();
-	 
-	 
-}
-
-Array.min = function( array ){
-    return Math.min.apply( Math, array );
-};
-	
