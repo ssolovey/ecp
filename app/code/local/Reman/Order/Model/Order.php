@@ -59,6 +59,20 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
 			$product = Mage::getModel('catalog/product')->load($product_id->getId());
 
+
+            /* decrease selected stock by 1 item */
+
+            $currentStockValue =  (int)$product->getData($data['ship_from_lb']);
+
+            if($currentStockValue > 0){
+
+                $product->setData($data['ship_from_lb'], 2);
+
+                $product->save();
+            }
+
+
+
 			$buyInfo = array(
 			        'qty'	=> 1
 			);

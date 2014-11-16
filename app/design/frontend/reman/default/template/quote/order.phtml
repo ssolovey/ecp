@@ -245,6 +245,7 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
             <td class="label">Ship From:</td>
             <td id="order-ship-from"></td>
             <input id="order-ship-from-input" type="hidden" name="ship_from" value="" />
+            <input id="order-ship-from-input-label" type="hidden" name="ship_from_lb" value="" />
         </tr>
 
         <tr>
@@ -596,9 +597,21 @@ $j(document).ready(function(){
     $j('#order-shipping-cost').html('$'+window.truecost);
 
     // Set Shp from warehouse
-    $j('#order-ship-from').html( window.store.substring(window.store.lastIndexOf('_'),-1));
+    $j('#order-ship-from').html(window.store);
 
-    $j('#order-ship-from-input').attr('value', window.store.substring(window.store.lastIndexOf('_'),-1) );
+
+    /** Map Parts stores ZIP values*/
+    var storeZIP = {
+        53223: 'parts_inventory_nc',
+        91761: 'parts_inventory_sw',
+        30344: 'parts_inventory_se',
+        21113: 'parts_inventory_ne',
+        75261: 'parts_inventory_sc',
+        97201: 'parts_inventory_nw'
+    }
+
+    $j('#order-ship-from-input').attr('value', window.store );
+    $j('#order-ship-from-input-label').attr('value', storeZIP[window.storeZIP] );
 
     // Form Days text
     if(window.servicedays > 1){

@@ -82,6 +82,7 @@ function estimateShipping (stocks,destzip,inProgress){
                     window.truecost = filterResults[bestDeliveryStock].TrueCost;
                     window.carrier = filterResults[bestDeliveryStock].CarrierName;
                     window.store = storeZIP[bestDeliveryStock];
+                    window.storeZIP = bestDeliveryStock;
 
                     // Form Days text
                     if (window.servicedays > 1) {

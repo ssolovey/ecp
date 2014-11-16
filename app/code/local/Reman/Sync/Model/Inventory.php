@@ -59,8 +59,6 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 			foreach ( $stockData as $key=>$value ) {
 				$currentValue = $product->getData($key);
 
-                //var_dump('currentValue: '.$currentValue.' value '.$value);
-
 				if ($currentValue != $value || $qty == 0 ) {
 					$needUpdate = true;
 					if ($value) {
@@ -75,7 +73,7 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 			if ($needUpdate) {
 				$product->save();
 			}
-            
+
 
 			$needUpdate = false;
 			if ($stockItem->getData('manage_stock') != 1) {
