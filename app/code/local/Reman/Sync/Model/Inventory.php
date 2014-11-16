@@ -34,9 +34,16 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 	{		
 		$product	=	$this->_getProductBySku( $data[0] );
 		$totalStock	=	0;
+
+
 		
 		
 		if ( $product ) {
+
+            $productId = $product->getId();
+            $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
+            $qty = $stockItem->getData('qty');
+
 			$stockData	=	array(
 				'parts_inventory_nw'	=>	$data[1],
 				'parts_inventory_nc'	=>	$data[2],
@@ -51,7 +58,10 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 			$needUpdate = false;
 			foreach ( $stockData as $key=>$value ) {
 				$currentValue = $product->getData($key);
-				if ($currentValue != $value) {
+
+                //var_dump('currentValue: '.$currentValue.' value '.$value);
+
+				if ($currentValue != $value || $qty == 0 ) {
 					$needUpdate = true;
 					if ($value) {
 						$product->setData($key, $value);
@@ -65,11 +75,7 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 			if ($needUpdate) {
 				$product->save();
 			}
-			
-			
-			$productId = $product->getId();
-			$stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
-			$stockItemId = $stockItem->getId();
+            
 
 			$needUpdate = false;
 			if ($stockItem->getData('manage_stock') != 1) {
@@ -81,6 +87,9 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 				$stockItem->setData('is_in_stock', $isInStock);
 				$needUpdate = true;
 			}
+
+
+
 			if ($stockItem->getData('qty') != $totalStock) {
 				$stockItem->setData('qty', $totalStock);
 				$needUpdate = true;
