@@ -142,8 +142,6 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// parse request data
 		$request = $this->getRequest()->getPost();
 
-        $array = array();
-
         /**
          * PHP Session Locks – Prevent Blocking Requests
          *
@@ -171,23 +169,8 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
         $response = simplexml_load_string($data->GetLTLRateQuoteAdvancedResult);
 
-        //$array[$request['stock']] =  $response;
+
         echo json_encode($response);
-
-        //$result = (object) array();
-
-        /*foreach($response as $store)
-        {
-
-
-             $store->TrueCost
-
-        }*/
-
-
-		
-		//echo json_encode($array);
-	
 	}
 	
 	/** 

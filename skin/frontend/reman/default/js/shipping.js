@@ -12,11 +12,12 @@
  
  /** Map Parts stores ZIP values*/	
  var storeZIP = {
-	53223: 'Milwaukee, WI',
-	91761: 'Ontario, CA',
-	30344: 'Atlanta, GA',
-	21113: 'Baltimore, MD',
-	75261: 'Dulles, TX'
+	 53223: 'Milwaukee, WI',
+	 91761: 'Ontario, CA',
+	 30344: 'Atlanta, GA',
+	 21113: 'Baltimore, MD',
+	 75261: 'Dulles, TX',
+     97201: 'Portland, OR'
  }
 
 /** Shipping estimation filter result object*/
@@ -72,7 +73,7 @@ function estimateShipping (stocks,destzip,inProgress){
                     // reset filter Results
                     filterResults = {};
 
-                    getBestServiceDays(filteredData, inProgress);
+                    getClosestDistance(filteredData);
 
                     // FIll In result values
                     var bestDeliveryStock = Object.keys(filterResults)[0];
@@ -128,7 +129,8 @@ function getBestServiceDays(data,inProgress){
         OriginPostalCode:'',
         CarrierName: '',
         ServiceDays:'empty',
-        TrueCost:''
+        TrueCost:'',
+        Distance:''
     };
 
     for(key in data ){
@@ -153,9 +155,11 @@ function getBestServiceDays(data,inProgress){
                 var price = Number(data[key]['TrueCost']);
                 var carrier = data[key]['CarrierName'];
                 var carrierId = data[key]['OriginPostalCode'];
+                var distance = Number(data[key]['Distance']);
 
-                console.log('ALLResultDays: ' + days );
+               /* console.log('ALLResultDays: ' + days );
                 console.log('ALLResultPrice: ' + price );
+                console.log('ALLDistance: ' + distance );*/
 
                 if (bufferResult.ServiceDays == 'empty') {
 
@@ -166,6 +170,8 @@ function getBestServiceDays(data,inProgress){
                     bufferResult.CarrierName = carrier;
 
                     bufferResult.OriginPostalCode = carrierId;
+
+                    bufferResult.Distance = distance;
 
                 } else {
 
@@ -179,6 +185,8 @@ function getBestServiceDays(data,inProgress){
 
                         bufferResult.OriginPostalCode = carrierId;
 
+                        bufferResult.Distance = distance;
+
                     }else if(days == bufferResult.ServiceDays){
 
                         if(price < bufferResult.TrueCost){
@@ -191,23 +199,103 @@ function getBestServiceDays(data,inProgress){
 
                             bufferResult.OriginPostalCode = carrierId;
 
+                            bufferResult.Distance = distance;
+
                         }
 
                     }
 
                 }
-
             }
         }
-
     }
 
     filterResults[bufferResult.OriginPostalCode] = bufferResult;
-
-    console.log(' !!!!!!!!!!!!!!!!!bufferResultCarrierID: '+bufferResult.OriginPostalCode);
-    console.log(' !!!!!!!!!!!!!!!!!bufferResultDATA: '+bufferResult.ServiceDays);
-    console.log('!!!!!!!!!!!!!!!!!!bufferResultPRICE: '+bufferResult.TrueCost);
-
 }
 
+
+function getClosestDistance(data){
+
+    var bufferResult = {
+
+        OriginPostalCode:'',
+        CarrierName: '',
+        ServiceDays:'empty',
+        TrueCost:'',
+        Distance:''
+
+    };
+
+    for(key in data ){
+
+        for(store in data[key] ) {
+
+            if (store == 'Distance') {
+
+                /* If service Days == 0 add 1 day if not take value fro response*/
+                var days = (Number(data[key]['ServiceDays']) == 0)? 1: Number(data[key]['ServiceDays']);
+
+                var price = Number(data[key]['TrueCost']);
+                var carrier = data[key]['CarrierName'];
+                var carrierId = data[key]['OriginPostalCode'];
+                var distance = Number(data[key]['Distance']);
+
+
+
+                if (bufferResult.ServiceDays == 'empty') {
+
+                    bufferResult.ServiceDays = days;
+
+                    bufferResult.TrueCost = price;
+
+                    bufferResult.CarrierName = carrier;
+
+                    bufferResult.OriginPostalCode = carrierId;
+
+                    bufferResult.Distance = distance;
+
+                } else {
+
+                    if (distance < bufferResult.Distance) {
+
+                        bufferResult.ServiceDays = days;
+
+                        bufferResult.TrueCost = price;
+
+                        bufferResult.CarrierName = carrier;
+
+                        bufferResult.OriginPostalCode = carrierId;
+
+                        bufferResult.Distance = distance;
+
+                    }else if(distance == bufferResult.Distance){
+
+                        if(price < bufferResult.TrueCost){
+
+                            bufferResult.ServiceDays = days;
+
+                            bufferResult.TrueCost = price;
+
+                            bufferResult.CarrierName = carrier;
+
+                            bufferResult.OriginPostalCode = carrierId;
+
+                            bufferResult.Distance = distance;
+
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    filterResults[bufferResult.OriginPostalCode] = bufferResult
+
+   /* console.log(' !!!!!!!!!!!!!!!!!bufferResultCarrierID: '+bufferResult.OriginPostalCode);
+    console.log(' !!!!!!!!!!!!!!!!!bufferResultDATA: '+bufferResult.ServiceDays);
+    console.log('!!!!!!!!!!!!!!!!!!bufferResultPRICE: '+bufferResult.TrueCost);
+    console.log('!!!!!!!!!!!!!!!!!!bufferResultDistance: '+bufferResult.Distance);*/
+
+}
 

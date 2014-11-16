@@ -47,11 +47,18 @@
 		if($dal != 0 && $dal != null){	
 			array_push($array, "75261");
 		}
+
+
+        if($port != 0 && $port != null){
+            array_push($array, "97201");
+        }
+
+
 		
 		$SHIPPING_PRICE = 200;
 		
 		//check for In Progress Items
-		if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
+		if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
 			$inProgress = 1;
 		}else{
 			$inProgress = 0;
@@ -95,7 +102,7 @@
 <div id="stock_avl">
     <div class="title">Pricing & Availability </div>
     <table id="ship-go-table" style="margin-bottom:25px;">
-        <?php if(($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
+        <?php if(($port != 0 || $port != null) ||($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <tr>
             <td>
                 <input id="zip_value" value="" type="text" placeholder="Destination Zip" />
@@ -235,7 +242,7 @@
             <td class="lable" style="font-weight: bold;">Availability:</td>
             <td style="width:100px; font-weight: bold;">
                 <?php
-					if(($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
+					if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
 						echo "Call for availability";
 					}else{
 						echo "Immediate";
@@ -251,7 +258,7 @@
     </table>
 
 <?php /*?><<<<<<< HEAD<?php */?>
-    <?php if(($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
+    <?php if(($port != 0 || $port != null) || ($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <!--Allow Order only for Company "On Account" -->
     	<?php if($company->payment == 'ACCT') :?>
     		<div style="display:none;" id="order-now-btn"></div>
