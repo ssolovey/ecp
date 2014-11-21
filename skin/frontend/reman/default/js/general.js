@@ -713,10 +713,9 @@ Reman_QuickQuote.prototype = {
 			var self = this;
 			if(subgroup == 0) {
 					$j.ajax({
-						url: "index/ajax",
+						url: "index/product",
 						type: 'POST',
 						data: {
-							step:4,
 							id:applic_id,
 							category: Reman_QuickQuote.prototype.currentCatSelected
 						},
@@ -730,27 +729,72 @@ Reman_QuickQuote.prototype = {
 						},
 
 						complete: function(data){
-							//parse response to JSON Object		  
-							var response = $j.parseJSON(data.responseText);
-							// If Session Expired
-							if(response.end_session) {
-								//show error popup
-								$j('#preloader_cont').hide();
-								$j('#session_error_popup').fadeIn();
-								
-								return;
-							}
-							//Set current Parts Family 
-							Reman_QuickQuote.prototype.currentPartFamilySelected = response.family;
-							
-							Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
-							// Set Current Part Number Name
-							Reman_QuickQuote.prototype.currentPartNumber = response.sku;
-							// Load Product Page
-							Reman_QuickQuote.prototype.loadProductInfo(applic_id,name,id);		
+
+                            if(data.responseText == "no sku"){
+                                $j('#preloader_cont').fadeOut(500,function(){
+                                    Reman_QuickQuote.prototype.currentPartRootSelected.pop();
+                                    $j('#breadcrumb_info').removeClass('disabled');
+                                    $j('#parts_tbl').show();
+                                    //show error popup
+                                    $j('#product_error_popup').fadeIn();
+                                });
+
+
+                                return false;
+
+                            }
+
+                            Reman_QuickQuote.prototype.currentPartRootSelected.push(name);
+
+                            // trancate group text if longer than 30 letters
+                            if(name.length >30){
+                                name = jQuery.trim(name).substring(0, 30).trim(this) + "...";
+                            }
+                            //hide parts table
+                            $j('#parts_tbl').hide();
+                            //insert product info block
+                            $j('#preloader_cont').fadeOut(500,function(){
+                                $j('#table_container').css('min-height', '');
+                                // set breadcrumb info about last successful or not succssful choise
+                                $j('.sel_group_link').parent().remove();
+
+                                if(name == ""){
+                                    $j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+Reman_QuickQuote.prototype.currentSelectedModel+'</span></span>');
+                                    Reman_QuickQuote.prototype.isGroupActive = true;
+                                }else{
+                                    $j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+id+'" type="'+$j('#'+id).attr('type')+'">'+name+'</span></span>');
+
+                                }
+
+                                $j('#breadcrumb_info').removeClass('disabled');
+                                // Show product page
+                                $j('#reman-product_info').show();
+                                // Check for IE8 USE Native innerHTML method
+                                if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) {
+                                    $j('#reman-product_info')[0].innerHTML = data.responseText;
+                                }else{
+                                    $j('#reman-product_info').html(data.responseText);
+                                }
+                                $j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
+
+                                // Set up current sected Drive type to product page
+                                if(Reman_QuickQuote.prototype.currentSelectedDrive != ''){
+                                    $j('#current_selected_drive').html(Reman_QuickQuote.prototype.currentSelectedDrive);
+                                    $j('#current_selected_drive_db').hide();
+                                    $j('#current_selected_drive').show();
+
+                                }
+
+                                Reman_QuickQuote.prototype.currentApplic_id = applic_id;
+
+
+
+
+
+                            });
+
 							// Load Invent Block
 							Reman_QuickQuote.prototype.loadInventoryInfo(applic_id);
-							
 
 						}
 				});
@@ -766,80 +810,7 @@ Reman_QuickQuote.prototype = {
 				
 			}
 	},
-	/**
-	 * Load Product Info 
-	*/
-	loadProductInfo: function(id,name,prevgroup){
-		var aplicStr = Reman_QuickQuote.prototype.currentPartRootSelected.join(' > ');
-		var make = $j.trim(Reman_QuickQuote.prototype.currentSelectedMake);
-		$j.ajax({
-				url: "index/product",
-				type: 'POST',
-				data: {
-					id:id,
-					make: make,
-					year: Reman_QuickQuote.prototype.currentSelectedYear,
-					model: Reman_QuickQuote.prototype.currentSelectedModel,
-					applic: aplicStr,
-					partnum: Reman_QuickQuote.prototype.currentPartNumber
-				},
-				complete: function(data){
-					if(Reman_QuickQuote.prototype.currentPartNumber == "N/A" || 
-						Reman_QuickQuote.prototype.currentPartNumber == "" ){
-						$j('#preloader_cont').fadeOut(500,function(){
-							Reman_QuickQuote.prototype.currentPartRootSelected.pop();
-							$j('#breadcrumb_info').removeClass('disabled');
-							$j('#parts_tbl').show();
-							//show error popup
-							$j('#product_error_popup').fadeIn();
-						});
-						return;
-					}					
-					// trancate group text if longer than 30 letters
-					if(name.length >30){
-						name = jQuery.trim(name).substring(0, 30).trim(this) + "...";
-					}
-					//hide parts table					
-					$j('#parts_tbl').hide();
-					//insert product info block	
-					$j('#preloader_cont').fadeOut(500,function(){
-						$j('#table_container').css('min-height', '');
-						// set breadcrumb info about last successful or not succssful choise
-						$j('.sel_group_link').parent().remove();
-						
-						if(name == ""){
-							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb model_link">'+Reman_QuickQuote.prototype.currentSelectedModel+'</span></span>');
-							Reman_QuickQuote.prototype.isGroupActive = true;
-						}else{
-							$j('#breadcrumb_info').append('<span><span>></span><span class="breadcrumb sel_group_link"  prevgroup="'+prevgroup+'" type="'+$j('#'+prevgroup).attr('type')+'">'+name+'</span></span>');
-						
-						}
 
-						$j('#breadcrumb_info').removeClass('disabled');
-						// Show product page
-						$j('#reman-product_info').show();
-						// Check for IE8 USE Native innerHTML method
-						if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) { 
-						 	$j('#reman-product_info')[0].innerHTML = data.responseText;
-						}else{
-						 	$j('#reman-product_info').html(data.responseText);
-						}
-						$j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
-						
-						// Set up current sected Drive type to product page
-						if(Reman_QuickQuote.prototype.currentSelectedDrive != ''){
-							$j('#current_selected_drive').html(Reman_QuickQuote.prototype.currentSelectedDrive);
-							$j('#current_selected_drive_db').hide();
-							$j('#current_selected_drive').show();
-							
-						}
-						
-						Reman_QuickQuote.prototype.currentApplic_id = id;
-						
-					});
-				}
-		});
-	},
 	/**
 	 * Load Inventory Info
 	*/
@@ -852,22 +823,14 @@ Reman_QuickQuote.prototype = {
 					id:id
 				},
 				complete: function(data){
-					if(Reman_QuickQuote.prototype.currentPartNumber == "N/A" || 
-						Reman_QuickQuote.prototype.currentPartNumber == "" ){
-							
-							return; // Abort request
-					}		
-					
+
+                    if(data.responseText == "no sku"){
+                        return false;
+                    }
+
 						$j('#reman-invent_info').show();
 						$j('#reman-invent_info').html(data.responseText);
-						
-						if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
-							var cat = 'Transmission';
-						}else{
-							var cat = 'Transfer Case';
-						}
-						//Update Banner text
-						$j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
+
 					}
 				
 		});

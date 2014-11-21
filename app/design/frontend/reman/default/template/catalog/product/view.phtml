@@ -33,7 +33,6 @@
 ?>
 <?php
 
-    $_helper = $this->helper('catalog/output');
 
     $_product = $this->getProduct();
 
@@ -74,21 +73,14 @@
     }
 ?>
 
-<script type="text/javascript">
-    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
-</script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view_quote">
     <div id="reman_product" class="product-essential">
-    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-        <div class="no-display">
-            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-            <input type="hidden" name="related_product" id="related-products-field" value="" />
-        </div>
+
 
         <div class="product-shop">
             <div class="product-img-box">
-            	<?php echo $this->getChildHtml('media') ?>        
+            	<?php echo $this->getChildHtml('media') ?>
          	</div>
 			<div id="general_info">
                   <table>
@@ -136,59 +128,7 @@
        </div>
       
         <div class="clearer"></div>
-    </form>
-   
-    <script type="text/javascript">
-    //<![CDATA[
-        var productAddToCartForm = new VarienForm('product_addtocart_form');
-        productAddToCartForm.submit = function(button, url) {
-            if (this.validator.validate()) {
-                var form = this.form;
-                var oldUrl = form.action;
 
-                if (url) {
-                   form.action = url;
-                }
-                var e = null;
-                try {
-                    this.form.submit();
-                } catch (e) {
-                }
-                this.form.action = oldUrl;
-                if (e) {
-                    throw e;
-                }
-
-                if (button && button != 'undefined') {
-                    button.disabled = true;
-                }
-            }
-        }.bind(productAddToCartForm);
-
-        productAddToCartForm.submitLight = function(button, url){
-            if(this.validator) {
-                var nv = Validation.methods;
-                delete Validation.methods['required-entry'];
-                delete Validation.methods['validate-one-required'];
-                delete Validation.methods['validate-one-required-by-name'];
-                // Remove custom datetime validators
-                for (var methodName in Validation.methods) {
-                    if (methodName.match(/^validate-datetime-.*/i)) {
-                        delete Validation.methods[methodName];
-                    }
-                }
-
-                if (this.validator.validate()) {
-                    if (url) {
-                        this.form.action = url;
-                    }
-                    this.form.submit();
-                }
-                Object.extend(Validation.methods, nv);
-            }
-        }.bind(productAddToCartForm);
-    //]]>
-    </script>
     </div>
 
    <div class="product-collateral">      
@@ -220,3 +160,20 @@
 			</div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    Reman_QuickQuote.prototype.currentPartFamilySelected = "<?php echo $this->getFamily();?>";
+    Reman_QuickQuote.prototype.currentPartNumber = "<?php echo $this->getSku();?>";
+
+
+    if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
+        var cat = 'Transmission';
+    }else{
+        var cat = 'Transfer Case';
+    }
+    //Update Banner text
+    $j('#welcome_bunner').html(Reman_QuickQuote.prototype.currentPartFamilySelected +' '+cat);
+
+
+</script>

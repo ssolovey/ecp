@@ -6,7 +6,9 @@
  * @package     Design
  * @author		Igor Zhavoronkin (zhavoronkin.i@gmail.com)
  */ 
-		$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id')); 
+
+        $_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getSku());
+
 		//MKE Stock
 		$mke = (int)$_product->getData('parts_inventory_nc');
 		//BWI Stock

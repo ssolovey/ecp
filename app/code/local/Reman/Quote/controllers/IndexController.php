@@ -62,21 +62,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 			echo json_encode($result_st3);
 		
 		}
-		/** Quote Step 4 - Load Product Page */
-		if($request['step'] == 4)
-		{
-			// get product object from catalog according to product ID
-			$result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
-			$productObj = new stdClass();
-			if($result_st4){
-				$productObj->sku = $result_st4->getSku();
-				$productObj->family = $result_st4->getData('parts_family');
-			}else{
-				$productObj->sku = "";
-			}
-			
-			echo json_encode($productObj);
-		}
+
 		// close connection
 		die;
 	}
@@ -86,38 +72,127 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 	public function productAction(){
 		// parse request data
 		$request = $this->getRequest()->getPost();
-		/**
+
+        /**
+         * PHP Session Locks – Prevent Blocking Requests
+         *
+         */
+        // start the session
+        session_start();
+        // close the session
+        session_write_close();
+
+        /**
 		 *Log Search Results
 		*/
-		Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
-		
-		/* Load Current selected product object*/
-		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$request['partnum']);
-		/* Get Product ID*/
-		$productId = $product->getId();
-		/* Init Product Object*/
-		Mage::helper('catalog/product')->initProduct($productId, $this);
-		/* Render FrontEnd */
-		$this->loadLayout();
-        //This function processes and displays all layout phtml and php files.
-		$this->renderLayout(); 
+		//Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
+
+        // get product object from catalog according to product ID
+        $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
+
+        if($result_st4){
+
+            $sku = $result_st4->getSku();
+
+            $family = $result_st4->getData('parts_family');
+
+            /* Load Current selected product object*/
+            $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+            /* Get Product ID*/
+            $productId = $product->getId();
+            /* Init Product Object*/
+            Mage::helper('catalog/product')->initProduct($productId, $this);
+
+            /* Render FrontEnd */
+            $this->loadLayout();
+
+            /* Get block reference*/
+            $block = Mage::app()->getLayout()->getBlock('root');
+
+            /* Set current SKU value*/
+            $block->setSku($sku);
+            /* Set current Family value*/
+            $block->setFamily($family);
+
+            //This function processes and displays all layout phtml and php files.
+            $this->renderLayout();
+
+
+        }else {
+
+
+
+            echo 'no sku';
+
+
+
+        }
+
+
 	
 	}
 	/** 
 	  * Load Inventory info block page for Quick Quote Block
 	*/
 	public function inventAction(){
-		
-		$this->loadLayout('invent'); 
-        //This function processes and displays all layout phtml and php files.
-		$this->renderLayout(); 
-	
+
+        // parse request data
+        $request = $this->getRequest()->getPost();
+
+
+        /**
+         * PHP Session Locks – Prevent Blocking Requests
+         *
+         */
+        // start the session
+        session_start();
+        // close the session
+        session_write_close();
+
+
+        // get product object from catalog according to product ID
+        $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
+
+        if($result_st4){
+
+            $sku = $result_st4->getSku();
+
+            $this->loadLayout('invent');
+
+            /* Get block reference*/
+            $block = Mage::app()->getLayout()->getBlock('quote');
+
+            /* Set current SKU value*/
+            $block->setSku($sku);
+            /* Set current Family value*/
+
+            //This function processes and displays all layout phtml and php files.
+            $this->renderLayout();
+
+
+        }else{
+
+            echo 'no sku';
+
+        }
+
+
+
 	}
 	/** 
 	  * Load Inventory info block page for Quick Quote Block
 	*/
 	public function shippingAction(){
-		
+
+        /**
+         * PHP Session Locks – Prevent Blocking Requests
+         *
+         */
+        // start the session
+        session_start();
+        // close the session
+        session_write_close();
+
 		$this->loadLayout('shipping'); 
         //This function processes and displays all layout phtml and php files.
 		$this->renderLayout(); 
