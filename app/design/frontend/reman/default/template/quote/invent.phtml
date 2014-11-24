@@ -136,7 +136,7 @@
         <tr>
             <td class="lable">Shipping:</td>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>
-            <td><?php	echo "$".Mage::helper('company')->getCustomerShippingPrice();?></td>
+            <td><?php	echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>
             <?php endif; ?>
             <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>
             <td><?php echo "to be estimated based on Zip";?></td>
