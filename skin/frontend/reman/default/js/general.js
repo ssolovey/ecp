@@ -486,13 +486,18 @@ Reman_QuickQuote.prototype = {
 
                     var itemCount = 0;
 
-                    var rowItemLength = Number(((response.length) / 4).toFixed(0));
+                    //var rowItemLength = Number(((response.length) / 3).toFixed(0));
 
-                    var restOfItems = ((((response.length) / 4) - rowItemLength) * 4)+rowItemLength;
+                    var rowItemLength = Math.ceil(response.length/3);
+
+                    //var restOfItems = ((((response.length) / 3) - rowItemLength) * 3)+rowItemLength;
+
+
+                    var restOfItems = response.length - (rowItemLength * 2);
 
                     var buffer = '<ul class="list list_first">'; // buffer string
 
-                    if(response.length <= 40){
+                    if(response.length <= 30){
 
                         for(var i = 0; i<=response.length-1; i++){ // nest select with options
                             buffer += '<li class="model_select"  value="'+response[i]['vehicle_id']+'">'+response[i]['model']+'</li>';
@@ -503,13 +508,13 @@ Reman_QuickQuote.prototype = {
 
                     }else{
 
-                        //console.log('length: '+response.length+' rowItemLength: '+ rowItemLength+'('+ rowItemLength*3 +')  '+'restOfItems: '+restOfItems + '('+ (rowItemLength*3+restOfItems)+')');
+                        console.log('length: '+response.length+' rowItemLength: '+ rowItemLength+'('+ ((rowItemLength*2)+restOfItems) +')  '+'restOfItems: '+restOfItems + '('+ (rowItemLength*2+restOfItems)+')');
 
                         for(var i = 0; i<=response.length-1; i++){ // nest select with options
 
                             itemCount+=1;
 
-                            if(rowCount == 3){
+                            if(rowCount == 2){
 
                                 rowItemLength = restOfItems;
                             }
