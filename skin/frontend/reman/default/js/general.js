@@ -26,6 +26,18 @@ $j(document).ready(function(){
 	});
 	/* Enable jQuery Input PlaceHolders for IE*/
 	initIEPlaceholders();
+
+
+
+    // Trigger Shipping estimation on Enter Button Event
+    $j('#sku-number').keydown(function(event) {
+        if (event.which == 13) {
+            if($j("#sku-number").attr("value") != ""){
+                Reman_QuickQuote.prototype.loadProductPageBySku($j("#sku-number").attr("value"));
+		}
+	   }
+	});
+
 	
 });
 
