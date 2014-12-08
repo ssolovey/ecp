@@ -875,6 +875,8 @@ Reman_QuickQuote.prototype = {
                             //show error popup
                             $j('#sku_error_popup').fadeIn();
 
+                            $j('#breadcrumb_info').removeClass('disabled');
+
 
                         });
 
@@ -897,6 +899,8 @@ Reman_QuickQuote.prototype = {
 
                         //show error popup
                         $j('#sku_error_popup').fadeIn();
+
+                        $j('#breadcrumb_info').removeClass('disabled');
 
 
                     });
