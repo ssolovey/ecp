@@ -856,12 +856,16 @@ Reman_QuickQuote.prototype = {
 
                         label = 'Automatic Transmissions';
 
+                        Reman_QuickQuote.prototype.currentCatSelected = 'T';
+
                         break;
                     }
 
                     case 'X':{
 
                         label = 'Transfer Case';
+
+                        Reman_QuickQuote.prototype.currentCatSelected = 'X';
 
                         break;
                     }
