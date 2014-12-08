@@ -95,16 +95,28 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
             $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $request['sku']);
 
 
-            /* Get Product ID*/
-            $productId = $product->getId();
-            /* Init Product Object*/
-            Mage::helper('catalog/product')->initProduct($productId, $this);
+            /* In  case of wrong sku number or sku number is not found in data */
 
-            /* Render FrontEnd */
-            $this->loadLayout();
+            if($product){
+                        /* Get Product ID*/
+                        $productId = $product->getId();
+                        /* Init Product Object*/
+                        Mage::helper('catalog/product')->initProduct($productId, $this);
 
-            //This function processes and displays all layout phtml and php files.
-            $this->renderLayout();
+                        /* Render FrontEnd */
+                        $this->loadLayout();
+
+                        //This function processes and displays all layout phtml and php files.
+                        $this->renderLayout();
+            }else{
+
+                echo 'no sku';
+
+
+            }
+
+
+
 
 
         }else{

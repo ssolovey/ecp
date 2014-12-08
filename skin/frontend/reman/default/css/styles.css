@@ -2165,7 +2165,7 @@ background-position: 0px 20px;
 	width: 601px;
 }
 
-#welcome_bunner, #sku_banner{
+#welcome_bunner{
 	background:url(../images/top_banner.png) no-repeat;
 	width:601px;
 	height:75px;
@@ -2180,10 +2180,36 @@ background-position: 0px 20px;
 }
 
 
+#ship-go-table{
+    position: relative;
+    float: left;
+}
+
 
 #sku_banner{
-    margin-bottom: 30px;
+    font-size: 22px;
+    color: #980404;
+    font-weight: bold;
+    width: 260px;
+    position: relative;
+    margin-right: -11px;
+    float: left;
+    margin-left: 37px;
 }
+
+#sku_banner .lable{
+    font-size: 19px;
+    position: relative;
+    float: left;
+}
+
+#sku_banner .ie{
+    font-size: 17px;
+    position: relative;
+    float: left;
+}
+
+
 /*Group select block*/
 #group_select{
 	position:relative;

@@ -849,7 +849,7 @@ Reman_QuickQuote.prototype = {
                 $j('#preloader_cont').show();
                 $j('#breadcrumb_info').addClass('disabled');
 
-                switch(sku[0]){
+                switch(sku[0].toUpperCase()){
 
                     case 'T':{
 
@@ -888,6 +888,21 @@ Reman_QuickQuote.prototype = {
             },
 
             complete: function(data){
+
+                if(data.responseText == 'no sku'){
+
+                    $j('#preloader_cont').fadeOut(500,function(){
+
+                        $j('#group_select').show();
+
+                        //show error popup
+                        $j('#sku_error_popup').fadeIn();
+
+
+                    });
+
+                    return false;
+                }
 
 
                 //insert product info block
