@@ -42,7 +42,18 @@
     $_description = $this->getProduct()->getDescription();
 
 
-    $engineSize = Mage::getModel('sync/applic')->getProductEngine($this->getRequest()->getPost('id'));
+    if(!$this->getRequest()->getPost('id')){
+
+        $apId = Mage::getModel('sync/applic')->getApplicIdBySku($_product->getData('sku'));
+
+    }else{
+
+        $apId = $this->getRequest()->getPost('id');
+    }
+
+
+    $engineSize = Mage::getModel('sync/applic')->getProductEngine($apId);
+
 
 ?>
 
@@ -163,8 +174,8 @@
 
 <script type="text/javascript">
 
-    Reman_QuickQuote.prototype.currentPartFamilySelected = "<?php echo $this->getFamily();?>";
-    Reman_QuickQuote.prototype.currentPartNumber = "<?php echo $this->getSku();?>";
+    Reman_QuickQuote.prototype.currentPartFamilySelected = "<?php echo $_product->getData('parts_family');?>";
+    Reman_QuickQuote.prototype.currentPartNumber = "<?php echo $_product->getData('sku');?>";
 
 
     if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){

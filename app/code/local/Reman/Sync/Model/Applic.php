@@ -60,7 +60,16 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	public function loadProduct($applic_id){
 		return $this->getResource()->loadProduct($applic_id);
     }
-	
+
+    /**
+     * Get Applic Id by SKU
+     * @return string
+     */
+    public function getApplicIdBySku($sku){
+
+        return $this->getResource()->getApplicIdBySku($sku);
+    }
+
 	/*
 	 * Get Product Engine Value
 	 * @return string 

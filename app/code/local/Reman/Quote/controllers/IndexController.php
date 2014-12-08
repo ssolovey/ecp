@@ -87,17 +87,14 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		*/
 		//Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
 
-        // get product object from catalog according to product ID
-        $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
 
-        if($result_st4){
+        if($request['sku']){
 
-            $sku = $result_st4->getSku();
-
-            $family = $result_st4->getData('parts_family');
 
             /* Load Current selected product object*/
-            $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+            $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $request['sku']);
+
+
             /* Get Product ID*/
             $productId = $product->getId();
             /* Init Product Object*/
@@ -106,31 +103,53 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
             /* Render FrontEnd */
             $this->loadLayout();
 
-            /* Get block reference*/
-            $block = Mage::app()->getLayout()->getBlock('root');
-
-            /* Set current SKU value*/
-            $block->setSku($sku);
-            /* Set current Family value*/
-            $block->setFamily($family);
-
             //This function processes and displays all layout phtml and php files.
             $this->renderLayout();
 
 
-        }else {
+        }else{
+
+
+            // get product object from catalog according to product ID
+            $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
+
+            if($result_st4){
+
+                $sku = $result_st4->getSku();
+
+                $family = $result_st4->getData('parts_family');
+
+                /* Load Current selected product object*/
+                $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+                /* Get Product ID*/
+                $productId = $product->getId();
+                /* Init Product Object*/
+                Mage::helper('catalog/product')->initProduct($productId, $this);
+
+                /* Render FrontEnd */
+                $this->loadLayout();
+
+                //This function processes and displays all layout phtml and php files.
+                $this->renderLayout();
+
+
+            }else {
 
 
 
-            echo 'no sku';
+                echo 'no sku';
 
+
+
+            }
 
 
         }
 
-
-	
 	}
+
+
+
 	/** 
 	  * Load Inventory info block page for Quick Quote Block
 	*/
@@ -149,13 +168,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
         // close the session
         session_write_close();
 
+        if($request['sku']){
 
-        // get product object from catalog according to product ID
-        $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
-
-        if($result_st4){
-
-            $sku = $result_st4->getSku();
+            $sku = $request['sku'];
 
             $this->loadLayout('invent');
 
@@ -169,12 +184,34 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
             //This function processes and displays all layout phtml and php files.
             $this->renderLayout();
 
-
         }else{
+            // get product object from catalog according to product ID
+            $result_st4 = Mage::getModel('sync/applic')->loadProduct($request['id']);
 
-            echo 'no sku';
+            if($result_st4){
 
+                $sku = $result_st4->getSku();
+
+                $this->loadLayout('invent');
+
+                /* Get block reference*/
+                $block = Mage::app()->getLayout()->getBlock('quote');
+
+                /* Set current SKU value*/
+                $block->setSku($sku);
+                /* Set current Family value*/
+
+                //This function processes and displays all layout phtml and php files.
+                $this->renderLayout();
+
+
+            }else{
+
+                echo 'no sku';
+
+            }
         }
+
 
 
 

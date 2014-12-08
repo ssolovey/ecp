@@ -117,10 +117,24 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 		$csv = new Varien_File_Csv();
 			
 		// Set delimiter to "\"
-		$csv->setDelimiter( $this->_delim );
-		
-		// Load data from CSV file
-		$data = $csv->getData( $path );
+
+
+        try {
+
+            $csv->setDelimiter( $this->_delim );
+            // Load data from CSV file
+            $data = $csv->getData( $path );
+
+            var_dump($path);
+
+        } catch (Exception $e)
+
+        {
+
+            var_dump($e->getMessage());
+            //echo $e->getMessage();
+
+        }
 
 		$count = 0;
 			

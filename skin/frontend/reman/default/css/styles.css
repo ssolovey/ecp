@@ -2165,7 +2165,7 @@ background-position: 0px 20px;
 	width: 601px;
 }
 
-#welcome_bunner{
+#welcome_bunner, #sku_banner{
 	background:url(../images/top_banner.png) no-repeat;
 	width:601px;
 	height:75px;
@@ -2177,6 +2177,12 @@ background-position: 0px 20px;
 	font-weight: bold;
 	position:relative;
 	float:left;
+}
+
+
+
+#sku_banner{
+    margin-bottom: 30px;
 }
 /*Group select block*/
 #group_select{
@@ -2807,7 +2813,7 @@ background-position: 0px 20px;
 }
 
 /*Error Part Number Popup*/
-#product_error_popup , #session_error_popup{
+#product_error_popup , #session_error_popup , #sku_error_popup{
 	width: 260px;
 	height: 90px;
 	border: 1px solid #E06060;
@@ -2822,7 +2828,7 @@ background-position: 0px 20px;
 	display:none;
 }
 
-#product_error_popup button , #session_error_popup button , #popup-shipping-re-estimation button{
+#product_error_popup button , #session_error_popup button , #popup-shipping-re-estimation button , #sku_error_popup button{
 	width: 80px;
 	height: 25px;
 	margin-top: 10px;
@@ -3524,7 +3530,7 @@ text-decoration: none;
 
 /* Shipping Estimation*/
 
-#estimate-shipping-btn{
+#estimate-shipping-btn, #sku-go-btn {
 	background:url(../images/shipping-go-search.png) no-repeat;
 	width: 50px;
 	height: 20px;
@@ -3533,7 +3539,7 @@ text-decoration: none;
 	cursor:pointer; 
 }
 
-#zip_value{
+#zip_value, #sku-number{
 	width: 100px;
 	border: 2px solid #000;
 	padding: 5px 0px 5px 4px;

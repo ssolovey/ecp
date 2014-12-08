@@ -72,7 +72,7 @@ Reman_QuickQuote.prototype = {
 					$j('#breadcrumb_info').append('<span><span class="breadcrumb cat_link">'+elem.innerHTML+'</span></span>');
 					//Update Banner text
 					$j('#welcome_bunner').html('What is the vehicle make?');
-					
+
 					return;
 
 					break;
@@ -219,9 +219,18 @@ Reman_QuickQuote.prototype = {
 			if (elem.className == 'breadcrumb cat_link'){
 				this.turnOnCatBreadcrumb();
 				this.resetSearchErrorResults();
-				this.currentPartRootSelected = [];
-				// reset Parts Additional Array data
-				this.partsAdditionlInfo = [];
+				
+                /* clear all*/
+                this.currentSelectedMake= '';
+                this.currentSelectedYear= '';
+                this.currentSelectedModel= '';
+                this.currentPartRootSelected=[];
+                this.currentPartNumber='';
+                this.currentSelectedEngine='';
+                this.currentSelectedDrive='';
+                this.partsAdditionlInfo=[];
+                this.currentApplic_id = '';
+
 				return;
 			}
 
@@ -780,6 +789,7 @@ Reman_QuickQuote.prototype = {
                                 }else{
                                     $j('#reman-product_info').html(data.responseText);
                                 }
+
                                 $j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
 
                                 // Set up current sected Drive type to product page
@@ -816,6 +826,104 @@ Reman_QuickQuote.prototype = {
 			}
 	},
 
+
+    loadProductPageBySku: function(sku){
+
+        //remove all spaces from sku string
+        sku = sku.replace(/\s+/g, '');
+
+        $j.ajax({
+
+            url: "index/product",
+
+            type: 'POST',
+
+            data: {
+                sku:sku
+            },
+
+            beforeSend: function(){
+                $j('#preloader_cont').css('height', $j('#table_container').height() + 'px');
+                $j('#table_container').css('min-height', $j('#table_container').height() + 'px');
+                $j('#group_select').hide();
+                $j('#preloader_cont').show();
+                $j('#breadcrumb_info').addClass('disabled');
+
+                switch(sku[0]){
+
+                    case 'T':{
+
+
+                        label = 'Automatic Transmissions';
+
+                        break;
+                    }
+
+                    case 'X':{
+
+                        label = 'Transfer Case';
+
+                        break;
+                    }
+
+                    default:{
+
+                        $j('#preloader_cont').fadeOut(500,function(){
+
+                            $j('#group_select').show();
+
+                            //show error popup
+                            $j('#sku_error_popup').fadeIn();
+
+
+                        });
+
+                        return false;
+                        break;
+                    }
+
+
+                }
+
+            },
+
+            complete: function(data){
+
+
+                //insert product info block
+                $j('#preloader_cont').fadeOut(500,function(){
+
+                    $j('#table_container').css('min-height', '');
+
+                    // update bread crumb link
+                    $j('#breadcrumb_info').append('<span><span class="breadcrumb cat_link">'+label+'</span></span>');
+
+
+                    $j('#breadcrumb_info').removeClass('disabled');
+
+                    // Show product page
+                    $j('#reman-product_info').show();
+
+                    // Check for IE8 USE Native innerHTML method
+                    if ($j.browser.msie  && parseInt($j.browser.version, 10) === 8) {
+
+                        $j('#reman-product_info')[0].innerHTML = data.responseText;
+
+                    }else{
+
+                        $j('#reman-product_info').html(data.responseText);
+                    }
+
+                });
+
+                // Load Invent Block
+                Reman_QuickQuote.prototype.loadInventoryInfoBySku(sku);
+
+            }
+        });
+
+    },
+
 	/**
 	 * Load Inventory Info
 	*/
@@ -840,6 +948,28 @@ Reman_QuickQuote.prototype = {
 				
 		});
 	},
+
+    loadInventoryInfoBySku:function(sku){
+        $j.ajax({
+
+            url: "index/invent",
+            type: 'POST',
+            data: {
+                sku:sku
+            },
+            complete: function(data){
+
+                if(sku[0] != 'T' && sku[0] != 'X' ){
+                    return false;
+                }
+
+                $j('#reman-invent_info').show();
+                $j('#reman-invent_info').html(data.responseText);
+
+            }
+
+        });
+    },
 	
 	/**
 	 * Load Order Table

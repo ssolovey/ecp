@@ -72,6 +72,24 @@ class Reman_Sync_Model_Mysql4_Applic extends Mage_Core_Model_Mysql4_Abstract
 			 return $product;
 		}
 	}
+
+    /**
+     * Get Applic Id by SKU
+     * @return string
+     */
+
+    public function getApplicIdBySku($sku){
+
+        $where = $this->_getReadAdapter()->quoteInto("part_number=?", $sku);
+
+        $select = $this->_getReadAdapter()->select()->from('reman_applic','applic_id')->where($where);
+
+        $result = $this->_getReadAdapter()->fetchAll($select); // run sql query
+
+
+        return $result[0]['applic_id'];
+
+    }
 	
 	/*
 	 * Get Product Engine Value

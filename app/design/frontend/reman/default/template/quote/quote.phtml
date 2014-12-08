@@ -25,8 +25,26 @@ endif;
         </div>
         <!--Group Selects-->
         <div id="group_select">
+
             <div id="autotrans" class="cat_select" cat="T">Automatic Transmissions</div>
             <div id="transcase" class="cat_select" cat="С">Transfer Case</div>
+
+
+            <div id="sku_banner">I know Part number!</div>
+
+
+            <table id="ship-go-table">
+                 <tr>
+                    <td>
+                       <input id="sku-number" value="" type="text" placeholder="Part Number">
+                    </td>
+                    <td>
+                       <div id="sku-go-btn" onclick="Reman_QuickQuote.prototype.loadProductPageBySku($j('#sku-number').attr('value')); return false;"></div>
+                    </td>
+                 </tr>
+            </table>
+
+
         </div>
         <!--Make Selection-->
         <div id="make_tbl" style="display:none;">
@@ -54,6 +72,11 @@ endif;
         <div id="product_error_popup">
             <span>Part number for selected configuration is not available.</span>
             <button onclick="$j('#product_error_popup').fadeOut();">OK</button>
+        </div>
+
+        <div id="sku_error_popup">
+            <span>Part Number is not valid !!!</span>
+            <button onclick="$j('#sku_error_popup').fadeOut();">OK</button>
         </div>
 
         <div id="session_error_popup">
