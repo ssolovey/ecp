@@ -3556,7 +3556,7 @@ text-decoration: none;
 
 /* Shipping Estimation*/
 
-#estimate-shipping-btn, #sku-go-btn {
+#estimate-shipping-btn {
 	background:url(../images/shipping-go-search.png) no-repeat;
 	width: 50px;
 	height: 20px;
@@ -3565,10 +3565,29 @@ text-decoration: none;
 	cursor:pointer; 
 }
 
-#zip_value, #sku-number{
+
+#sku-go-btn {
+    background: url(../images/shipping-go-search.png) no-repeat;
+    width: 50px;
+    height: 20px;
+    margin-left: 15px;
+    margin-top: 11px;
+    cursor: pointer;
+}
+
+
+#zip_value{
 	width: 100px;
 	border: 2px solid #000;
 	padding: 5px 0px 5px 4px;
+}
+
+
+#sku-number{
+    width: 315px;
+    border: 2px solid #000;
+    padding: 10px 0px 10px 5px;
+    font-size: 16px;
 }
 
 
