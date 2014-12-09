@@ -178,6 +178,14 @@
     Reman_QuickQuote.prototype.currentPartNumber = "<?php echo $_product->getData('sku');?>";
 
 
+    if(Reman_QuickQuote.prototype.currentSelectedYear == ""){
+
+
+        Reman_QuickQuote.prototype.currentSelectedYear = "<?php echo $_product->getData('parts_start_year')?>"+" - "+"<?php echo $_product->getData('parts_end_year')?>";
+
+        $j('#current_selected_year').html(Reman_QuickQuote.prototype.currentSelectedYear);
+    }
+
     if(Reman_QuickQuote.prototype.currentCatSelected == 'T'){
         var cat = 'Automatic Transmission';
     }else{
