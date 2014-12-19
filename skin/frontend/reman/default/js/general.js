@@ -1015,7 +1015,7 @@ Reman_QuickQuote.prototype = {
 				url: "index/order",
 				type: 'POST',
 				data: {
-					id: Reman_QuickQuote.prototype.currentApplic_id,
+					sku: Reman_QuickQuote.prototype.currentPartNumber,
 					year: Reman_QuickQuote.prototype.currentSelectedYear,
 					model: Reman_QuickQuote.prototype.currentSelectedModel,
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
