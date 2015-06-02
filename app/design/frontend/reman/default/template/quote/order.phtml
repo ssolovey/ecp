@@ -134,60 +134,69 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
 
         <tr>
             <td class="label">Make:</td>
-            <td><?php echo $this->getRequest()->getPost('make') ?></td>
-            <input type="hidden" name="make" value="<?php echo $this->getRequest()->getPost('make') ?>" />
+            <td><?php
+
+                    $maker = $this->getRequest()->getPost('make');
+                    echo (!$maker)? '""' : $maker;
+
+                ?>
+
+            </td>
+            <input type="hidden" name="make" value="<?php echo (!$maker)? '""' : $maker; ?>" />
 
         </tr>
         <tr>
             <td class="label">Model:</td>
-            <td><?php echo $this->getRequest()->getPost('model'); ?></td>
-            <input type="hidden" name="model" value="<?php echo $this->getRequest()->getPost('model'); ?>" />
+            <td><?php
+
+                    $model =  $this->getRequest()->getPost('model');
+                    echo (!$model)? '""' : $model;
+
+                ?>
+            </td>
+            <input type="hidden" name="model" value="<?php echo (!$model)? '""' : $model; ?>" />
         </tr>
         <tr>
             <td class="label">Engine:</td>
             <td>
                 <?php
-									if($this->getRequest()->getPost('engine') != NULL){
-                echo $this->getRequest()->getPost('engine');
-                }else{
-                echo 'N/A';
-                }
+
+                        $engine = $this->getRequest()->getPost('engine');
+                        echo (!$engine)? '""' : $engine;
 
                 ?>
-                <input type="hidden" name="engine" value="<?php  echo $this->getRequest()->getPost('engine'); ?>" />
+                <input type="hidden" name="engine" value="<?php echo (!$engine)? '""' : $engine; ?>" />
             </td>
         </tr>
         <tr>
             <td class="label">Drive:</td>
             <td><?php
-									if($this->getRequest()->getPost('drive') == ""){
-                $drive = $_product->getData('parts_drive');
+
+                if(!$this->getRequest()->getPost('drive')){
+
+                    $drive = $_product->getData('parts_drive');
+
                 }else{
-                $drive = $this->getRequest()->getPost('drive');
+
+                    $drive = $this->getRequest()->getPost('drive');
                 }
 
-                if($drive == NULL){
-                echo 'N/A';
-                }else{
-                echo $drive;
-                }
 
+                echo (!$drive)? '""' : $drive;
 
                 ?>
 
-                <input type="hidden" name="drive" value="<?php echo $drive; ?>" />
+                <input type="hidden" name="drive" value="<?php  echo (!$drive)? '""' : $drive; ?>" />
             </td>
         </tr>                        <tr>
         <td class="label">Notes:</td>
         <td><?php
-									if($partNotes != NULL){ 
-										echo $partNotes;
-									}else{
-										echo 'N/A';
-									}
-								?>
+
+                echo (!$partNotes)? '""' : $partNotes;
+
+            ?>
         </td>
-        <input type="hidden" name="vehicle_notes" value="<?php echo $partNotes;?>" />
+        <input type="hidden" name="vehicle_notes" value="<?php echo (!$partNotes)? '""' : $partNotes; ?>" />
     </tr>
     </table>
     <div style="clear:both"></div>
@@ -414,26 +423,26 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
             <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
             <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
             <?php else: ?>
-            <td>N/A</td>
+            <td>""</td>
             <input type="hidden"  name="tax_percent" value="0.00" />
-            <input type="hidden"  name="tax_total" value="N/A" />
+            <input type="hidden"  name="tax_total" value='""' />
             <?php endif; ?>
         </tr>
         <tr>
             <td class="label">Fluid:</td>
             <td id="fluid-price">
                 <?php
-								 	if($fluid == 'R'){
-								 		echo '$'.number_format($fliudPrice,2,'.','');
-									}else{
-										echo 'N/A';
-									}
-								 ?>
+                    if($fluid == 'R'){
+                        echo '$'.number_format($fliudPrice,2,'.','');
+                    }else{
+                        echo '""';
+                    }
+                 ?>
             </td>
             <?php if($fluid == 'R'):?>
             <input type="hidden"  name="fluid_total" value="<?php echo number_format($fliudPrice,2,'.','') ?>" />
             <?php else: ?>
-            <input type="hidden"  name="fluid_total" value="N/A" />
+            <input type="hidden"  name="fluid_total" value='""' />
             <?php endif; ?>
         </tr>
 
@@ -485,10 +494,10 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
         <tr style="height:40px;">
             <td class="label">Fluid Amount:</td>
             <td><?php
-									if($_product->parts_fluid_quantity != NULL){
-                echo $_product->parts_fluid_quantity.' quarts';
+                if($_product->parts_fluid_quantity != NULL){
+                    echo $_product->parts_fluid_quantity.' quarts';
                 }else{
-                echo 'N/A';
+                    echo '""';
                 }
                 ?>
             </td>
@@ -496,7 +505,7 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
         <?php endif; ?>
         <tr>
             <td class="label">Other Charges:</td>
-            <td>N/A</td>
+            <td>""</td>
         </tr>
     </table>
 </div>
