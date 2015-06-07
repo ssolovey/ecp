@@ -220,7 +220,8 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
             'total_amount' => $data['total_amount'],
 
              /***** Warranty ****/
-             'warranty_text'=> $data['warranty_text']
+             'warranty_text'=> $data['warranty_text'],
+             'order_notes'=> $data['order_notes']
 
 
 
@@ -245,7 +246,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
         Mage::getModel('order/email')->sendEmail(
 
-               '3',
+               'reman_order_confirmation',
 
                 array(
                     'name' => 'ETEREMAN',

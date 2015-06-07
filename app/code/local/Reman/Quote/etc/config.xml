@@ -39,5 +39,16 @@
                 <class>Reman_Quote_Model</class>
             </quote>
         </models>
+
+        <template>
+            <email>
+                <reman_order_confirmation>
+                    <label>Reman Order Confirmation</label>
+                    <file>order_email_template.html</file>
+                    <type>html</type>
+                </reman_order_confirmation>
+        </email>
+    </template>
+
 	</global>
 </config>

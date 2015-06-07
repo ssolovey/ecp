@@ -513,7 +513,7 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
 
 <div id="warranty-info" class="check-price-order">
     <div class="title"><span>Warranty</span></div>
-    <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value')); return false;" >
+    <select id="warrenty_select" onchange="$j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value')); $j('#order_warrenty_text').attr('value', $j('#warrenty_select option:selected').html()); return false;" >
         <?php  foreach($warranties as $index): ?>
         <option <?php if($index['weight'] == $warrantyWeightID): ?> selected="selected"
         <?php else: ?>
