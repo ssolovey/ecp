@@ -11,7 +11,7 @@
  var MAXCOST = 200;
  
  /** Map Parts stores ZIP values*/	
- var storeZIP = {
+ var storeZIPMap = {
 	 53223: 'Milwaukee, WI',
 	 91761: 'Ontario, CA',
 	 30344: 'Atlanta, GA',
@@ -81,7 +81,7 @@ function estimateShipping (stocks,destzip,inProgress){
                     window.servicedays = filterResults[bestDeliveryStock].ServiceDays;
                     window.truecost = filterResults[bestDeliveryStock].TrueCost;
                     window.carrier = filterResults[bestDeliveryStock].CarrierName;
-                    window.store = storeZIP[bestDeliveryStock];
+                    window.store = storeZIPMap[bestDeliveryStock];
                     window.storeZIP = bestDeliveryStock;
 
                     // Form Days text

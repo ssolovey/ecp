@@ -103,162 +103,94 @@
 
 <div id="stock_avl">
     <div class="title">Pricing</div>
-    <table id="ship-go-table" style="margin-bottom:25px;">
-        <?php if(($port != 0 || $port != null) ||($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
-        <tr>
-            <td>
-                <input id="zip_value" value="" type="text" placeholder="Destination Zip" />
-            </td>
-            <td>
-                <div id="estimate-shipping-btn"></div>
-            </td>
-        </tr>
-        <?php endif; ?>
-    </table>
 
     <table class="pricing">
-        <tr>
-            <td class="lable">Your price:</td>
-            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
-        </tr>
-        <tr>
-            <td class="lable">Core:</td>
-            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
-        </tr>
-
-        <?php if ($isFluidShown): ?>
-        <tr>
-            <td class="lable">Fluid price:</td>
-            <td>$<?php echo number_format($_product->getData('parts_fluid_quantity')*5,2,'.','');?></td>
-        </tr>
-        <?php endif; ?>
-
-        <tr>
-            <td class="lable">Shipping:</td>
-            <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>
-            <td><?php	echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>
-            <?php endif; ?>
-            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>
-            <td><?php echo "to be estimated based on Zip";?></td>
-            <?php endif; ?>
-        </tr>
         <tr style="height:20px;">
             <td class="lable">MSRP:</td>
             <td>$<?php echo number_format($_product->getData('parts_msrp'),2,'.','');?></td>
         </tr>
         <tr>
-            <td class="lable">Warranty:</td>
-            <td>
-                <?php
+            <td class="lable">Your price:</td>
+            <td>$<?php echo number_format($_product->getPrice(),2,'.','');?></td>
+        </tr>
+        <tr>
+            <td class="lable">Core Value:</td>
+            <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
+        </tr>
+
+        <?php if ($isFluidShown): ?>
+            <tr>
+                <td class="lable">Fluid price:</td>
+                <td>$<?php echo number_format($_product->getData('parts_fluid_quantity')*5,2,'.','');?></td>
+            </tr>
+        <?php endif; ?>
+
+        <tr>
+            <td class="lable">Shipping:</td>
+            <?php if(Mage::helper('company')->getCustomerShippingPrice() != "NULL"):?>
+                <td><?php	echo "$".number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?></td>
+            <?php endif; ?>
+            <?php if(Mage::helper('company')->getCustomerShippingPrice() == "NULL"):?>
+                <td><?php echo "to be estimated based on Zip";?></td>
+            <?php endif; ?>
+        </tr>
+
+        <tr>
+
+            <td class="lable">Total:</td>
+            <td></td>
+
+        </tr>
+
+    </table>
+    <span style="font-size: 10px; padding-left: 29px; color: #000;">*Core value is deferred.</span>
+
+    <div class="title" style="margin-top: 15px;">Warranty</div>
+
+    <span style="font-size: 12px; color: #000000; padding-left: 25px;">
+        <?php
                 $partType = $_product->getName();
                 echo Mage::helper('warranty')->getBaseWarrantyLabel($partType[0],$_product);
-                ?>
-            </td>
-        </tr>
-    </table>
+        ?>
 
-    <?php /*><div style="margin-top:5px;" class="title">Availability</div><*/?>
+    </span>
 
-<?php /*>
-    <table>
+
+    <table class="ship-from" style="display:none;">
         <tr>
-            <td class="lable" width="60%">Milwaukee, WI:</td>
-            <td id="mke">
-                <?php
-					if($mke == 0 || $mke == null){
-						echo 'PLEASE CALL';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
+            <td class="lable" style=" font-weight: bold;">Ship From:</td>
+            <td id="ship-from-value"  style=" font-weight: bold;"></td>
         </tr>
         <tr>
-            <td class="lable">Baltimore, MD:</td>
-            <td id="bwi">
-                <?php
-					if($bwi == 0 || $bwi == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Ontario, CA:</td>
-            <td id="ont">
-                <?php
-					if($ont == 0 || $ont == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Atlanta, GA:</td>
-            <td id="atl">
-                <?php
-					if($atl == 0 || $atl == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Dallas, TX:</td>
-            <td id="dal">
-                <?php
-					if($dal == 0 || $dal == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable">Portland, OR:</td>
-            <td id="port">
-                <?php
-					if($port == 0 || $port == null){
-						echo 'NO';
-					}else{
-						echo '<span style="color:#f6193a">YES</span>';
-                }
-                ?>
-            </td>
+            <td class="lable" style=" font-weight: bold;">Ship Time:</td>
+            <td id="ship-time-value" style="font-weight: bold;"></td>
         </tr>
 
     </table>
- < */?>
 
-    <table>
-        <tr>
-            <td class="lable ship-from" style="display:none; font-weight: bold;">Ship From:</td>
-            <td id="ship-from-value" class="ship-from" style="display:none; font-weight: bold;"></td>
-        </tr>
 
-        <tr>
-            <td class="lable" style="font-weight: bold;">Availability:</td>
-            <td style="width:100px; font-weight: bold;">
-                <?php
-					if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip == 0 || $ip == null) && ($dal == 0 || $dal == null)){
-						echo "Call for availability";
-					}else{
-						echo "Immediate";
-					}
-		?>
-            </td>
-        </tr>
-        <tr>
-            <td class="lable ship-time" style="display:none; font-weight: bold;">Ship Time:</td>
-            <td id="ship-time-value" class="ship-time" style="display:none; font-weight: bold;"></td>
-        </tr>
+    <div class="title" style="margin-top: 5px;">Availability and Order</div>
+
+    <table id="ship-go-table" style="margin-bottom:25px;">
+        <?php if(($port != 0 || $port != null) ||($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
+            <tr>
+                <td>
+                    <input id="zip_value" value="" type="text" placeholder="Destination Zip" />
+                </td>
+                <td>
+                    <div id="estimate-shipping-btn"></div>
+                </td>
+            </tr>
+
+
+            <?php else: ?>
+
+
+            <div style="font-size: 12px;color: #000000;margin-top: 10px; margin-left: 42px;">Call for availability</div>
+
+            <?php endif; ?>
+
+
 
     </table>
 
@@ -266,7 +198,7 @@
     <?php if(($port != 0 || $port != null) || ($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <!--Allow Order only for Company "On Account" -->
     	<?php if($company->payment == 'ACCT') :?>
-    		<div style="display:none;" id="order-now-btn"></div>
+    		<div style="display:none; margin-top: 60px;" id="order-now-btn"></div>
 		<?php endif; ?>
        
         
