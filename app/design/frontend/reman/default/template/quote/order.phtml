@@ -203,7 +203,7 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
     <table id="vin-mileage-table" class="vin" style="margin-left:55px; margin-top:25px;">
         <tr class="check-tr">
             <td class="label">VIN:</td>
-            <td id="input-vin"><input type="text" name="vin" class="required-entry" /><em>*</em></td>
+            <td id="input-vin"><input type="text" name="vin" maxlength="17" class="required-entry" /><em>*</em></td>
             <td id="check-vin"></td>
         </tr>
         <tr class="check-tr">
