@@ -21,6 +21,15 @@ class Reman_Sync_Model_Gsp extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[1])
+            || !isset($item[2])
+            || !isset($item[3])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$this->setData(
 			array(
 				'customer_id'	=>		$item[0],

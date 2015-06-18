@@ -21,6 +21,12 @@ class Reman_Sync_Model_Taxes extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[3])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
 		$this->setData(
 			array(
 				'tax_id'	=>		$item[0],

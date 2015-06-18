@@ -20,6 +20,14 @@ class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[1])
+            || !isset($item[4])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$this->setData(
 			array(
 				'customer_id'	=>		$item[0],
@@ -27,7 +35,9 @@ class Reman_Sync_Model_Gsw extends Reman_Sync_Model_Abstract
 				'warranty_id'	=>		$item[4]
 			)		    	
 		);
-		$this->save();		
+		$this->save();
+
+        return true;
 	}
 	
 	// override

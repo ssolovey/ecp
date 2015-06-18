@@ -64,9 +64,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 			{
 				$this->_parseFile( $file , $folder );
 			}
-		} else {
-			$this->syncLog(false,0,'-/-','Folder is Empty!!!');
-		}	
+		}
 	}
 	
 	/**
@@ -76,7 +74,6 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	protected function _loadFile( $filename )
 	{	
 		$path = $this->_folder . $filename;
-
 
 		if ( file_exists($path) ) {
 			$collection = Mage::getSingleton('index/indexer')->getProcessesCollection();
@@ -92,11 +89,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				$process->setMode(Mage_Index_Model_Process::MODE_REAL_TIME)->save();
 			}
 			
-		} else {
-
-            $this->syncLog(false,0,$filename, 'File is absent!!!');
-
-        }
+		}
 	}
 	
 	/**
@@ -112,9 +105,10 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 	 * Parse file
 	 *
 	 */
-	protected function _parseFile( $path , $folder )
+	protected function _parseFile( $path , $folder = false )
 	{
-		$csv = new Varien_File_Csv();
+
+        $csv = new Varien_File_Csv();
 			
 		// Set delimiter to "\"
 
@@ -125,27 +119,29 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
             // Load data from CSV file
             $data = $csv->getData( $path );
 
-            var_dump($path);
-
         } catch (Exception $e)
 
         {
-
-            var_dump($e->getMessage());
-            //echo $e->getMessage();
-
+            $this->syncLog(false, 0, $path, 'CSV parse error:' . $e->getMessage());
+            return false;
         }
 
 		$count = 0;
-			
-		foreach( $data as $item ) {
-			
-			if ( sizeof($item) > 1 ) {
-				if ( $this->_parseItem( $item ) !== 0 ) {
-					$count++;
-				}
-			}
-		}
+
+        foreach ($data as $item) {
+
+            if (sizeof($item) > 1) {
+                try {
+                    if ($this->_parseItem($item) !== 0) {
+                        $count++;
+                   }
+                } catch (Exception $e) {
+                    $this->syncLog(false, 0, $path, 'CSV parse error: ' . $e->getMessage());
+                    continue;
+                }
+
+            }
+        }
 
 		//unlink($path);
 		
@@ -218,7 +214,6 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				);
 
 				/* Send Export Fail Email */
-
 				Mage::getModel('order/email')->sendEmail(
 					'5',
 					array(

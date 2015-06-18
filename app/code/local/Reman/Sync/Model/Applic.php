@@ -20,6 +20,19 @@ class Reman_Sync_Model_Applic extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[2])
+            || !isset($item[5])
+            || !isset($item[6])
+            || !isset($item[4])
+            || !isset($item[7])
+            || !isset($item[1])
+            || !isset($item[8])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$this->setData(
 			array(
 				'vehicle_id'		=>		$item[0],

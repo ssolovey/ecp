@@ -38,6 +38,39 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 			
 			return 0;
 		}
+
+        if (
+            !isset($item[0])
+            || !isset($item[1])
+            || !isset($item[2])
+            || !isset($item[3])
+            || !isset($item[4])
+            || !isset($item[5])
+            || !isset($item[6])
+            || !isset($item[7])
+            || !isset($item[8])
+            || !isset($item[9])
+            || !isset($item[10])
+            || !isset($item[11])
+            || !isset($item[12])
+            || !isset($item[13])
+            || !isset($item[14])
+            || !isset($item[15])
+            || !isset($item[16])
+            || !isset($item[17])
+            || !isset($item[18])
+            || !isset($item[19])
+            || !isset($item[20])
+            || !isset($item[21])
+            || !isset($item[22])
+            || !isset($item[23])
+            || !isset($item[24])
+            || !isset($item[25])
+            || !isset($item[26])
+            || !isset($item[27])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
 		
 		$this->_companies		=	Mage::getModel('company/company');
 		

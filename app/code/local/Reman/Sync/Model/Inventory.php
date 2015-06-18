@@ -31,14 +31,26 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 	 * @param array $data
 	 */
 	protected function _updateInventory($data)
-	{		
+	{
+        if (
+            !isset($item[0])
+            || !isset($item[1])
+            || !isset($item[2])
+            || !isset($item[3])
+            || !isset($item[4])
+            || !isset($item[5])
+            || !isset($item[6])
+            || !isset($item[7])
+            || !isset($item[8])
+            || !isset($item[9])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$product	=	$this->_getProductBySku( $data[0] );
 		$totalStock	=	0;
 
-
-		
-		
-		if ( $product ) {
+        if ( $product ) {
 
             $productId = $product->getId();
             $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);

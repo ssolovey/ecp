@@ -38,6 +38,27 @@ class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
 	 */
 	protected function _addProduct($product, $data)
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[3])
+            || !isset($item[17])
+            || !isset($item[15])
+            || !isset($item[12])
+            || !isset($item[13])
+            || !isset($item[4])
+            || !isset($item[5])
+            || !isset($item[1])
+            || !isset($item[2])
+            || !isset($item[11])
+            || !isset($item[6])
+            || !isset($item[7])
+            || !isset($item[8])
+            || !isset($item[10])
+            || !isset($item[9])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$product->setData( 
 			array(
 				'sku'					=>	$data[0],
@@ -96,6 +117,27 @@ class Reman_Sync_Model_Parts extends Reman_Sync_Model_Product
 	 */
 	protected function _updateProductAttributes($product, $data)
 	{
+        if (
+            !isset($item[0])
+            || !isset($item[3])
+            || !isset($item[17])
+            || !isset($item[15])
+            || !isset($item[12])
+            || !isset($item[13])
+            || !isset($item[4])
+            || !isset($item[5])
+            || !isset($item[1])
+            || !isset($item[2])
+            || !isset($item[11])
+            || !isset($item[6])
+            || !isset($item[7])
+            || !isset($item[8])
+            || !isset($item[10])
+            || !isset($item[9])
+        ) {
+            throw new Exception('Broken CSV file format.');
+        }
+
 		$needsUpdate = false;
 		if ($product->getParts_commercial_warranty() != $data[17]) {
 			$product->setParts_commercial_warranty($data[17]);
