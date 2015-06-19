@@ -113,7 +113,7 @@
         <?php  foreach(Mage::helper('order')->getCompanyOrdersIds() as $value): ?>
         
 			 
-            <?php if(count($value['orders']) != 0): ?> 
+            <?php if(array_key_exists('orders',$value) && count($value['orders']) != 0): ?>
              	
                 <?php  foreach($value['orders'] as $order): ?>
                 <?php $item = Mage::getModel('order/order')->load($order)->_data; ?>

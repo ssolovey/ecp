@@ -35,7 +35,7 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		$companiesArray = Mage::getModel('company/company')->getCompaniesArray();
 
 		foreach($companiesArray as $index){
-			if( $index['value'] == $customer_company_id){
+			if( array_key_exists('value',$index) && $index['value'] == $customer_company_id){
 				return $index['label'];
 			}
 		}
@@ -118,7 +118,7 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		foreach ($collection as $customer) {
 			$customerArr = $customer->toArray();
 			if($customerArr['entity_id'] != $customer_id ){
-				if($customerArr['company'] == $this->getCompanyId()){
+				if(array_key_exists('company',$customerArr) && $customerArr['company'] == $this->getCompanyId()){
 					$result[] = $customer->toArray();
 				}
 			}
@@ -143,7 +143,7 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		$result = array();
 		foreach ($collection as $customer) {
 			$customerArr = $customer->toArray();
-			if($customerArr['company'] == $this->getCompanyId()){
+			if(array_key_exists('company',$customerArr) && $customerArr['company'] == $this->getCompanyId()){
 				$result[] = $customer->toArray();
 			}
 		}
@@ -168,7 +168,7 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		$result = array();
 		foreach ($collection as $customer) {
 			$customerArr = $customer->toArray();
-			if($customerArr['company'] == $this->getCompanyId()){
+			if(array_key_exists('company',$customerArr) && $customerArr['company'] == $this->getCompanyId()){
 				$result[] = $customer->entity_id;
 			}
 		}
@@ -190,13 +190,13 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		$result = array();
 		foreach ($collection as $customer) {
 			$customerArr = $customer->toArray();
-			if($customerArr['company'] == $this->getCompanyId()){
+			if(array_key_exists('company',$customerArr) && $customerArr['company'] == $this->getCompanyId()){
 				$result[] = $customer->toArray();
 			}
 		}
 		
 		foreach ( $result as $key => $value ) {
-			if($value['group_id'] == 6){
+			if(array_key_exists('group_id',$value) && $value['group_id'] == 6){
 				return $value['email'];
 			}
 		}
@@ -216,13 +216,13 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 		$result = array();
 		foreach ($collection as $customer) {
 			$customerArr = $customer->toArray();
-			if($customerArr['company'] == $this->getCompanyId()){
+			if(array_key_exists('company',$customerArr) && $customerArr['company'] == $this->getCompanyId()){
 				$result[] = $customer->toArray();
 			}
 		}
 		
 		foreach ( $result as $key => $value ) {
-			if($value['group_id'] == 6){
+			if(array_key_exists('group_id',$value) && $value['group_id'] == 6){
 				return $value['entity_id'];
 			}
 		}

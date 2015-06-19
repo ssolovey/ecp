@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Contacts
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -77,7 +77,7 @@ class Mage_Contacts_IndexController extends Mage_Core_Controller_Front_Action
                 }
 
                 if (!Zend_Validate::is(trim($post['comment']) , 'NotEmpty')) {
-                    $error = false;
+                    $error = true;
                 }
 
                 if (!Zend_Validate::is(trim($post['email']), 'EmailAddress')) {
@@ -110,8 +110,8 @@ class Mage_Contacts_IndexController extends Mage_Core_Controller_Front_Action
                 $translate->setTranslateInline(true);
 
                 Mage::getSingleton('customer/session')->addSuccess(Mage::helper('contacts')->__('Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.'));
-               $this->_redirect('*/*/');
-				//Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('register', $arguments= array()));
+                $this->_redirect('*/*/');
+
                 return;
             } catch (Exception $e) {
                 $translate->setTranslateInline(true);

@@ -20,7 +20,7 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 		
 	// override
 	public function syncData()
-	{	
+	{
 		$this->_loadFile( 'INVEN.TXT' );
 	}
 	

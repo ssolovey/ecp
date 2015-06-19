@@ -10,20 +10,19 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Admin
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 
 /**
  * ACL user resource
@@ -151,7 +150,7 @@ class Mage_Admin_Model_Resource_User extends Mage_Core_Model_Resource_Db_Abstrac
      */
     private function _encryptPassword($pwStr)
     {
-        return Mage::helper('core')->getHash($pwStr, 2);
+        return Mage::helper('core')->getHash($pwStr, Mage_Admin_Model_User::HASH_SALT_LENGTH);
     }
 
     /**
@@ -219,7 +218,7 @@ class Mage_Admin_Model_Resource_User extends Mage_Core_Model_Resource_Db_Abstrac
         } catch (Mage_Core_Exception $e) {
             throw $e;
             return false;
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $adapter->rollBack();
             return false;
         }
@@ -238,7 +237,7 @@ class Mage_Admin_Model_Resource_User extends Mage_Core_Model_Resource_Db_Abstrac
     {
         $rolesIds = $user->getRoleIds();
 
-        if( !is_array($rolesIds) || count($rolesIds) == 0 ) {
+        if (!is_array($rolesIds) || count($rolesIds) == 0) {
             return $user;
         }
 
@@ -275,7 +274,7 @@ class Mage_Admin_Model_Resource_User extends Mage_Core_Model_Resource_Db_Abstrac
             $adapter->commit();
         } catch (Mage_Core_Exception $e) {
             throw $e;
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $adapter->rollBack();
             throw $e;
         }
@@ -331,7 +330,7 @@ class Mage_Admin_Model_Resource_User extends Mage_Core_Model_Resource_Db_Abstrac
 
         $aRoles = $this->hasAssigned2Role($user);
         if ( sizeof($aRoles) > 0 ) {
-            foreach($aRoles as $idx => $data){
+            foreach ($aRoles as $idx => $data) {
                 $conditions = array(
                     'role_id = ?' => $data['role_id'],
                 );

@@ -10,28 +10,29 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
  * Catalog product model
  *
  * @method Mage_Catalog_Model_Resource_Product getResource()
- * @method Mage_Catalog_Model_Resource_Product _getResource()
+ * @method Mage_Catalog_Model_Product setHasError(bool $value)
+ * @method null|bool getHasError()
  *
- * @category   Mage
- * @package    Mage_Catalog
+ * @category    Mage
+ * @package     Mage_Catalog
  * @author      Magento Core Team <core@magentocommerce.com>
  */
 class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
@@ -165,7 +166,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function getUrlModel()
     {
         if ($this->_urlModel === null) {
-            $this->_urlModel = Mage::getSingleton('catalog/product_url');
+            $this->_urlModel = Mage::getSingleton('catalog/factory')->getProductUrlInstance();
         }
         return $this->_urlModel;
     }
@@ -545,12 +546,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         $this->getOptionInstance()->setProduct($this)
             ->saveOptions();
 
-        $result = parent::_afterSave();
-
-        Mage::getSingleton('index/indexer')->processEntityAction(
-            $this, self::ENTITY, Mage_Index_Model_Event::TYPE_SAVE
-        );
-        return $result;
+        return parent::_afterSave();
     }
 
     /**
@@ -563,9 +559,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     {
         $this->_protectFromNonAdmin();
         $this->cleanCache();
-        Mage::getSingleton('index/indexer')->logEvent(
-            $this, self::ENTITY, Mage_Index_Model_Event::TYPE_DELETE
-        );
+
         return parent::_beforeDelete();
     }
 
@@ -577,9 +571,11 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     protected function _afterDeleteCommit()
     {
         parent::_afterDeleteCommit();
-        Mage::getSingleton('index/indexer')->indexEvents(
-            self::ENTITY, Mage_Index_Model_Event::TYPE_DELETE
-        );
+
+        /** @var \Mage_Index_Model_Indexer $indexer */
+        $indexer = Mage::getSingleton('index/indexer');
+
+        $indexer->processEntityAction($this, self::ENTITY, Mage_Index_Model_Event::TYPE_DELETE);
     }
 
     /**
@@ -1325,7 +1321,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function getIsSalable()
     {
         $productType = $this->getTypeInstance(true);
-        if (is_callable(array($productType, 'getIsSalable'))) {
+        if (method_exists($productType, 'getIsSalable')) {
             return $productType->getIsSalable($this);
         }
         if ($this->hasData('is_salable')) {
@@ -1534,6 +1530,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getRequestPath()
     {
+        if (!$this->_getData('request_path')) {
+            $this->getProductUrl();
+        }
         return $this->_getData('request_path');
     }
 
@@ -1914,7 +1913,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         $products = $this->_getResource()->getProductsSku($productIds);
         if (count($products)) {
             foreach ($products as $product) {
-                if (empty($product['sku'])) {
+                if (!strlen($product['sku'])) {
                     return false;
                 }
             }
@@ -1936,7 +1935,12 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         /* add product custom options data */
         $customOptions = $buyRequest->getOptions();
         if (is_array($customOptions)) {
-            $options->setOptions(array_diff($buyRequest->getOptions(), array('')));
+            foreach ($customOptions as $key => $value) {
+                if ($value === '') {
+                    unset($customOptions[$key]);
+                }
+            }
+            $options->setOptions($customOptions);
         }
 
         /* add product type selected options data */
@@ -2056,5 +2060,21 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function isDisabled()
     {
         return $this->getStatus() == Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
+    }
+
+    /**
+     * Callback function which called after transaction commit in resource model
+     *
+     * @return Mage_Catalog_Model_Product
+     */
+    public function afterCommitCallback()
+    {
+        parent::afterCommitCallback();
+
+        /** @var \Mage_Index_Model_Indexer $indexer */
+        $indexer = Mage::getSingleton('index/indexer');
+        $indexer->processEntityAction($this, self::ENTITY, Mage_Index_Model_Event::TYPE_SAVE);
+
+        return $this;
     }
 }

@@ -78,7 +78,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // close the session
         session_write_close();
 
@@ -88,7 +90,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		//Mage::getModel('quote/log')->send( $request['year'], $request['make'], $request['model'], $request['applic'] , $request['partnum']);
 
 
-        if($request['sku']){
+        if(array_key_exists('sku', $request)){
 
 
             /* Load Current selected product object*/
@@ -169,18 +171,18 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
         // parse request data
         $request = $this->getRequest()->getPost();
-
-
         /**
          * PHP Session Locks – Prevent Blocking Requests
          *
          */
         // start the session
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // close the session
         session_write_close();
 
-        if($request['sku']){
+        if(array_key_exists('sku', $request)){
 
             $sku = $request['sku'];
 
@@ -238,7 +240,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // close the session
         session_write_close();
 
@@ -271,7 +275,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // close the session
         session_write_close();
 
@@ -323,7 +329,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// Parse submited form DATA
 		parse_str($request['data'],$array);
 		
-		echo Mage::getModel('order/order')->createOrder($customer_id, $array );	
+		echo Mage::getModel('order/order')->createOrder($customer_id, $array , false );
 	}
 	
 }

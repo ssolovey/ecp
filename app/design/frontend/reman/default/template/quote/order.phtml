@@ -71,7 +71,13 @@ $parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->get
 $warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 
 // Part Additional Info
-$partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
+
+if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
+
+    $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
+
+}
+
 
 ?>
 
@@ -192,11 +198,11 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
         <td class="label">Notes:</td>
         <td><?php
 
-                echo (!$partNotes)? '""' : $partNotes;
+                echo (!isset($partNotes))? '""' : $partNotes;
 
             ?>
         </td>
-        <input type="hidden" name="vehicle_notes" value="<?php echo (!$partNotes)? '""' : $partNotes; ?>" />
+        <input type="hidden" name="vehicle_notes" value="<?php echo (!isset($partNotes))? '""' : $partNotes; ?>" />
     </tr>
     </table>
     <div style="clear:both"></div>
@@ -433,14 +439,14 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
             <td id="fluid-price">
                 <?php
                     if($fluid == 'R'){
-                        echo '$'.number_format($fliudPrice,2,'.','');
+                        echo '$'.number_format(isset($fliudPrice),2,'.','');
                     }else{
                         echo '""';
                     }
                  ?>
             </td>
             <?php if($fluid == 'R'):?>
-            <input type="hidden"  name="fluid_total" value="<?php echo number_format($fliudPrice,2,'.','') ?>" />
+            <input type="hidden"  name="fluid_total" value="<?php echo number_format(isset($fliudPrice),2,'.','') ?>" />
             <?php else: ?>
             <input type="hidden"  name="fluid_total" value='""' />
             <?php endif; ?>
@@ -452,7 +458,7 @@ $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
         </tr>
     </table>
     <!------ Fluid Price------>
-    <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format($fliudPrice,2,'.','');  ?>" />
+    <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format(isset($fliudPrice),2,'.','');  ?>" />
 
     <table class="right-table">
         <tr>
@@ -591,7 +597,7 @@ if(!is_null($parts_commercial_warranty_weightId)){
 ?>;
 var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 var fluidAmount = <?php echo $fluid_amount; ?>;
-var tax_value =  Number(<?php echo $tax_value[0]['value']; ?>);
+var tax_value =  Number(<?php if(isset($tax_value[0])) {echo $tax_value[0]['value'];} ?>);
 //]]>
 
 $j(document).ready(function(){

@@ -10,17 +10,17 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
- * @category   Varien
- * @package    Varien_Image
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @category    Varien
+ * @package     Varien_Image
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -43,12 +43,51 @@ class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
      */
     protected $_resized = false;
 
+    /**
+     * Opens image file.
+     *
+     * @param string $filename
+     * @throws Varien_Exception
+     */
     public function open($filename)
     {
         $this->_fileName = $filename;
         $this->getMimeType();
         $this->_getFileAttributes();
+        if ($this->_isMemoryLimitReached()) {
+            throw new Varien_Exception('Memory limit has been reached.');
+        }
         $this->_imageHandler = call_user_func($this->_getCallback('create'), $this->_fileName);
+    }
+
+    /**
+     * Checks whether memory limit is reached.
+     *
+     * @return bool
+     */
+    protected function _isMemoryLimitReached()
+    {
+        $limit = $this->_convertToByte(ini_get('memory_limit'));
+        $size = getimagesize($this->_fileName);
+        $requiredMemory = $size[0] * $size[1] * 3;
+        return (memory_get_usage(true) + $requiredMemory) > $limit;
+    }
+
+    /**
+     * Converts memory value (e.g. 64M, 129KB) to bytes.
+     * Case insensitive value might be used.
+     *
+     * @param string $memoryValue
+     * @return int
+     */
+    protected function _convertToByte($memoryValue)
+    {
+        if (stripos($memoryValue, 'M') !== false) {
+            return (int)$memoryValue * 1024 * 1024;
+        } elseif (stripos($memoryValue, 'KB') !== false) {
+            return (int)$memoryValue * 1024;
+        }
+        return (int)$memoryValue;
     }
 
     public function save($destination=null, $newName=null)

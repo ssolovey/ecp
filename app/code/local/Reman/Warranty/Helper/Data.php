@@ -41,10 +41,17 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		if(is_null($parts_original_warrantyId))
 		{
 			foreach($warrantyArray as $index){
-				if( $index['value'] == $warrantyID){ // return Base Warranty Value from comapny profile if parts original is empty
-					//return $index['label'];
-					return $index['value'];
-				}
+
+                if(array_key_exists('value' , $index)){
+
+                    if( $index['value'] == $warrantyID){ // return Base Warranty Value from comapny profile if parts original is empty
+                        //return $index['label'];
+                        return $index['value'];
+                    }
+
+                }
+
+
 			}
 		}else{
 			
@@ -80,9 +87,16 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 		$warrantyArray = Mage::getModel('warranty/warranties')->getWarrantiesArray();
 		$warrantyId = $this->getBaseWarrantyId($case,$product);
 		foreach($warrantyArray as $index){
-			if( $index['value'] == $warrantyId){
-				return  $index['label'];
-			}
+
+            if(array_key_exists('value' , $index)){
+
+                if( $index['value'] == $warrantyId){
+                    return  $index['label'];
+                }
+
+            }
+
+
 		}
 	}
 	
@@ -151,14 +165,14 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 	
 		foreach ($warrantyArray as $item) {
 			//Base Warranty
-			if($item['weight'] == $warrantyWeightID){ 
+			if(array_key_exists('weight',$item) && $item['weight'] == $warrantyWeightID){
 					
 				array_push($warranties , $item);		
 			}
 			// If Commercial Warranty weight less than BaseWarranty 
 			if($parts_commercial_warranty_weightId < $warrantyWeightID ){ 
 				//Commercial Warranty	
-				if($item['weight'] == $parts_commercial_warranty_weightId){ 
+				if(array_key_exists('weight',$item) && $item['weight'] == $parts_commercial_warranty_weightId){
 						
 						$added_comm_war_weight = $parts_commercial_warranty_weightId;
 						
@@ -170,7 +184,7 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 					
 				if(($additemWeight < $warrantyWeightID) && ($additemWeight != $added_comm_war_weight)){
 				
-					if($item['weight'] == $additemWeight){
+					if(array_key_exists('weight',$item) && $item['weight'] == $additemWeight){
 					
 						array_push($warranties , $item);
 					

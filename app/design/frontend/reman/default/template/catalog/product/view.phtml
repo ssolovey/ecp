@@ -126,7 +126,7 @@
                             <td><?php echo $_product->getData('parts_cylinder_type'); ?></td>
                    		</tr>
 
-                        <?php if ($isFluidShown): ?>
+                        <?php if (isset($isFluidShown)): ?>
                             <tr>
                                 <td class="label">Fluid Amount:</td>
                                 <td><?php echo $_product->getData('parts_fluid_quantity'); ?></td>

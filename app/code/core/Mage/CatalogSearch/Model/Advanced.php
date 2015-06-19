@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_CatalogSearch
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -62,9 +62,16 @@ class Mage_CatalogSearch_Model_Advanced extends Mage_Core_Model_Abstract
     /**
      * Current search engine
      *
-     * @var object | Mage_CatalogSearch_Model_Resource_Fulltext_Engine
+     * @var object|Mage_CatalogSearch_Model_Resource_Fulltext_Engine
      */
-    protected $_engine = null;
+    protected $_engine;
+
+    /**
+     * Found products collection
+     *
+     * @var Mage_CatalogSearch_Model_Resource_Advanced_Collection
+     */
+    protected $_productCollection;
 
     /**
      * Initialize resource model
@@ -156,6 +163,9 @@ class Mage_CatalogSearch_Model_Advanced extends Mage_Core_Model_Abstract
                 continue;
             }
             $value = $values[$attribute->getAttributeCode()];
+            if (!is_array($value)) {
+                $value = trim($value);
+            }
 
             if ($attribute->getAttributeCode() == 'price') {
                 $value['from'] = isset($value['from']) ? trim($value['from']) : '';
@@ -198,17 +208,12 @@ class Mage_CatalogSearch_Model_Advanced extends Mage_Core_Model_Abstract
                 $allConditions[$table][$attributeId] = $condition;
             }
         }
-        /*if ($allConditions) {
+        if ($allConditions) {
             $this->getProductCollection()->addFieldsToFilter($allConditions);
         } else if (!$hasConditions) {
             Mage::throwException(Mage::helper('catalogsearch')->__('Please specify at least one search term.'));
-        }*/
-
-		if (($allConditions) || (isset($values['category']) && is_numeric($values['category']))) {
-            $this->getProductCollection()->addFieldsToFilter($allConditions);
-        } else if (!count($filteredAttributes)) {
-            Mage::throwException(Mage::helper('catalogsearch')->__('You have to specify at least one search term'));
         }
+
         return $this;
     }
 
@@ -281,30 +286,17 @@ class Mage_CatalogSearch_Model_Advanced extends Mage_Core_Model_Abstract
      *
      * @return array
      */
-	 
-  /*  public function getSearchCriterias()
+    public function getSearchCriterias()
     {
         return $this->_searchCriterias;
-    }*/
-	
-	public function getSearchCriterias()
-    {
-        $search = $this->_searchCriterias;
-        /* display category filtering criteria */
-        if(isset($_GET['category']) && is_numeric($_GET['category'])) {
-            $category = Mage::getModel('catalog/category')->load($_GET['category']);
-            $search[] = array('name'=>'Category','value'=>$category->getName());
-        }
-        return $search;
     }
-	
 
     /**
      * Retrieve advanced search product collection
      *
      * @return Mage_CatalogSearch_Model_Resource_Advanced_Collection
      */
-   /* public function getProductCollection(){
+    public function getProductCollection(){
         if (is_null($this->_productCollection)) {
             $collection = $this->_engine->getAdvancedResultCollection();
             $this->prepareProductCollection($collection);
@@ -315,23 +307,7 @@ class Mage_CatalogSearch_Model_Advanced extends Mage_Core_Model_Abstract
         }
 
         return $this->_productCollection;
-    }*/
-	
-	 public function getProductCollection(){
-        if (is_null($this->_productCollection)) {
-            $this->_productCollection = Mage::getResourceModel('catalogsearch/advanced_collection')
-                ->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
-                ->addMinimalPrice()
-                ->addStoreFilter();
-                Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($this->_productCollection);
-                Mage::getSingleton('catalog/product_visibility')->addVisibleInSearchFilterToCollection($this->_productCollection);
-            /* include category filtering */
-            if(isset($_GET['category']) && is_numeric($_GET['category'])) $this->_productCollection->addCategoryFilter(Mage::getModel('catalog/category')->load($_GET['category']),true);
-        }
- 
-        return $this->_productCollection;
     }
-	
 
     /**
      * Prepare product collection

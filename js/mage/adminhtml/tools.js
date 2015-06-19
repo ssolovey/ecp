@@ -9,17 +9,17 @@
  * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 function setLocation(url){
@@ -133,27 +133,23 @@ function toggleValueElements(checkbox, container, excludedElements, checked){
         var isDisabled = (checked != undefined ? checked : checkbox.checked);
         elems.each(function (elem) {
             if (checkByProductPriceType(elem)) {
-                var isIgnored = false;
-                for (var i = 0; i < ignoredElements.length; i++) {
-                    if (elem == ignoredElements[i]) {
-                        isIgnored = true;
-                        break;
-                    }
-                }
-                if (isIgnored) {
+                var i = ignoredElements.length;
+                while (i-- && elem != ignoredElements[i]);
+                if (i != -1) {
                     return;
                 }
-                elem.disabled=isDisabled;
+
+                elem.disabled = isDisabled;
                 if (isDisabled) {
                     elem.addClassName('disabled');
                 } else {
                     elem.removeClassName('disabled');
                 }
-                if(elem.tagName == 'IMG') {
+                if (elem.nodeName.toLowerCase() == 'img') {
                     isDisabled ? elem.hide() : elem.show();
                 }
             }
-        })
+        });
     }
 }
 

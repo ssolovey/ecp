@@ -29,7 +29,7 @@
 	 * Check Quote Session ID if History Back button was click ID will be different from Profile Id link
 	 * So Quote page will be refreshed
 	*/
-    if (Mage::getSingleton('core/session')->getPid() != $_GET[pid]) {
+    if (Mage::getSingleton('core/session')->getPid() != $_GET['pid']) {
         	header("location:".$this->getUrl('quote'));
 	}    
 ?>

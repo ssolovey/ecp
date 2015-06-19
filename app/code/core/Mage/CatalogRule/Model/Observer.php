@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_CatalogRule
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -50,22 +50,32 @@ class Mage_CatalogRule_Model_Observer
             return;
         }
 
-        $productWebsiteIds = $product->getWebsiteIds();
-
-        $rules = Mage::getModel('catalogrule/rule')->getCollection()
-            ->addFieldToFilter('is_active', 1);
-
-        foreach ($rules as $rule) {
-            $websiteIds = array_intersect($productWebsiteIds, $rule->getWebsiteIds());
-            $rule->applyToProduct($product, $websiteIds);
-        }
+        Mage::getModel('catalogrule/rule')->applyAllRulesToProduct($product);
 
         return $this;
     }
 
     /**
+     * Load matched catalog price rules for specific product.
+     * Is used for comparison in Mage_CatalogRule_Model_Resource_Rule::applyToProduct method
+     *
+     * @param   Varien_Event_Observer $observer
+     * @return  Mage_CatalogRule_Model_Observer
+     */
+    public function loadProductRules($observer)
+    {
+        /** @var Mage_Catalog_Model_Product $product */
+        $product = $observer->getEvent()->getProduct();
+        if (!$product instanceof Mage_Catalog_Model_Product) {
+            return $this;
+        }
+        Mage::getModel('catalogrule/rule')->loadProductRules($product);
+        return $this;
+    }
+
+    /**
      * Apply all price rules for current date.
-     * Handle cataolg_product_import_after event
+     * Handle catalog_product_import_after event
      *
      * @param   Varien_Event_Observer $observer
      *
@@ -73,8 +83,9 @@ class Mage_CatalogRule_Model_Observer
      */
     public function applyAllRules($observer)
     {
+        /** @var $resource Mage_CatalogRule_Model_Resource_Rule */
         $resource = Mage::getResourceSingleton('catalogrule/rule');
-        $resource->applyAllRulesForDateRange($resource->formatDate(mktime(0,0,0)));
+        $resource->applyAllRules();
         Mage::getModel('catalogrule/flag')->loadSelf()
             ->setState(0)
             ->save();
@@ -206,7 +217,9 @@ class Mage_CatalogRule_Model_Observer
      */
     public function dailyCatalogUpdate($observer)
     {
-        Mage::getResourceSingleton('catalogrule/rule')->applyAllRulesForDateRange();
+        /** @var $model Mage_CatalogRule_Model_Rule */
+        $model = Mage::getSingleton('catalogrule/rule');
+        $model->applyAll();
 
         return $this;
     }
@@ -397,6 +410,19 @@ class Mage_CatalogRule_Model_Observer
         foreach ($rules as $rule) {
             $rule->setProductsFilter($affectedEntityIds);
             Mage::getResourceSingleton('catalogrule/rule')->updateRuleProductData($rule);
+        }
+    }
+
+    /**
+     * Runs Catalog Product Price Reindex
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function runCatalogProductPriceReindex(Varien_Event_Observer $observer)
+    {
+        $indexProcess = Mage::getSingleton('index/indexer')->getProcessByCode('catalog_product_price');
+        if ($indexProcess) {
+            $indexProcess->reindexAll();
         }
     }
 }

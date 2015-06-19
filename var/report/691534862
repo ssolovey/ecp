@@ -1,9 +1,0 @@
-a:5:{i:0;s:239:"Error in file: "C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Catalog\sql\catalog_setup\upgrade-1.6.0.0.9-1.6.0.0.10.php" - SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'catalog_product_entity_group_price' already exists";i:1;s:1004:"#0 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\Resource\Setup.php(645): Mage::exception('Mage_Core', 'Error in file: ...')
-#1 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\Resource\Setup.php(437): Mage_Core_Model_Resource_Setup->_modifyResourceDb('upgrade', '1.6.0.0.6', '1.6.0.0.14')
-#2 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\Resource\Setup.php(320): Mage_Core_Model_Resource_Setup->_upgradeResourceDb('1.6.0.0.6', '1.6.0.0.14')
-#3 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\Resource\Setup.php(235): Mage_Core_Model_Resource_Setup->applyUpdates()
-#4 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\App.php(417): Mage_Core_Model_Resource_Setup::applyAllUpdates()
-#5 C:\xampp\htdocs\magento\ecp\app\code\core\Mage\Core\Model\App.php(343): Mage_Core_Model_App->_initModules()
-#6 C:\xampp\htdocs\magento\ecp\app\Mage.php(683): Mage_Core_Model_App->run(Array)
-#7 C:\xampp\htdocs\magento\ecp\index.php(87): Mage::run('', 'store')
-#8 {main}";s:3:"url";s:78:"/magento/ecp/index.php/admin/cache/index/key/68f298e6598ddccd1fd1cd7929e57960/";s:11:"script_name";s:22:"/magento/ecp/index.php";s:4:"skin";s:7:"default";}
