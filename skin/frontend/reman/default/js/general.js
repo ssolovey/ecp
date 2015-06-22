@@ -531,7 +531,7 @@ Reman_QuickQuote.prototype = {
 
                     }else{
 
-                        console.log('length: '+response.length+' rowItemLength: '+ rowItemLength+'('+ ((rowItemLength*2)+restOfItems) +')  '+'restOfItems: '+restOfItems + '('+ (rowItemLength*2+restOfItems)+')');
+                        //console.log('length: '+response.length+' rowItemLength: '+ rowItemLength+'('+ ((rowItemLength*2)+restOfItems) +')  '+'restOfItems: '+restOfItems + '('+ (rowItemLength*2+restOfItems)+')');
 
                         for(var i = 0; i<=response.length-1; i++){ // nest select with options
 
