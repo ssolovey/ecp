@@ -243,6 +243,8 @@ Reman_QuickQuote.prototype = {
                 this.partsAdditionlInfo=[];
                 this.currentApplic_id = '';
 
+                $j('#sku-number').attr('value','');
+
 				return;
 			}
 
