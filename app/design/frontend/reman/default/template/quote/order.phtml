@@ -143,12 +143,12 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
             <td><?php
 
                     $maker = $this->getRequest()->getPost('make');
-                    echo (!$maker)? '""' : $maker;
+                    echo (!$maker)? '' : $maker;
 
                 ?>
 
             </td>
-            <input type="hidden" name="make" value="<?php echo (!$maker)? '""' : $maker; ?>" />
+            <input type="hidden" name="make" value="<?php echo (!$maker)? '' : $maker; ?>" />
 
         </tr>
         <tr>
@@ -156,11 +156,11 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
             <td><?php
 
                     $model =  $this->getRequest()->getPost('model');
-                    echo (!$model)? '""' : $model;
+                    echo (!$model)? '' : $model;
 
                 ?>
             </td>
-            <input type="hidden" name="model" value="<?php echo (!$model)? '""' : $model; ?>" />
+            <input type="hidden" name="model" value="<?php echo (!$model)? '' : $model; ?>" />
         </tr>
         <tr>
             <td class="label">Engine:</td>
@@ -168,10 +168,10 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
                 <?php
 
                         $engine = $this->getRequest()->getPost('engine');
-                        echo (!$engine)? '""' : $engine;
+                        echo (!$engine)? '' : $engine;
 
                 ?>
-                <input type="hidden" name="engine" value="<?php echo (!$engine)? '""' : $engine; ?>" />
+                <input type="hidden" name="engine" value="<?php echo (!$engine)? '' : $engine; ?>" />
             </td>
         </tr>
         <tr>
@@ -188,21 +188,21 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
                 }
 
 
-                echo (!$drive)? '""' : $drive;
+                echo (!$drive)? '' : $drive;
 
                 ?>
 
-                <input type="hidden" name="drive" value="<?php  echo (!$drive)? '""' : $drive; ?>" />
+                <input type="hidden" name="drive" value="<?php  echo (!$drive)? '' : $drive; ?>" />
             </td>
         </tr>                        <tr>
         <td class="label">Notes:</td>
         <td><?php
 
-                echo (!isset($partNotes))? '""' : $partNotes;
+                echo (!isset($partNotes))? '' : $partNotes;
 
             ?>
         </td>
-        <input type="hidden" name="vehicle_notes" value="<?php echo (!isset($partNotes))? '""' : $partNotes; ?>" />
+        <input type="hidden" name="vehicle_notes" value="<?php echo (!isset($partNotes))? '' : $partNotes; ?>" />
     </tr>
     </table>
     <div style="clear:both"></div>
@@ -429,9 +429,9 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
             <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
             <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
             <?php else: ?>
-            <td>""</td>
+            <td></td>
             <input type="hidden"  name="tax_percent" value="0.00" />
-            <input type="hidden"  name="tax_total" value='""' />
+            <input type="hidden"  name="tax_total" value='' />
             <?php endif; ?>
         </tr>
         <tr>
@@ -441,14 +441,14 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
                     if($fluid == 'R'){
                         echo '$'.number_format(isset($fliudPrice),2,'.','');
                     }else{
-                        echo '""';
+                        echo '';
                     }
                  ?>
             </td>
             <?php if($fluid == 'R'):?>
             <input type="hidden"  name="fluid_total" value="<?php echo number_format(isset($fliudPrice),2,'.','') ?>" />
             <?php else: ?>
-            <input type="hidden"  name="fluid_total" value='""' />
+            <input type="hidden"  name="fluid_total" value='' />
             <?php endif; ?>
         </tr>
 
@@ -503,7 +503,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
                 if($_product->parts_fluid_quantity != NULL){
                     echo $_product->parts_fluid_quantity.' quarts';
                 }else{
-                    echo '""';
+                    echo '';
                 }
                 ?>
             </td>
@@ -511,7 +511,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
         <?php endif; ?>
         <tr>
             <td class="label">Other Charges:</td>
-            <td>""</td>
+            <td></td>
         </tr>
     </table>
 </div>
@@ -747,7 +747,7 @@ function calculateFluid(checked){
         calculateTotalPrice();
     }else{
         $j('#fluid-amount').attr('value', '0.00' );
-        $j('#fluid-price').html('N/A');
+        $j('#fluid-price').html('');
 
         $j('#check-fluid').html('Not Included');
 

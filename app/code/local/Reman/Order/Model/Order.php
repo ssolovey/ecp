@@ -235,7 +235,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
         Mage::getModel('order/email')->sendEmail(
 
-           '3',
+            'reman_order_confirmation',
 
             array(
                 'name' => 'ETEREMAN',
