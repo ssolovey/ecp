@@ -18,14 +18,14 @@
 ?>	
 
 <div id="remaqn_users_cont" style="display:none; top: -20px; position: relative;">
-	<div class="heading"><span>Manage Users</span></div>
+	<div class="heading"><span style="font-size: 14px;">Manage Users</span></div>
  <?php if (Mage::helper('customer')->isCompanyAdminUser()): ?>    
     
 	<?php if (count($result) == 0): ?>
         <span>No records found</span>
 	<?php endif; ?>
     <?php if (count($result) > 0): ?>
-        <table class="reman_users_table">
+        <table class="reman_users_table" style="margin-top: 0px;">
             <tr>
                 <td class="lable">First name</td>
                 <td class="lable">Last name</td>
