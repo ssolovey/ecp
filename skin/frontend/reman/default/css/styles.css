@@ -2501,6 +2501,12 @@ background-position: 0px 20px;
 	float:left;
 }
 
+
+#general_info tr td {
+    vertical-align: bottom !important;
+}
+
+
 #general_info .label {
 	padding-right: 5px;
 	font-size: 12px;
