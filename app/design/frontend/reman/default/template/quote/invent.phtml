@@ -233,7 +233,7 @@
 	$j('#estimate-shipping-btn').click(function(){
 		
 		if($j("#zip_value").attr("value") != ""){
-			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value") ,  <?php echo $inProgress; ?>);
+            getStateByZip($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
 		}
 	});
 	// Load Order Page
@@ -244,7 +244,9 @@
 	$j('#zip_value').keydown(function(event) {
 	  if (event.which == 13) {
 		 if($j("#zip_value").attr("value") != ""){
-			estimateShipping(<?php echo json_encode($array); ?> , $j("#zip_value").attr("value"));
+
+             getStateByZip($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
+
 		}
 	   }
 	});

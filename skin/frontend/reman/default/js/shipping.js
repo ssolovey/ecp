@@ -20,6 +20,99 @@
      97201: 'Portland, OR'
  }
 
+/**
+ * Map stocks according to rules
+ *
+ * */
+
+var s = [97201,91761,53223,75261,30344,21113];
+
+var stocksRules = {
+    AK : [s[0],s[2]],
+    AL : [s[4],s[2]],
+    AR : [s[3],s[2]],
+    AZ : [s[3],s[1],s[2]],
+    CA : [s[1],s[2]],
+    CO : [s[3],s[2]],
+    CT : [s[5],s[2]],
+    DC : [s[5],s[2]],
+    DE : [s[5],s[2]],
+    FL : [s[4],s[2]],
+    GA : [s[4],s[2]],
+    HI : [s[1],s[2]],
+    IA : [s[2]],
+    ID : [s[0],s[2]],
+    IL : [s[2]],
+    IN : [s[2]],
+    KS : [s[3],s[2]],
+    KY : [s[2]],
+    LA : [s[3],s[2]],
+    MA : [s[5],s[2]],
+    MD : [s[5],s[2]],
+    ME : [s[5],s[2]],
+    MI : [s[2]],
+    MN : [s[2]],
+    MO : [s[2]],
+    MS : [s[4],s[2]],
+    MT : [s[0],s[2]],
+    NC : [s[4],s[2]],
+    ND : [s[2]],
+    NE : [s[2]],
+    NH : [s[5],s[2]],
+    NJ : [s[5],s[2]],
+    NM : [s[3],s[2]],
+    NV : [s[1],s[2]],
+    NY : [s[5],s[2]],
+    OH : [s[2]],
+    OK : [s[3],s[2]],
+    OR : [s[0],s[2]],
+    PA : [s[5],s[2]],
+    RI : [s[5],s[2]],
+    SC : [s[4],s[2]],
+    SD : [s[2]],
+    TN : [s[4],s[2]],
+    TX : [s[3],s[2]],
+    UT : [s[1],s[0],s[2]],
+    VA : [s[5],s[2]],
+    VT : [s[5],s[2]],
+    WA : [s[0],s[2]],
+    WI : [s[0],s[2]],
+    WV : [s[5],s[2]],
+    WY : [s[0],s[2]]
+}
+
+
+
+function getStateByZip(zip,inProgress) {
+
+    $j.ajax({
+
+        url: "http://zip.getziptastic.com/v2/US/" + zip,
+        type: 'GET',
+
+
+        error: function (error) {
+            console.log(error);
+            return;
+        },
+
+        complete: function (data) {
+
+            var stateShort = $j.parseJSON(data.responseText).state_short;
+
+            var selectedStocks = stocksRules[stateShort];
+
+
+            estimateShipping(selectedStocks, zip, inProgress );
+
+
+        }
+
+    });
+
+}
+
+
 /** Shipping estimation filter result object*/
 var filterResults={};
 /** 
@@ -29,6 +122,8 @@ var filterResults={};
   * @return JSON DATA (Shipping Service result)
 */
 function estimateShipping (stocks,destzip,inProgress){
+    /* reset */
+    filterResults={};
 
     var stock_length = stocks.length;
 
@@ -158,7 +253,7 @@ function getBestServiceDays(data,inProgress){
                 var carrierId = data[key]['OriginPostalCode'];
                 var distance = Number(data[key]['Distance']);
 
-               /* console.log('ALLResultDays: ' + days );
+              /*console.log('ALLResultDays: ' + days );
                 console.log('ALLResultPrice: ' + price );
                 console.log('ALLDistance: ' + distance );*/
 
@@ -293,7 +388,7 @@ function getClosestDistance(data){
 
     filterResults[bufferResult.OriginPostalCode] = bufferResult
 
-   /* console.log(' !!!!!!!!!!!!!!!!!bufferResultCarrierID: '+bufferResult.OriginPostalCode);
+    /*console.log(' !!!!!!!!!!!!!!!!!bufferResultCarrierID: '+bufferResult.OriginPostalCode);
     console.log(' !!!!!!!!!!!!!!!!!bufferResultDATA: '+bufferResult.ServiceDays);
     console.log('!!!!!!!!!!!!!!!!!!bufferResultPRICE: '+bufferResult.TrueCost);
     console.log('!!!!!!!!!!!!!!!!!!bufferResultDistance: '+bufferResult.Distance);*/
