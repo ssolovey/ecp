@@ -51,8 +51,27 @@
         $apId = $this->getRequest()->getPost('id');
     }
 
+    if(isset($apId)){
 
-    $engineSize = Mage::getModel('sync/applic')->getProductEngine($apId);
+
+        $engineSize = Mage::getModel('sync/applic')->getProductEngine($apId);
+
+        if(isset($engineSize)){
+
+            $engineSizeInfo = $engineSize.' L';
+
+        }else{
+
+            $engineSizeInfo = "";
+
+        }
+
+
+    }
+
+
+
+
 
 
 ?>
@@ -115,7 +134,7 @@
                         </tr>
                         <tr>
                             <td class="label">Engine Sizes:</td>
-                            <td><?php echo $engineSize; ?>L</td>
+                            <td><?php echo $engineSizeInfo; ?></td>
                         </tr>
                         <tr>
                             <td class="label">Aspiration:</td>
