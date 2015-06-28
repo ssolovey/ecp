@@ -255,5 +255,15 @@
 	var total = <?php echo $_product->getPrice();?> + <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+<?php echo $_product->getData('parts_core_price');?>;
 	
 	$j('#total-price-product-page').html('$' + total+ '.00');
+
+
+    $j('#zip_value').bind('focus',function(){
+            if($j(this).hasClass('validation-failed')){
+
+                $j(this).removeClass('validation-failed');
+            }
+    });
+
+
 </script>
 

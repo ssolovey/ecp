@@ -81,34 +81,46 @@ var stocksRules = {
     WY : [s[0],s[2]]
 }
 
-
-
 function getStateByZip(zip,inProgress) {
 
-    $j.ajax({
 
-        url: "http://zip.getziptastic.com/v2/US/" + zip,
-        type: 'GET',
+    //validate ZIP
 
+    if(Validation.get('IsEmpty').test(zip) || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip)){
 
-        error: function (error) {
-            console.log(error);
-            return;
-        },
+        $j.ajax({
 
-        complete: function (data) {
-
-            var stateShort = $j.parseJSON(data.responseText).state_short;
-
-            var selectedStocks = stocksRules[stateShort];
+            url: "http://zip.getziptastic.com/v2/US/" + zip,
+            type: 'GET',
 
 
-            estimateShipping(selectedStocks, zip, inProgress );
+            error: function (error) {
+
+                return;
+            },
+
+            complete: function (data) {
+
+                var stateShort = $j.parseJSON(data.responseText).state_short;
+
+                var selectedStocks = stocksRules[stateShort];
 
 
-        }
+                estimateShipping(selectedStocks, zip, inProgress );
 
-    });
+
+            }
+
+        });
+
+    }else{
+
+        $j('#zip_value').addClass('validation-failed');
+
+    }
+
+
+
 
 }
 
