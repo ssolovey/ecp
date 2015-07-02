@@ -134,6 +134,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
         }
 
 		$count = 0;
+        $failedCount = 0;
 
         foreach ($data as $item) {
 
@@ -143,16 +144,17 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
                         $count++;
                    }
                 } catch (Exception $e) {
-                    $this->syncLog(false, 0, $path, 'CSV parse error: ' . $e->getMessage());
+                    $failedCount++;
                     continue;
                 }
 
             }
         }
 
+        if ($failedCount > 0) {
+            $this->syncLog(false, 0, $path, "File contained $failedCount broken CSV items.");
+        }
 		//unlink($path);
-		
-
 
         $this->syncLog(true, $count,'','');
 
@@ -221,7 +223,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 				);
 
 				/* Send Export Fail Email */
-				/*Mage::getModel('order/email')->sendEmail(
+				Mage::getModel('order/email')->sendEmail(
 					'5',
 					array(
 						'name' => 'ETEREMAN',
@@ -232,7 +234,7 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 					'Support Team',
 					'Export Error Report',
 					$params
-				);*/
+				);
 			} catch (Exception $e) {
 				//failed to process email sending. Skipping it
 			}
