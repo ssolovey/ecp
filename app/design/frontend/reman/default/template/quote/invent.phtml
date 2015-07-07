@@ -257,7 +257,9 @@
 	$j('#total-price-product-page').html('$' + total+ '.00');
 
 
-    $j('#zip_value').bind('focus',function(){
+    $j('#zip_value').bind('focus keydown',function(event){
+            if (event.which == 13) return;
+
             if($j(this).hasClass('validation-failed')){
 
                 $j(this).removeClass('validation-failed');
