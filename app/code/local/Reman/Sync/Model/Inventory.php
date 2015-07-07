@@ -33,16 +33,16 @@ class Reman_Sync_Model_Inventory extends Reman_Sync_Model_Product
 	protected function _updateInventory($data)
 	{
         if (
-            !isset($item[0])
-            || !isset($item[1])
-            || !isset($item[2])
-            || !isset($item[3])
-            || !isset($item[4])
-            || !isset($item[5])
-            || !isset($item[6])
-            || !isset($item[7])
-            || !isset($item[8])
-            || !isset($item[9])
+            !isset($data[0])
+            || !isset($data[1])
+            || !isset($data[2])
+            || !isset($data[3])
+            || !isset($data[4])
+            || !isset($data[5])
+            || !isset($data[6])
+            || !isset($data[7])
+            || !isset($data[8])
+            || !isset($data[9])
         ) {
             throw new Exception('Broken CSV file format.');
         }
