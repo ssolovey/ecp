@@ -297,7 +297,16 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
         $data =  $this->_shippingClient->GetLTLRateQuoteAdvanced($params);
 
-        $response = simplexml_load_string($data->GetLTLRateQuoteAdvancedResult);
+        $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
+
+        $response = array(
+            "data" =>  simplexml_load_string($data->GetLTLRateQuoteAdvancedResult),
+            "tax" => $tax_value
+        );
+
+
+
+
 
 
         echo json_encode($response);
