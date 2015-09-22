@@ -50,7 +50,7 @@
                     <username><![CDATA[dev]]></username>
                     <password><![CDATA[devBuyete123]]></password>
                     <host><![CDATA[buyetedbmaster.c3vn3ty3u8se.us-east-1.rds.amazonaws.com]]></host>
-                    <dbname><![CDATA[magento]]></dbname>
+                    <dbname><![CDATA[magento_new]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>
