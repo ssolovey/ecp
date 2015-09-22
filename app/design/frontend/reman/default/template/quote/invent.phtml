@@ -71,6 +71,7 @@
 <?php
 
     $isFluidShown = FALSE;
+    $fluidPrice = 0;
 
     // Current Logged Company
     $_company = Mage::helper('company')->getCustomerCompanyObject();
@@ -97,8 +98,10 @@
 
     if (($fluid == "R") || ($fluid == "O")) {
         $isFluidShown = TRUE;
+        $fluidPrice = $_product->getData('parts_fluid_quantity')*5;
         }
     }
+
 ?>
 
 <div id="stock_avl">
@@ -118,10 +121,10 @@
             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
         </tr>
 
-        <?php if (isset($isFluidShown)): ?>
+        <?php if ($isFluidShown): ?>
             <tr>
                 <td class="lable">Fluid price:</td>
-                <td>$<?php echo number_format($_product->getData('parts_fluid_quantity')*5,2,'.','');?></td>
+                <td>$<?php echo number_format($fluidPrice,2,'.','');?></td>
             </tr>
         <?php endif; ?>
 
@@ -138,7 +141,7 @@
         <tr>
 
             <td class="lable">Total:</td>
-            <td></td>
+            <td class="invent-total"></td>
 
         </tr>
 
@@ -252,9 +255,13 @@
 	});
 	
 	
-	var total = <?php echo $_product->getPrice();?> + <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+<?php echo $_product->getData('parts_core_price');?>;
+	window.inventTotal = <?php echo $_product->getPrice();?> +
+                <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+
+                <?php echo $_product->getData('parts_core_price');?> +
+                <?php echo $fluidPrice;?>;
+
 	
-	$j('#total-price-product-page').html('$' + total+ '.00');
+	$j('#total-price-product-page').html('$' + window.inventTotal+ '.00');
 
 
     $j('#zip_value').bind('focus keydown',function(event){

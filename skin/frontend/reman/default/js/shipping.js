@@ -170,7 +170,7 @@ function estimateShipping (stocks,destzip,inProgress){
                 var data = $j.parseJSON(data.responseText);
 
                 /* Filter Best result on Service Day value */
-                getBestServiceDays(data,inProgress);
+                getBestServiceDays(data.data,inProgress);
 
                 result_index+=1;
 
@@ -190,6 +190,15 @@ function estimateShipping (stocks,destzip,inProgress){
                     window.carrier = filterResults[bestDeliveryStock].CarrierName;
                     window.store = storeZIPMap[bestDeliveryStock];
                     window.storeZIP = bestDeliveryStock;
+
+                    if(data.tax.length > 0){
+
+                        window.taxOnZip = data.tax[0];
+
+                    }else{
+
+                        window.taxOnZip = 0;
+                    }
 
                     // Form Days text
                     if (window.servicedays > 1) {
@@ -212,6 +221,9 @@ function estimateShipping (stocks,destzip,inProgress){
                     $j('#prepay').show();
                     // hide shipping preloader
                     $j('.ship-preloader').hide();
+
+
+                    $j('.invent-total').html('$'+ (window.inventTotal + window.taxOnZip)+'.00' );
 
 
                 }

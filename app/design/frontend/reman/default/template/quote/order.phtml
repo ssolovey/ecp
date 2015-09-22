@@ -47,17 +47,20 @@ $fluid_amount = $_product->parts_fluid_quantity;
 * Company VAlue: R = Required , O = Optional , N = None
 *
 */
-if($_product->parts_fluid_option == 5){
-$fluid = 'N';
-$fliudPrice = 0;
-}else{
-$fluid = $company->fluid;
 
-if($fluid == "R"){
-$fliudPrice = $_product->parts_fluid_quantity * $FlUIDE_PRICE;
-}else if( $fluid == "O"){
-$fliudPrice = 0;
-}
+
+if($_product->parts_fluid_option == 5){
+    $fluid = 'N';
+    $fliudPrice = 0;
+}else{
+
+    $fluid = $company->fluid;
+
+    if($fluid == "R"){
+    $fliudPrice = $_product->getData('parts_fluid_quantity') * $FlUIDE_PRICE;
+    }else if( $fluid == "O"){
+    $fliudPrice = 0;
+    }
 }
 // Calculated Base Warranty Id
 $warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
