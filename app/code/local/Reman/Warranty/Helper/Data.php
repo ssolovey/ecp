@@ -44,7 +44,7 @@ class Reman_Warranty_Helper_Data extends Mage_Core_Helper_Abstract
 
                 if(array_key_exists('value' , $index)){
 
-                    if( $index['value'] == $warrantyID){ // return Base Warranty Value from comapny profile if parts original is empty
+                    if( $index['value'] == $warrantyID){ // return Base Warranty Value from company profile if parts original is empty
                         //return $index['label'];
                         return $index['value'];
                     }

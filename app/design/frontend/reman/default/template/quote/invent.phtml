@@ -138,7 +138,7 @@
             <?php endif; ?>
         </tr>
 
-        <tr>
+        <tr id="invent-total-price" style="display: none;">
 
             <td class="lable">Total:</td>
             <td class="invent-total"></td>
@@ -253,8 +253,8 @@
 		}
 	   }
 	});
-	
-	
+
+
 	window.inventTotal = <?php echo $_product->getPrice();?> +
                 <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+
                 <?php echo $_product->getData('parts_core_price');?> +

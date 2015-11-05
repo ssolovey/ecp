@@ -193,7 +193,7 @@ function estimateShipping (stocks,destzip,inProgress){
 
                     if(data.tax.length > 0){
 
-                        window.taxOnZip = data.tax[0];
+                        window.taxOnZip = parseFloat(data.tax[0].tax);
 
                     }else{
 
@@ -223,8 +223,11 @@ function estimateShipping (stocks,destzip,inProgress){
                     $j('.ship-preloader').hide();
 
 
-                    $j('.invent-total').html('$'+ (window.inventTotal + window.taxOnZip)+'.00' );
+                    var calculatedTaxValue = window.inventTotal/100*window.taxOnZip;
 
+
+                    $j('.invent-total').html('$'+ (window.inventTotal + calculatedTaxValue)+'.00' );
+                    $j('#invent-total-price').show();
 
                 }
 

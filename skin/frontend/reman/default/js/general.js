@@ -1057,10 +1057,14 @@ Reman_QuickQuote.prototype = {
 		$j('#order-wrapper').html('');
 		$j('#steps').show();
 		$j('#reman-invent_info').show();
-		$j('#order-now-btn').show();					 
+		$j('#order-now-btn').hide();
 		$j('#ship-go-table').show();
 		$j('#prepay').show();
-		
+
+
+        $j('#invent-total-price').hide();
+
+
 		if(isShippingEstimation){
 			
 			// Show Values
@@ -1416,5 +1420,6 @@ function backToOrderEdit(){
 	
 	$j('#check-order-fluid').hide();
 	$j('#input-fluid').show();
+
 }
 		

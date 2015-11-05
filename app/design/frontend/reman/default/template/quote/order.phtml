@@ -20,6 +20,8 @@
 $partType = $_product->getName();
 
 // Tax Value Calculated according to Shipping ZIP value
+
+
 $tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
 
 // Current Logged Company
@@ -73,6 +75,7 @@ $parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->get
 
 $warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 
+
 // Part Additional Info
 
 if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
@@ -120,10 +123,10 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
 <input type="hidden" id="tax-total-amount"  name="tax_amount" value="" />
 
 <!------- Ship AMOUNT --------->
-<input type="hidden" id="tax-total-amount"  name="ship_amount" value="<?php	echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
+<input type="hidden" id="ship-total-amount"  name="ship_amount" value="<?php	echo number_format(Mage::helper('company')->getCustomerShippingPrice(),2,'.','');?>" />
 
 <!-- TAG NAUMBER-->
-<input type="hidden" id="tax-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
+<input type="hidden" id="tag-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
 
 
 
@@ -428,9 +431,9 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
         <tr>
             <td class="label">Tax:</td>
             <?php if(count($tax_value) != 0):?>
-            <td><?php echo $tax_value[0]['value'].'%' ?></td>
-            <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
-            <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['value'],2,'.',''); ?>" />
+            <td><?php echo $tax_value[0]['tax'].'%' ?></td>
+            <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
+            <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
             <?php else: ?>
             <td></td>
             <input type="hidden"  name="tax_percent" value="0.00" />
@@ -600,7 +603,7 @@ if(!is_null($parts_commercial_warranty_weightId)){
 ?>;
 var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 var fluidAmount = <?php echo $fluid_amount; ?>;
-var tax_value =  Number(<?php if(isset($tax_value[0])) {echo $tax_value[0]['value'];} ?>);
+var tax_value =  Number(<?php if(isset($tax_value[0])) {echo $tax_value[0]['tax'];} ?>);
 //]]>
 
 $j(document).ready(function(){
