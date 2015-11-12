@@ -227,5 +227,38 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 	}
+
+
+	/**
+     * Retrieve Company address
+     *
+     * @return string
+     */
+
+      function getCompanyAddress() {
+
+     		$company = $this->getCustomerCompanyObject();
+            $addr1 = $company->addr1;
+            return $addr1;
+      }
+
+
+
+        /**
+         * Retrieve Company city
+         *
+         * @return string
+         */
+
+          function getCompanyCity() {
+
+                $company = $this->getCustomerCompanyObject();
+                $city = $company->city;
+                return $city;
+          }
+
+
+
+
 	
 }

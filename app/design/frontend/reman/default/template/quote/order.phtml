@@ -333,6 +333,10 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
 <!-- Company ID -->
 <input type="hidden" name="so_cust_num" value="<?php echo $this->helper('company')->getCustomerCompanyObject()->ete; ?>" />
 
+<input type="hidden" id="company-address" name="company_addres1" value="<?php echo $this->helper('company')->getCompanyAddress(); ?>" />
+<input type="hidden" id="company-city" name="company_city" value="<?php echo $this->helper('company')->getCompanyCity(); ?>" />
+
+
 <!-- Logged user Email -->
 <input type="hidden" name="so_cont_email" value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>" />
 
@@ -676,6 +680,12 @@ $j('#same-as-sold').click(function() {
                 $j($j('#ship-to-states option')[s]).attr('selected','selected');
             }
         }
+
+         /* copy address*/
+         $j('#input-st_addr1 input').attr('value', $j('#company-address')[0].value);
+          /* copy city*/
+          $j('#input-st_city input').attr('value', $j('#company-city')[0].value);
+
     } else {
         for( var i = 1; i<=$j('#ship-to input').length-1; i++){
             if(!$j($j('#ship-to input')[i]).hasClass('isZip')){
@@ -683,7 +693,18 @@ $j('#same-as-sold').click(function() {
             }
         }
         $j($j('#ship-to-states option')[0]).attr('selected','selected');
+
+
+         /* copy address*/
+         $j('#input-st_addr1 input').attr('value', '');
+         /* copy city*/
+         $j('#input-st_city input').attr('value', '');
+
     }
+
+    /* copy address*/
+
+    $j('#input-st_addr1').attr('value', $j('#company-address')[0].value);
 
     $j("#phone-input").mask("999-999-9999");
 });
