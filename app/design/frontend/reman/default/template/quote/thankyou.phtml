@@ -1,0 +1,29 @@
+
+<?php
+
+//Load Current Logged Customer Object
+$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$customer = Mage::getModel('customer/customer')->load($customer_id);
+
+?>
+
+<h3>Thank you for shopping with BuyETE.com!</h3>
+
+<p>Your order is currently Pending. What that means is all of the information provided will be double checked by a Customer Loyalty rep before it is processed as an order.</p>
+
+<p>If we have any questions, we’ll contact <?php echo $customer->getFirstname().' '.$customer->getLastname(); ?> at <span id="formated-phone"></span> <input id="thank-phone" type="hidden" value="<?php echo $customer->phone; ?>" /> . Otherwise, expect an email order confirmation shortly.</p>
+
+<p>If you have any questions regarding your order, please email weborders@etereman.com or call 800-934-9479 (M-F 7:00 am - 6:00 pm CST).</p>
+
+<p>To make the process run as smooth as the shifts in our transmissions, please refer to your Order Number.</p>
+
+<p>We look forward to working with you again!</p>
+
+
+
+<script type="text/javascript">
+ jQuery(function($){
+        $j("#thank-phone").mask("999-999-9999");
+        $j('#formated-phone').html( $j("#thank-phone")[0].value );
+  });
+</script>

@@ -39,5 +39,9 @@
 	<quote_index_order>
 		<block type="quote/quote" name="quote" output="toHtml" template="quote/order.phtml" />
 	</quote_index_order>
+
+    <quote_index_ordersubmit>
+        <block type="quote/quote" name="quote" output="toHtml" template="quote/thankyou.phtml" />
+    </quote_index_ordersubmit>
 	
 </layout>

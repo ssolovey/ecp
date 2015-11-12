@@ -338,7 +338,21 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 		// Parse submited form DATA
 		parse_str($request['data'],$array);
 		
-		echo Mage::getModel('order/order')->createOrder($customer_id, $array , false );
+		if(Mage::getModel('order/order')->createOrder($customer_id, $array , false ) == "Success"){
+
+		        $this->loadLayout('thankyou');
+
+                //This function processes and displays all layout phtml and php files.
+                $this->renderLayout();
+		}else{
+
+		    echo "Failed";
+
+		}
+
+
 	}
+
+
 	
 }

@@ -1175,11 +1175,11 @@ function submitOrder(){
 		},
 		
 		complete: function(data){
-			if(data.responseText != 'Success'){
+			if(data.responseText == 'Failed'){
 				$j('#order-message-text').html(data.responseText);
 				$j('#order-error-back').show();
 			}else{
-				$j('#order-message-text').html('Thank you for your order');
+				$j('#success-wrapper').html(data.responseText); 
 			}
 			$j('#preloader-order-page').hide();
 			$j('#order-message').show();
