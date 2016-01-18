@@ -285,7 +285,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
     <table class="vin" style="margin-top:25px; margin-left:12px;">
         <tr class="check-tr">
             <td class="label">PO #:</td>
-            <td id="input-po"><input type="text" name="po" class="required-entry" /><em>*</em></td>
+            <td id="input-po"><input type="text" name="po" /></td>
             <td id="check-po"></td>
         </tr>
         <tr class="check-tr">
@@ -380,7 +380,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
         </tr>
     </table>
 
-    <table style="margin-left:71px;" class="adress">
+    <table style="margin-left:15px;" class="adress">
         <tr class="check-tr">
             <td class="label">City:</td>
             <td id="input-st_city"><input name="st_city" type="text" class="required-entry" /><em>*</em></td>
@@ -391,7 +391,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
             <td id="input-st_state" style="height:24px;">
                 <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
                     <?php  foreach($states as $state): ?>
-                    <option value="<?php echo $state->getId(); ?>"><?php echo $state->getName(); ?></option>
+                    <option value="<?php echo $state->getId(); ?>" code="<?php echo $state->getCode(); ?>"><?php echo $state->getName(); ?></option>
                     <?php endforeach; ?>
                 </select>
                 <input id="st_state" type="hidden" name="st_state" value="" />
@@ -401,7 +401,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
         </tr>
 
         <tr class="check-tr">
-            <td class="label">ZIP:</td>
+            <td class="label">Destination ZIP:</td>
             <td id="input-st_zip"><input id="zip-re-estimation" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
             <td id="check-st_zip"></td>
         </tr>
@@ -608,6 +608,7 @@ if(!is_null($parts_commercial_warranty_weightId)){
 var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 var fluidAmount = <?php echo $fluid_amount; ?>;
 var tax_value =  Number(<?php if(isset($tax_value[0])) {echo $tax_value[0]['tax'];} ?>);
+var destintion_zip = <?php echo $this->getRequest()->getPost('zip'); ?>;
 //]]>
 
 $j(document).ready(function(){
@@ -650,6 +651,42 @@ $j(document).ready(function(){
 
     $j('#order-ship-time-input').attr('value', window.servicedays + ' '+ textDays);
 
+    /* For selecting the destination STate lable*/
+
+    function getTheStateLabel(zip){
+
+        $j.ajax({
+
+            url: "http://zip.getziptastic.com/v2/US/" + zip,
+            type: 'GET',
+
+
+            error: function (error) {
+
+                return;
+            },
+
+            complete: function (data) {
+
+                var stateShort = $j.parseJSON(data.responseText).state_short;
+
+                $j.each($j('#ship-to-states option'), function(index, value){
+
+                    if($j(value).attr('code') == stateShort) {
+
+                        $j($j('#ship-to-states option')[index]).attr('selected', 'selected');
+                    }
+
+                });
+            }
+
+        });
+
+
+    }
+
+    // call on page load
+    getTheStateLabel(destintion_zip );
 
     jQuery(function($){
         $j("#phone-input").mask("999-999-9999");

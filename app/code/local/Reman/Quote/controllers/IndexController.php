@@ -346,7 +346,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                 $this->renderLayout();
 		}else{
 
-		    echo "Failed";
+		    echo Mage::getModel('order/order')->createOrder($customer_id, $array , false );
 
 		}
 
