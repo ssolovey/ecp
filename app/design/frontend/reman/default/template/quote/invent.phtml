@@ -9,6 +9,13 @@
 
         $_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getSku());
 
+
+        $model = Mage::getModel('catalog/product');
+        $_product = $model->load($_product->getId());
+        $stocklevel = (int)Mage::getModel('cataloginventory/stock_item')
+            ->loadByProduct($_product)->getQty();
+
+
 		//MKE Stock
 		$mke = (int)$_product->getData('parts_inventory_nc');
 		//BWI Stock
@@ -175,7 +182,7 @@
     <div class="title" style="margin-top: 15px;">Availability and Order</div>
 
     <table id="ship-go-table" style="margin-bottom:25px;">
-        <?php if(($port != 0 || $port != null) ||($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
+        <?php if($stocklevel != 0):?>
             <tr>
                 <td>
                     <input id="zip_value" value="" type="text" placeholder="Destination Zip" />
