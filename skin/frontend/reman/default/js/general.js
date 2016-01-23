@@ -1053,23 +1053,24 @@ Reman_QuickQuote.prototype = {
 	/**
 	 Reset Order
 	*/
-	resetOrder : function(isShippingEstimation){
+	resetOrder : function(){
 		$j('#order-wrapper').html('');
 		$j('#steps').show();
 		$j('#reman-invent_info').show();
 		$j('#order-now-btn').hide();
 		$j('#ship-go-table').show();
 		$j('#prepay').show();
+        $j('#zip_value').attr('value','');
 
 
         $j('#invent-total-price').hide();
 
-
-		if(isShippingEstimation){
+        // hide Values
+        $j('.ship-time').hide();
+        $j('.ship-from').hide();
+		/*if(isShippingEstimation){
 			
-			// Show Values
-		 $j('.ship-time').hide();
-		 $j('.ship-from').hide();
+
 		 
 		 //Show order button
 		 $j('#order-now-btn').hide();
@@ -1078,7 +1079,7 @@ Reman_QuickQuote.prototype = {
 		 $j('#black-mask').hide();
 		 $j('#popup-shipping-re-estimation').hide();
 			
-		}
+		}*/
 	
 	}
 }
@@ -1193,7 +1194,7 @@ function submitOrder(){
 function orderBack(){
 	$j('#order-message').hide();
 	$j('#order-error-back').hide();
-	$j('#reman_order').show();	
+	$j('#reman_order').show();
 }
 
 /** User Profile Order List Filter */

@@ -85,6 +85,31 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
 }
 
 
+//MKE Stock
+$mke = (int)$_product->getData('parts_inventory_nc');
+//BWI Stock
+$bwi = (int)$_product->getData('parts_inventory_ne');
+//ONT Stock
+$ont = (int)$_product->getData('parts_inventory_sw');
+//ATL Stock
+$atl = (int)$_product->getData('parts_inventory_se');
+//DALLAS Stock
+$dal = (int)$_product->getData('parts_inventory_sc');
+
+//PORTLAND Stock
+$port = (int)$_product->getData('parts_inventory_nw');
+
+//IP
+$ip = (int)$_product->getData('parts_inventory_ip');
+
+//check for In Progress Items
+if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
+    $inProgress = 1;
+}else{
+    $inProgress = 0;
+}
+
+
 ?>
 
 
@@ -394,7 +419,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
                     <option value="<?php echo $state->getId(); ?>" code="<?php echo $state->getCode(); ?>"><?php echo $state->getName(); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input id="st_state" type="hidden" name="st_state" value="" />
+                <input id="st_state" class="isZip" type="hidden" name="st_state" value="" />
             </td>
             <td id="check-st_state"></td>
 
@@ -402,7 +427,7 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
 
         <tr class="check-tr">
             <td class="label">Destination ZIP:</td>
-            <td id="input-st_zip"><input id="zip-re-estimation" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+            <td id="input-st_zip"><input id="zip-re-estimation" autocomplete="off" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
             <td id="check-st_zip"></td>
         </tr>
     </table>
@@ -435,13 +460,13 @@ if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
         <tr>
             <td class="label">Tax:</td>
             <?php if(count($tax_value) != 0):?>
-            <td><?php echo $tax_value[0]['tax'].'%' ?></td>
-            <input type="hidden"  name="tax_percent" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
-            <input type="hidden"  name="tax_total" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
+            <td id="tax_value_text"><?php echo $tax_value[0]['tax'].'%' ?></td>
+            <input type="hidden" id="tax_percent"  name="tax_percent" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
+            <input type="hidden" id="tax_total"  name="tax_total" value="<?php echo number_format($tax_value[0]['tax'],2,'.',''); ?>" />
             <?php else: ?>
-            <td></td>
-            <input type="hidden"  name="tax_percent" value="0.00" />
-            <input type="hidden"  name="tax_total" value='' />
+            <td id="tax_value_text"></td>
+            <input type="hidden" id="tax_percent"  name="tax_percent" value="0.00" />
+            <input type="hidden" id="tax_total"  name="tax_total" value='' />
             <?php endif; ?>
         </tr>
         <tr>
@@ -607,91 +632,26 @@ if(!is_null($parts_commercial_warranty_weightId)){
 ?>;
 var baseWarrantyId = <?php echo $warrantyWeightID; ?>;
 var fluidAmount = <?php echo $fluid_amount; ?>;
-var tax_value =  Number(<?php if(isset($tax_value[0])) {echo $tax_value[0]['tax'];} ?>);
 var destintion_zip = <?php echo $this->getRequest()->getPost('zip'); ?>;
+window.shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>;
+
 //]]>
 
 $j(document).ready(function(){
     // Set selected warrenty value on Order Load
     $j('#order_warrenty').attr('value', $j('#warrenty_select option:selected').attr('value'));
-
     $j('#order_warrenty_text').attr('value', $j('#warrenty_select option:selected').html());
 
-    // Set selected State SHIP TO
-    $j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
+    // Update the shipping info
+    updateShippingInfo();
 
-    // Set Shipping Value to Order Table
-    $j('#order-shipping-cost').html('$'+window.truecost);
+    // Put State Name according to Destination ZIP value
+    getTheStateLabel(destintion_zip);
 
-    // Set Shp from warehouse
-    $j('#order-ship-from').html(window.store);
-
-
-    /** Map Parts stores ZIP values*/
-    var storeZIP = {
-        53223: 'parts_inventory_nc',
-        91761: 'parts_inventory_sw',
-        30344: 'parts_inventory_se',
-        21113: 'parts_inventory_ne',
-        75261: 'parts_inventory_sc',
-        97201: 'parts_inventory_nw'
-    }
-
-    $j('#order-ship-from-input').attr('value', window.store );
-    $j('#order-ship-from-input-label').attr('value', storeZIP[window.storeZIP] );
-
-    // Form Days text
-    if(window.servicedays > 1){
-        var textDays = 'Days';
-    }else{
-        var textDays = 'Day';
-    }
-    // Set Shipping Days
-    $j('#order-ship-time').html( window.servicedays + ' '+ textDays);
-
-    $j('#order-ship-time-input').attr('value', window.servicedays + ' '+ textDays);
-
-    /* For selecting the destination STate lable*/
-
-    function getTheStateLabel(zip){
-
-        $j.ajax({
-
-            url: "http://zip.getziptastic.com/v2/US/" + zip,
-            type: 'GET',
-
-
-            error: function (error) {
-
-                return;
-            },
-
-            complete: function (data) {
-
-                var stateShort = $j.parseJSON(data.responseText).state_short;
-
-                $j.each($j('#ship-to-states option'), function(index, value){
-
-                    if($j(value).attr('code') == stateShort) {
-
-                        $j($j('#ship-to-states option')[index]).attr('selected', 'selected');
-                    }
-
-                });
-            }
-
-        });
-
-
-    }
-
-    // call on page load
-    getTheStateLabel(destintion_zip );
 
     jQuery(function($){
         $j("#phone-input").mask("999-999-9999");
     });
-
 
     /** Calculate Total Parts Amount*/
     calculateTotalPrice();
@@ -729,10 +689,7 @@ $j('#same-as-sold').click(function() {
                 $j('#ship-to input')[i].value = "";
             }
         }
-        $j($j('#ship-to-states option')[0]).attr('selected','selected');
-
-
-         /* copy address*/
+      /* copy address*/
          $j('#input-st_addr1 input').attr('value', '');
          /* copy city*/
          $j('#input-st_city input').attr('value', '');
@@ -823,22 +780,20 @@ function calculateFluid(checked){
 }
 // Calculate Total Amount
 function calculateTotalPrice(){
-    var shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>;
-    var fluidPrice =  Number($j('#fluid-amount').attr('value'));
 
+    var fluidPrice =  Number($j('#fluid-amount').attr('value'));
     var partPrice = Number($j('#part-price').attr('value'));
     var corePrice = Number($j('#core-price').attr('value'));
-    var total  = shippingPrice + fluidPrice + partPrice + corePrice;
+    var total  = window.shippingPrice + fluidPrice + partPrice + corePrice;
 
 
-    if(tax_value){
-        var tax_amount = (total/100) * tax_value;
-        $j('#tax-total-amount').attr('value',tax_value);
+    if(window.taxOnZip){
+        var tax_amount = (total/100) * window.taxOnZip;
+        $j('#tax-total-amount').attr('value',window.taxOnZip);
         var total  = total + tax_amount ;
     }
 
     $j('#total-price').attr('value', Number(total).toFixed(2));
-
     $j('#total-amount').html('$'+Number(total).toFixed(2));
 }
 
@@ -886,13 +841,14 @@ if ($j.browser.msie){
     });
 }
 
-
 // Shipping re-estimation
 $j("#zip-re-estimation").keypress(function(event) {
-    if(this.value.length == 5) return false;
+    if(this.value.length == 5 && event.keyCode != 8) return false;
     if(this.value.length == 4) {
-        $j('#black-mask').show();
-        $j('#popup-shipping-re-estimation').show();
+        setTimeout(function(){
+            reestimateShipping($j("#zip-re-estimation").attr("value"), <?php echo $inProgress; ?>);
+        },100)
+
     }
 });
 

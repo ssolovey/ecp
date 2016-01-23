@@ -118,12 +118,103 @@ function getStateByZip(zip,inProgress) {
         $j('#zip_value').addClass('validation-failed');
 
     }
+}
 
 
+function reestimateShipping(zip,inProgress) {
 
+    //validate ZIP
+
+    if (Validation.get('IsEmpty').test(zip) || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip)) {
+
+        var xhr = $j.ajax({
+
+            url: "http://zip.getziptastic.com/v2/US/" + zip,
+            type: 'GET',
+
+
+            error: function (error) {
+
+                $j('#zip-re-estimation').addClass('validation-failed');
+
+                xhr.abort();
+            },
+
+            complete: function (data) {
+
+                if(data.status !== 404){
+
+                    var stateShort = $j.parseJSON(data.responseText).state_short;
+
+                    var selectedStocks = stocksRules[stateShort];
+
+                    estimateShipping(selectedStocks, zip, inProgress);
+
+                }
+            }
+
+        });
+
+    } else {
+
+        $j('#zip-re-estimation').addClass('validation-failed');
+
+    }
 
 }
 
+
+function updateShippingInfo(){
+    // Set Shp from warehouse
+    $j('#order-ship-from').html(window.store);
+
+
+    /** Map Parts stores ZIP values*/
+    var storeZIP = {
+        53223: 'parts_inventory_nc',
+        91761: 'parts_inventory_sw',
+        30344: 'parts_inventory_se',
+        21113: 'parts_inventory_ne',
+        75261: 'parts_inventory_sc',
+        97201: 'parts_inventory_nw'
+    }
+
+    $j('#order-ship-from-input').attr('value', window.store );
+    $j('#order-ship-from-input-label').attr('value', storeZIP[window.storeZIP] );
+
+    // Form Days text
+    if(window.servicedays > 1){
+        var textDays = 'Days';
+    }else{
+        var textDays = 'Day';
+    }
+    // Set Shipping Days
+    $j('#order-ship-time').html( window.servicedays + ' '+ textDays);
+
+    $j('#order-ship-time-input').attr('value', window.servicedays + ' '+ textDays);
+
+    // Set Shipping Value to Order Table
+    $j('#order-shipping-cost').html('$'+window.truecost);
+
+
+    // Tax values update
+
+    $j('#tax_percent').attr('value', window.taxOnZip);
+    $j('#tax_total').attr('value', Number(window.inventTotal/100*window.taxOnZip).toFixed(2));
+
+    if(window.taxOnZip != 0){
+        $j('#tax_value_text').html(window.taxOnZip+'%');
+    }else{
+
+        $j('#tax_value_text').html('');
+    }
+
+    if(typeof calculateTotalPrice != 'undefined'){
+        calculateTotalPrice();
+    }
+
+
+}
 
 /** Shipping estimation filter result object*/
 var filterResults={};
@@ -226,8 +317,15 @@ function estimateShipping (stocks,destzip,inProgress){
                     var calculatedTaxValue = window.inventTotal/100*window.taxOnZip;
 
 
-                    $j('.invent-total').html('$'+ (window.inventTotal + calculatedTaxValue)+'.00' );
+                    $j('.invent-total').html('$'+ (Number(window.inventTotal + calculatedTaxValue).toFixed(2)));
                     $j('#invent-total-price').show();
+
+                    getTheStateLabel(destzip);
+
+                    updateShippingInfo();
+
+
+
 
                 }
 
