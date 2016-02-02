@@ -259,7 +259,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
                     'email' => 'WebCatAccess@etereman.com'
                 ),
 
-                'hybridtestmail@gmail.com',
+                'weborders@etereman.com',
                  $customer,
                 'Order Confirmation',
                 $params
