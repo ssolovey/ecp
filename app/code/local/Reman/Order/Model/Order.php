@@ -239,7 +239,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
             array(
                 'name' => 'ETEREMAN',
-                'email' => 'WebOrders@etereman.com'
+                'email' => 'noreply@etereman.com'
             ),
 
             $email,
@@ -256,7 +256,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
                 array(
                     'name' => 'ETEREMAN',
-                    'email' => 'WebCatAccess@etereman.com'
+                    'email' => 'noreply@etereman.com'
                 ),
 
                 'weborders@etereman.com',
