@@ -360,6 +360,7 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
 
 <input type="hidden" id="company-address" name="company_addres1" value="<?php echo $this->helper('company')->getCompanyAddress(); ?>" />
 <input type="hidden" id="company-city" name="company_city" value="<?php echo $this->helper('company')->getCompanyCity(); ?>" />
+<input type="hidden" id="company-address2" name="company_addres2" value="<?php echo $this->helper('company')->getCompanyAddress2(); ?>" />
 
 
 <!-- Logged user Email -->
@@ -399,9 +400,14 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
 
         </tr>
         <tr class="check-tr">
-            <td class="label">Address:</td>
+            <td class="label">Address 1:</td>
             <td id="input-st_addr1"><input type="text" name="st_addr1" class="required-entry" /><em>*</em></td>
             <td id="check-st_addr1"></td>
+        </tr>
+         <tr class="check-tr">
+            <td class="label">Address 2:</td>
+            <td id="input-st_addr2"><input type="text" name="st_addr2" /></td>
+            <td id="check-st_addr2"></td>
         </tr>
     </table>
 
@@ -441,7 +447,7 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
 <input type="hidden" name="bt_addr1" value="Segedskay"  />
 
 <input type="hidden" name="st_phone_ext" value="" />
-<input type="hidden" name="st_addr2" value="" />
+
 
 
 <div id="pricing-info" style="height:160px;">
@@ -680,6 +686,7 @@ $j('#same-as-sold').click(function() {
 
          /* copy address*/
          $j('#input-st_addr1 input').attr('value', $j('#company-address')[0].value);
+         $j('#input-st_addr2 input').attr('value', $j('#company-address2')[0].value);
           /* copy city*/
           $j('#input-st_city input').attr('value', $j('#company-city')[0].value);
 
@@ -691,6 +698,7 @@ $j('#same-as-sold').click(function() {
         }
       /* copy address*/
          $j('#input-st_addr1 input').attr('value', '');
+         $j('#input-st_addr2 input').attr('value', '');
          /* copy city*/
          $j('#input-st_city input').attr('value', '');
 
