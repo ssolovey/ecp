@@ -843,7 +843,7 @@ if ($j.browser.msie){
 
 // Shipping re-estimation
 $j("#zip-re-estimation").keypress(function(event) {
-    if(this.value.length == 5 && event.keyCode != 8) return false;
+    //if(this.value.length == 5 && event.keyCode != 8) return false;
     if(this.value.length == 4) {
         setTimeout(function(){
             reestimateShipping($j("#zip-re-estimation").attr("value"), <?php echo $inProgress; ?>);
