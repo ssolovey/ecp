@@ -258,7 +258,11 @@ function estimateShipping (stocks,destzip,inProgress){
 
             complete: function(data){
 
-                var data = $j.parseJSON(data.responseText);
+                //var data = $j.parseJSON(data.responseText);
+
+                var data = xmlToJson($j(data.responseText)[0]);
+
+                console.log(data);
 
                 /* Filter Best result on Service Day value */
                 getBestServiceDays(data.data,inProgress);

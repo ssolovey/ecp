@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<RateLinx ver="1.0">
+    <ClientID>ETE</ClientID>
+    <Username>Webservice</Username>
+    <Password>eteweb1</Password>
+    <BillingType>1</BillingType>
+    <LocationID>001</LocationID>
+    <ShipDate>02/01/2008</ShipDate>
+    <ExpectedCount>1</ExpectedCount>
+    <ShipVia>
+        <ShipVia>RATESHOP</ShipVia>
+    </ShipVia>
+    <Addresses>
+        <Address>
+            <Account>1415</Account>
+            <Address1>address line 1</Address1>
+            <Address2>address line 2</Address2>
+            <AddressType>SHIPTO</AddressType>
+            <Attention>John</Attention>
+            <City>Chicago</City>
+            <Country>US</Country>
+            <Phone>555-555-1234</Phone>
+            <Name>Vandilay Industries</Name>
+            <State>IL</State>
+            <Zip>60601</Zip>
+        </Address>
+    </Addresses>
+    <SpecialServices>
+        <SpecialService>
+            <ID>FIXHANDAMOUNT</ID>
+            <Value>0</Value>
+        </SpecialService>
+    </SpecialServices>
+    <Packages>
+        <Package>
+            <Height>5</Height>
+            <Length>7</Length>
+            <Width>5</Width>
+            <ActualWeight>6</ActualWeight>
+            <SpecialServices>
+                <SpecialService>
+                    <ID>PACKAGINGTYPE</ID>
+                    <Value>02</Value>
+                </SpecialService>
+            </SpecialServices>
+        </Package>
+    </Packages>
+    <BOLDetails>
+        <BOLDetail>
+            <Class>50</Class>
+            <Pallets>1</Pallets>
+            <Pieces>1</Pieces>
+            <Height>5</Height>
+            <Length>7</Length>
+            <Width>5</Width>
+            <Weight>6</Weight>
+        </BOLDetail>
+    </BOLDetails>
+</RateLinx>

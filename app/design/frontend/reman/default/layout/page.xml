@@ -55,7 +55,7 @@ Default layout, loads most of the pages
 				<action method="addItem"><type>skin_js</type><name>js/masked-input.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/table-sorter.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/general.js</name></action>
-				<action method="addItem"><type>skin_js</type><name>js/shipping.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/shipping_service.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/order.js</name></action>
 
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>

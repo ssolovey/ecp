@@ -37,11 +37,6 @@
 
 		//IP
 		$ip = (int)$_product->getData('parts_inventory_ip');
-
-
-		
-		// Current Logged Company
-		$company = Mage::helper('company')->getCustomerCompanyObject();
 		
 		$array = array();
 		
@@ -67,9 +62,6 @@
             array_push($array, "97201");
         }
 
-
-		
-		$SHIPPING_PRICE = 200;
 		
 		//check for In Progress Items
 		if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
@@ -78,44 +70,17 @@
 			$inProgress = 0;
 		}
 
-?>
-
-<?php
-
-    $isFluidShown = FALSE;
-    $fluidPrice = 0;
-
     // Current Logged Company
     $_company = Mage::helper('company')->getCustomerCompanyObject();
 
-    //Flued Options
-    /*
-    * Parts Value: 7 = Required , 6 = Optional , 5 = None
-    * Company VAlue: R = Required , O = Optional , N = None
-    *
-    */
-    /* Requirement:
-    *
-    *  a. We do not need to show fluid capacity for Transfer casesß
-    *
-    *  b. If the part number is hard keyed to show Required always show the capacity and “included” for the price (i.e. cft30s)
-    *
-    *  c.  Otherwise, use the customer’s file to determine if fluid shows.
-    *      Required and optional should always show capacity and cost.  None should not.
-    */
-    if ($_product->parts_fluid_option == 7) {
-        $isFluidShown = TRUE;
-    } else {
-        $fluid = $_company->fluid;
+    $isFluidPrice = Mage::helper('quote')->getFluidPrice($_company, $_product);
 
-    if (($fluid == "R") || ($fluid == "O")) {
-        $isFluidShown = TRUE;
-        $fluidPrice = $_product->getData('parts_fluid_quantity')*5;
-        }
-    }
+
+    $totalPrice = Mage::helper('quote')->getTotalInventoryPrice($_company, $_product);
+
+    //Mage::getSingleton('core/session')->setTotalPrice($totalPrice);
 
 ?>
-
 <div id="stock_avl">
     <div class="title">Pricing</div>
 
@@ -133,10 +98,10 @@
             <td>$<?php echo number_format($_product->getData('parts_core_price'),2,'.','');?></td>
         </tr>
 
-        <?php if ($isFluidShown): ?>
+        <?php if ($isFluidPrice): ?>
             <tr>
                 <td class="lable">Fluid price:</td>
-                <td>$<?php echo number_format($fluidPrice,2,'.','');?></td>
+                <td>$<?php echo number_format($isFluidPrice,2,'.','');?></td>
             </tr>
         <?php endif; ?>
 
@@ -153,7 +118,7 @@
         <tr id="invent-total-price" style="display: none;">
 
             <td class="lable">Total:</td>
-            <td class="invent-total"></td>
+            <td class="invent-total" data="<?php echo $totalPrice?>"><?php	echo "$".number_format($totalPrice,2,'.','');?></td>
 
         </tr>
 
@@ -212,13 +177,13 @@
 <?php /*?><<<<<<< HEAD<?php */?>
     <?php if(($port != 0 || $port != null) || ($atl != 0 || $atl != null) || ($ont != 0 || $ont != null) || ($bwi != 0 || $bwi != null) || ($mke != 0 || $mke != null) || ($ip != 0 || $ip != null) || ($dal != 0 || $dal != null)):?>
         <!--Allow Order only for Company "On Account" -->
-    	<?php if($company->payment == 'ACCT') :?>
+    	<?php if($_company->payment == 'ACCT') :?>
     		<div style="display:none; margin-top: 60px;" id="order-now-btn"></div>
 		<?php endif; ?>
        
         
      <?php endif; ?>
-    <?php if($company->payment == 'PREPAY') :?>
+    <?php if($_company->payment == 'PREPAY') :?>
         <div id="prepay" style="display:none;">PLEASE CALL US WITH YOUR ORDER</div>
     <?php endif; ?>    
 <?php /*?>=======
@@ -248,7 +213,7 @@
 	$j('#estimate-shipping-btn').click(function(){
 		
 		if($j("#zip_value").attr("value") != ""){
-            getStateByZip($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
+            shipService.getWareHouses($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
 		}
 	});
 	// Load Order Page
@@ -260,20 +225,11 @@
 	  if (event.which == 13) {
 		 if($j("#zip_value").attr("value") != ""){
 
-             getStateByZip($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
+             shipService.getWareHouses($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
 
 		}
 	   }
 	});
-
-
-	window.inventTotal = <?php echo $_product->getPrice();?> +
-                <?php echo Mage::helper('company')->getCustomerShippingPrice();?>+
-                <?php echo $_product->getData('parts_core_price');?> +
-                <?php echo $fluidPrice;?>;
-
-	
-	$j('#total-price-product-page').html('$' + window.inventTotal+ '.00');
 
 
     $j('#zip_value').bind('focus keydown',function(event){

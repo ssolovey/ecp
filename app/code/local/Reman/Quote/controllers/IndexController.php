@@ -252,23 +252,24 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 	
 	}
 
-    /* Init Shipping Service*/
+    /* New Shipping service*/
 
-    protected $_shippingClient;
+    protected $_newShippingClient;
 
     protected function _construct()
     {
         parent::_construct();
 
-        $this->_shippingClient = new SoapClient("http://services.afs.net/rate/rateservice_v2.asmx?WSDL");
+        $this->_newShippingClient = new SoapClient("http://webservice.ratelinxapp.com/ratelinxwebservice/ratelinx.asmx?WSDL");
     }
 
-	/**
-	  * Call For ThirdPart Shipping Service
-	*/
-	public function estimateshippingAction(){
-		// parse request data
-		$request = $this->getRequest()->getPost();
+
+    /**
+     * Call For ThirdPart Shipping Service
+     */
+    public function estimateshippingAction(){
+        // parse request data
+        $request = $this->getRequest()->getPost();
 
         /**
          * PHP Session Locks – Prevent Blocking Requests
@@ -281,38 +282,151 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
         // close the session
         session_write_close();
 
+        // Customer info
+        //Load Current Logged Customer Object
+        $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+        $customer = Mage::getModel('customer/customer')->load($customer_id);
+
+
         $params = array(
-               "clientId" => "1481",
-               "carrierId" => "0",
-               "shipmentDate" => date("m.d.y"),
-               "transportationMode" => "T",
-               "originPostalCode" => $request['stock'],
-               "destinationPostalCode" => $request['destzip'],
-               "rateItems" => "50|175",
-               "rateAccessorials" => "",
-               "rateIncrease" => "0",
-               "userName"      => "eteweb",
-               "password"  => "afsrates"
-            );
 
-        $data =  $this->_shippingClient->GetLTLRateQuoteAdvanced($params);
+                    "ClientID" => "ETE",
+                    "Username" => "Webservice",
+                    "Password" => "eteweb1",
+                    "BillingType" => "1",
+                    "LocationID" => $request['stock'],
+                    "ShipDate" => date("m.d.y"),
+                    "ExpectedCount"=> "1",
 
-        $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
 
-        $response = array(
-            "data" =>  simplexml_load_string($data->GetLTLRateQuoteAdvancedResult),
-            "tax" => $tax_value
+                    "ShipVia" => array(
+
+                            "ShipVia" => "LTL",
+                    ),
+
+                    "Addresses" => array(
+
+                            "Address" => array(
+
+                                    "Account"=>"",
+                                    "Address1"=>Mage::helper('company')->getCompanyAddress(),
+                                    "Address2"=>Mage::helper('company')->getCompanyAddress2(),
+                                    "AddressType"=>"SHIPTO",
+                                    "Attention"=>$customer->getFirstname().' '.$customer->getLastname(),
+                                    "City"=>$request['city'],
+                                    "Country"=>"US",
+                                    "Phone"=>$customer->phone,
+                                    "Name"=>Mage::helper('company')->getCompanyName(),
+                                    "State"=>$request['state'],
+                                    "Zip"=>$request['destzip']
+
+                            )
+                    ),
+
+                    "SpecialServices" => array(
+
+                        "SpecialService" => array(
+
+                            "ID" => "",
+                            "Value"=>""
+                        )
+
+                    ),
+
+                    "Packages"=>array(
+
+                        "Package"=>array(
+
+                            "Height"=>"24.0",
+                            "Length"=>"48.0",
+                            "Width"=>"24.0",
+                            "ActualWeight"=>"175.0",
+                            "SpecialServices"=> array(
+
+                                "SpecialService"=>array(
+
+                                    "ID" => "",
+                                    "Value"=>""
+
+                                )
+
+                            )
+                        )
+
+                    ),
+
+                    "BOLDetails"=>array(
+
+                        "BOLDetail"=>array(
+
+                            "Class"=>"85",
+                            "Pallets"=>"0",
+                            "Pieces"=>"1",
+                            "Height"=>"24.0",
+                            "Length"=>"48.0",
+                            "Width"=>"24.0",
+                            "Weight"=>"175.0"
+                        )
+
+                    )
+
         );
 
 
+        $xml = new SimpleXMLElement('<RateLinx ver="1.0"/>');
 
+        $this->to_xml($xml, $params);
 
+        $xmlString = $xml->asXML();
 
+        $client = new Varien_Http_Client("http://webservice.ratelinxapp.com/ratelinxwebservice/ratelinx.asmx/RateShop");
 
-        echo json_encode($response);
-	}
-	
-	/** 
+        $client->setMethod(Varien_Http_Client::POST);
+
+        $client->setParameterPost('xmlData', $xmlString);
+
+        try{
+
+            $response = $client->request();
+
+            if ($response->isSuccessful()) {
+
+                $result = simplexml_load_string($response->getBody());
+
+                $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
+
+                $response = array(
+                    "data" =>  $result,
+                    "stock" => $request['stock'],
+                    "tax"=>$tax_value
+                );
+
+                echo json_encode($response);
+
+            }
+        } catch (Exception $e) {
+
+            echo $e;
+        }
+    }
+
+    public function to_xml(SimpleXMLElement $object, array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $new_object = $object->addChild($key);
+                $this->to_xml($new_object, $value);
+            }
+            else
+            {
+                $object->addChild($key, $value);
+            }
+        }
+    }
+
+    /**
 		Load Order page 
 	*/
 	public function orderAction(){
