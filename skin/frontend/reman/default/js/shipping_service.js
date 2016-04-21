@@ -97,7 +97,7 @@
 
     // helper method for getting the stock ZIP
     // according to the provided original ZIP value
-    ShippingService.prototype.getWareHouses = function(zip,inProgress){
+    ShippingService.prototype.getWareHouses = function(zip,type,inProgress){
         //validate ZIP
         var self = this;
         if(Validation.get('IsEmpty').test(zip) || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zip)){
@@ -115,7 +115,7 @@
                             selectedStocks = self.stocksRules[stateShort];
 
                         //// trigger shipping estimation
-                        self.estimateShipping(selectedStocks, zip, stateShort, $j.parseJSON(data.responseText).city, inProgress );
+                        self.estimateShipping(selectedStocks, zip, stateShort, $j.parseJSON(data.responseText).city,type, inProgress );
                     }
 
 
@@ -131,7 +131,7 @@
     };
 
     /*Init Shipping Estimation*/
-    ShippingService.prototype.estimateShipping = function(stocks,zip,state,city,inProgress){
+    ShippingService.prototype.estimateShipping = function(stocks,zip,state,city,type,inProgress){
 
         var self = this,
             result = [],
@@ -183,11 +183,22 @@
 
                         console.log('NEW SERVICE RESPONSE', result);
 
-                        self.getBestService(result);
+                        if ('RATESHOPRESULTS' in result[0]){
 
-                        //// Calculate Tax
+                            self.getBestService(result,type);
 
-                        self.calculateTax(resObj.tax);
+                            //// Calculate Tax
+                            self.calculateTax(resObj.tax,type);
+
+
+
+                        }else{
+
+                            alert('Shipping Service error. Try again');
+
+                            $j('.ship-preloader').hide();
+                        }
+
 
                     }
                 }
@@ -196,7 +207,7 @@
         }
     };
 
-    ShippingService.prototype.getBestService = function(result){
+    ShippingService.prototype.getBestService = function(result,type){
 
         var buffer,
             item,
@@ -212,7 +223,7 @@
 
             for(var z=0; z<=item.length -1; z++){
 
-                console.log("ALL RESULTS ",item[z]);
+                //console.log("ALL RESULTS ",item[z]);
 
                 item[z].stockZIP = stockZip;
                 item[z].stockName = stockName;
@@ -244,7 +255,24 @@
         this.store = buffer.stockName;
         this.storeZIP = buffer.stockZIP;
 
-        this.workWithDom();
+
+        // Form Days text
+        if (this.servicedays > 1) {
+            this.textDays = 'Days';
+        } else {
+            this.textDays = 'Day';
+        }
+
+        if(type === "invent"){
+
+            this.workWithDom();
+
+        }else{
+
+            this.workWithDomInOrder();
+
+        }
+
 
         var bResult = {
 
@@ -256,24 +284,19 @@
 
         };
 
-        console.log("BEST SERVICE ", bResult);
+        //console.log("BEST SERVICE ", bResult);
 
     };
 
     ShippingService.prototype.workWithDom = function(){
         ////// Show result
 
-        // Form Days text
-        if (this.servicedays > 1) {
-            var textDays = 'Days';
-        } else {
-            var textDays = 'Day';
-        }
+
 
         // Fill in Values
         $j('#ship-price-value').html('$' + this.truecost);
         $j('#ship-from-value').html(this.store);
-        $j('#ship-time-value').html(this.servicedays + ' ' + textDays);
+        $j('#ship-time-value').html(this.servicedays + ' ' + this.textDays);
         // Show Values
         $j('.ship-time').show();
         $j('.ship-from').show();
@@ -287,7 +310,42 @@
 
     };
 
-    ShippingService.prototype.calculateTax = function(taxVal){
+
+    ShippingService.prototype.workWithDomInOrder = function(){
+
+        // Set Shp from warehouse
+        $j('#order-ship-from').html(this.store);
+
+        $j('#order-ship-from-input').attr('value', this.store );
+        $j('#order-ship-from-input-label').attr('value', this.storeZIP );
+
+
+        // Set Shipping Days
+        $j('#order-ship-time').html( this.servicedays + ' ' + this.textDays);
+
+        $j('#order-ship-time-input').attr('value', this.servicedays + ' ' + this.textDays);
+
+        // Set Shipping Value to Order Table
+        $j('#order-shipping-cost').html('$'+this.truecost);
+
+        // reset the fluid check box
+        $j('#fluid-check-box').attr('checked',false);
+        $j('#fluid-amount').attr('value', '0.00' );
+        $j('#fluid-price').html('');
+        $j('#check-fluid').html('Not Included');
+        $j('#fluid-optional').attr('value','Not Included');
+
+        if(typeof getTotalPrice != 'undefined'){
+            getTotalPrice(false);
+        }
+
+        // hide shipping preloader
+        $j('.ship-preloader').hide();
+
+    }
+
+
+    ShippingService.prototype.calculateTax = function(taxVal,type){
 
         if(taxVal.length > 0){
 
@@ -298,17 +356,28 @@
             this.taxOnZip = 0;
         }
 
-        var inventPrice = parseFloat($j('.invent-total').attr('data'));
+        if(type === "invent"){
 
-        var calculatedTaxValue = inventPrice/100*this.taxOnZip;
+            var inventPrice = parseFloat($j('.invent-total').attr('data'));
 
-        this.totalProductPrice = Number(inventPrice + calculatedTaxValue);
+            var calculatedTaxValue = inventPrice/100*this.taxOnZip;
 
-        $j('.invent-total').html('$'+ this.totalProductPrice.toFixed(2));
+            this.totalProductPrice = Number(inventPrice + calculatedTaxValue);
 
-        $j('#invent-total-price').show();
+            $j('.invent-total').html('$'+ this.totalProductPrice.toFixed(2));
+
+            $j('#invent-total-price').show();
 
 
+        }else{
+
+            if(this.taxOnZip !== 0){
+                $j('#tax_value_text').html(this.taxOnZip+'%');
+            }else{
+                $j('#tax_value_text').html("");
+            }
+            $j('#tax_percent').attr('value', this.taxOnZip);
+        }
     };
 
     ShippingService.prototype.xmlToJson = function(xml){

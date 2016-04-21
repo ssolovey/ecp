@@ -41,23 +41,104 @@ class Reman_Quote_Helper_Data extends Mage_Core_Helper_Abstract
 
         $fluid = $_company->fluid;
 
-        if($_product->parts_fluid_option == 7 || (($fluid == "R") || ($fluid == "O")) ){
+        if($_product->parts_fluid_option == 7 || ($fluid == "R")){
 
             return $_product->getData('parts_fluid_quantity')*$fluidAmountPrice;
 
         }else{
 
-            return false;
+            return 0;
 
         }
 
     }
 
-    public function getTotalInventoryPrice($_company,$_product,$tax)
-    {
 
-       return  $_product->getPrice() + Mage::helper('company')->getCustomerShippingPrice() + $_product->getData('parts_core_price')+ $this->getFluidPrice($_company,$_product);
+    public function getFluidPriceInventory($_company, $_product){
+
+        $fluidAmountPrice = 5;
+
+        $fluid = $_company->fluid;
+
+        if($_product->parts_fluid_option == 7 || ($fluid == "R" || $fluid == "O")){
+
+            return $_product->getData('parts_fluid_quantity')*$fluidAmountPrice;
+
+        }else{
+
+            return 0;
+
+        }
 
     }
+
+
+    public function getFluidType($_company, $_product){
+
+        if($_product->parts_fluid_option == 5){
+
+            return 'N';
+
+        }else{
+
+            return $_company->fluid;
+
+        }
+
+    }
+
+    public function getFluidAmount($_product){
+
+        if($_product->parts_fluid_quantity == NULL){
+
+            return 0;
+
+        }else{
+
+            return $_product->parts_fluid_quantity;
+        }
+    }
+
+
+    public function getTotalInventoryPrice($_company,$_product){
+
+       return  $_product->getPrice() + Mage::helper('company')->getCustomerShippingPrice() + $_product->getData('parts_core_price')+ $this->getFluidPriceInventory($_company,$_product);
+
+    }
+
+
+    public function getTotalPrice($_product){
+
+        return  $_product->getPrice() + Mage::helper('company')->getCustomerShippingPrice() + $_product->getData('parts_core_price');
+
+    }
+
+
+    public function getEngineSizeInfo($_product){
+
+
+        $apId = Mage::getModel('sync/applic')->getApplicIdBySku($_product->getData('sku'));
+
+
+        if(isset($apId)){
+
+            $engineSize = Mage::getModel('sync/applic')->getProductEngine($apId);
+
+            if(isset($engineSize)){
+
+                return $engineSize.' L';
+
+            }else{
+
+                return  "";
+
+            }
+
+        }
+
+
+    }
+
+
 
 }

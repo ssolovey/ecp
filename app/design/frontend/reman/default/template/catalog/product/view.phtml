@@ -41,38 +41,7 @@
 
     $_description = $this->getProduct()->getDescription();
 
-
-    if(!$this->getRequest()->getPost('id')){
-
-        $apId = Mage::getModel('sync/applic')->getApplicIdBySku($_product->getData('sku'));
-
-    }else{
-
-        $apId = $this->getRequest()->getPost('id');
-    }
-
-    if(isset($apId)){
-
-
-        $engineSize = Mage::getModel('sync/applic')->getProductEngine($apId);
-
-        if(isset($engineSize)){
-
-            $engineSizeInfo = $engineSize.' L';
-
-        }else{
-
-            $engineSizeInfo = "";
-
-        }
-
-
-    }
-
-
-
-
-
+    $engineSizeInfo = Mage::helper('quote')->getEngineSizeInfo($_product);
 
 ?>
 

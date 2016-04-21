@@ -11,105 +11,84 @@
 ?>
 
 <?php 
-	// Load Product Object	
-	//$_product = Mage::getModel('sync/applic')->loadProduct($this->getRequest()->getPost('id'));
+	// Load Product Object
+	$_product =  Mage::getSingleton('core/session')->getData('selectedProduct');
 
-	$_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getRequest()->getPost('sku'));
+    //Product Type
+    $partType = $_product->getName();
 
-//Product Type
-$partType = $_product->getName();
+    // Tax Value Calculated according to Shipping ZIP value
+    $tax_value = Mage::getSingleton('core/session')->getData('taxValue');
 
-// Tax Value Calculated according to Shipping ZIP value
+    // Current Logged Company
+    $_company = Mage::helper('company')->getCustomerCompanyObject();
 
+    //Load Current Logged Customer Object
+    $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+    $customer = Mage::getModel('customer/customer')->load($customer_id);
 
-$tax_value = Mage::getModel('sync/taxes')->getTaxValue($this->getRequest()->getPost('zip'));
-
-// Current Logged Company
-$company = Mage::helper('company')->getCustomerCompanyObject();
-
-//Load Current Logged Customer Object
-$customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
-$customer = Mage::getModel('customer/customer')->load($customer_id);
-
-//state names
-$states = Mage::getModel('directory/country')->load('US')->getRegions();
-
-//Fluid Price
-$FlUIDE_PRICE = 5;
-
-//Fluid Amount
-if($_product->parts_fluid_quantity == NULL){
-$fluid_amount = 0;
-}else{
-$fluid_amount = $_product->parts_fluid_quantity;
-}
-//Flued Options
-/*
-* Parts Value: 7 = Required , 6 = Optional , 5 = None
-* Company VAlue: R = Required , O = Optional , N = None
-*
-*/
+    //state names
+    $states = Mage::getModel('directory/country')->load('US')->getRegions();
 
 
-if($_product->parts_fluid_option == 5){
-    $fluid = 'N';
-    $fliudPrice = 0;
-}else{
 
-    $fluid = $company->fluid;
+    //Fluid Amount
 
-    if($fluid == "R"){
-    $fliudPrice = $_product->getData('parts_fluid_quantity') * $FlUIDE_PRICE;
-    }else if( $fluid == "O"){
-    $fliudPrice = 0;
+    $fluid_amount = Mage::helper('quote')->getFluidAmount($_product);
+
+    $fluidPrice = Mage::helper('quote')->getFluidPrice($_company, $_product);
+
+    $fluid = Mage::helper('quote')->getFluidType($_company, $_product);
+
+    //ENGINE
+    $engineSizeInfo = Mage::helper('quote')->getEngineSizeInfo($_product);
+
+
+    $totalPrice = Mage::helper('quote')->getTotalPrice($_product);
+
+
+    // Calculated Base Warranty Id
+    $warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
+    //Get BaseWarrantyWeightID
+    $warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
+    // Parts Commercial Warranty ID
+    $parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
+    // Parts Commercial Warranty Weight ID
+    $parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
+
+    $warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
+
+
+    // Part Additional Info
+
+    if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
+        $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
     }
-}
-// Calculated Base Warranty Id
-$warrantyId = Mage::helper('warranty')->getBaseWarrantyId($partType[0],$_product);
-//Get BaseWarrantyWeightID
-$warrantyWeightID = Mage::getModel('warranty/warranties')->getWarrantyWeight($warrantyId);
-// Parts Commercial Warranty ID
-$parts_commercial_warrantyId = $_product->getData('parts_commercial_warranty');
-// Parts Commercial Warranty Weight ID
-$parts_commercial_warranty_weightId = Mage::getModel('warranty/warranties')->getWarrantyWeight($parts_commercial_warrantyId);
-
-$warranties = Mage::helper('warranty')->getCalculatedWarrantyList($partType[0],$_product);
 
 
-// Part Additional Info
+    //MKE Stock
+    $mke = (int)$_product->getData('parts_inventory_nc');
+    //BWI Stock
+    $bwi = (int)$_product->getData('parts_inventory_ne');
+    //ONT Stock
+    $ont = (int)$_product->getData('parts_inventory_sw');
+    //ATL Stock
+    $atl = (int)$_product->getData('parts_inventory_se');
+    //DALLAS Stock
+    $dal = (int)$_product->getData('parts_inventory_sc');
 
-if(is_array($this->getRequest()->getPost('partsAdditionlInfo'))){
+    //PORTLAND Stock
+    $port = (int)$_product->getData('parts_inventory_nw');
 
-    $partNotes = implode(",",  $this->getRequest()->getPost('partsAdditionlInfo'));
+    //IP
+    $ip = (int)$_product->getData('parts_inventory_ip');
 
-}
-
-
-//MKE Stock
-$mke = (int)$_product->getData('parts_inventory_nc');
-//BWI Stock
-$bwi = (int)$_product->getData('parts_inventory_ne');
-//ONT Stock
-$ont = (int)$_product->getData('parts_inventory_sw');
-//ATL Stock
-$atl = (int)$_product->getData('parts_inventory_se');
-//DALLAS Stock
-$dal = (int)$_product->getData('parts_inventory_sc');
-
-//PORTLAND Stock
-$port = (int)$_product->getData('parts_inventory_nw');
-
-//IP
-$ip = (int)$_product->getData('parts_inventory_ip');
-
-//check for In Progress Items
-if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
-    $inProgress = 1;
-}else{
-    $inProgress = 0;
-}
-
-
+    //check for In Progress Items
+    if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 || $ont == null) && ($bwi == 0 || $bwi == null) && ($mke == 0 || $mke == null) && ($ip != 0 || $ip != null) && ($dal == 0 || $dal == null)){
+        $inProgress = 1;
+    }else{
+        $inProgress = 0;
+    }
 ?>
 
 
@@ -198,11 +177,11 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
             <td>
                 <?php
 
-                        $engine = $this->getRequest()->getPost('engine');
-                        echo (!$engine)? '' : $engine;
+
+                        echo $engineSizeInfo;
 
                 ?>
-                <input type="hidden" name="engine" value="<?php echo (!$engine)? '' : $engine; ?>" />
+                <input type="hidden" name="engine" value="<?php echo $engineSizeInfo; ?>" />
             </td>
         </tr>
         <tr>
@@ -480,14 +459,14 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
             <td id="fluid-price">
                 <?php
                     if($fluid == 'R'){
-                        echo '$'.number_format(isset($fliudPrice),2,'.','');
+                        echo '$'.number_format(isset($fluidPrice),2,'.','');
                     }else{
                         echo '';
                     }
                  ?>
             </td>
             <?php if($fluid == 'R'):?>
-            <input type="hidden"  name="fluid_total" value="<?php echo number_format(isset($fliudPrice),2,'.','') ?>" />
+            <input type="hidden"  name="fluid_total" value="<?php echo number_format(isset($fluidPrice),2,'.','') ?>" />
             <?php else: ?>
             <input type="hidden"  name="fluid_total" value='' />
             <?php endif; ?>
@@ -499,7 +478,7 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
         </tr>
     </table>
     <!------ Fluid Price------>
-    <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format(isset($fliudPrice),2,'.','');  ?>" />
+    <input type="hidden" id="fluid-amount" name="fluid_amount" value="<?php echo number_format(isset($fluidPrice),2,'.','');  ?>" />
 
     <table class="right-table">
         <tr>
@@ -516,7 +495,7 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
             <?php if($partType[0] == 'T' && $fluid != 'N') : ?>
             <td class="label">Add Fluid?</td>
             <?php if($fluid == 'O'): ?>
-            <td><input onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
+            <td><input id="fluid-check-box" onchange="calculateFluid(this.checked);" type="checkbox"  /></td>
             <?php endif; ?>
             <?php if($fluid == 'R'): ?>
             <td><input checked="checked" type="checkbox"  disabled="disabled" /></td>
@@ -617,10 +596,6 @@ if(($port == 0 || $port == null) && ($atl == 0 || $atl == null) && ($ont == 0 ||
     <div id="submit-order-button" style="display:none;"></div>
 </div>
 
-<div id="popup-shipping-re-estimation" style="display:none;">
-    <span>You will be forwarded to previous step for shippng re-estimation</span>
-    <button onclick="$j('#zip_value').attr('value', $j('#zip-re-estimation').attr('value')); Reman_QuickQuote.prototype.resetOrder(true); return false;" style="width: 70px; height: 25px; margin-top: 25px;">OK</button>
-</div>
 </form>
 
 
@@ -641,6 +616,7 @@ var fluidAmount = <?php echo $fluid_amount; ?>;
 var destintion_zip = <?php echo $this->getRequest()->getPost('zip'); ?>;
 window.shippingPrice = <?php echo Mage::helper('company')->getCustomerShippingPrice();?>;
 
+
 //]]>
 
 $j(document).ready(function(){
@@ -649,7 +625,7 @@ $j(document).ready(function(){
     $j('#order_warrenty_text').attr('value', $j('#warrenty_select option:selected').html());
 
     // Update the shipping info
-    updateShippingInfo();
+    shipService.workWithDomInOrder();
 
     // Put State Name according to Destination ZIP value
     getTheStateLabel(destintion_zip);
@@ -660,7 +636,7 @@ $j(document).ready(function(){
     });
 
     /** Calculate Total Parts Amount*/
-    calculateTotalPrice();
+    getTotalPrice(false);
 });
 
 /** Remove default magento validation failed lables */
@@ -769,41 +745,17 @@ function calculateFluid(checked){
         var total = fluidAmount * 5;
         $j('#fluid-amount').attr('value', Number(total).toFixed(2));
         $j('#fluid-price').html('$'+Number(total).toFixed(2));
-
         $j('#check-fluid').html('Included');
-
         $j('#fluid-optional').attr('value','Included');
-
-        calculateTotalPrice();
     }else{
         $j('#fluid-amount').attr('value', '0.00' );
         $j('#fluid-price').html('');
-
         $j('#check-fluid').html('Not Included');
-
         $j('#fluid-optional').attr('value','Not Included');
-
-        calculateTotalPrice();
     }
+    getTotalPrice(checked);
 }
-// Calculate Total Amount
-function calculateTotalPrice(){
 
-    var fluidPrice =  Number($j('#fluid-amount').attr('value'));
-    var partPrice = Number($j('#part-price').attr('value'));
-    var corePrice = Number($j('#core-price').attr('value'));
-    var total  = window.shippingPrice + fluidPrice + partPrice + corePrice;
-
-
-    if(window.taxOnZip){
-        var tax_amount = (total/100) * window.taxOnZip;
-        $j('#tax-total-amount').attr('value',window.taxOnZip);
-        var total  = total + tax_amount ;
-    }
-
-    $j('#total-price').attr('value', Number(total).toFixed(2));
-    $j('#total-amount').html('$'+Number(total).toFixed(2));
-}
 
 /*Reset Order Page*/
 $j('.cancel-order').click(function(){
@@ -854,7 +806,8 @@ $j("#zip-re-estimation").keypress(function(event) {
     //if(this.value.length == 5 && event.keyCode != 8) return false;
     if(this.value.length == 4) {
         setTimeout(function(){
-            reestimateShipping($j("#zip-re-estimation").attr("value"), <?php echo $inProgress; ?>);
+            shipService.getWareHouses($j("#zip-re-estimation").attr("value"),"order", <?php echo $inProgress; ?>);
+            getTheStateLabel($j("#zip-re-estimation").attr("value"));
         },100)
 
     }

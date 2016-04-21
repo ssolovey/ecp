@@ -1023,7 +1023,6 @@ Reman_QuickQuote.prototype = {
 					drive: Reman_QuickQuote.prototype.currentSelectedDrive,
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					type: Reman_QuickQuote.prototype.currentCatSelected,
-					engine: Reman_QuickQuote.prototype.currentSelectedEngine,
 					partsAdditionlInfo:Reman_QuickQuote.prototype.partsAdditionlInfo,
 					zip:zip
 

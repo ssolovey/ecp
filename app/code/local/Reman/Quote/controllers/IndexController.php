@@ -78,11 +78,11 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        if (session_status() == PHP_SESSION_NONE) {
+        /*if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // close the session
-        session_write_close();
+        session_write_close();*/
 
         /**
 		 *Log Search Results
@@ -176,11 +176,11 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        if (session_status() == PHP_SESSION_NONE) {
+        /*if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // close the session
-        session_write_close();
+        session_write_close();*/
 
         if(array_key_exists('sku', $request)){
 
@@ -240,11 +240,11 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        if (session_status() == PHP_SESSION_NONE) {
+        /*if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // close the session
-        session_write_close();
+        session_write_close();*/
 
 		$this->loadLayout('shipping'); 
         //This function processes and displays all layout phtml and php files.
@@ -276,11 +276,11 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
          *
          */
         // start the session
-        if (session_status() == PHP_SESSION_NONE) {
+        /*if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // close the session
-        session_write_close();
+        session_write_close();*/
 
         // Customer info
         //Load Current Logged Customer Object
@@ -375,6 +375,9 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
         $xml = new SimpleXMLElement('<RateLinx ver="1.0"/>');
 
+
+
+
         $this->to_xml($xml, $params);
 
         $xmlString = $xml->asXML();
@@ -394,6 +397,8 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                 $result = simplexml_load_string($response->getBody());
 
                 $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
+
+                Mage::getSingleton('core/session')->setData('taxValue',$tax_value );
 
                 $response = array(
                     "data" =>  $result,
@@ -424,6 +429,60 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                 $object->addChild($key, $value);
             }
         }
+    }
+
+
+    /**
+     *
+     * Calculate product price
+     *
+     */
+
+    public function getPriceAction(){
+
+        // Load Product Object
+        $_product =  Mage::getSingleton('core/session')->getData('selectedProduct');
+
+        // Current Logged Company
+        $_company = Mage::helper('company')->getCustomerCompanyObject();
+
+        // tax value
+        $taxValue =  Mage::getSingleton('core/session')->getData('taxValue');
+
+        // get request POST data
+        $request = $this->getRequest()->getPost();
+
+        /////// FLUID
+
+        if($request[isfluid] === "true"){
+            $fluid =  Mage::helper('quote')->getFluidPriceInventory($_company, $_product);
+        }else{
+            $fluid =  0;
+        }
+
+        $partPrice = $_product->getPrice();
+
+        $partCorePrice = $_product->getData('parts_core_price');
+
+        $shippingPrice = Mage::helper('company')->getCustomerShippingPrice();
+
+
+        /////// TAX calculation
+
+        $priceWithoutTax = $fluid + $partPrice + $partCorePrice + $shippingPrice;
+
+        if(sizeof($taxValue) > 0){
+
+            $taxPrice = ($priceWithoutTax/100) * $taxValue[0]["tax"];
+
+            echo $priceWithoutTax + $taxPrice;
+
+        }else{
+
+            echo $priceWithoutTax;
+
+        }
+
     }
 
     /**

@@ -9,9 +9,9 @@
 
         $_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getSku());
 
+        Mage::getSingleton('core/session')->setData('selectedProduct',$_product );
 
-        $model = Mage::getModel('catalog/product');
-        $_product = $model->load($_product->getId());
+
         $stocklevel = (int)Mage::getModel('cataloginventory/stock_item')
             ->loadByProduct($_product)->getQty();
 
@@ -73,12 +73,13 @@
     // Current Logged Company
     $_company = Mage::helper('company')->getCustomerCompanyObject();
 
-    $isFluidPrice = Mage::helper('quote')->getFluidPrice($_company, $_product);
-
+    $isFluidPrice = Mage::helper('quote')->getFluidPriceInventory($_company, $_product);
 
     $totalPrice = Mage::helper('quote')->getTotalInventoryPrice($_company, $_product);
 
-    //Mage::getSingleton('core/session')->setTotalPrice($totalPrice);
+    $totalPriceNetto = Mage::helper('quote')->getTotalPrice($_product);
+
+
 
 ?>
 <div id="stock_avl">
@@ -118,7 +119,7 @@
         <tr id="invent-total-price" style="display: none;">
 
             <td class="lable">Total:</td>
-            <td class="invent-total" data="<?php echo $totalPrice?>"><?php	echo "$".number_format($totalPrice,2,'.','');?></td>
+            <td class="invent-total" price="<?php echo $totalPriceNetto?>" data="<?php echo $totalPrice?>"><?php	echo "$".number_format($totalPrice,2,'.','');?></td>
 
         </tr>
 
@@ -213,7 +214,7 @@
 	$j('#estimate-shipping-btn').click(function(){
 		
 		if($j("#zip_value").attr("value") != ""){
-            shipService.getWareHouses($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
+            shipService.getWareHouses($j("#zip_value").attr("value"),"invent", <?php echo $inProgress; ?>);
 		}
 	});
 	// Load Order Page
@@ -225,7 +226,7 @@
 	  if (event.which == 13) {
 		 if($j("#zip_value").attr("value") != ""){
 
-             shipService.getWareHouses($j("#zip_value").attr("value"), <?php echo $inProgress; ?>);
+             shipService.getWareHouses($j("#zip_value").attr("value"),"invent", <?php echo $inProgress; ?>);
 
 		}
 	   }
