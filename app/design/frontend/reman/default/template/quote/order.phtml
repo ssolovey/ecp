@@ -399,7 +399,7 @@
         <tr class="check-tr">
             <td class="label">State:</td>
             <td id="input-st_state" style="height:24px;">
-                <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); return false;" >
+                <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); $j('#zip-re-estimation').attr('value',''); return false;" >
                     <?php  foreach($states as $state): ?>
                     <option value="<?php echo $state->getId(); ?>" code="<?php echo $state->getCode(); ?>"><?php echo $state->getName(); ?></option>
                     <?php endforeach; ?>
