@@ -272,7 +272,21 @@ class Reman_Company_Helper_Data extends Mage_Core_Helper_Abstract
           }
 
 
+            /**
+             * Retrieve Company zip value
+             *
+             * @return string
+             */
+
+            function getCompanyZip() {
+
+                $company = $this->getCustomerCompanyObject();
+                $zip = $company->zip;
+                return $zip;
+            }
 
 
-	
+
+
+
 }

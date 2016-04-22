@@ -340,6 +340,7 @@
 <input type="hidden" id="company-address" name="company_addres1" value="<?php echo $this->helper('company')->getCompanyAddress(); ?>" />
 <input type="hidden" id="company-city" name="company_city" value="<?php echo $this->helper('company')->getCompanyCity(); ?>" />
 <input type="hidden" id="company-address2" name="company_addres2" value="<?php echo $this->helper('company')->getCompanyAddress2(); ?>" />
+<input type="hidden" id="company-zip" name="company_zip" value="<?php echo $this->helper('company')->getCompanyZip(); ?>" />
 
 
 <!-- Logged user Email -->
@@ -404,7 +405,7 @@
                     <option value="<?php echo $state->getId(); ?>" code="<?php echo $state->getCode(); ?>"><?php echo $state->getName(); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input id="st_state" class="isZip" type="hidden" name="st_state" value="" />
+                <input id="st_state" class="" type="hidden" name="st_state" value="" />
             </td>
             <td id="check-st_state"></td>
 
@@ -412,7 +413,7 @@
 
         <tr class="check-tr">
             <td class="label">Destination ZIP:</td>
-            <td id="input-st_zip"><input id="zip-re-estimation" autocomplete="off" name="st_zip" style="width:127px;" type="text" class="required-entry isZip" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
+            <td id="input-st_zip"><input id="zip-re-estimation" autocomplete="off" name="st_zip" style="width:127px;" type="text" class="required-entry" value="<?php echo $this->getRequest()->getPost('zip'); ?>" /><em>*</em></td>
             <td id="check-st_zip"></td>
         </tr>
     </table>
@@ -664,7 +665,14 @@ $j('#same-as-sold').click(function() {
          $j('#input-st_addr1 input').attr('value', $j('#company-address')[0].value);
          $j('#input-st_addr2 input').attr('value', $j('#company-address2')[0].value);
           /* copy city*/
-          $j('#input-st_city input').attr('value', $j('#company-city')[0].value);
+         $j('#input-st_city input').attr('value', $j('#company-city')[0].value);
+
+         $j("#zip-re-estimation").attr("value",$j('#company-zip')[0].value);
+
+
+        ////////////////////// reestimate shipping
+        shipService.getWareHouses($j("#zip-re-estimation").attr("value"),"order", <?php echo $inProgress; ?>);
+        getTheStateLabel($j("#zip-re-estimation").attr("value"));
 
     } else {
         for( var i = 1; i<=$j('#ship-to input').length-1; i++){
