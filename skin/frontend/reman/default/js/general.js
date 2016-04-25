@@ -1338,7 +1338,12 @@ function checkOrder(){
 	
 	$j('#check-st_addr1').html($j('#input-st_addr1 > input').attr('value'));
 	$j('#input-st_addr1').hide();
-	
+
+
+    $j('#check-st_addr2').html($j('#input-st_addr2 > input').attr('value'));
+    $j('#input-st_addr2').hide();
+
+
 	$j('#check-st_city').html($j('#input-st_city > input').attr('value'));
 	$j('#input-st_city').hide();
 	
@@ -1405,6 +1410,8 @@ function backToOrderEdit(){
 	$j('#input-st_phone').show();
 	$j('#check-st_addr1').html('');
 	$j('#input-st_addr1').show();
+    $j('#check-st_addr2').html('');
+    $j('#input-st_addr2').show();
 	$j('#check-st_city').html('');
 	$j('#input-st_city').show();
 	$j('#check-st_state').html('');
