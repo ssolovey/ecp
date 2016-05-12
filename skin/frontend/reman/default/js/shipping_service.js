@@ -33,6 +33,29 @@
         };
 
 
+        this.inventoryLabel = {
+
+            3237: "parts_inventory_nc",
+            3257: "parts_inventory_sw",
+            3258: "parts_inventory_se",
+            3259: "parts_inventory_ne",
+            3236: "parts_inventory_sc",
+            3255: "parts_inventory_nw"
+
+        };
+
+
+        this.stocksLabel = {
+
+            53223: "parts_inventory_nc",
+            91761: "parts_inventory_sw",
+            30344: "parts_inventory_se",
+            21113: "parts_inventory_ne",
+            75261: "parts_inventory_sc",
+            97201: "parts_inventory_nw"
+
+        };
+
         /**
          * Map stocks according to rules
          * */
@@ -90,7 +113,8 @@
             WA : [s[0],s[2]],
             WI : [s[0],s[2]],
             WV : [s[5],s[2]],
-            WY : [s[0],s[2]]
+            WY : [s[0],s[2]],
+            DEF: [s[2]]
         };
 
     }
@@ -135,11 +159,12 @@
 
         var self = this,
             result = [],
+            inventoryLabel = "",
             response = {};
 
         for(var i=0; i<=stocks.length -1; i++){
 
-
+            inventoryLabel = self.inventoryLabel[stocks[i]];
 
             $j.ajax({
                 url: "index/estimateshipping",
@@ -149,7 +174,8 @@
                     stock: stocks[i],
                     destzip: zip,
                     state:state,
-                    city:city
+                    city:city,
+                    invlabel:inventoryLabel
                 },
                 beforeSend: function(){
                     $j('.ship-preloader').show();
@@ -168,37 +194,33 @@
 
                     var resObj = $j.parseJSON(data.responseText);
 
-                    var  response = self.xmlToJson($j(resObj.data[0])[0]);
 
-                    var  stock = resObj.stock;
+                    if(resObj.data !== ""){
+                        var  response = self.xmlToJson($j(resObj.data[0])[0]);
 
-                    //add stock field to response result
-                    response.stockZIP = self.storeZIPMap[stock];
+                        var  stock = resObj.stock;
 
-                    response.stockName = self.storeNameMap[self.storeZIPMap[stock]];
+                        //add stock field to response result
+                        response.stockZIP = self.storeZIPMap[stock];
 
-                    result.push(response);
+                        response.stockName = self.storeNameMap[self.storeZIPMap[stock]];
+
+                        result.push(response);
+                    }else{
+
+                        result.push(resObj);
+                    }
+
+
 
                     if(result.length-1 === stocks.length -1 ){
 
                         console.log('NEW SERVICE RESPONSE', result);
 
-                        if ('RATESHOPRESULTS' in result[0]){
+                        self.getBestService(result,type);
 
-                            self.getBestService(result,type);
-
-                            //// Calculate Tax
-                            self.calculateTax(resObj.tax,type);
-
-
-
-                        }else{
-
-                            alert('Shipping Service error. Try again');
-
-                            $j('.ship-preloader').hide();
-                        }
-
+                        //// Calculate Tax
+                        self.calculateTax(resObj.tax,type);
 
                     }
                 }
@@ -216,75 +238,79 @@
 
         for(var i=0; i<=result.length-1;i++){
 
-            item = result[i].RATESHOPRESULTS.RATESHOPRESULT;
+            if (result[i].hasOwnProperty("RATESHOPRESULTS")) {
 
-            stockZip = result[i].stockZIP;
-            stockName = result[i].stockName;
+                    item = result[i].RATESHOPRESULTS.RATESHOPRESULT;
 
-            for(var z=0; z<=item.length -1; z++){
+                    stockZip = result[i].stockZIP;
+                    stockName = result[i].stockName;
 
-                //console.log("ALL RESULTS ",item[z]);
+                    for (var z = 0; z <= item.length - 1; z++) {
 
-                item[z].stockZIP = stockZip;
-                item[z].stockName = stockName;
+                        //console.log("ALL RESULTS ",item[z]);
 
-                if(buffer === undefined){
-                    buffer = item[z];
-                }else{
+                        item[z].stockZIP = stockZip;
+                        item[z].stockName = stockName;
 
-                    if(parseInt(buffer.TNTDAYS['#text']) == parseInt(item[z].TNTDAYS['#text'])){
-
-                        if(parseFloat(buffer.RATE['#text']) > parseFloat(item[z].RATE['#text'])){
+                        if (buffer === undefined) {
                             buffer = item[z];
-                        }
+                        } else {
 
-                    }else{
+                            if (parseInt(buffer.TNTDAYS['#text']) == parseInt(item[z].TNTDAYS['#text'])) {
 
-                        if(parseInt(buffer.TNTDAYS['#text']) > parseInt(item[z].TNTDAYS['#text'])){
-                            buffer = item[z];
+                                if (parseFloat(buffer.RATE['#text']) > parseFloat(item[z].RATE['#text'])) {
+                                    buffer = item[z];
+                                }
+
+                            } else {
+
+                                if (parseInt(buffer.TNTDAYS['#text']) > parseInt(item[z].TNTDAYS['#text'])) {
+                                    buffer = item[z];
+                                }
+                            }
                         }
                     }
-                }
             }
         }
 
-        // global variables for Order Page
-        this.servicedays = buffer.TNTDAYS['#text'];
-        this.truecost = buffer.RATE['#text'];
-        this.carrier = buffer.SERVICEDESCRIPTION['#text'];
-        this.store = buffer.stockName;
-        this.storeZIP = buffer.stockZIP;
+        if(buffer !== undefined){
+
+            // global variables for Order Page
+            this.servicedays = buffer.TNTDAYS['#text'];
+            this.truecost = buffer.RATE['#text'];
+            this.carrier = buffer.SERVICEDESCRIPTION['#text'];
+            this.store = buffer.stockName;
+            this.storeZIP = buffer.stockZIP;
 
 
-        // Form Days text
-        if (this.servicedays > 1) {
-            this.textDays = 'Days';
-        } else {
-            this.textDays = 'Day';
+            // Form Days text
+            if (this.servicedays > 1) {
+                this.textDays = 'Days';
+            } else {
+                this.textDays = 'Day';
+            }
+
+            if(type === "invent"){
+
+                this.workWithDom();
+
+            }else{
+
+                this.workWithDomInOrder();
+
+            }
+
+
+            var bResult = {
+
+                servicedays: this.servicedays,
+                truecost: this.truecost,
+                carrier: this.carrier,
+                store: this.store,
+                storeZIP: this.storeZIP
+
+            };
         }
-
-        if(type === "invent"){
-
-            this.workWithDom();
-
-        }else{
-
-            this.workWithDomInOrder();
-
-        }
-
-
-        var bResult = {
-
-            servicedays: this.servicedays,
-            truecost: this.truecost,
-            carrier: this.carrier,
-            store: this.store,
-            storeZIP: this.storeZIP
-
-        };
-
-        //console.log("BEST SERVICE ", bResult);
 
     };
 
@@ -317,7 +343,7 @@
         $j('#order-ship-from').html(this.store);
 
         $j('#order-ship-from-input').attr('value', this.store );
-        $j('#order-ship-from-input-label').attr('value', this.storeZIP );
+        $j('#order-ship-from-input-label').attr('value', this.stocksLabel[this.storeZIP] );
 
 
         // Set Shipping Days

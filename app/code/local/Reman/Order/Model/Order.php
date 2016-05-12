@@ -72,7 +72,7 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
 
             if($currentStockValue > 0){
 
-                $product->setData($data['ship_from_lb'], 2);
+                $product->setData($data['ship_from_lb'], $currentStockValue - 1);
 
                 $product->save();
             }

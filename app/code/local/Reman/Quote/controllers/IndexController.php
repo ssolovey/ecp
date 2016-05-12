@@ -271,112 +271,127 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
         // parse request data
         $request = $this->getRequest()->getPost();
 
-        /**
-         * PHP Session Locks – Prevent Blocking Requests
-         *
-         */
-        // start the session
-        /*if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        // close the session
-        session_write_close();*/
-
         // Customer info
         //Load Current Logged Customer Object
         $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
         $customer = Mage::getModel('customer/customer')->load($customer_id);
 
 
+        // Load Product Object
+        $_product =  Mage::getSingleton('core/session')->getData('selectedProduct');
+
+        $invlabel = $request['invlabel'];
+
+        if((int)$_product->getData($invlabel)  == 0 && $request['stock'] != 3237 ) {
+
+            $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
+
+            $response = array(
+                "data" =>  "",
+                "stock" => "",
+                "tax"=> $tax_value
+            );
+
+            echo json_encode($response);
+
+        }else{
+
+            $this->shippingServiceRequest($request,$customer);
+
+        }
+
+    }
+
+
+
+    public function shippingServiceRequest ($request,$customer){
+
         $params = array(
 
-                    "ClientID" => "ETE",
-                    "Username" => "Webservice",
-                    "Password" => "eteweb1",
-                    "BillingType" => "1",
-                    "LocationID" => $request['stock'],
-                    "ShipDate" => date("m.d.y"),
-                    "ExpectedCount"=> "1",
+            "ClientID" => "ETE",
+            "Username" => "Webservice",
+            "Password" => "eteweb1",
+            "BillingType" => "1",
+            "LocationID" => $request['stock'],
+            "ShipDate" => date("m.d.y"),
+            "ExpectedCount"=> "1",
 
 
-                    "ShipVia" => array(
+            "ShipVia" => array(
 
-                            "ShipVia" => "LTL",
-                    ),
+                "ShipVia" => "LTL",
+            ),
 
-                    "Addresses" => array(
+            "Addresses" => array(
 
-                            "Address" => array(
+                "Address" => array(
 
-                                    "Account"=>"",
-                                    "Address1"=>Mage::helper('company')->getCompanyAddress(),
-                                    "Address2"=>Mage::helper('company')->getCompanyAddress2(),
-                                    "AddressType"=>"SHIPTO",
-                                    "Attention"=>$customer->getFirstname().' '.$customer->getLastname(),
-                                    "City"=>$request['city'],
-                                    "Country"=>"US",
-                                    "Phone"=>$customer->phone,
-                                    "Name"=>Mage::helper('company')->getCompanyName(),
-                                    "State"=>$request['state'],
-                                    "Zip"=>$request['destzip']
+                    "Account"=>"",
+                    "Address1"=>Mage::helper('company')->getCompanyAddress(),
+                    "Address2"=>Mage::helper('company')->getCompanyAddress2(),
+                    "AddressType"=>"SHIPTO",
+                    "Attention"=>$customer->getFirstname().' '.$customer->getLastname(),
+                    "City"=>$request['city'],
+                    "Country"=>"US",
+                    "Phone"=>$customer->phone,
+                    "Name"=>Mage::helper('company')->getCompanyName(),
+                    "State"=>$request['state'],
+                    "Zip"=>$request['destzip']
 
-                            )
-                    ),
+                )
+            ),
 
-                    "SpecialServices" => array(
+            "SpecialServices" => array(
 
-                        "SpecialService" => array(
+                "SpecialService" => array(
+
+                    "ID" => "",
+                    "Value"=>""
+                )
+
+            ),
+
+            "Packages"=>array(
+
+                "Package"=>array(
+
+                    "Height"=>"24.0",
+                    "Length"=>"48.0",
+                    "Width"=>"24.0",
+                    "ActualWeight"=>"175.0",
+                    "SpecialServices"=> array(
+
+                        "SpecialService"=>array(
 
                             "ID" => "",
                             "Value"=>""
-                        )
 
-                    ),
-
-                    "Packages"=>array(
-
-                        "Package"=>array(
-
-                            "Height"=>"24.0",
-                            "Length"=>"48.0",
-                            "Width"=>"24.0",
-                            "ActualWeight"=>"175.0",
-                            "SpecialServices"=> array(
-
-                                "SpecialService"=>array(
-
-                                    "ID" => "",
-                                    "Value"=>""
-
-                                )
-
-                            )
-                        )
-
-                    ),
-
-                    "BOLDetails"=>array(
-
-                        "BOLDetail"=>array(
-
-                            "Class"=>"85",
-                            "Pallets"=>"0",
-                            "Pieces"=>"1",
-                            "Height"=>"24.0",
-                            "Length"=>"48.0",
-                            "Width"=>"24.0",
-                            "Weight"=>"175.0"
                         )
 
                     )
+                )
+
+            ),
+
+            "BOLDetails"=>array(
+
+                "BOLDetail"=>array(
+
+                    "Class"=>"85",
+                    "Pallets"=>"0",
+                    "Pieces"=>"1",
+                    "Height"=>"24.0",
+                    "Length"=>"48.0",
+                    "Width"=>"24.0",
+                    "Weight"=>"175.0"
+                )
+
+            )
 
         );
 
 
         $xml = new SimpleXMLElement('<RateLinx ver="1.0"/>');
-
-
-
 
         $this->to_xml($xml, $params);
 
@@ -413,6 +428,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
             echo $e;
         }
+
     }
 
     public function to_xml(SimpleXMLElement $object, array $data)
