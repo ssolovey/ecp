@@ -25,6 +25,8 @@ function getTheStateLabel(zip){
                     $j($j('#ship-to-states option')[index]).attr('selected', 'selected');
                     // Set selected State SHIP TO
                     $j('#st_state').attr('value', $j('#ship-to-states option:selected').html());
+                    // Set selected State SHIP TO
+                    $j('#bt_state').attr('value', $j('#ship-to-states option:selected').html());
                 }
 
             });

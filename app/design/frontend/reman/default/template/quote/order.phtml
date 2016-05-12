@@ -353,6 +353,10 @@
 <input type="hidden" name="bt_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
 <input type="hidden" name="bt_phone" value="<?php echo $customer->phone; ?>" />
 <input type="hidden" name="bt_phone_ext" value="" />
+<input type="hidden" name="bt_city" value="<?php echo $this->helper('company')->getCompanyCity(); ?>"  />
+
+<input type="hidden"  name="bt_zip" value="<?php echo $this->helper('company')->getCompanyZip(); ?>"   />
+<input type="hidden" name="bt_addr1" value="<?php echo $this->helper('company')->getCompanyAddress(); ?>"  />
 
 
 <div id="ship-to" style="margin-top:25px; height:250px;" class="check-bottom-blocks">
@@ -400,12 +404,13 @@
         <tr class="check-tr">
             <td class="label">State:</td>
             <td id="input-st_state" style="height:24px;">
-                <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); $j('#zip-re-estimation').attr('value',''); return false;" >
+                <select id="ship-to-states" style="width:131px;" onchange="$j('#st_state').attr('value',$j('#ship-to-states option:selected').html()); $j('#bt_state').attr('value',$j('#ship-to-states option:selected').html()); $j('#zip-re-estimation').attr('value',''); return false;" >
                     <?php  foreach($states as $state): ?>
                     <option value="<?php echo $state->getId(); ?>" code="<?php echo $state->getCode(); ?>"><?php echo $state->getName(); ?></option>
                     <?php endforeach; ?>
                 </select>
                 <input id="st_state" class="" type="hidden" name="st_state" value="" />
+                <input id="bt_state"  class="" type="hidden" name="bt_state" value=""  />
             </td>
             <td id="check-st_state"></td>
 
@@ -420,11 +425,7 @@
 
 </div>
 
-<!-- FOR TEST PURPOSE NEED TO CLARIFIED -->
-<input type="hidden" name="bt_city" value="New York"  />
-<input id="bt_state" type="hidden" name="bt_state" value="NY"  />
-<input type="hidden"  name="bt_zip" value="15656"   />
-<input type="hidden" name="bt_addr1" value="Segedskay"  />
+
 
 <input type="hidden" name="st_phone_ext" value="" />
 
