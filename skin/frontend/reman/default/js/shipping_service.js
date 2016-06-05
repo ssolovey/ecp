@@ -56,6 +56,9 @@
 
         };
 
+
+        this.destinationZIP = null;
+
         /**
          * Map stocks according to rules
          * */
@@ -137,6 +140,8 @@
 
                         var stateShort = $j.parseJSON(data.responseText).state_short,
                             selectedStocks = self.stocksRules[stateShort];
+
+                        self.destinationZIP = zip;
 
                         //// trigger shipping estimation
                         self.estimateShipping(selectedStocks, zip, stateShort, $j.parseJSON(data.responseText).city,type, inProgress );
@@ -238,38 +243,51 @@
 
         for(var i=0; i<=result.length-1;i++){
 
-            if (result[i].hasOwnProperty("RATESHOPRESULTS")) {
+            //////////////////////CHECK for Shipping Service ERROR ////////////////////////////
+            if(!result[i].hasOwnProperty("ERRORNUM")){
 
-                    item = result[i].RATESHOPRESULTS.RATESHOPRESULT;
+                        if (result[i].hasOwnProperty("RATESHOPRESULTS")) {
 
-                    stockZip = result[i].stockZIP;
-                    stockName = result[i].stockName;
+                                item = result[i].RATESHOPRESULTS.RATESHOPRESULT;
 
-                    for (var z = 0; z <= item.length - 1; z++) {
+                                stockZip = result[i].stockZIP;
+                                stockName = result[i].stockName;
 
-                        //console.log("ALL RESULTS ",item[z]);
+                                for (var z = 0; z <= item.length - 1; z++) {
 
-                        item[z].stockZIP = stockZip;
-                        item[z].stockName = stockName;
+                                    //console.log("ALL RESULTS ",item[z]);
 
-                        if (buffer === undefined) {
-                            buffer = item[z];
-                        } else {
+                                    //console.log(item[z].ERRORNUM['#text']);
 
-                            if (parseInt(buffer.TNTDAYS['#text']) == parseInt(item[z].TNTDAYS['#text'])) {
+                                    item[z].stockZIP = stockZip;
+                                    item[z].stockName = stockName;
 
-                                if (parseFloat(buffer.RATE['#text']) > parseFloat(item[z].RATE['#text'])) {
-                                    buffer = item[z];
+                                    if (buffer === undefined) {
+                                        buffer = item[z];
+                                    } else {
+
+                                        if (parseInt(buffer.TNTDAYS['#text']) == parseInt(item[z].TNTDAYS['#text'])) {
+
+                                            if (parseFloat(buffer.RATE['#text']) > parseFloat(item[z].RATE['#text'])) {
+                                                buffer = item[z];
+                                            }
+
+                                        } else {
+
+                                            if (parseInt(buffer.TNTDAYS['#text']) > parseInt(item[z].TNTDAYS['#text'])) {
+                                                buffer = item[z];
+                                            }
+                                        }
+                                    }
                                 }
-
-                            } else {
-
-                                if (parseInt(buffer.TNTDAYS['#text']) > parseInt(item[z].TNTDAYS['#text'])) {
-                                    buffer = item[z];
-                                }
-                            }
                         }
-                    }
+            }else{
+
+                var message = result[i].RESULTDESC["#text"];
+                var errorNum = result[i].ERRORNUM['#text'];
+
+                this.sendShippingErrorNotification(this.destinationZIP,errorNum, message);
+
             }
         }
 
@@ -311,6 +329,50 @@
 
             };
         }
+
+    };
+
+
+    ShippingService.prototype.sendShippingErrorNotification = function(zip,error,message){
+
+        var searchResult = "";
+
+        $j('#breadcrumb_info .breadcrumb').each(
+
+            function(index,item) {
+                if ($j('#breadcrumb_info .breadcrumb').length - 1 != index)
+                {
+                    searchResult+=item.innerHTML+" > ";
+                }else{
+                    searchResult+=item.innerHTML;
+                }
+            });
+
+        $j.ajax({
+            url: "index/errorshipping",
+            type: 'POST',
+
+            data: {
+                zip: zip,
+                error:error,
+                search:searchResult,
+                message: message
+            },
+
+            beforeSend: function(){
+                $j('.ship-preloader').hide();
+            },
+
+            error: function(error){
+                $j('.ship-preloader').hide();
+            },
+
+            complete: function(data) {
+
+                $j("#shipping_service_error").fadeIn();
+            }
+        });
+
 
     };
 

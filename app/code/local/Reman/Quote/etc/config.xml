@@ -48,6 +48,13 @@
                     <type>html</type>
                 </reman_order_confirmation>
         </email>
+            <email>
+                <reman_error_shipping>
+                    <label>Reman Shipping Service Error</label>
+                    <file>shipping_error.html</file>
+                    <type>html</type>
+                </reman_error_shipping>
+            </email>
     </template>
 
 	</global>

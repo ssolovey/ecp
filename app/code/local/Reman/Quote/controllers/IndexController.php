@@ -336,7 +336,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                     "Phone"=>$customer->phone,
                     "Name"=>Mage::helper('company')->getCompanyName(),
                     "State"=>$request['state'],
-                    "Zip"=>$request['destzip']
+                    "Zip"=>111111
 
                 )
             ),
@@ -411,6 +411,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
                 $result = simplexml_load_string($response->getBody());
 
+
                 $tax_value = Mage::getModel('sync/taxes')->getTaxValue($request['destzip']);
 
                 Mage::getSingleton('core/session')->setData('taxValue',$tax_value );
@@ -428,6 +429,57 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
 
             echo $e;
         }
+
+    }
+
+
+    public function errorshippingAction(){
+
+        // parse request data
+        $request = $this->getRequest()->getPost();
+
+        // Customer info
+        //Load Current Logged Customer Object
+        $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId();
+        $customer = Mage::getModel('customer/customer')->load($customer_id);
+
+
+        // Load Product Object
+        $_product =  Mage::getSingleton('core/session')->getData('selectedProduct');
+
+
+        $params = array(
+              'date' => date('l jS \of F Y h:i:s A'),
+              'customer_name' => $customer->getFirstname().' '.$customer->getLastname(),
+              'part_number' => $_product->getSku(),
+              'zip' => $request[zip],
+              'error' => $request[error],
+              'search' => $request[search],
+              'message' => $request[message]
+        );
+
+
+
+
+        /* Send Email to WebOrders*/
+
+                Mage::getModel('order/email')->sendEmail(
+
+                       'reman_error_shipping',
+
+                        array(
+                            'name' => 'ETEREMAN',
+                            'email' => 'noreply@etereman.com'
+                        ),
+
+                        'hybridtestmail@gmail.com',
+                        $customer,
+                        'Shipping Error',
+                        $params
+                );
+
+
+
 
     }
 
