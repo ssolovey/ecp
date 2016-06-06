@@ -336,7 +336,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                     "Phone"=>$customer->phone,
                     "Name"=>Mage::helper('company')->getCompanyName(),
                     "State"=>$request['state'],
-                    "Zip"=>111111
+                    "Zip"=>$request['destzip']
 
                 )
             ),
@@ -472,7 +472,7 @@ class Reman_Quote_IndexController extends Mage_Core_Controller_Front_Action
                             'email' => 'noreply@etereman.com'
                         ),
 
-                        'hybridtestmail@gmail.com',
+                        'webcatadmin@etereman.com',
                         $customer,
                         'Shipping Error',
                         $params
