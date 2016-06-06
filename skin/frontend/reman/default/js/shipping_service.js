@@ -220,7 +220,7 @@
 
                     if(result.length-1 === stocks.length -1 ){
 
-                        console.log('NEW SERVICE RESPONSE', result);
+                        //console.log('NEW SERVICE RESPONSE', result);
 
                         self.getBestService(result,type);
 
@@ -360,15 +360,16 @@
             },
 
             beforeSend: function(){
-                $j('.ship-preloader').hide();
+                //$j('.ship-preloader').hide();
+                $j('#loader-wrapper').fadeOut();
+                $j('.reman_preloader_shipping').fadeOut();
             },
 
             error: function(error){
-                $j('.ship-preloader').hide();
+                //$j('.ship-preloader').hide();
             },
 
             complete: function(data) {
-
                 $j("#shipping_service_error").fadeIn();
             }
         });
