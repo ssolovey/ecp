@@ -132,7 +132,9 @@
 <!-- TAG NAUMBER-->
 <input type="hidden" id="tag-total-amount"  name="tag" value="<?php	echo $this->getRequest()->getPost('tagNumber');?>" />
 
+<!-- Part Search result -->
 
+<input type="hidden" name="search_result" value="<?php	echo $this->getRequest()->getPost('search');?>">
 
 
 <div id="order-title" class="title"><span>Order</span></div>
@@ -204,9 +206,10 @@
 
                 <input type="hidden" name="drive" value="<?php  echo (!$drive)? '' : $drive; ?>" />
             </td>
-        </tr>                        <tr>
-        <td class="label">Notes:</td>
-        <td><?php
+        </tr>
+        <tr>
+            <td class="label">Part notes:</td>
+            <td><?php
 
                 echo (!isset($partNotes))? '' : $partNotes;
 
@@ -216,7 +219,7 @@
     </tr>
     </table>
     <div style="clear:both"></div>
-    <table id="vin-mileage-table" class="vin" style="margin-left:55px; margin-top:25px;">
+    <table id="vin-mileage-table" class="vin" style="margin-left:33px; margin-top:25px;">
         <tr class="check-tr">
             <td class="label">VIN:</td>
             <td id="input-vin"><input type="text" name="vin" maxlength="17" class="required-entry" /><em>*</em></td>
@@ -226,6 +229,12 @@
             <td class="label">Mileage:</td>
             <td id="input-mileage"><input type="text" name="mileage" class="required-entry" /><em>*</em></td>
             <td id="check-mileage"></td>
+        </tr>
+
+
+        <tr class="check-tr">
+            <td class="label">Tag/Assm#:</td>
+            <td><input type="text" name="tag" /></td>
         </tr>
     </table>
 
@@ -347,7 +356,7 @@
 <input type="hidden" name="so_cont_email" value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>" />
 
 <input type="hidden" name="so_phone_ext" value="" />
-
+<input type="hidden" id="gate_req"  name="gate_req" value="no"   />
 <!--Bill To The Same As Sold To-->
 
 <input type="hidden" name="bt_cust_name" value="<?php echo $this->helper('company')->getCompanyName(); ?>" />
@@ -363,9 +372,14 @@
     <div class="title"><span>Ship To</span></div>
 
     <table class="vin" style="margin-left:5px;">
-        <tr id="check-same-as-sold-cont" style="height:45px;">
+        <tr id="check-same-as-sold-cont" style="height:25px;">
             <td class="label"><input id="same-as-sold" type="checkbox" /></td>
             <td style="font-weight:bold; line-height:18px;">Same as Sold To</td>
+        </tr>
+        <tr>
+            <td class="label"><input onclick="handleGateReqChange(this);"  type="checkbox" /></td>
+            <td style="font-weight:bold; line-height:18px;">Lift Gate Required?</td>
+
         </tr>
         <tr class="check-tr">
             <td width="100" class="label">Customer Name:</td>
@@ -468,9 +482,9 @@
                  ?>
             </td>
             <?php if($fluid == 'R'):?>
-            <input type="hidden"  name="fluid_total" value="<?php echo number_format(isset($fluidPrice),2,'.','') ?>" />
+            <input type="hidden" class="fluid-total"  name="fluid_total" value="<?php echo number_format(isset($fluidPrice),2,'.','') ?>" />
             <?php else: ?>
-            <input type="hidden"  name="fluid_total" value='' />
+            <input type="hidden" class="fluid-total"  name="fluid_total" value='' />
             <?php endif; ?>
         </tr>
 
@@ -654,7 +668,8 @@ $j('#reman_order input').click(function(e){
 $j('#same-as-sold').click(function() {
     if($j(this).is(':checked')) {
         for( var i = 0; i<=$j('#sold-to input').length-1; i++){
-            $j('#ship-to input')[i+1].value = $j('#sold-to input')[i].value;
+
+            $j('#ship-to input')[i+2].value = $j('#sold-to input')[i].value;
         }
         for (var s = 0; s<=$j('#ship-to-states option').length; s++){
             if($j('#sold-to-states option:selected').val() == $j($j('#ship-to-states option')[s]).val() ){
@@ -833,6 +848,14 @@ $j('#input-vin input').bind('keypress', function (event) {
         return false;
     }
 });
+
+function handleGateReqChange(item){
+
+    var status = item.checked ? "yes" : "no";
+
+    $j('#gate_req').attr('value', status);
+
+}
 
 
 </script>

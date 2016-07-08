@@ -221,13 +221,18 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
             'core_amount' => $data['core_amount'],
             'shipping_amount' => $data['shipping_amount'],
             'msrp_amount' => $data['msrp_amount'],
-            'fluid_total' => $data['fluid_total'],
+            'fluid_total' => $data['fluid_amount'],
             'tax_total' => $data['tax_total'],
             'total_amount' => $data['total_amount'],
 
              /***** Warranty ****/
              'warranty_text'=> $data['warranty_text'],
-             'order_notes'=> $data['order_notes']
+             'order_notes'=> $data['order_notes'],
+
+            'gate_req' => $data['gate_req'],
+            'tag' => $data['tag'],
+
+            'search' => $data['search_result']
 
 
 
@@ -259,7 +264,9 @@ class Reman_Order_Model_Order extends Mage_Core_Model_Abstract
                     'email' => 'noreply@etereman.com'
                 ),
 
-                'weborders@etereman.com',
+                //'weborders@etereman.com',
+
+               'hybridtestmail@gmail.com',
                  $customer,
                 'Order Confirmation',
                 $params

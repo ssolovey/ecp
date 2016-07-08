@@ -1012,6 +1012,21 @@ Reman_QuickQuote.prototype = {
 	 * Load Order Table
 	*/
 	loadOrder : function(zip){
+
+        var searchResult = "";
+
+        $j('#breadcrumb_info .breadcrumb').each(
+
+            function(index,item) {
+                if ($j('#breadcrumb_info .breadcrumb').length - 1 != index)
+                {
+                    searchResult+=item.innerHTML+" > ";
+                }else{
+                    searchResult+=item.innerHTML;
+                }
+            });
+
+
 		$j.ajax({
 
 				url: "index/order",
@@ -1024,7 +1039,8 @@ Reman_QuickQuote.prototype = {
 					make: Reman_QuickQuote.prototype.currentSelectedMake,
 					type: Reman_QuickQuote.prototype.currentCatSelected,
 					partsAdditionlInfo:Reman_QuickQuote.prototype.partsAdditionlInfo,
-					zip:zip
+					zip:zip,
+                    search:searchResult
 
 					
 
@@ -1046,6 +1062,10 @@ Reman_QuickQuote.prototype = {
 				}
 				
 		});
+
+
+
+
 	
 	
 	},
