@@ -29,7 +29,10 @@ class Reman_Sync_Model_Profile extends Reman_Sync_Model_Abstract
 	// override
 	protected function _parseItem( $item )
 	{
-		
+		if (!isset($item[13]) || empty($item[13])) {
+			throw new Exception('Broken CSV format. No email specified for customer');
+		}
+
 		$this->_companies		=	Mage::getModel('company/company');
 		
 		$this->_customers		=	Mage::getModel('customer/customer');

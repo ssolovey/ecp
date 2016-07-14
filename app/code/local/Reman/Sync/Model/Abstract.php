@@ -52,7 +52,11 @@ class Reman_Sync_Model_Abstract extends Mage_Core_Model_Abstract
 
 		foreach($files as $file)
 		{
-			$this->_parseFile( $file );
+			try {
+				$this->_parseFile( $file );
+			} catch (Exception $e) {
+				$this->syncLog($file, "Filed: " . $e->getMessage());
+			}
 		}
 		
 		$this->syncLog($folder, "Scaned");
