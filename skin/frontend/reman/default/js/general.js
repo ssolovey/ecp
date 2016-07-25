@@ -1304,7 +1304,10 @@ function checkOrder(){
 	
 	$j('#check-mileage').html($j('#input-mileage > input').attr('value'));
 	$j('#input-mileage').hide();
-	
+
+
+    $j('#check-tag').html($j('#input-tag > input').attr('value'));
+    $j('#input-tag').hide();
 	
 	$j('#com-app-input').hide();
 	$j('#check-application-block').show();
@@ -1404,6 +1407,9 @@ function backToOrderEdit(){
 	$j('#input-mileage').show();
 	$j('#com-app-input').show();
 	$j('#check-application-block').hide();
+
+    $j('#check-tag').html('').hide();
+    $j('#input-tag').show();
 	
 	/** Order Details */
 	$j('#check-po').html('');
